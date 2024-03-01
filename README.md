@@ -13,7 +13,7 @@ $ cd dotfiles
 Then use GNU stow to create symlinks
 
 ```
-$ stow .
+$ stow --adopt .
 ```
 
 [Link to video explaining it](https://www.youtube.com/watch?v=y6XCebnB9gs)
