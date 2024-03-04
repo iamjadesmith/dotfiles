@@ -2,6 +2,6 @@
 	name = Jade Smith
 	email = jade@jade-smith.com
 [core]
-	editor = neovim
+	editor = nvim
 [init]
 	defaultBranch = main
