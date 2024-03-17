@@ -62,3 +62,10 @@ if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
 fi
 
 zle_highlight=('paste:none')
+
+# Bitwarden shell completion
+eval "$(bw completion --shell zsh); compdef _bw bw;"
+
+export BW_SESSION="5FYTVBL73xwR3Pq0LWSn/JA6yzXUjwSTweE6pX51ck5eFg10jpoXt8exCHUazpXQKQ9DHHQUHvyqE7eblw/PFA=="
+
+bindkey "^J" autosuggest-execute
