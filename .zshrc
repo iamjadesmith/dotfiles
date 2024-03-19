@@ -62,3 +62,5 @@ if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
 fi
 
 zle_highlight=('paste:none')
+
+eval "$(zoxide init --cmd cd zsh)"
