@@ -1,2 +1,3 @@
 # Replace Mac OS Stuff here
 eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="/Users/jade/.local/bin:$PATH"
