@@ -1,1 +1,2 @@
 PATH="$HOME/.npm/bin:$PATH"
+PATH="$HOME/.local/bin:$PATH"
