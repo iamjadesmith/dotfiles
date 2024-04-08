@@ -5,15 +5,24 @@
 
 ## Installation
 
+### Install Zoxide first
+
+Debian
+
 ```bash
-$ git clone git@github.com:iamjadesmith/dotfiles.git
-$ cd dotfiles
+curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+```
+
+Otherwise, install with your package manager
+
+```bash
+git clone git@github.com:iamjadesmith/dotfiles.git && cd dotfiles
 ```
 
 Then use GNU stow to create symlinks
 
 ```bash
-$ stow .
+stow .
 ```
 
 ## Installing Other Things
