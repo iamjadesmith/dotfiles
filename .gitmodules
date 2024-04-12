@@ -3,4 +3,4 @@
   url = https://github.com/tarjoilija/zgen
 [submodule ".config/nvim"]
 	path = .config/nvim
-	url = git@github.com:iamjadesmith/neovim
+	url = git@github.com:iamjadesmith/neovim.git
