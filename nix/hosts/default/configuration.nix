@@ -1,5 +1,8 @@
 { config, pkgs, inputs, ... }:
-
+with pkgs;
+let
+  R-with-my-packages = rWrapper.override{ packages = with rPackages; [ ggplot2 dplyr xts ]; };
+in
 {
   nix = {
     package = pkgs.nixFlakes;
@@ -122,6 +125,7 @@
     swww
     alacritty
     rofi-wayland
+    R-with-my-packages
     (waybar.overrideAttrs (oldAttrs: {
         mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
       })
