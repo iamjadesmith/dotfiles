@@ -9,7 +9,7 @@
   };
 
   imports =
-    [ 
+    [
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.default
     ];
@@ -36,6 +36,9 @@
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+
+  programs.hyprland.enable = true;
+  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
 
   services.xserver.xkb = {
     layout = "us";
@@ -75,7 +78,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     users = {
-      "joejad" = import ./home.nix;
+      "joejad" = import ../../home/home.nix;
     };
   };
 
@@ -85,7 +88,11 @@
   programs.firefox.enable = true;
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs;
+  let
+    R-with-my-packages = rWrapper.override{ packages = with rPackages; [ languageserver ggplot2 dplyr xts ]; };
+  in
+  [
     zsh
     wget
     neovim
@@ -95,7 +102,6 @@
     fzf
     obsidian
     neofetch
-    alacritty
     cider
     zoxide
     stow
