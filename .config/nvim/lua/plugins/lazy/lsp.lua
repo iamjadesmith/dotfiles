@@ -11,6 +11,7 @@ return {
 		"L3MON4D3/LuaSnip",
 		"saadparwaiz1/cmp_luasnip",
 		"j-hui/fidget.nvim",
+        "R-nvim/cmp-r",
 	},
 
 	config = function()
@@ -61,6 +62,7 @@ return {
 			snippet = {
 				expand = function(args)
 					require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+                    require("cmp_r")
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
@@ -71,6 +73,7 @@ return {
 			}),
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp" },
+                { name = "cmp_r" },
 				{ name = "luasnip" }, -- For luasnip users.
 			}, {
 				{ name = "buffer" },
