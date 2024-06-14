@@ -29,9 +29,7 @@ return {
 		require("mason-lspconfig").setup({
 			ensure_installed = {
                 "lua_ls",
-				"rust_analyzer",
-				"tsserver",
-                "r_language_server",
+                "pyright",
 			},
 			handlers = {
 				function(server_name) -- default handler (optional)
@@ -52,6 +50,10 @@ return {
 							},
 						},
 					})
+                    lspconfig.pyright.setup({
+                        capabilities = capabilities,
+                        filetypes = { "python" },
+                    })
 				end,
 			},
 		})
@@ -74,6 +76,7 @@ return {
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp" },
                 { name = "cmp_r" },
+                { name = "vim-dadbod-completion" },
 				{ name = "luasnip" }, -- For luasnip users.
 			}, {
 				{ name = "buffer" },
