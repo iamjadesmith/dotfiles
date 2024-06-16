@@ -1,8 +1,5 @@
 { config, pkgs, inputs, ... }:
-with pkgs;
-let
-  R-with-my-packages = rWrapper.override{ packages = with rPackages; [ ggplot2 dplyr xts ]; };
-in
+
 {
   nix = {
     package = pkgs.nixFlakes;
@@ -12,7 +9,7 @@ in
   };
 
   imports =
-    [
+    [ 
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.default
     ];
@@ -39,17 +36,6 @@ in
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
-  environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
-    NIXOS_OZONE_WL = "1";
-  };
-
 
   services.xserver.xkb = {
     layout = "us";
@@ -89,7 +75,7 @@ in
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     users = {
-      "joejad" = import ../../home/home.nix;
+      "joejad" = import ./home.nix;
     };
   };
 
@@ -99,8 +85,7 @@ in
   programs.firefox.enable = true;
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs;
-  [
+  environment.systemPackages = with pkgs; [
     zsh
     wget
     neovim
@@ -110,6 +95,7 @@ in
     fzf
     obsidian
     neofetch
+    alacritty
     cider
     zoxide
     stow
@@ -118,21 +104,7 @@ in
     nodejs_22
     R
     lua-language-server
-    waybar
-    eww
-    dunst
-    libnotify
-    swww
-    alacritty
-    rofi-wayland
-    R-with-my-packages
-    (waybar.overrideAttrs (oldAttrs: {
-        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-      })
-    )
   ];
-
-  xdg.portal.enable = true;
 
   system.stateVersion = "24.05";
   system.autoUpgrade.enable = true;
