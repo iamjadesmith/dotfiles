@@ -27,34 +27,47 @@ return {
 		require("fidget").setup({})
 		require("mason").setup()
 		require("mason-lspconfig").setup({
-			ensure_installed = {
-                "lua_ls",
-				"rust_analyzer",
-				"tsserver",
-                "r_language_server",
-			},
 			handlers = {
 				function(server_name) -- default handler (optional)
 					require("lspconfig")[server_name].setup({
 						capabilities = capabilities,
 					})
 				end,
+                ["lua_ls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.lua_ls.setup({
+                        capabilities = capabilities,
+                        settings = {
+                            Lua = {
+                                diagnostics = {
+                                    globals = { "vim", "it", "describe", "before_each", "after_each" },
+                                },
+                            },
+                        },
+                    })
+                end,
+            },
+        })
 
-				["lua_ls"] = function()
-					local lspconfig = require("lspconfig")
-					lspconfig.lua_ls.setup({
-						capabilities = capabilities,
-						settings = {
-							Lua = {
-								diagnostics = {
-									globals = { "vim", "it", "describe", "before_each", "after_each" },
-								},
-							},
-						},
-					})
-				end,
-			},
-		})
+        local lspconfig = require("lspconfig")
+        lspconfig.lua_ls.setup({
+            capabilities = capabilities,
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { "vim", "it", "describe", "before_each", "after_each" },
+                    },
+                },
+            },
+        })
+
+        lspconfig.nil_ls.setup({
+            capabilities = capabilities,
+        })
+
+        lspconfig.r_language_server.setup({
+            capabilities = capabilities,
+        })
 
 		local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
