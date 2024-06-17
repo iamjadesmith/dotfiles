@@ -9,10 +9,7 @@
   };
 
   imports =
-    [
-      ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.default
-    ];
+    [ ./hardware-configuration.nix inputs.home-manager.nixosModules.default ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -61,22 +58,13 @@
     isNormalUser = true;
     description = "Joejad";
     shell = pkgs.zsh;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-    ];
-    packages = with pkgs; [
-      tree
-    ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    packages = with pkgs; [ tree ];
   };
-
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
-    users = {
-      "joejad" = import ./home.nix;
-    };
+    users = { "joejad" = import ./home.nix; };
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -102,6 +90,7 @@
     ripgrep
     gcc
     nodejs_22
+    nil
     R
     lua-language-server
     stylua
@@ -118,7 +107,7 @@
     driSupport32Bit = true;
   };
 
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;
