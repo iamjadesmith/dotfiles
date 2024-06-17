@@ -9,7 +9,7 @@
   };
 
   imports =
-    [ 
+    [
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.default
     ];
@@ -104,6 +104,8 @@
     nodejs_22
     R
     lua-language-server
+    stylua
+    nixfmt
   ];
 
   system.stateVersion = "24.05";
