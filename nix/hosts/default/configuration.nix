@@ -96,7 +96,7 @@
     R
     lua-language-server
     stylua
-    nixfmt
+    nixfmt-rfc-style
   ];
 
   system.stateVersion = "24.05";
