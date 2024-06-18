@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   nix = {
@@ -8,8 +13,10 @@
     '';
   };
 
-  imports =
-    [ ./hardware-configuration.nix inputs.home-manager.nixosModules.default ];
+  imports = [
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.default
+  ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -60,13 +67,21 @@
     isNormalUser = true;
     description = "Joejad";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     packages = with pkgs; [ tree ];
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users = { "joejad" = import ./home.nix; };
+    extraSpecialArgs = {
+      inherit inputs;
+    };
+    users = {
+      "joejad" = import ./home.nix;
+    };
   };
 
   security.sudo.wheelNeedsPassword = false;
