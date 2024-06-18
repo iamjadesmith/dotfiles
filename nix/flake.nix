@@ -9,19 +9,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-
   };
 
-  outputs = { self, nixpkgs, hyprland, ... }@inputs: {
+  outputs = { self, nixpkgs, ... }@inputs: {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/default/configuration.nix
         inputs.home-manager.nixosModules.default
 
-        hyprland.homeManagerModules.default
-        {wayland.windowManager.hyprland.enable = true;}
       ];
     };
   };
