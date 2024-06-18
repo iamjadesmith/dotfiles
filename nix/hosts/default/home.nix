@@ -16,7 +16,6 @@ in {
 
   home.sessionVariables = { };
 
-  wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
     bind = [ "$mod, F, exec, firefox" ", Print, exec, grimblast copy area" ]
