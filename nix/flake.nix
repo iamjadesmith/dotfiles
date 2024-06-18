@@ -10,6 +10,8 @@
     };
   };
 
+  wayland.windowManager.hyprland.enable = true;
+
   outputs = { self, nixpkgs, ... }@inputs: {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };

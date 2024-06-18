@@ -16,7 +16,5 @@ in {
 
   home.sessionVariables = { };
 
-  wayland.windowManager.hyprland.enable = true;
-
   programs.home-manager.enable = true;
 }
