@@ -97,6 +97,7 @@
     lua-language-server
     stylua
     nixfmt
+    hyprland
   ];
 
   system.stateVersion = "24.05";
