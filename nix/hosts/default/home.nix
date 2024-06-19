@@ -26,9 +26,9 @@ in
       [
         "$mod, F, exec, firefox"
         "$mod, RETURN, exec, alacritty"
-        "$mod, Q, exit"
-        "$mod, C, killactive"
-        "$mod, E, exec, nautilus"
+        "$mod, E, exit"
+        "$mod, Q, killactive"
+        "$mod, Y, exec, nautilus"
         "$mod, V, togglesplit"
         "$mod, T, togglegroup"
         "$mod+ALT, J, changegroupactive, f"
