@@ -25,16 +25,17 @@ in
     bind =
       [
         "$mod, F, exec, firefox"
-        "$mod, ENTER, exec, alacritty"
+        "$mod, enter, exec, alacritty"
+        "$mod, Q, exit"
         "$mod, E, exec, nautilus"
         "$mod, V, togglesplit"
         "$mod, T, togglegroup"
         "$mod+ALT, J, changegroupactive, f"
         "$mod+ALT, K, changegroupactive, f"
-        "$mod, left, movefocus, l"
-        "$mod, right, movefocus, r"
-        "$mod, up, movefocus, u"
-        "$mod, down, movefocus, d"
+        "$mod, H, movefocus, l"
+        "$mod, L, movefocus, r"
+        "$mod, K, movefocus, u"
+        "$mod, J, movefocus, d"
       ]
       ++ (
         builtins.concatLists (
