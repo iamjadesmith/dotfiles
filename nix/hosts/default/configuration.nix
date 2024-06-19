@@ -88,7 +88,9 @@
 
   programs.zsh.enable = true;
   programs.firefox.enable = true;
+
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowBroken = true;
 
   environment.systemPackages = with pkgs; [
     zsh
