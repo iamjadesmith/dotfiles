@@ -25,7 +25,7 @@ in
     bind =
       [
         "$mod, F, exec, firefox"
-        "$mod, enter, exec, alacritty"
+        "$mod, RETURN, exec, alacritty"
         "$mod, Q, exit"
         "$mod, E, exec, nautilus"
         "$mod, V, togglesplit"
