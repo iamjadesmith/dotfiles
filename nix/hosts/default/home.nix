@@ -38,27 +38,25 @@ in
         "$mod, K, movefocus, u"
         "$mod, J, movefocus, d"
       ]
-      ++ (
-        builtins.concatLists (
-          builtins.genList (
-            x:
-            let
-              ws =
-                let
-                  c = (x + 1) / 10;
-                in
-                builtins.toString (x + 1 - (c * 10));
-            in
-            [
-              "$mod, ${ws}, workspace, ${toString (x + 1)}"
-              "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-            ]
-          ) 10
-        )
-      );
+      ++ (builtins.concatLists (
+        builtins.genList (
+          x:
+          let
+            ws =
+              let
+                c = (x + 1) / 10;
+              in
+              builtins.toString (x + 1 - (c * 10));
+          in
+          [
+            "$mod, ${ws}, workspace, ${toString (x + 1)}"
+            "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+          ]
+        ) 10
+      ));
     monitor = [
-        "DP-1,3440x1440@175,0x0,1"
-        "HDMI-1,3840x2160,0x0,2"
+      "DP-1, 3440x1440@175, 0x0, 1"
+      "HDMI-1, 3840x2160, 0x0, 2"
     ];
   };
 }
