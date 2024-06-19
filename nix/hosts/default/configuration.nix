@@ -112,6 +112,7 @@
     lua-language-server
     stylua
     nixfmt-rfc-style
+    minecraft
   ];
 
   system.stateVersion = "24.05";
