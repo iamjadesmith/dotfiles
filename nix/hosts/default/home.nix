@@ -30,13 +30,15 @@ in
         "$mod, Q, killactive"
         "$mod, Y, exec, nautilus"
         "$mod, V, togglesplit"
-        "$mod, T, togglegroup"
-        "$mod+ALT, J, changegroupactive, f"
-        "$mod+ALT, K, changegroupactive, f"
         "$mod, H, movefocus, l"
         "$mod, L, movefocus, r"
         "$mod, K, movefocus, u"
         "$mod, J, movefocus, d"
+        "$mod+SHIFT, H, movewindow, l"
+        "$mod+SHIFT, L, movewindow, r"
+        "$mod+SHIFT, K, movewindow, u"
+        "$mod+SHIFT, J, movewindow, d"
+        "$mod, R, exec, wofi --show drun"
       ]
       ++ (builtins.concatLists (
         builtins.genList (
