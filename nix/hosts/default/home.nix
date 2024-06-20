@@ -26,8 +26,8 @@ in
       [
         "$mod, F, exec, firefox"
         "$mod, RETURN, exec, alacritty"
-        "$mod, E, exit"
-        "$mod, Q, killactive"
+        "$mod+SHIFT, E, exit"
+        "$mod+SHIFT, Q, killactive"
         "$mod, Y, exec, nautilus"
         "$mod, V, togglesplit"
         "$mod, H, movefocus, l"
@@ -60,11 +60,6 @@ in
       "HDMI-A-1,3840x2160,0x0,2"
       "DP-3,3440x1440@175,1920x0,1"
       "Unknown-1,disable"
-    ];
-    exec = [
-      "gsettings set org.gnome.desktop.interface gtk-theme Adwaita"
-
-      "gsettings set org.gnome.desktop.interface color-scheme prefer-dark"
     ];
   };
 }
