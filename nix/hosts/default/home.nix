@@ -38,7 +38,7 @@ in
         "$mod+SHIFT, L, movewindow, r"
         "$mod+SHIFT, K, movewindow, u"
         "$mod+SHIFT, J, movewindow, d"
-        "$mod, R, exec, wofi --show drun"
+        "$mod, D, exec, wofi --show drun"
       ]
       ++ (builtins.concatLists (
         builtins.genList (
