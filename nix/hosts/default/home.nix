@@ -61,5 +61,9 @@ in
       "DP-3,3440x1440@175,1920x0,1"
       "Unknown-1,disable"
     ];
+    exec = [
+      "gsettings set org.gnome.desktop.interface gtk-theme "Adwaita""
+      "gsettings set org.gnome.desktop.interface color-scheme "prefer-dark""
+    ];
   };
 }
