@@ -115,6 +115,7 @@
     stylua
     nixfmt-rfc-style
     minecraft
+    wofi
   ];
 
   system.stateVersion = "24.05";
