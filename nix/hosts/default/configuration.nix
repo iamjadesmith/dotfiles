@@ -116,6 +116,7 @@
     nixfmt-rfc-style
     minecraft
     wofi
+    oh-my-posh
   ];
 
   system.stateVersion = "24.05";
