@@ -116,6 +116,7 @@
     prismlauncher
     wofi
     oh-my-posh
+    zulu
   ];
 
   system.stateVersion = "24.05";
