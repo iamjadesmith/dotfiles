@@ -90,7 +90,6 @@
   programs.firefox.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowBroken = true;
 
   environment.systemPackages = with pkgs; [
     zsh
@@ -114,7 +113,7 @@
     lua-language-server
     stylua
     nixfmt-rfc-style
-    minecraft
+    prismlauncher
     wofi
     oh-my-posh
   ];
