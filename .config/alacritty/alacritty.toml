@@ -1,8 +1,8 @@
 live_config_reload = true
 
 import = [
-    "~/.config/alacritty/tokyonight-day.toml"
-    # "~/.config/alacritty/tokyonight-night.toml"
+    # "~/.config/alacritty/tokyonight-day.toml"
+    "~/.config/alacritty/tokyonight-night.toml"
 ]
 
 [bell]
