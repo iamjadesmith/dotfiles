@@ -66,9 +66,26 @@ in
       "Unknown-1,disable"
     ];
     exec = [
-      "gsettings set org.gnome.desktop.interface gtk-theme ""Adwaita"""
-      "gsettings set org.gnome.desktop.interface color-scheme ""prefer-dark"""
+      "gsettings set org.gnome.desktop.interface gtk-theme "
+      "Adwaita"
+      ""
+      "gsettings set org.gnome.desktop.interface color-scheme "
+      "prefer-dark"
+      ""
     ];
     xwayland.force_zero_scaling = true;
   };
+
+  xsession.windowManager.i3 = {
+    enable = true;
+    package = pkgs.i3-gaps;
+    config = {
+      modifier = "Mod4";
+      gaps = {
+        inner = 10;
+        outer = 5;
+      };
+    };
+  };
+
 }
