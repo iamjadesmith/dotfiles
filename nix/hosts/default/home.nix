@@ -1,6 +1,7 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
+  mod = "Mod4";
 in
 {
   home.username = "joejad";
@@ -80,10 +81,20 @@ in
     enable = true;
     package = pkgs.i3-gaps;
     config = {
-      modifier = "Mod4";
-      gaps = {
-        inner = 10;
-        outer = 5;
+      modifier = mod;
+
+      keybindings = lib.mkOptionDefault {
+        "${mod}+h" = "focus left";
+        "${mod}+j" = "focus down";
+        "${mod}+k" = "focus up";
+        "${mod}+l" = "focus right";
+
+        "${mod}+Shift+h" = "move left";
+        "${mod}+Shift+j" = "move down";
+        "${mod}+Shift+k" = "move up";
+        "${mod}+Shift+l" = "move right";
+
+        "${mod}+Enter" = "exec alacritty";
       };
     };
   };
