@@ -94,7 +94,7 @@ in
         "${mod}+Shift+k" = "move up";
         "${mod}+Shift+l" = "move right";
 
-        "${mod}+enter" = "exec alacritty";
+        "${mod}+Return" = "exec alacritty";
       };
     };
   };
