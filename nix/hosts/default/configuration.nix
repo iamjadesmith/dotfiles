@@ -122,7 +122,6 @@
     wofi
     oh-my-posh
     zulu
-    autorandr
   ];
 
   system.stateVersion = "24.05";
