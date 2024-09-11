@@ -6,6 +6,7 @@
 - Install stow
 - Install fzf
 - Install zoxide
+- Install tmux
 - Install oh-my-posh
 - Install JetBrains Mono Nerd Font
 
