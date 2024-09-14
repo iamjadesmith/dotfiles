@@ -122,6 +122,7 @@
     wofi
     oh-my-posh
     zulu
+    kanata
   ];
 
   system.stateVersion = "24.05";
