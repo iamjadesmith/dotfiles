@@ -123,6 +123,7 @@
     oh-my-posh
     zulu
     kanata
+    nextcloud-client
   ];
 
   services.kanata = {
