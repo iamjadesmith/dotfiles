@@ -124,6 +124,7 @@
     zulu
     kanata
     nextcloud-client
+    thunderbird
   ];
 
   services.kanata = {
