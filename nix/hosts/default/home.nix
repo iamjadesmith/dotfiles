@@ -1,11 +1,14 @@
-{ config, pkgs, meta, ... }:
+{
+  config,
+  pkgs,
+  meta,
+  ...
+}:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
 in
 {
-  imports = [
-    ./ags/default.nix
-  ];
+  imports = [ ./ags/default.nix ];
 
   home.username = "joejad";
   home.homeDirectory = "/home/joejad";
@@ -36,12 +39,11 @@ in
   };
 
   programs = {
-    alacritty = import ./alacritty.nix {inherit config pkgs meta;};
+    alacritty = import ./alacritty.nix { inherit config pkgs meta; };
   };
 
   wayland.windowManager = {
-    hyprland = import ./hyprland.nix {inherit pkgs;};
+    hyprland = import ./hyprland.nix { inherit pkgs; };
   };
-
 
 }
