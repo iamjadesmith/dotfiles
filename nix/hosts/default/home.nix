@@ -62,17 +62,12 @@ in
         ) 10
       ));
     monitor = [
-      "HDMI-A-1,3840x2160,0x0,2"
       "DP-3,3440x1440@175,1920x0,1"
       "Unknown-1,disable"
     ];
     exec = [
-      "gsettings set org.gnome.desktop.interface gtk-theme "
-      "Adwaita"
-      ""
-      "gsettings set org.gnome.desktop.interface color-scheme "
-      "prefer-dark"
-      ""
+      ''gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"   # for GTK3 apps''
+      ''gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps''
     ];
     xwayland.force_zero_scaling = true;
   };
