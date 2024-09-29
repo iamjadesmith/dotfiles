@@ -22,7 +22,7 @@ in
 
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
-    "$mod" = "ALT";
+    "$mod" = "SUPER";
     bind =
       [
         "$mod, F, exec, firefox"
