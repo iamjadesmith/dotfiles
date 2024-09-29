@@ -84,11 +84,6 @@
     };
   };
 
-  services.xserver.windowManager.i3.enable = true;
-  services.displayManager = {
-    defaultSession = "none+i3";
-  };
-
   security.sudo.wheelNeedsPassword = false;
 
   programs.zsh.enable = true;
@@ -142,7 +137,7 @@
            caps
           )
           (defalias
-           caps (tap-hold 100 100 esc esc)
+           caps (tap 100 esc)
           )
 
           (deflayer base
