@@ -93,6 +93,7 @@
 
   nixpkgs = {
     overlays = [
+      outputs.overlays.additions
       outputs.overlays.unstable
       inputs.alacritty-theme.overlays.default
     ];
