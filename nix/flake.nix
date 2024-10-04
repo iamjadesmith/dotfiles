@@ -16,11 +16,21 @@
   };
 
   outputs =
-    { self, nixpkgs, alacritty-theme, ... }@inputs:
     {
+      self,
+      nixpkgs,
+      alacritty-theme,
+      ...
+    }@inputs:
+    let
+      inherit (self) outputs;
+
+    in
+    {
+      overlays = import ./overlays { inherit inputs; };
       nixosConfigurations.default = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs;
+          inherit inputs outputs;
         };
         modules = [
           ./hosts/default/configuration.nix
