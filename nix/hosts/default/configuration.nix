@@ -1,8 +1,8 @@
 {
-  config,
-  pkgs,
   inputs,
   outputs,
+  pkgs,
+  config,
   ...
 }:
 
@@ -95,6 +95,7 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.unstable
+      inputs.alacritty-theme.overlays.default
     ];
     config = {
       permittedInsecurePackages = [
