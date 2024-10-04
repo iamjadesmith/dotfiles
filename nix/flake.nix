@@ -23,6 +23,7 @@
       nixpkgs,
       alacritty-theme,
       nixpkgs-unstable,
+      home-manager,
       ...
     }@inputs:
     let
@@ -38,7 +39,15 @@
         modules = [
           ./hosts/default/configuration.nix
           inputs.home-manager.nixosModules.default
-
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.elliott = import ./home/home.nix;
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+            };
+          }
         ];
       };
     };
