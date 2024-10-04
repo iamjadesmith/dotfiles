@@ -14,7 +14,7 @@
   };
 
   outputs =
-    { self, nixpkgs, nixpkgs-unstable, ... }@inputs:
+    { self, nixpkgs, ... }@inputs:
     {
       nixosConfigurations.default = nixpkgs.lib.nixosSystem {
         specialArgs = {
