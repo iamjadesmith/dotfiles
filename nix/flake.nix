@@ -9,12 +9,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
+
     ags.url = "github:Aylur/ags";
 
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    { self, nixpkgs, alacritty-theme, ... }@inputs:
     {
       nixosConfigurations.default = nixpkgs.lib.nixosSystem {
         specialArgs = {
