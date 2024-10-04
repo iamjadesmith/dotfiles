@@ -43,7 +43,7 @@ in
   };
 
   wayland.windowManager = {
-    hyprland = import ./hyprland.nix { inherit pkgs; };
+    hyprland = import ./hyprland.nix { inherit pkgs meta config; };
   };
 
 }
