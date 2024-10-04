@@ -16,7 +16,6 @@
 
   imports = [
     ./hardware-configuration.nix
-    inputs.home-manager.nixosModules.default
   ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -77,15 +76,6 @@
     packages = with pkgs; [ tree ];
   };
 
-  home-manager = {
-    extraSpecialArgs = {
-      inherit inputs;
-    };
-    users = {
-      "joejad" = import ./home.nix;
-    };
-  };
-
   security.sudo.wheelNeedsPassword = false;
 
   programs.zsh.enable = true;
@@ -98,9 +88,7 @@
       inputs.alacritty-theme.overlays.default
     ];
     config = {
-      permittedInsecurePackages = [
-        "electron-25.9.0"
-      ];
+      permittedInsecurePackages = [ "electron-25.9.0" ];
       allowUnfree = true;
     };
   };
@@ -140,12 +128,12 @@
     enable = true;
     keyboards = {
       internalKeyboard = {
-      #   devices = [
-      #     "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
-      #     "/dev/input/by-id/usb-Framework_Laptop_16_Keyboard_Module_-_ANSI_FRAKDKEN0100000000-event-kbd"
-      #     "/dev/input/by-id/usb-Framework_Laptop_16_Keyboard_Module_-_ANSI_FRAKDKEN0100000000-if02-event-kbd"
-      #   ];
-      #   extraDefCfg = "process-unmapped-keys yes";
+        #   devices = [
+        #     "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
+        #     "/dev/input/by-id/usb-Framework_Laptop_16_Keyboard_Module_-_ANSI_FRAKDKEN0100000000-event-kbd"
+        #     "/dev/input/by-id/usb-Framework_Laptop_16_Keyboard_Module_-_ANSI_FRAKDKEN0100000000-if02-event-kbd"
+        #   ];
+        #   extraDefCfg = "process-unmapped-keys yes";
         config = ''
           (defsrc
            caps
