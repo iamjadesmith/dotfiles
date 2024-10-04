@@ -1,3 +1,6 @@
+{ ... }:
+let
+in
 {
   enable = true;
   settings = {
