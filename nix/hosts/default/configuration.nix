@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  outputs,
   ...
 }:
 
@@ -90,7 +91,18 @@
   programs.zsh.enable = true;
   programs.firefox.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    overlays = [
+      outputs.overlays.additions
+      outputs.overlays.unstable
+    ];
+    config = {
+      permittedInsecurePackages = [
+        "electron-25.9.0"
+      ];
+      allowUnfree = true;
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     zsh
