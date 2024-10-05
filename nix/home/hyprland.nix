@@ -44,7 +44,7 @@ in
         ) 10
       ));
     monitor = [
-      "DP-3,3840x2160,0x0,1"
+      "DP-3,3840x2160,0x0,1.5"
       "Unknown-1,disable"
     ];
     exec = [
