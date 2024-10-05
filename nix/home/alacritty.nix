@@ -1,6 +1,5 @@
 {
   pkgs,
-  meta,
   ...
 }: {
   enable = true;
@@ -30,10 +29,7 @@
         inherit style;
       };
     in {
-      size =
-        if meta.name == "karasu"
-        then 12
-        else 16;
+      size = 16;
       normal = jetbrainsMono "Regular";
       bold = jetbrainsMono "Bold";
       italic = jetbrainsMono "Italic";

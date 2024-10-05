@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  meta,
   ...
 }:
 let
@@ -39,7 +38,7 @@ in
   };
 
   programs = {
-    alacritty = import ./alacritty.nix { inherit config pkgs meta; };
+    alacritty = import ./alacritty.nix { inherit config pkgs; };
   };
 
   wayland.windowManager = {
