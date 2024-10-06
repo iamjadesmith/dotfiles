@@ -5,6 +5,7 @@ in
   enable = true;
   settings = {
     "$mod" = "SUPER";
+    exec-once = ["ags"];
     bind =
       [
         "$mod, F, exec, firefox"
