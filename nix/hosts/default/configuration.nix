@@ -120,7 +120,7 @@
     oh-my-posh
     zulu
     kanata
-    # nextcloud-client
+    nextcloud-client
     thunderbird
   ];
 
