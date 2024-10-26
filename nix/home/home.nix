@@ -7,8 +7,6 @@ let
   inherit (config.lib.file) mkOutOfStoreSymlink;
 in
 {
-  imports = [ ./ags/default.nix ];
-
   home.username = "joejad";
   home.homeDirectory = "/home/joejad";
   xdg.enable = true;
