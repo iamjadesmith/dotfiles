@@ -21,7 +21,7 @@ in
         "$mod+SHIFT, L, movewindow, r"
         "$mod+SHIFT, K, movewindow, u"
         "$mod+SHIFT, J, movewindow, d"
-        "$mod, D, exec, wofi --show drun"
+        "$mod, Space, exec, wofi --show drun"
         "$mod+ALT, H, resizeactive, -10 -10"
         "$mod+ALT, L, resizeactive, 10 -10"
         "$mod+ALT, K, resizeactive, 10 -10"
