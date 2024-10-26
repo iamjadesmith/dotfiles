@@ -5,7 +5,6 @@ in
   enable = true;
   settings = {
     "$mod" = "SUPER";
-    exec-once = ["ags"];
     bind =
       [
         "$mod, F, exec, firefox"
@@ -45,7 +44,7 @@ in
         ) 10
       ));
     monitor = [
-      "DP-3,3840x2160@239.99,0x0,1.5"
+      "DP-3,3840x2160@239.99,0x0,1.5,vrr,1"
       "Unknown-1,disable"
     ];
     exec = [
