@@ -122,6 +122,7 @@
     kanata
     nextcloud-client
     thunderbird
+    ansible
   ];
 
   services.kanata = {
