@@ -66,7 +66,7 @@
 
   users.users.joejad = {
     isNormalUser = true;
-    description = "Joejad";
+    description = "joejad";
     shell = pkgs.zsh;
     extraGroups = [
       "networkmanager"
