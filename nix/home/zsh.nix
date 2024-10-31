@@ -1,7 +1,5 @@
 {
   config,
-  pkgs,
-  lib,
   ...
 }: {
   enable = true;
@@ -14,47 +12,42 @@
     c = "clear";
   };
   initExtra = ''
-    export EDITOR=nvim
-    export SHELL="zsh"
+    if [[ -f "/opt/homebrew/bin/brew" ]] then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+
+    ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+    if [ ! -d "$ZINIT_HOME" ]; then
+       mkdir -p "$(dirname $ZINIT_HOME)"
+       git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+    fi
+
+    source "${ZINIT_HOME}/zinit.zsh"
+
+    zinit light zsh-users/zsh-syntax-highlighting
+    zinit light zsh-users/zsh-completions
+    zinit light zsh-users/zsh-autosuggestions
+    zinit light Aloxaf/fzf-tab
+
+    zinit snippet OMZP::git
+    zinit snippet OMZP::sudo
+    zinit snippet OMZP::command-not-found
+
+    autoload -Uz compinit && compinit
+
+    zinit cdreplay -q
 
     if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
         eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
     fi
 
-    export BUN_INSTALL=$HOME/.bun
-    export PATH="$HOME/go/bin:$BUN_INSTALL/bin:$PATH"
-
-    bindkey -e
-
-    # disable sort when completing `git checkout`
-    zstyle ':completion:*:git-checkout:*' sort false
-
-    # set descriptions format to enable group support
-    # NOTE: don't use escape sequences here, fzf-tab will ignore them
-    zstyle ':completion:*:descriptions' format '[%d]'
-
-    # set list-colors to enable filename colorizing
-    zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
-
-    # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-    zstyle ':completion:*' menu no
-
-    # preview directory's content with eza when completing cd
-    zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -1 --color=always $realpath'
-    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-    zstyle ':fzf-tab:complete:ls:*' fzf-preview 'cat $realpath'
-
-    # switch group using `<` and `>`
-    zstyle ':fzf-tab:*' switch-group '<' '>'
-
-    # Keybindings
     bindkey -e
     bindkey '^p' history-search-backward
     bindkey '^n' history-search-forward
     bindkey '^[w' kill-region
 
-    zle_highlight+=(paste:none)
-
+    SAVEHIST=$HISTSIZE
+    HISTDUP=erase
     setopt appendhistory
     setopt sharehistory
     setopt hist_ignore_space
@@ -62,52 +55,39 @@
     setopt hist_save_no_dups
     setopt hist_ignore_dups
     setopt hist_find_no_dups
+
+    zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+    zstyle ':completion:*' menu no
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+    zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+    eval "$(fzf --zsh)"
+    eval "$(zoxide init --cmd cd zsh)"
+
+    PATH="$HOME/.local/bin:$PATH"
+
+    export EDITOR="nvim"
+    export SHELL="zsh"
+
+    function lgit() {
+        git add .
+        if [ "$1" != "" ]; then
+            git commit -m "$1"
+        else
+            git commit -m 'update'
+        fi
+        git push -u origin main
+    }
+
+    function rebuild() {
+        git add .
+        if [ "$1" != "" ]; then
+            git commit -m "$1"
+        else
+            git commit -m 'update'
+        fi
+        sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#default
+    }
   '';
-  oh-my-zsh = {
-    enable = true;
-    plugins = [
-      "git"
-      "sudo"
-      "golang"
-      "kubectl"
-      "kubectx"
-      "rust"
-      "command-not-found"
-      "pass"
-      "helm"
-    ];
-  };
-  plugins = [
-    {
-      # will source zsh-autosuggestions.plugin.zsh
-      name = "zsh-autosuggestions";
-      src = pkgs.zsh-autosuggestions;
-      file = "share/zsh-autosuggestions/zsh-autosuggestions.zsh";
-    }
-    {
-      name = "zsh-completions";
-      src = pkgs.zsh-completions;
-      file = "share/zsh-completions/zsh-completions.zsh";
-    }
-    {
-      name = "zsh-syntax-highlighting";
-      src = pkgs.zsh-syntax-highlighting;
-      file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
-    }
-    {
-      name = "powerlevel10k";
-      src = pkgs.zsh-powerlevel10k;
-      file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-    }
-    {
-      name = "powerlevel10k-config";
-      src = lib.cleanSource ../../.p10k.zsh;
-      file = "p10k.zsh";
-    }
-    {
-      name = "fzf-tab";
-      src = pkgs.zsh-fzf-tab;
-      file = "share/fzf-tab/fzf-tab.plugin.zsh";
-    }
-  ];
 }

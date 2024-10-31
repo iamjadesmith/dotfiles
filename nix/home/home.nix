@@ -37,6 +37,7 @@ in
 
   programs = {
     alacritty = import ./alacritty.nix { inherit config pkgs; };
+    zsh = import ./zsh.nix {inherit config;};
   };
 
   wayland.windowManager = {
