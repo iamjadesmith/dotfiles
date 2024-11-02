@@ -6,7 +6,7 @@ return {
         {
             "<leader>f",
             function()
-                require("conform").format({ lsp_fallback = "true" })
+                require("conform").format({lsp_fallback = "true", timeout_ms = 2000})
             end,
             mode = "",
             desc = "Format buffer",
@@ -18,6 +18,7 @@ return {
             lua = { "stylua" },
             nix = { "nixfmt" },
             python = { "black" },
+            r = { "styler" },
         },
     },
 }
