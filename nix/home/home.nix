@@ -40,7 +40,6 @@ in
     zsh = import ./zsh.nix {inherit config;};
     fzf = import ./fzf.nix {inherit pkgs;};
     neovim = import ./neovim.nix {inherit config pkgs;};
-    oh-my-posh = import ./oh-my-posh.nix {inherit config;};
     tmux = import ./tmux.nix {inherit pkgs;};
     git = import ./git.nix {inherit config pkgs;};
     zoxide = import ./zoxide.nix {inherit pkgs;};
