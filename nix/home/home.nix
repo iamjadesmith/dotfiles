@@ -39,6 +39,7 @@ in
     alacritty = import ./alacritty.nix { inherit config pkgs; };
     zsh = import ./zsh.nix {inherit config;};
     fzf = import ./fzf.nix {inherit pkgs;};
+    neovim = import ./neovim.nix {inherit config pkgs;};
   };
 
   wayland.windowManager = {
