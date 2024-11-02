@@ -3,8 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nix-darwin.url = "github:LnL7/nix-darwin"
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -20,7 +18,6 @@
   };
 
   outputs =
-<<<<<<< HEAD
     {
       self,
       nixpkgs,
