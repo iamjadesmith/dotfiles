@@ -140,7 +140,7 @@
            caps
           )
           (defalias
-           caps (tap-hold 100 100 esc esc)
+           caps esc
           )
 
           (deflayer base
