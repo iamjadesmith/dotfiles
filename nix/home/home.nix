@@ -42,6 +42,8 @@ in
     neovim = import ./neovim.nix {inherit config pkgs;};
     oh-my-posh = import ./oh-my-posh.nix {inherit config;};
     tmux = import ./tmux.nix {inherit pkgs;};
+    git = import ./git.nix {inherit config pkgs;};
+    zoxide = import ./zoxide.nix {inherit pkgs;};
   };
 
   wayland.windowManager = {
