@@ -12,9 +12,19 @@
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, ... }:
   let
+    add-unstable-packages = final: _prev: {
+      unstable = import inputs.nixpkgs-unstable {
+        system = "aarch64-darwin";
+      };
+    };
+    username = "jade";
     configuration = { pkgs, lib, config, ... }: {
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
+      nixpkgs.config.allowUnfree = true;
+      nixpkgs.overlays = [
+        add-unstable-packages
+      ];
       environment.systemPackages =
         [
 	  pkgs.alacritty
