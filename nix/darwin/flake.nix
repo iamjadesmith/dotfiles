@@ -13,7 +13,7 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, ... }:
   let
     add-unstable-packages = final: _prev: {
-      unstable = import inputs.nixpkgs-unstable {
+      unstable = import inputs.nixpkgs {
         system = "aarch64-darwin";
       };
     };
