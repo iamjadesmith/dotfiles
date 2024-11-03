@@ -17,9 +17,11 @@ in {
   home.stateVersion = "24.05";
 
   programs = {
+    alacritty = import ../home/alacritty.nix { inherit config pkgs; };
     tmux = import ../home/tmux.nix {inherit pkgs;};
     zsh = import ../home/zsh.nix {inherit config pkgs lib; };
     zoxide = (import ../home/zoxide.nix { inherit config pkgs; });
     fzf = import ../home/fzf.nix {inherit pkgs;};
+    git = import ../home/git.nix {inherit config pkgs;};
   };
 }
