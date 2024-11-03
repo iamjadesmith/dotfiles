@@ -27,10 +27,11 @@
       nixpkgs.config.allowUnfree = true;
       nixpkgs.overlays = [
         add-unstable-packages
+        alacritty-theme.overlays.default
       ];
       environment.systemPackages =
         [
-	  pkgs.alacritty
+	      pkgs.alacritty
           pkgs.git
           pkgs.unstable.go_1_23
           pkgs.lua-language-server
