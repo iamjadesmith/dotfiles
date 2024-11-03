@@ -14,7 +14,7 @@ in {
 
   xdg.configFile.nvim.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/nvim";
 
-  home.stateVersion = "24.05";
+  home.stateVersion = "24.11";
 
   programs = {
     alacritty = import ../home/alacritty.nix { inherit config pkgs; };
