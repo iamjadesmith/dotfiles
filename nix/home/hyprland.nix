@@ -50,7 +50,7 @@ in
     exec = [
       ''gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"   # for GTK3 apps''
       ''gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps''
-      ''gsettings set org.gnome.desktop.interface cursor-size 16''
+      ''gsettings set org.gnome.desktop.interface cursor-size 12''
     ];
     xwayland.force_zero_scaling = true;
     env = [
