@@ -10,6 +10,7 @@ in
         "$mod, F, exec, firefox"
         "$mod, RETURN, exec, alacritty"
         "$mod+SHIFT, E, exit"
+        "$mod+SHIFT, S, exec, systemctl suspend"
         "$mod+SHIFT, Q, killactive"
         "$mod, Y, exec, nautilus"
         "$mod, V, togglesplit"
