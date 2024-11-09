@@ -129,12 +129,6 @@
     enable = true;
     keyboards = {
       internalKeyboard = {
-        #   devices = [
-        #     "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
-        #     "/dev/input/by-id/usb-Framework_Laptop_16_Keyboard_Module_-_ANSI_FRAKDKEN0100000000-event-kbd"
-        #     "/dev/input/by-id/usb-Framework_Laptop_16_Keyboard_Module_-_ANSI_FRAKDKEN0100000000-if02-event-kbd"
-        #   ];
-        #   extraDefCfg = "process-unmapped-keys yes";
         config = ''
           (defsrc
            caps
