@@ -19,7 +19,7 @@
       decorations_theme_variant = "None";
     };
 
-    import = [
+    general.import = [
       pkgs.alacritty-theme.tokyo-night
     ];
 
