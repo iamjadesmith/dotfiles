@@ -55,9 +55,9 @@ in
       ''gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps''
     ];
     xwayland.force_zero_scaling = true;
+    cursor.no_hardware_cursors = true;
     env = [
       "MOZ_ENABLE_WAYLAND,1"
-      "WLR_NO_HARDWARE_CURSORS,1"
     ];
   };
 }
