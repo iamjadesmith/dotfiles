@@ -123,6 +123,7 @@
     nextcloud-client
     thunderbird
     ansible
+    md5
   ];
 
   services.kanata = {
