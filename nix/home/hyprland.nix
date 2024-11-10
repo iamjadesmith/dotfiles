@@ -12,7 +12,7 @@ in
         "$mod+SUPER, E, exit"
         "$mod+SUPER, S, exec, systemctl suspend"
         "$mod+SUPER, R, exec, reboot now"
-        "$mod+SUPER, Q, exec, shutdown now"
+        "$mod+SUPER, Q, exec, systemctl restart"
         "$mod, Q, killactive"
         "$mod, Y, exec, nautilus"
         "$mod, V, togglesplit"
