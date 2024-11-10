@@ -41,8 +41,6 @@
         eval "$(oh-my-posh init zsh --config $HOME/.dotfiles/.config/ohmyposh/zen.toml)"
     fi
 
-    [[ $TERM != "screen" ]] && exec tmux
-
     bindkey -e
     bindkey '^p' history-search-backward
     bindkey '^n' history-search-forward
