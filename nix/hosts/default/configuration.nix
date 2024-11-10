@@ -155,7 +155,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     powerManagement.enable = true;
-    powerManagement.finegrained = true;
+    # powerManagement.finegrained = true;
     open = false;
   };
 }
