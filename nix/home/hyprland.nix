@@ -4,7 +4,7 @@ in
 {
   enable = true;
   settings = {
-    "$mod" = "SUPER";
+    "$mod" = "ALT";
     bind =
       [
         "$mod, F, exec, firefox"
@@ -25,10 +25,10 @@ in
         "$mod+SHIFT, K, movewindow, u"
         "$mod+SHIFT, J, movewindow, d"
         "$mod, Space, exec, wofi --show drun"
-        "$mod+ALT, H, resizeactive, -10 -10"
-        "$mod+ALT, L, resizeactive, 10 -10"
-        "$mod+ALT, K, resizeactive, 10 -10"
-        "$mod+ALT, J, resizeactive, -10 -10"
+        "$mod+SUPER, H, resizeactive, -10 -10"
+        "$mod+SUPER, L, resizeactive, 10 -10"
+        "$mod+SUPER, K, resizeactive, 10 -10"
+        "$mod+SUPER, J, resizeactive, -10 -10"
       ]
       ++ (builtins.concatLists (
         builtins.genList (
