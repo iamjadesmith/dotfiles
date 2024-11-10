@@ -47,13 +47,12 @@ in
         ) 10
       ));
     monitor = [
-      "DP-3,3840x2160@239.99,0x0,2"
+      "DP-3,3840x2160@239.99,0x0,1.5"
       "Unknown-1,disable"
     ];
     exec = [
       ''gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"   # for GTK3 apps''
       ''gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps''
-      ''gsettings set org.gnome.desktop.interface cursor-size 12''
     ];
     xwayland.force_zero_scaling = true;
     env = [
