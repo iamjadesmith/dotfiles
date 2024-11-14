@@ -44,7 +44,6 @@
           pkgs.tmux
           pkgs.zoxide
           pkgs.kubectl
-          pkgs.helm
         ];
 
       users.users.jade = {
@@ -56,6 +55,7 @@
         enable = true;
         brews = [
           "mas"
+          "helm"
         ];
         casks = [
           "alfred"
