@@ -67,7 +67,6 @@
     PATH="$HOME/.local/bin:$PATH"
 
     export EDITOR="nvim"
-    export SHELL="zsh"
 
     function lgit() {
         git add .
