@@ -1,7 +1,11 @@
 version = 2
 final_space = true
 console_title_template = '{{ .Shell }} in {{ .Folder }}'
+<<<<<<< HEAD
 auto_upgrade = false
+=======
+auto_upgrade = true
+>>>>>>> 1fc34c9 (making small changes)
 
 [[blocks]]
   type = 'prompt'
