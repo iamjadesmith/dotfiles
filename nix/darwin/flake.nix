@@ -43,6 +43,8 @@
           pkgs.stylua
           pkgs.tmux
           pkgs.zoxide
+          pkgs.kubectl
+          pkgs.helm
         ];
 
       users.users.jade = {
@@ -59,6 +61,7 @@
           "alfred"
           "firefox"
           "discord"
+          "nikitabobko/tap/aerospace"
         ];
         taps = [
         ];
