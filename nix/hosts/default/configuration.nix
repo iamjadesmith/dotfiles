@@ -101,6 +101,7 @@
     tmux
     git
     kubectl
+    helm
     fzf
     obsidian
     neofetch
