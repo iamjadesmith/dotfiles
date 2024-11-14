@@ -23,6 +23,7 @@
 
   networking.hostName = "joejadnix";
   networking.networkmanager.enable = true;
+  networking.enableIPv6  = false;
 
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
