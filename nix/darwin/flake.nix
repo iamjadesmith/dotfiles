@@ -96,6 +96,8 @@
         NSGlobalDomain.AppleShowAllExtensions = true;
         loginwindow.GuestEnabled = false;
         finder.FXPreferredViewStyle = "clmv";
+        dock.autohide = true;
+        dock.autohide-delay = 0.0;
       };
 
       # Auto upgrade nix package and the daemon service.
