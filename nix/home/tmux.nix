@@ -1,14 +1,4 @@
 {pkgs, ...}: let
-  catppuccin = pkgs.tmuxPlugins.mkTmuxPlugin {
-    pluginName = "catppuccin";
-    version = "unstable-2023-01-06";
-    src = pkgs.fetchFromGitHub {
-      owner = "dreamsofcode-io";
-      repo = "catppuccin-tmux";
-      rev = "main";
-      sha256 = "sha256-FJHM6LJkiAwxaLd5pnAoF3a7AE1ZqHWoCpUJE0ncCA8=";
-    };
-  };
   tokyo-night = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tokyo-night";
     version = "unstable-2023-01-06";
@@ -94,5 +84,8 @@ in {
     bind '"' split-window -v -c "#{pane_current_path}"
     bind % split-window -h -c "#{pane_current_path}"
     bind c new-window -c "#{pane_current_path}"
+
+    set -gu default-command
+    set -g default-shell "$SHELL"
   '';
 }

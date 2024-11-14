@@ -64,6 +64,7 @@
           "nikitabobko/tap/aerospace"
         ];
         taps = [
+          "nikitabobko/tap"
         ];
 	masApps = {
 	};
