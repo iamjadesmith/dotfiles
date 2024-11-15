@@ -7,9 +7,11 @@
   history.path = "${config.xdg.dataHome}/zsh/history";
   shellAliases = {
     vim = "nvim";
+    v = "nvim";
     ls = "ls --color";
     l = "ls -la";
     c = "clear";
+    dot = "cd ~/.dotfiles && nvim .";
   };
   initExtra = ''
     if [[ -f "/opt/homebrew/bin/brew" ]] then

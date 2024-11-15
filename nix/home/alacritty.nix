@@ -32,7 +32,7 @@
         inherit style;
       };
     in {
-      size = 16;
+      size = 14;
       normal = jetbrainsMono "Regular";
       bold = jetbrainsMono "Bold";
       italic = jetbrainsMono "Italic";
