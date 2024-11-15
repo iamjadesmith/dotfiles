@@ -12,6 +12,8 @@
     l = "ls -la";
     c = "clear";
     dot = "cd ~/.dotfiles && nvim .";
+    k = "kubectl";
+    h = "helm";
   };
   initExtra = ''
     if [[ -f "/opt/homebrew/bin/brew" ]] then
