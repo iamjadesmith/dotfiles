@@ -126,6 +126,7 @@
     nextcloud-client
     thunderbird
     ansible
+    inputs.zen-browser.packages
   ];
 
   services.kanata = {
