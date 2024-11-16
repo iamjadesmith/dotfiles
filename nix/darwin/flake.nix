@@ -44,6 +44,7 @@
           pkgs.tmux
           pkgs.zoxide
           pkgs.kubectl
+          pkgs.flux
         ];
 
       users.users.jade = {
