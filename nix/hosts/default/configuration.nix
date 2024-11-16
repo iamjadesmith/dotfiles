@@ -127,7 +127,7 @@
     thunderbird
     ansible
     inputs.zen-browser.packages."${system}".specific
-    flux
+    fluxcd
   ];
 
   services.kanata = {
