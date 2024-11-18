@@ -45,6 +45,7 @@
           pkgs.zoxide
           pkgs.kubectl
           pkgs.fluxcd
+          pkgs.lens
         ];
 
       users.users.jade = {
