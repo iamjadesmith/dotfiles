@@ -14,6 +14,7 @@
     dot = "cd ~/.dotfiles && nvim .";
     k = "kubectl";
     h = "helm";
+    rebmac = "darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac";
   };
   initExtra = ''
     if [[ -f "/opt/homebrew/bin/brew" ]] then
