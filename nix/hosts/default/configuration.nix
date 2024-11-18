@@ -129,6 +129,7 @@
     inputs.zen-browser.packages."${system}".specific
     fluxcd
     apacheHttpd
+    openssl
   ];
 
   services.kanata = {
