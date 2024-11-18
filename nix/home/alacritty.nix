@@ -21,7 +21,7 @@
 
     general = {
       import = [
-        pkgs.alacritty-theme.tokyo-night
+        pkgs.alacritty-theme.tokyo_night
       ];
       live_config_reload = true;
     };
