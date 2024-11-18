@@ -128,6 +128,7 @@
     ansible
     inputs.zen-browser.packages."${system}".specific
     fluxcd
+    apache-httpd
   ];
 
   services.kanata = {
