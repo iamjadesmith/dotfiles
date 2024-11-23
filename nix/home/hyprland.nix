@@ -67,8 +67,8 @@ in
       "XDG_SESSION_TYPE,wayland"
       "GBM_BACKEND,nvidia-drm"
       "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-      "HYPRCURSOR_SIZE,24"
-      "XCURSOR_SIZE,24"
+      "HYPRCURSOR_SIZE,16"
+      "XCURSOR_SIZE,16"
     ];
   };
 }
