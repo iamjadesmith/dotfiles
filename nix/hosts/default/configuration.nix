@@ -152,6 +152,11 @@
     };
   };
 
+  fileSystems."/mnt/test" = {
+    device = "10.47.59.84:/home/joejad";
+    fsType = "nfs";
+  };
+
   system.stateVersion = "24.05";
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
