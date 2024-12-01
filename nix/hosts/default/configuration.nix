@@ -130,6 +130,7 @@
     fluxcd
     apacheHttpd
     openssl
+    lazygit
   ];
 
   services.kanata = {
