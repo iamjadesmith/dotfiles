@@ -131,6 +131,7 @@
     apacheHttpd
     openssl
     lazygit
+    postgresql
   ];
 
   services.kanata = {
