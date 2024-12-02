@@ -63,6 +63,7 @@
             pkgs.lazygit
             pkgs.postgresql_17
             pkgs.nixfmt-rfc-style
+            pkgs.youtube-dl
           ];
 
           users.users.jade = {
