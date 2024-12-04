@@ -64,6 +64,7 @@
             pkgs.postgresql_17
             pkgs.nixfmt-rfc-style
             pkgs.yt-dlp
+            pkgs.ffmpeg-headless
           ];
 
           users.users.jade = {
