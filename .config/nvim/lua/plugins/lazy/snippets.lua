@@ -8,6 +8,7 @@ return {
 
 		config = function()
 			local ls = require("luasnip")
+      require('luasnip.loaders.from_snipmate').load({ paths = "./snippets"})
 			ls.filetype_extend("javascript", { "jsdoc" })
 
 			vim.keymap.set({ "i" }, "<C-s>e", function()

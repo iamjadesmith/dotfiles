@@ -1,7 +1,9 @@
+vim.opt.runtimepath:append("$HOME/.local/share/treesitter")
 return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
 	require("nvim-treesitter.configs").setup({
+    parser_install_dir = "$HOME/.local/share/treesitter",
 		ensure_installed = {
 			"vimdoc",
 			"javascript",
