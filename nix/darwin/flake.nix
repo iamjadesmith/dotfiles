@@ -68,7 +68,6 @@
             nixfmt-rfc-style
             yt-dlp
             ffmpeg-headless
-            swiftformat
             ruby
             pipx
           ];
@@ -85,6 +84,7 @@
               "helm"
               "xcode-build-server"
               "xcbeautify"
+              "swiftformat"
             ];
             casks = [
               "alfred"
