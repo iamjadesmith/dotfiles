@@ -19,6 +19,7 @@ return {
             nix = { "nixfmt" },
             python = { "black" },
             r = { "styler" },
+            swift = { "swiftformat" },
         },
     },
 }

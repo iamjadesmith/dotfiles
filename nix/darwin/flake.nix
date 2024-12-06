@@ -85,6 +85,7 @@
               "ruby"
               "pipx"
               "rg"
+              "swiftformat"
             ];
             casks = [
               "alfred"
