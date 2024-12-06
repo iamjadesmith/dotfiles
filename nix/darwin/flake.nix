@@ -68,6 +68,9 @@
             nixfmt-rfc-style
             yt-dlp
             ffmpeg-headless
+            swiftformat
+            ruby
+            pipx
           ];
 
           users.users.jade = {
@@ -82,10 +85,6 @@
               "helm"
               "xcode-build-server"
               "xcbeautify"
-              "ruby"
-              "pipx"
-              "rg"
-              "swiftformat"
             ];
             casks = [
               "alfred"
