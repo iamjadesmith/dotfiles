@@ -15,6 +15,7 @@ return {
 				"bash",
 				"r",
 				"python",
+        "swift",
 			},
 
 			sync_install = false,

@@ -44,27 +44,28 @@
             add-unstable-packages
             alacritty-theme.overlays.default
           ];
-          environment.systemPackages = [
-            pkgs.alacritty
-            pkgs.git
-            pkgs.unstable.go_1_23
-            pkgs.lua-language-server
-            pkgs.mkalias
-            pkgs.neovim
-            pkgs.nil
-            pkgs.obsidian
-            pkgs.ripgrep
-            pkgs.stylua
-            pkgs.tmux
-            pkgs.zoxide
-            pkgs.kubectl
-            pkgs.fluxcd
-            pkgs.lens
-            pkgs.lazygit
-            pkgs.postgresql_17
-            pkgs.nixfmt-rfc-style
-            pkgs.yt-dlp
-            pkgs.ffmpeg-headless
+          environment.systemPackages =  with pkgs; [
+            alacritty
+            git
+            unstable.go_1_23
+            lua-language-server
+            mkalias
+            neovim
+            nil
+            rustup
+            obsidian
+            ripgrep
+            stylua
+            tmux
+            zoxide
+            kubectl
+            fluxcd
+            lens
+            lazygit
+            postgresql_17
+            nixfmt-rfc-style
+            yt-dlp
+            ffmpeg-headless
           ];
 
           users.users.jade = {
