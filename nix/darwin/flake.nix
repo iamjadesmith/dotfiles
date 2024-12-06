@@ -85,6 +85,7 @@
               "xcode-build-server"
               "xcbeautify"
               "swiftformat"
+              "swiftlint"
             ];
             casks = [
               "alfred"
