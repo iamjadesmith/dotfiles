@@ -51,6 +51,7 @@
             lua-language-server
             mkalias
             neovim
+            tree-sitter
             nil
             rustup
             obsidian
