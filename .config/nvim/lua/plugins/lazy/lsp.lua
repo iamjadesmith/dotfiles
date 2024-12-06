@@ -56,6 +56,9 @@ return {
 		lspconfig.r_language_server.setup({
 			capabilities = capabilities,
 		})
+		lspconfig.sourckit.setup({
+      capabilities = capabilities,
+    })
 		lspconfig.lua_ls.setup({
 			capabilities = capabilities,
 			settings = {
