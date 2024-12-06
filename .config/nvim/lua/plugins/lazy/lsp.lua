@@ -17,6 +17,14 @@ return {
 	config = function()
 		local cmp = require("cmp")
 		local cmp_lsp = require("cmp_nvim_lsp")
+    local opts = { noremap = true, silent = true }
+    local on_attach = function(_, bufnr)
+      opts.buffer = bufnr
+      opts.desc = "Show line diagnostics"
+      vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+      opts.desc = "Show documentation for what is under cursor"
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    end
 		local capabilities = vim.tbl_deep_extend(
 			"force",
 			{},
@@ -53,12 +61,13 @@ return {
 		lspconfig.nil_ls.setup({
 			capabilities = capabilities,
 		})
+		lspconfig.sourcekit.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
 		lspconfig.r_language_server.setup({
 			capabilities = capabilities,
 		})
-		lspconfig.sourckit.setup({
-      capabilities = capabilities,
-    })
 		lspconfig.lua_ls.setup({
 			capabilities = capabilities,
 			settings = {

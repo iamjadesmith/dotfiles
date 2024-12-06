@@ -54,6 +54,7 @@
             nil
             rustup
             obsidian
+            nodejs
             ripgrep
             stylua
             tmux
