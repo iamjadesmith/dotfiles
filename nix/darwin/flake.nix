@@ -78,6 +78,11 @@
             brews = [
               "mas"
               "helm"
+              "xcode-build-server"
+              "xcbeautify"
+              "ruby"
+              "pipx"
+              "rg"
             ];
             casks = [
               "alfred"
