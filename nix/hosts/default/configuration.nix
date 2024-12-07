@@ -132,6 +132,8 @@
     openssl
     lazygit
     postgresql_17
+    wl-clipboard
+    tree-sitter
   ];
 
   services.kanata = {
