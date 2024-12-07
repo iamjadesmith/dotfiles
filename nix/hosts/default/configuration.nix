@@ -109,6 +109,8 @@
     alacritty
     cider
     zoxide
+    luajit
+    lua
     stow
     ripgrep
     gcc
