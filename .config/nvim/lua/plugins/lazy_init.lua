@@ -14,4 +14,11 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	spec = "plugins.lazy",
 	change_detection = { notify = false },
+	rocks = {
+		enabled = false,
+	},
+	{
+		"nvim-lua/plenary.nvim",
+		name = "plenary",
+	},
 })
