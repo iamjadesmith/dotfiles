@@ -138,6 +138,7 @@
     tree-sitter
     sourcekit-lsp
     swiftPackages.swift-unwrapped
+    swiftPackages.swiftpm
     xcbuild
   ];
 
