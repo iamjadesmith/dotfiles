@@ -137,9 +137,6 @@
     wl-clipboard
     tree-sitter
     sourcekit-lsp
-    swiftPackages.swift-unwrapped
-    swiftPackages.swiftpm
-    xcbuild
   ];
 
   services.kanata = {
