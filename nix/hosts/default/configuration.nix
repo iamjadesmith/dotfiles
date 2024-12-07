@@ -134,6 +134,7 @@
     postgresql_17
     wl-clipboard
     tree-sitter
+    sourcekit-lsp
   ];
 
   services.kanata = {
