@@ -138,6 +138,7 @@
     tree-sitter
     sourcekit-lsp
     swift
+    xcbuild
   ];
 
   services.kanata = {
