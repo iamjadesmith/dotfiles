@@ -137,7 +137,7 @@
     wl-clipboard
     tree-sitter
     sourcekit-lsp
-    swift
+    swiftPackages.swift-unwrapped
     xcbuild
   ];
 
