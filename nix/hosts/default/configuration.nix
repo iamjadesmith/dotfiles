@@ -137,6 +137,8 @@
     wl-clipboard
     tree-sitter
     sourcekit-lsp
+    swiftlint
+    swiftformat
   ];
 
   services.kanata = {
