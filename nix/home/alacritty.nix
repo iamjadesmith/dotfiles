@@ -38,7 +38,7 @@ in
         };
       in
       {
-        size = if hostname == "joejadmpb.local" then 16 else 14;
+        size = if hostname == "joejadmpb.local" then 18 else 14;
         normal = jetbrainsMono "Regular";
         bold = jetbrainsMono "Bold";
         italic = jetbrainsMono "Italic";
