@@ -137,6 +137,7 @@
     wl-clipboard
     tree-sitter
     sourcekit-lsp
+    python314
   ];
 
   services.kanata = {
