@@ -137,7 +137,7 @@
     wl-clipboard
     tree-sitter
     sourcekit-lsp
-    chromedriver
+    electron-chromedriver_31
   ];
 
   services.kanata = {
