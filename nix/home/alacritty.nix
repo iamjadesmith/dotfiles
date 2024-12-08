@@ -1,9 +1,11 @@
 {
   pkgs,
+  lib,
+  config,
   ...
 }:
 let
-  hostname = builtins.getEnv "HOSTNAME";
+  hostname = lib.mkDefault config.networking.hostName;
 in
 {
   enable = true;
