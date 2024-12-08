@@ -137,8 +137,7 @@
     wl-clipboard
     tree-sitter
     sourcekit-lsp
-    google-chrome
-    chromedriver
+    discord
   ];
 
   services.kanata = {
