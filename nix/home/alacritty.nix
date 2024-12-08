@@ -1,7 +1,11 @@
 {
   pkgs,
   ...
-}: {
+}:
+let
+  hostname = builtins.getEnv "HOSTNAME";
+in
+{
   enable = true;
   package = pkgs.unstable.alacritty;
 
@@ -26,18 +30,20 @@
       live_config_reload = true;
     };
 
-    font = let
-      jetbrainsMono = style: {
-        family = "JetBrainsMono Nerd Font";
-        inherit style;
+    font =
+      let
+        jetbrainsMono = style: {
+          family = "JetBrainsMono Nerd Font";
+          inherit style;
+        };
+      in
+      {
+        size = if hostname == "joejadmpb.local" then 16 else 14;
+        normal = jetbrainsMono "Regular";
+        bold = jetbrainsMono "Bold";
+        italic = jetbrainsMono "Italic";
+        bold_italic = jetbrainsMono "Bold Italic";
       };
-    in {
-      size = 14;
-      normal = jetbrainsMono "Regular";
-      bold = jetbrainsMono "Bold";
-      italic = jetbrainsMono "Italic";
-      bold_italic = jetbrainsMono "Bold Italic";
-    };
 
     cursor = {
       style = "Block";
