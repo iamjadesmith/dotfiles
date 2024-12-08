@@ -138,6 +138,9 @@
     tree-sitter
     sourcekit-lsp
     discord
+    ente-auth
+    bitwarden-desktop
+    bitwarden-cli
   ];
 
   services.kanata = {
