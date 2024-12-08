@@ -141,6 +141,7 @@
     ente-auth
     bitwarden-desktop
     bitwarden-cli
+    (chromedriver.overrideAttrs (old: { version = "131.0.6778.87"; }))
   ];
 
   services.kanata = {
