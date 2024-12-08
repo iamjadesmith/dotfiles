@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -36,7 +37,7 @@ in
   };
 
   programs = {
-    alacritty = import ./alacritty.nix { inherit config pkgs; };
+    alacritty = import ./alacritty.nix { inherit config pkgs lib; };
     zsh = import ./zsh.nix {inherit config;};
     fzf = import ./fzf.nix {inherit pkgs;};
     neovim = import ./neovim.nix {inherit config pkgs;};
