@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  meta,
   ...
 }: let
   inherit (config.lib.file) mkOutOfStoreSymlink;
@@ -18,7 +19,7 @@ in {
   home.stateVersion = "24.05";
 
   programs = {
-    alacritty = import ../home/alacritty.nix { inherit config pkgs; };
+    alacritty = import ../home/alacritty.nix { inherit lib config pkgs meta; };
     tmux = import ../home/tmux.nix {inherit pkgs;};
     zsh = import ../home/zsh.nix {inherit config pkgs lib; };
     zoxide = (import ../home/zoxide.nix { inherit config pkgs; });

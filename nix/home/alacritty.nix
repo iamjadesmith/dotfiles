@@ -1,12 +1,10 @@
 {
   pkgs,
+  meta,
   lib,
   config,
   ...
 }:
-let
-  hostname = lib.mkDefault config.networking.hostName;
-in
 {
   enable = true;
   package = pkgs.unstable.alacritty;
@@ -40,7 +38,7 @@ in
         };
       in
       {
-        size = if hostname == "joejadmpb.local" then 18 else 14;
+        size = if meta == "joejadmbp" then 16 else 14;
         normal = jetbrainsMono "Regular";
         bold = jetbrainsMono "Bold";
         italic = jetbrainsMono "Italic";
