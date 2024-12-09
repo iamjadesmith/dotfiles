@@ -29,6 +29,7 @@
         };
       };
       username = "jade";
+      meta = "joejadmbp";
       configuration =
         {
           pkgs,
@@ -167,6 +168,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.jade = import ./home.nix;
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+              inherit meta;
+            };
           }
         ];
       };
