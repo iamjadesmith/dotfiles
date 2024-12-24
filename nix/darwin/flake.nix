@@ -87,6 +87,7 @@
               "xcbeautify"
               "swiftformat"
               "swiftlint"
+              "vapor"
             ];
             casks = [
               "alfred"
