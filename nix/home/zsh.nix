@@ -15,7 +15,7 @@
     dot = "cd ~/.dotfiles && nvim .";
     k = "kubectl";
     h = "helm";
-    rebmac = "sudo darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac";
+    rebmac = "darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac";
   };
   initExtra = ''
     if [[ -f "/opt/homebrew/bin/brew" ]] then
@@ -72,7 +72,7 @@
 
     PATH="$HOME/.local/bin:$HOME/.scripts:$PATH"
 
-    if [[ -f "/Users/jade/Library/Python" ]] then
+    if [[ -d "/Users/jade/Library/Python" ]] then
       export PATH="$PATH:$HOME/Library/Python/3.9/bin"
     fi
 
