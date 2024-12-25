@@ -1,7 +1,8 @@
 {
   config,
   ...
-}: {
+}:
+{
   enable = true;
   history.size = 10000;
   history.path = "${config.xdg.dataHome}/zsh/history";
@@ -70,6 +71,10 @@
     eval "$(zoxide init --cmd cd zsh)"
 
     PATH="$HOME/.local/bin:$HOME:/.scripts:$PATH"
+
+    if [[ -f "/Users/jade/Library/Python" ]] then
+      PATH="PATH=$HOME:/Library/Python/3.9/bin:$PATH"
+    fi
 
     export EDITOR="nvim"
 
