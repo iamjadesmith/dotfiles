@@ -70,10 +70,10 @@
     eval "$(fzf --zsh)"
     eval "$(zoxide init --cmd cd zsh)"
 
-    PATH="$HOME/.local/bin:$HOME:/.scripts:$PATH"
+    PATH="$HOME/.local/bin:$HOME/.scripts:$PATH"
 
     if [[ -f "/Users/jade/Library/Python" ]] then
-      export PATH="PATH=$PATH:$HOME:/Library/Python/3.9/bin"
+      export PATH="PATH=$PATH:$HOME/Library/Python/3.9/bin"
     fi
 
     export EDITOR="nvim"
