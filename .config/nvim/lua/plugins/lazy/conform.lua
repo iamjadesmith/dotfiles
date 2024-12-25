@@ -20,7 +20,6 @@ return {
 			python = { "black" },
 			r = { "styler" },
 			swift = { "swiftformat" },
-			html = { "djlint" },
 		},
 		format_on_save = {
 			lsp_format = "fallback",
