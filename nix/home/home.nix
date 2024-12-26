@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  meta,
   ...
 }:
 let
@@ -37,13 +38,20 @@ in
   };
 
   programs = {
-    alacritty = import ./alacritty.nix { inherit config pkgs lib; };
-    zsh = import ./zsh.nix {inherit config;};
-    fzf = import ./fzf.nix {inherit pkgs;};
-    neovim = import ./neovim.nix {inherit config pkgs;};
-    tmux = import ./tmux.nix {inherit pkgs;};
-    git = import ./git.nix {inherit config pkgs;};
-    zoxide = import ./zoxide.nix {inherit pkgs;};
+    alacritty = import ./alacritty.nix {
+      inherit
+        config
+        pkgs
+        lib
+        meta
+        ;
+    };
+    zsh = import ./zsh.nix { inherit config; };
+    fzf = import ./fzf.nix { inherit pkgs; };
+    neovim = import ./neovim.nix { inherit config pkgs; };
+    tmux = import ./tmux.nix { inherit pkgs; };
+    git = import ./git.nix { inherit config pkgs; };
+    zoxide = import ./zoxide.nix { inherit pkgs; };
   };
 
   wayland.windowManager = {
