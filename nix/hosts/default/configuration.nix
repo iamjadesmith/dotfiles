@@ -63,7 +63,7 @@
 
   fonts.packages = with pkgs; [
     # (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-    nerd-fonts.jetbrainsmono
+    nerd-fonts.jetbrains-mono
     openmoji-color
   ];
 
