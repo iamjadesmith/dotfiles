@@ -27,6 +27,7 @@
       ...
     }@inputs:
     let
+      meta = "joejadnix";
       inherit (self) outputs;
 
     in
@@ -46,6 +47,7 @@
             home-manager.users.joejad = import ./home/home.nix;
             home-manager.extraSpecialArgs = {
               inherit inputs;
+              inherit meta;
             };
           }
         ];
