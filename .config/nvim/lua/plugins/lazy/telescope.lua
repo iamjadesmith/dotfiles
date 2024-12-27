@@ -17,6 +17,11 @@ return {
 				cwd = vim.fn.stdpath("config"),
 			})
 		end)
+		vim.keymap.set("n", "<leader>ed", function()
+			builtin.find_files({
+				cwd = "~/.dotfiles",
+			})
+		end)
 
 		require("plugins.lazy.telescope.multigrep").setup()
 	end,
