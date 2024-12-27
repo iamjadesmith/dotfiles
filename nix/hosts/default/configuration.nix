@@ -114,6 +114,7 @@
     stow
     ripgrep
     gcc
+    cmake
     nodejs_22
     nil
     R
