@@ -142,6 +142,7 @@
     ente-auth
     bitwarden-desktop
     bitwarden-cli
+    yubikey-manager
   ];
 
   services.kanata = {
