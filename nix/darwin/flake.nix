@@ -45,7 +45,7 @@
             add-unstable-packages
             alacritty-theme.overlays.default
           ];
-          environment.systemPackages =  with pkgs; [
+          environment.systemPackages = with pkgs; [
             alacritty
             git
             unstable.go_1_23
@@ -88,6 +88,7 @@
               "swiftformat"
               "swiftlint"
               "vapor"
+              "ykpers"
             ];
             casks = [
               "alfred"
