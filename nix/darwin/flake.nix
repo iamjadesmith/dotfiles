@@ -71,6 +71,7 @@
             ffmpeg-headless
             ruby
             pipx
+            yubikey-manager
           ];
 
           users.users.jade = {
@@ -88,7 +89,6 @@
               "swiftformat"
               "swiftlint"
               "vapor"
-              "ykpers"
             ];
             casks = [
               "alfred"
