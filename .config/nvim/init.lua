@@ -14,9 +14,8 @@ vim.opt.tabstop = 2
 -- vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 -- vim.opt.undofile = true
 
--- vim.opt.hlsearch = false
--- vim.opt.incsearch = true
-
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
 vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 8
@@ -30,7 +29,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
 	callback = function()
-		vim.highlight.on_yank()
+		vim.highlight.on_yank({
+			higroup = "IncSearch",
+			timeout = 40,
+		})
 	end,
 })
 
