@@ -23,6 +23,6 @@ return {
 			})
 		end)
 
-		require("plugins.lazy.telescope.multigrep").setup()
+		require("config.telescope.multigrep").setup()
 	end,
 }
