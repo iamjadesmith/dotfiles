@@ -72,7 +72,6 @@
             ruby
             pipx
             yubikey-manager
-            starship
           ];
 
           users.users.jade = {
