@@ -72,6 +72,7 @@
             ruby
             pipx
             yubikey-manager
+            starship
           ];
 
           users.users.jade = {
@@ -99,9 +100,8 @@
             taps = [
               "nikitabobko/tap"
             ];
-            masApps =
-              {
-              };
+            masApps = {
+            };
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
             onActivation.upgrade = true;
