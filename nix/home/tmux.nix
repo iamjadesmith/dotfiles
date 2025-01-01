@@ -21,7 +21,6 @@ in
   newSession = true;
   secureSocket = true;
   shell = "${pkgs.zsh}/bin/zsh";
-  shortcut = "a";
   terminal = "screen-256color";
 
   plugins = with pkgs.tmuxPlugins; [
