@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   tokyo-night = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tokyo-night";
     version = "unstable-2023-01-06";
@@ -9,7 +10,8 @@
       sha256 = "sha256-3rMYYzzSS2jaAMLjcQoKreE0oo4VWF9dZgDtABCUOtY=";
     };
   };
-in {
+in
+{
   enable = true;
 
   aggressiveResize = true;
@@ -33,10 +35,6 @@ in {
     set -as terminal-features ",xterm-256color:RGB"
     # set-option -sa terminal-overrides ",xterm*:Tc"
     set -g mouse on
-
-    unbind C-b
-    set -g prefix C-Space
-    bind C-Space send-prefix
 
     # vim-like pane switching
     bind -r ^ last-window
