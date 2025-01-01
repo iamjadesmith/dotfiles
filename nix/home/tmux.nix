@@ -36,14 +36,12 @@ in
     # set-option -sa terminal-overrides ",xterm*:Tc"
     set -g mouse on
 
-    # vim-like pane switching
     bind -r ^ last-window
     bind -r k select-pane -U
     bind -r j select-pane -D
     bind -r h select-pane -L
     bind -r l select-pane -R
 
-    # Start windows and panes at 1, not 0
     set -g base-index 1
     set -g pane-base-index 1
     set-window-option -g pane-base-index 1
@@ -51,12 +49,6 @@ in
 
     # Bind clearing the screen
     bind L send-keys '^L'
-
-    # Use Alt-arrow keys without prefix key to switch panes
-    bind -n M-Left select-pane -L
-    bind -n M-Right select-pane -R
-    bind -n M-Up select-pane -U
-    bind -n M-Down select-pane -D
 
     # Shift arrow to switch windows
     bind -n S-Left  previous-window
