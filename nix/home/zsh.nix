@@ -16,6 +16,7 @@
     k = "kubectl";
     h = "helm";
     rebmac = "darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac";
+    proj = "source ~/.scripts/project.sh";
   };
   initExtra = ''
     if [[ -f "/opt/homebrew/bin/brew" ]] then
