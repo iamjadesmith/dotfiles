@@ -17,6 +17,7 @@
     h = "helm";
     rebmac = "darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac";
     proj = "source ~/.scripts/project.sh";
+    o = "cd ~/Obsidian && nvim .";
   };
   initExtra = ''
     if [[ -f "/opt/homebrew/bin/brew" ]] then
