@@ -22,6 +22,11 @@ return {
 				cwd = "~/.dotfiles",
 			})
 		end)
+		vim.keymap.set("n", "<leader>eo", function()
+			builtin.find_files({
+				cwd = "~/Obsidian",
+			})
+		end)
 
 		require("config.telescope.multigrep").setup()
 	end,
