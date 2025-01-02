@@ -70,6 +70,7 @@
             ruby
             pipx
             yubikey-manager
+            tree
           ];
 
           users.users.jade = {
