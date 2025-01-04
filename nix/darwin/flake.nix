@@ -62,7 +62,6 @@
             zoxide
             kubectl
             fluxcd
-            R
             lazygit
             postgresql_17
             nixfmt-rfc-style
@@ -85,6 +84,7 @@
               "mas"
               "helm"
               "vapor"
+              "r"
             ];
             casks = [
               "alfred"
