@@ -61,6 +61,7 @@
             tmux
             zoxide
             kubectl
+            black
             fluxcd
             lazygit
             postgresql_17
@@ -68,7 +69,6 @@
             yt-dlp
             ffmpeg-headless
             ruby
-            pipx
             yubikey-manager
             tree
           ];
@@ -85,6 +85,7 @@
               "helm"
               "vapor"
               "r"
+              "pipx"
             ];
             casks = [
               "alfred"
