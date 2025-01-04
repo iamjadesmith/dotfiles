@@ -62,6 +62,7 @@
             zoxide
             kubectl
             fluxcd
+            R
             lazygit
             postgresql_17
             nixfmt-rfc-style
