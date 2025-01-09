@@ -118,6 +118,7 @@
     nodejs_22
     nil
     R
+    gnumake
     lua-language-server
     stylua
     nixfmt-rfc-style
