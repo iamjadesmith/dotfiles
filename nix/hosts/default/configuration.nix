@@ -104,6 +104,7 @@
     kubectl
     helm
     python314
+    luajitPackages.luarocks-nix
     fzf
     obsidian
     neofetch
