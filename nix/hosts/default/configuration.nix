@@ -103,6 +103,7 @@
     git
     kubectl
     helm
+    python314
     fzf
     obsidian
     neofetch
