@@ -59,9 +59,6 @@ in
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ];
-    device = [
-      "logitech-g502-1,-.5"
-    ];
     xwayland.force_zero_scaling = true;
     cursor.no_hardware_cursors = true;
     env = [
@@ -74,4 +71,10 @@ in
       "XCURSOR_SIZE,24"
     ];
   };
+  extraConfig = ''
+          device {
+            name=logitech-g502-1
+            sensitivity=-0.5
+          }
+    		'';
 }
