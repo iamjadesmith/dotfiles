@@ -7,7 +7,7 @@ in
     "$mod" = "ALT";
     bind =
       [
-        "$mod, F, exec, zen"
+        "$mod, F, exec, firefox"
         "$mod, RETURN, exec, alacritty"
         "$mod+SUPER, E, exit"
         "$mod+SUPER, S, exec, systemctl suspend"
