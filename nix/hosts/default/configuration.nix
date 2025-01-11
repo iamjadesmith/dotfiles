@@ -168,6 +168,16 @@
     };
   };
 
+  programs.steam = {
+    enable = true;
+    extraCompatPackages = [
+      pkgs.proton-ge-bin
+    ];
+    gamescopeSession = {
+      enable = true;
+    };
+  };
+
   system.stateVersion = "24.05";
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
