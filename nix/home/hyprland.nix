@@ -72,13 +72,14 @@ in
     ];
   };
   extraConfig = ''
-          device {
-            name=logitech-g502-1
-            sensitivity=-1.0
-          }
-          device {
-            name=logitech-g502
-            sensitivity=-1.0
-          }
-    		'';
+              device {
+                name=logitech-g502-1
+                sensitivity=-1.0
+              }
+              device {
+                name=logitech-g502
+                sensitivity=-1.0
+              }
+    					render:explicit_sync = 0
+        		'';
 }
