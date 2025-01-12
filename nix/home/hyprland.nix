@@ -74,11 +74,11 @@ in
   extraConfig = ''
           device {
             name=logitech-g502-1
-            sensitivity=-0.7
+            sensitivity=-1.0
           }
           device {
             name=logitech-g502
-            sensitivity=-0.7
+            sensitivity=-1.0
           }
     		'';
 }
