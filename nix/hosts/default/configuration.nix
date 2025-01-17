@@ -139,6 +139,7 @@
     lazygit
     postgresql_17
     wl-clipboard
+    rustup
     tree-sitter
     sourcekit-lsp
     discord
