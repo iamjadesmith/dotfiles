@@ -140,6 +140,7 @@
     postgresql_17
     wl-clipboard
     rustup
+    cargo
     tree-sitter
     sourcekit-lsp
     discord
