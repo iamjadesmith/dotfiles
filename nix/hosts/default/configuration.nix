@@ -148,6 +148,7 @@
     bitwarden-desktop
     bitwarden-cli
     yubikey-manager
+    freetype
   ];
 
   services.kanata = {
