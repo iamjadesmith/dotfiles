@@ -132,7 +132,6 @@
     nextcloud-client
     thunderbird
     ansible
-    inputs.zen-browser.packages."${system}".specific
     fluxcd
     apacheHttpd
     openssl
