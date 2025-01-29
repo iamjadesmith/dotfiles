@@ -13,8 +13,6 @@
 
     alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
 
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
-
   };
 
   outputs =
