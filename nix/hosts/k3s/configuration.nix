@@ -39,7 +39,6 @@
   console = {
     font = "Lat2-Terminus16";
     keyMap = "us";
-    #useXkbConfig = true; # use xkb.options in tty.
   };
 
   systemd.tmpfiles.rules = [
@@ -82,7 +81,6 @@
     packages = with pkgs; [
       tree
     ];
-    # Created using mkpasswd
     hashedPassword = "$y$j9T$zCosUIu8eNq21sMsgQ7ya.$0oQ.aynDLokO77HvIjV.EEMDrnI25n8VQJgEd3RlSx8";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAaAVqMues6cNQYaIB/YbE6SN7tjM+jk0/xA1ss0HpMk joejad@joejadnix"
