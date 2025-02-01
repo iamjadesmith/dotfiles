@@ -3,6 +3,7 @@
   outputs,
   pkgs,
   config,
+  meta,
   lib,
   ...
 }:
@@ -21,6 +22,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  networking.hostName = meta.hostname;
   networking.networkmanager.enable = true;
   networking.enableIPv6 = false;
 
