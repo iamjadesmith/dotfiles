@@ -21,7 +21,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "joejadnix";
   networking.networkmanager.enable = true;
   networking.enableIPv6 = false;
 

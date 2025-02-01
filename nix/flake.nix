@@ -26,6 +26,7 @@
     }@inputs:
     let
       inherit (self) outputs;
+
       systems = [
         "aarch64-linux"
         "i686-linux"
@@ -33,6 +34,7 @@
         "aarch64-darwin"
         "x86_64-darwin"
       ];
+
       hosts = [
         {
           name = "joejadnix";
