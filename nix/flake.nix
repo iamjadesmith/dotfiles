@@ -26,6 +26,13 @@
     }@inputs:
     let
       inherit (self) outputs;
+      systems = [
+        "aarch64-linux"
+        "i686-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
       hosts = [
         {
           name = "joejadnix";
@@ -52,9 +59,12 @@
           server = true;
         }
       ];
+      forAllSystems =
+        fn: nixpkgs.lib.genAttrs systems (system: fn { pkgs = import nixpkgs { inherit system; }; });
     in
     {
       overlays = import ./overlays { inherit inputs; };
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
       nixosConfigurations.default = builtins.listToAttrs (
         map (host: {
           name = host.name;
@@ -69,7 +79,7 @@
             modules = [
               ./hosts/${host.name}/configuration.nix
               ./hosts/${host.name}/hardware-configuration.nix
-              # ./hosts/${host.name}/disko-config.nix
+              ./hosts/${host.name}/disko-config.nix
               inputs.home-manager.nixosModules.default
               home-manager.nixosModules.home-manager
               {
