@@ -1,5 +1,6 @@
 {
-  config,
+  inputs,
+  outputs,
   lib,
   pkgs,
   meta,
@@ -13,6 +14,18 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+  };
+
+  nixpkgs = {
+    overlays = [
+      outputs.overlays.additions
+      outputs.overlays.unstable
+      inputs.alacritty-theme.overlays.default
+    ];
+    config = {
+      permittedInsecurePackages = [ "electron-25.9.0" ];
+      allowUnfree = true;
+    };
   };
 
   boot.loader.grub.enable = lib.mkDefault true;
@@ -109,12 +122,33 @@
   services.logind.lidSwitch = "ignore";
 
   environment.systemPackages = with pkgs; [
-    neovim
+    unstable.neovim
     cifs-utils
     nfs-utils
     git
     samba
+    zsh
+    tmux
+    kubectl
+    helm
+    fluxcd
+    fzf
+    zoxide
+    lua
+    stow
+    ripgrep
+    nil
+    R
+    lua-language-server
+    stylua
+    nixfmt-rfc-style
+    oh-my-posh
+    unstable.rustup
+    unstable.cargo
+    lazygit
+    postgresql_17
   ];
+
   services.openssh.enable = true;
   networking.firewall.enable = false;
   system.stateVersion = "23.11";

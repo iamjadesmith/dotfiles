@@ -3,7 +3,6 @@
   outputs,
   pkgs,
   config,
-  lib,
   ...
 }:
 
@@ -95,7 +94,7 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs.unstable; [
     zsh
     wget
     neovim
