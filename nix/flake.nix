@@ -65,6 +65,7 @@
                 hostname = host.name;
               };
             };
+            system = "x86_64-linux";
             modules = [
               ./hosts/${host.name}/configuration.nix
               ./hosts/${host.name}/hardware-configuration.nix
