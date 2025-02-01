@@ -67,10 +67,10 @@
             };
             system = "x86_64-linux";
             modules = [
-              disko.nixosModules.disko
+              # disko.nixosModules.disko
               ./hosts/${host.name}/configuration.nix
               ./hosts/${host.name}/hardware-configuration.nix
-              ./hosts/${host.name}/disko-config.nix
+              # ./hosts/${host.name}/disko-config.nix
               inputs.home-manager.nixosModules.default
               home-manager.nixosModules.home-manager
               {
