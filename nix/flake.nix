@@ -67,7 +67,7 @@
     {
       overlays = import ./overlays { inherit inputs; };
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-      nixosConfigurations.default = builtins.listToAttrs (
+      nixosConfigurations = builtins.listToAttrs (
         map (host: {
           name = host.name;
           value = nixpkgs.lib.nixosSystem {
