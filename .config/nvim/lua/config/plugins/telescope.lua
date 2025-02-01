@@ -21,7 +21,7 @@ return {
 		vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 		vim.keymap.set("n", "<leader>en", function()
 			builtin.find_files({
-				cwd = vim.fn.stdpath("config"),
+				cwd = "~/.dotfiles/.config/nvim",
 			})
 		end)
 		vim.keymap.set("n", "<leader>ed", function()
