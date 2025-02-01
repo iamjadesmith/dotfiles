@@ -76,6 +76,7 @@
       "docker"
     ];
     packages = with pkgs; [ tree ];
+    hashedPassword = "$6$sI71vFKosWWmZeD3$04iWnWU3aXy/s9QOM6MDK8Zljnu9OaYuJGLMay.rix0TmT94W.fDQKVCmwdi.B0grPzDfpzkXVviPvEFY162T1";
   };
 
   security.sudo.wheelNeedsPassword = false;
