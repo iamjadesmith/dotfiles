@@ -61,7 +61,7 @@
     pulse.enable = true;
   };
 
-  fonts.packages = with pkgs; [
+  fonts.packages = with pkgs.unstable; [
     nerd-fonts.jetbrains-mono
     openmoji-color
   ];
