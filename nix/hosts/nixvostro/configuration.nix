@@ -141,6 +141,7 @@
     stow
     ripgrep
     gnumake
+    gcc
     nil
     R
     lua-language-server
