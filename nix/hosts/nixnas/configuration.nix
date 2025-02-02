@@ -88,6 +88,8 @@
     ];
   };
 
+  security.sudo.wheelNeedsPassword = false;
+
   programs.zsh.enable = true;
 
   services.nfs.server.enable = true;
