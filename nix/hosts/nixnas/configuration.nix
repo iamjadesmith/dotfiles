@@ -1,5 +1,6 @@
 {
-  config,
+  inputs,
+  outputs,
   lib,
   pkgs,
   meta,
@@ -17,6 +18,18 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+  };
+
+  nixpkgs = {
+    overlays = [
+      outputs.overlays.additions
+      outputs.overlays.unstable
+      inputs.alacritty-theme.overlays.default
+    ];
+    config = {
+      permittedInsecurePackages = [ "electron-25.9.0" ];
+      allowUnfree = true;
+    };
   };
 
   boot.loader.grub.enable = lib.mkDefault true;
@@ -56,6 +69,7 @@
 
   users.users.joejad = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     extraGroups = [
       "wheel"
       "docker"
@@ -73,6 +87,8 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKgYIcGwg/BHL2nJ+DfZsa2nvGz+e6TgUzuvIGudKB+w Shortcuts on Jade’s iPad"
     ];
   };
+
+  programs.zsh.enable = true;
 
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''
@@ -119,16 +135,34 @@
   };
 
   environment.systemPackages = with pkgs; [
-    neovim
+    unstable.neovim
     fluxcd
     kubectl
+    helm
     cifs-utils
     nfs-utils
     git
     samba
     postgresql_17
-    rustup
-    cargo
+    zsh
+    tmux
+    fzf
+    zoxide
+    lua
+    stow
+    ripgrep
+    gnumake
+    gcc
+    nil
+    R
+    lua-language-server
+    luajitPackages.luarocks-nix
+    stylua
+    nixfmt-rfc-style
+    oh-my-posh
+    unstable.rustup
+    unstable.cargo
+    lazygit
   ];
 
   services.openssh = {
