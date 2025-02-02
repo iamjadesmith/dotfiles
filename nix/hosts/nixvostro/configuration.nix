@@ -149,7 +149,14 @@
     postgresql_17
   ];
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
+
   networking.firewall.enable = false;
   system.stateVersion = "23.11";
 }
