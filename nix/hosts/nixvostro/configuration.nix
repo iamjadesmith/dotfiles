@@ -83,6 +83,8 @@
     ];
   };
 
+  programs.zsh.enable = true;
+
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''
     /home/joejad 10.47.59.0/24(rw,sync,no_root_squash,no_subtree_check)
