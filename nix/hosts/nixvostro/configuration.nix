@@ -145,6 +145,7 @@
     nil
     R
     lua-language-server
+    luajitPackages.luarocks-nix
     stylua
     nixfmt-rfc-style
     oh-my-posh
