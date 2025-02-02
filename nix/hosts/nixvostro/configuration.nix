@@ -63,6 +63,7 @@
 
   users.users.joejad = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     extraGroups = [
       "wheel"
       "docker"
@@ -137,6 +138,7 @@
     lua
     stow
     ripgrep
+    gnumake
     nil
     R
     lua-language-server
