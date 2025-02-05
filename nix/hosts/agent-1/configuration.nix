@@ -77,6 +77,7 @@
 
   users.users.joejad = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     extraGroups = [ "wheel" ];
     packages = with pkgs; [
       tree
@@ -93,13 +94,39 @@
     ];
   };
 
+  programs.zsh.enable = true;
+
   environment.systemPackages = with pkgs; [
-    neovim
     k3s
+    intel-gpu-tools
+    unstable.neovim
+    fluxcd
+    kubectl
+    helm
     cifs-utils
     nfs-utils
     git
-    intel-gpu-tools
+    samba
+    postgresql_17
+    zsh
+    tmux
+    fzf
+    zoxide
+    lua
+    stow
+    ripgrep
+    gnumake
+    gcc
+    nil
+    R
+    lua-language-server
+    luajitPackages.luarocks-nix
+    stylua
+    nixfmt-rfc-style
+    oh-my-posh
+    unstable.rustup
+    unstable.cargo
+    lazygit
   ];
 
   services.openssh = {
