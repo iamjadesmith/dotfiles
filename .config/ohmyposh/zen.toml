@@ -18,6 +18,13 @@ final_space = true
   newline = true
 
   [[blocks.segments]]
+    template = '{{ .UserName}}@{{ .HostName }} '
+    foreground = 'p:grey'
+    background = 'transparent'
+    type = 'session'
+    style = 'plain'
+
+  [[blocks.segments]]
     template = '{{ .Path }}'
     foreground = 'blue'
     background = 'transparent'
