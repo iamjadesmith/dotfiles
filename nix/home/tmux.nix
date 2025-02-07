@@ -1,15 +1,5 @@
 { pkgs, ... }:
 let
-  # tokyo-night = pkgs.tmuxPlugins.mkTmuxPlugin {
-  #   pluginName = "tokyo-night";
-  #   version = "unstable-2023-01-06";
-  #   src = pkgs.fetchFromGitHub {
-  #     owner = "janoamaral";
-  #     repo = "tokyo-night-tmux";
-  #     rev = "master";
-  #     sha256 = "sha256-3rMYYzzSS2jaAMLjcQoKreE0oo4VWF9dZgDtABCUOtY=";
-  #   };
-  # };
   tokyo-night = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tokyo-night";
     version = "1.6.1";
