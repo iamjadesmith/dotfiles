@@ -1,5 +1,7 @@
 {
   config,
+  inputs,
+  outputs,
   lib,
   pkgs,
   meta,
@@ -17,6 +19,18 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+  };
+
+  nixpkgs = {
+    overlays = [
+      outputs.overlays.additions
+      outputs.overlays.unstable
+      inputs.alacritty-theme.overlays.default
+    ];
+    config = {
+      permittedInsecurePackages = [ "electron-25.9.0" ];
+      allowUnfree = true;
+    };
   };
 
   boot.loader.grub.enable = lib.mkDefault true;
