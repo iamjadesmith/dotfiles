@@ -13,7 +13,6 @@
   terminal = "screen-256color";
 
   plugins = with pkgs.tmuxPlugins; [
-    tokyo-night
     yank
     sensible
   ];
