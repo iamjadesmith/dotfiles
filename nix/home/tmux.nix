@@ -17,7 +17,7 @@ let
       owner = "janoamaral";
       repo = "tokyo-night-tmux";
       rev = "master";
-      # sha256 = "sha256-d610ced20d5f602a7995854931440e4a1e0ab780";
+      sha256 = "sha256-17vEgkL7C51p/l5gpT9dkOy0bY9n8l0/LV51mR1k+V8=";
     };
   };
 in
