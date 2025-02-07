@@ -1,13 +1,23 @@
 { pkgs, ... }:
 let
+  # tokyo-night = pkgs.tmuxPlugins.mkTmuxPlugin {
+  #   pluginName = "tokyo-night";
+  #   version = "unstable-2023-01-06";
+  #   src = pkgs.fetchFromGitHub {
+  #     owner = "janoamaral";
+  #     repo = "tokyo-night-tmux";
+  #     rev = "master";
+  #     sha256 = "sha256-3rMYYzzSS2jaAMLjcQoKreE0oo4VWF9dZgDtABCUOtY=";
+  #   };
+  # };
   tokyo-night = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tokyo-night";
-    version = "unstable-2023-01-06";
+    version = "1.6.1";
     src = pkgs.fetchFromGitHub {
       owner = "janoamaral";
       repo = "tokyo-night-tmux";
       rev = "master";
-      sha256 = "sha256-3rMYYzzSS2jaAMLjcQoKreE0oo4VWF9dZgDtABCUOtY=";
+      sha256 = "sha256-d610ced20d5f602a7995854931440e4a1e0ab780";
     };
   };
 in
@@ -58,10 +68,10 @@ in
     bind -n M-H previous-window
     bind -n M-L next-window
 
-    # set -g @tokyo-night-tmux_window_id_style hsquare
-    # set -g @tokyo-night-tmux_show_datetime 0
+    set -g @tokyo-night-tmux_window_id_style hsquare
+    set -g @tokyo-night-tmux_show_datetime 0
 
-    # run-shell ${tokyo-night}/share/tmux-plugins/tokyo-night/tokyo-night.tmux
+    run-shell ${tokyo-night}/share/tmux-plugins/tokyo-night/tokyo-night.tmux
 
     # set vi-mode
     set-window-option -g mode-keys vi
