@@ -63,6 +63,14 @@
     openmoji-color
   ];
 
+  systemd.tmpfiles.rules = [
+    "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
+  ];
+  virtualisation.docker.logDriver = "json-file";
+
+  virtualisation.docker.enable = true;
+  virtualisation.docker.storageDriver = "btrfs";
+
   users.users.joejad = {
     isNormalUser = true;
     description = "joejad";
