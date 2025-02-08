@@ -215,7 +215,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     powerManagement.enable = true;
     # powerManagement.finegrained = true;
-    open = false;
+    open = true;
   };
   hardware.nvidia-container-toolkit.enable = true;
 }
