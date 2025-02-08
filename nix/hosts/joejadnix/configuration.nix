@@ -70,6 +70,7 @@
 
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
+  virtualisation.docker.daemon.settings.features.cdi = true;
 
   users.users.joejad = {
     isNormalUser = true;
@@ -198,4 +199,5 @@
     # powerManagement.finegrained = true;
     open = false;
   };
+  hardware.nvidia-container-toolkit.enable = true;
 }
