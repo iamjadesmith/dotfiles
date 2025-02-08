@@ -71,6 +71,7 @@
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
   virtualisation.docker.daemon.settings.features.cdi = true;
+  virtualisation.docker.rootless.daemon.settings.features.cdi = true;
 
   users.users.joejad = {
     isNormalUser = true;
