@@ -171,6 +171,7 @@
     bitwarden-desktop
     bitwarden-cli
     yubikey-manager
+    nvidia-container-toolkit
   ];
 
   services.kanata = {
