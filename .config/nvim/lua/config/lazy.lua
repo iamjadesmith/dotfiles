@@ -15,12 +15,6 @@ require("config.keymap")
 
 require("lazy").setup({
 	spec = {
-		{
-			"folke/tokyonight.nvim",
-			config = function()
-				vim.cmd.colorscheme("tokyonight-night")
-			end,
-		},
 		{ import = "config.plugins" },
 	},
 	change_detection = {
