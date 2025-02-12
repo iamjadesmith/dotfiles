@@ -26,6 +26,7 @@
     }@inputs:
     let
       inherit (self) outputs;
+      dark_mode = true;
       hosts = [
         {
           name = "joejadnix";
@@ -77,7 +78,12 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.users.joejad =
-                  if host.server == true then import ./home/home-server.nix else import ./home/home.nix;
+                  if host.server == true then
+                    import ./home/home-server.nix
+                  else if dark_mode == true then
+                    import ./home/home.nix
+                  else
+                    import ./home/home-light.nix;
                 home-manager.extraSpecialArgs = {
                   inherit inputs;
                   meta = host;
