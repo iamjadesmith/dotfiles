@@ -29,6 +29,7 @@
         };
       };
       username = "jade";
+      dark_mode = true;
       meta = "joejadmbp";
       configuration =
         {
@@ -151,7 +152,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.jade = import ./home.nix;
+            home-manager.users.jade = if dark_mode == true then import ./home.nix else import ./home-light.nix;
             home-manager.extraSpecialArgs = {
               inherit inputs;
               inherit meta;
@@ -159,7 +160,6 @@
           }
         ];
       };
-
       darwinPackages = self.darwinConfigurations."mac".pkgs;
     };
 }
