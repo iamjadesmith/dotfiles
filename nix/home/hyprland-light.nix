@@ -48,7 +48,7 @@
       "DP-3,3840x2160@239.99,0x0,1.5"
       "Unknown-1,disable"
     ];
-    exec = [
+    exec-once = [
       ''alacritty''
       ''firefox''
       ''obsidian''
@@ -59,9 +59,6 @@
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ];
     windowrulev2 = [
-      # ''move to workspace 1, class:^(Alacritty)$''
-      # ''move to workspace 2, class:^(firefox)$''
-      # ''move to workspace 3, class:^(obsidian)$''
       ''workspace 1, class:^(Alacritty)$''
       ''workspace 2, class:^(firefox)$''
       ''workspace 3, class:^(obsidian)$''
