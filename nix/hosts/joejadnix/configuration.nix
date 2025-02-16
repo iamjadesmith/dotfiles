@@ -171,6 +171,7 @@
     bitwarden-desktop
     bitwarden-cli
     yubikey-manager
+    nvidia-container-toolkit
   ];
 
   services.kanata = {
@@ -216,9 +217,6 @@
     open = true;
   };
 
-  hardware.nvidia-container-toolkit = {
-    enable = true;
-    package = pkgs.nvidia-container-toolkit;
-  };
+  hardware.nvidia-container-toolkit.enable = true;
 
 }
