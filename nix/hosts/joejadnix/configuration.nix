@@ -70,8 +70,8 @@
   virtualisation.docker = {
     enable = true;
     storageDriver = "btrfs";
-    logDriver = "json-file";
-    enableNvidia = true;
+    # logDriver = "json-file";
+    # enableNvidia = true;
     daemon.settings.features.cdi = true;
     rootless.daemon.settings.features.cdi = true;
   };
