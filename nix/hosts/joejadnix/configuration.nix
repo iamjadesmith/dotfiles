@@ -221,4 +221,10 @@
     package = pkgs.nvidia-container-toolkit;
   };
 
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
 }
