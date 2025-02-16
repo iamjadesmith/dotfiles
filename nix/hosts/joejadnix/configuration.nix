@@ -211,10 +211,14 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    modesetting.enable = true;
     powerManagement.enable = true;
-    # powerManagement.finegrained = true;
     open = true;
   };
-  hardware.nvidia-container-toolkit.enable = true;
+
+  hardware.nvidia-container-toolkit = {
+    enable = true;
+    package = pkgs.unstable.nvidia-container-toolkit;
+  };
+
 }
