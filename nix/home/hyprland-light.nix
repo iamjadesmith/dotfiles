@@ -48,10 +48,20 @@
       "DP-3,3840x2160@239.99,0x0,1.5"
       "Unknown-1,disable"
     ];
+    exec = [
+      ''alacritty''
+      ''firefox''
+      ''obsidian''
+    ];
     bindl = [
       ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    ];
+    windowrulev2 = [
+      ''move to workspace 1, class:^(Alacritty)$''
+      ''move to workspace 2, class:^(firefox)$''
+      ''move to workspace 3, class:^(obsidian)$''
     ];
     xwayland.force_zero_scaling = true;
     cursor.no_hardware_cursors = true;
