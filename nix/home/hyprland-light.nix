@@ -49,9 +49,9 @@
       "Unknown-1,disable"
     ];
     exec-once = [
-      ''alacritty''
-      ''firefox''
       ''obsidian''
+      ''firefox''
+      ''alacritty''
     ];
     bindl = [
       ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"

@@ -52,10 +52,20 @@
       ''gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"   # for GTK3 apps''
       ''gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps''
     ];
+    exec-once = [
+      ''obsidian''
+      ''firefox''
+      ''alacritty''
+    ];
     bindl = [
       ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    ];
+    windowrulev2 = [
+      ''workspace 1, class:^(Alacritty)$''
+      ''workspace 2, class:^(firefox)$''
+      ''workspace 3, class:^(obsidian)$''
     ];
     xwayland.force_zero_scaling = true;
     cursor.no_hardware_cursors = true;
