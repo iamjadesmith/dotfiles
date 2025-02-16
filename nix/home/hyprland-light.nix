@@ -59,9 +59,12 @@
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ];
     windowrulev2 = [
-      ''move to workspace 1, class:^(Alacritty)$''
-      ''move to workspace 2, class:^(firefox)$''
-      ''move to workspace 3, class:^(obsidian)$''
+      # ''move to workspace 1, class:^(Alacritty)$''
+      # ''move to workspace 2, class:^(firefox)$''
+      # ''move to workspace 3, class:^(obsidian)$''
+      ''workspace 1, class:^(Alacritty)$''
+      ''workspace 2, class:^(firefox)$''
+      ''workspace 3, class:^(obsidian)$''
     ];
     xwayland.force_zero_scaling = true;
     cursor.no_hardware_cursors = true;
