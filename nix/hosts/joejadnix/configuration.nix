@@ -218,7 +218,7 @@
 
   hardware.nvidia-container-toolkit = {
     enable = true;
-    package = pkgs.unstable.nvidia-container-toolkit;
+    package = pkgs.nvidia-container-toolkit;
   };
 
 }
