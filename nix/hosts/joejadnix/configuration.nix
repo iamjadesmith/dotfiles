@@ -76,6 +76,28 @@
     rootless.daemon.settings.features.cdi = true;
   };
 
+  virtualisation.oci-containers.containers = {
+    ollama = {
+      image = "ollama/ollama";
+      ports = [ "11434:11434" ];
+      volumes = [
+        "/home/joejad/projects/ollama/ollama:/root/.ollama"
+      ];
+      autoStart = true;
+      extraOptions = [
+        "--device=nvidia.com/gpu=all"
+      ];
+    };
+    open-webui = {
+      image = "ghcr.io/open-webui/open-webui:main";
+      ports = [ "3000:8080" ];
+      volumes = [
+        "/home/joejad/projects/ollama/open-webui:/app/backend/data"
+      ];
+      autoStart = true;
+    };
+  };
+
   users.users.joejad = {
     isNormalUser = true;
     description = "joejad";
