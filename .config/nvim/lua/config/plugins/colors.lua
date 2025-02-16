@@ -1,4 +1,4 @@
-local dark_mode = true
+local dark_mode = false
 
 return {
 	{
