@@ -99,5 +99,15 @@
         fi
         sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
     }
+
+    function rebmac() {
+        git add .
+        if [ "$1" != "" ]; then
+            git commit -m "$1"
+        else
+            git commit -m 'update'
+        fi
+        darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac
+    }
   '';
 }
