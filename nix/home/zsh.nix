@@ -91,13 +91,13 @@
     }
 
     function rebuild() {
-        git add .
-        if [ "$1" != "" ]; then
-            git commit -m "$1"
-        else
-            git commit -m 'update'
-        fi
-        sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#default
+        # git add .
+        # if [ "$1" != "" ]; then
+        #     git commit -m "$1"
+        # else
+        #     git commit -m 'update'
+        # fi
+        echo "sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)"
     }
   '';
 }
