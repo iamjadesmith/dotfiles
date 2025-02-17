@@ -145,6 +145,7 @@
 
   environment.systemPackages = with pkgs.unstable; [
     zsh
+    bash
     wget
     neovim
     tmux
