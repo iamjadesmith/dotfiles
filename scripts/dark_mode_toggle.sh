@@ -3,14 +3,14 @@
 NVIM_CONFIG="$HOME/.dotfiles/.config/nvim/lua/config/plugins/colors.lua"
 
 function toggle {
-    let FLAKE=$1
-    let NVIM_CONFIG=$2
+    FLAKE=$1
+    NVIM_CONFIG=$2
     if grep -q "dark_mode = true" "$FLAKE"; then
-        sed -i '' 's/dark_mode = true/dark_mode = false/' "$FLAKE"
-        sed -i '' 's/dark_mode = true/dark_mode = false/' "$NVIM_CONFIG"
+        sed -i 's/dark_mode = true/dark_mode = false/' "$FLAKE"
+        sed -i 's/dark_mode = true/dark_mode = false/' "$NVIM_CONFIG"
     else
-        sed -i '' 's/dark_mode = false/dark_mode = true/' "$FLAKE"
-        sed -i '' 's/dark_mode = false/dark_mode = true/' "$NVIM_CONFIG"
+        sed -i 's/dark_mode = false/dark_mode = true/' "$FLAKE"
+        sed -i 's/dark_mode = false/dark_mode = true/' "$NVIM_CONFIG"
     fi
 }
 
