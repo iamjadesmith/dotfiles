@@ -1,9 +1,25 @@
 #!/bin/bash
 
-CONFIG_FILE="$HOME/.dotfiles/.config/nvim/lua/config/plugins/colors.lua"
+NVIM_CONFIG="$HOME/.dotfiles/.config/nvim/lua/config/plugins/colors.lua"
 
-if grep -q "dark_mode = true" "$CONFIG_FILE"; then
-    sed -i '' 's/dark_mode = true/dark_mode = false/' "$CONFIG_FILE"
+function toggle {
+    let FLAKE=$1
+    let NVIM_CONFIG=$2
+    if grep -q "dark_mode = true" "$FLAKE"; then
+        sed -i '' 's/dark_mode = true/dark_mode = false/' "$FLAKE"
+        sed -i '' 's/dark_mode = true/dark_mode = false/' "$NVIM_CONFIG"
+    else
+        sed -i '' 's/dark_mode = false/dark_mode = true/' "$FLAKE"
+        sed -i '' 's/dark_mode = false/dark_mode = true/' "$NVIM_CONFIG"
+    fi
+}
+
+if [[ -d "/Users/jade" ]] then
+    FLAKE="$HOME/.dotfiles/nix/darwin/flake.nix"
+    toggle $FLAKE $NVIM_CONFIG
+    darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac
 else
-    sed -i '' 's/dark_mode = false/dark_mode = true/' "$CONFIG_FILE"
+    FLAKE="$HOME/.dotfiles/nix/flake.nix"
+    toggle $FLAKE $NVIM_CONFIG
+    sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
 fi
