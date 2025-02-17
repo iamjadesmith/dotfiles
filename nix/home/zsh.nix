@@ -15,7 +15,6 @@
     dot = "cd ~/.dotfiles && nvim .";
     k = "kubectl";
     h = "helm";
-    rebmac = "darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac";
     proj = "source ~/.scripts/project.sh";
     o = "cd ~/Obsidian && nvim .";
   };
@@ -97,17 +96,11 @@
         else
             git commit -m 'update'
         fi
-        sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
-    }
-
-    function rebmac() {
-        git add .
-        if [ "$1" != "" ]; then
-            git commit -m "$1"
+        if [[ -d "/Users/jade" ]] then
+            darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac
         else
-            git commit -m 'update'
+            sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
         fi
-        darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac
     }
   '';
 }
