@@ -37,13 +37,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # services.xserver.enable = true;
   programs.hyprland.enable = true;
-
-  # services.xserver.xkb = {
-  #   layout = "us";
-  #   variant = "";
-  # };
 
   services.printing.enable = true;
   security.rtkit.enable = true;
