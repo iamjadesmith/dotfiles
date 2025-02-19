@@ -131,6 +131,7 @@
     git
     samba
     zsh
+    bash
     tmux
     kubectl
     helm

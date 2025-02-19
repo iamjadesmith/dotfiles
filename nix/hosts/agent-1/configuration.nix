@@ -123,6 +123,7 @@
     samba
     postgresql_17
     zsh
+    bash
     tmux
     fzf
     zoxide
