@@ -133,59 +133,60 @@
   };
 
   environment.systemPackages = with pkgs.unstable; [
-    zsh
-    bash
-    wget
-    neovim
-    tmux
-    git
-    kubectl
-    helm
-    python314
-    luajitPackages.luarocks-nix
-    fzf
-    obsidian
-    neofetch
-    alacritty
-    cider
-    zoxide
-    luajit
-    lua
-    stow
-    ripgrep
-    gcc
-    cmake
-    nodejs_22
-    nil
     R
-    gnumake
-    lua-language-server
-    stylua
-    nixfmt-rfc-style
-    prismlauncher
-    wofi
-    oh-my-posh
-    zulu
-    kanata
-    nextcloud-client
-    thunderbird
+    alacritty
     ansible
-    fluxcd
     apacheHttpd
-    openssl
-    lazygit
-    postgresql_17
-    wl-clipboard
-    rustup
+    bash
+    bitwarden-cli
+    bitwarden-desktop
     cargo
-    tree-sitter
-    sourcekit-lsp
+    cider
+    cmake
     discord
     ente-auth
-    bitwarden-desktop
-    bitwarden-cli
-    yubikey-manager
+    firefox
+    fluxcd
+    fzf
+    gcc
+    git
+    gnumake
+    helm
+    kanata
+    kubectl
+    lazygit
+    lua
+    lua-language-server
+    luajit
+    luajitPackages.luarocks-nix
+    neofetch
+    neovim
+    nextcloud-client
+    nil
+    nixfmt-rfc-style
+    nodejs_22
     nvidia-container-toolkit
+    obsidian
+    oh-my-posh
+    openssl
+    postgresql_17
+    prismlauncher
+    python314
+    ripgrep
+    rustup
+    sourcekit-lsp
+    stow
+    stylua
+    thunderbird
+    tmux
+    tree-sitter
+    wget
+    wl-clipboard
+    wofi
+    yubikey-manager
+    zoxide
+    zsh
+    zulu
   ];
 
   services.kanata = {
