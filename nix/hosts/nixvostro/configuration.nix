@@ -51,15 +51,81 @@
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
   ];
-  virtualisation.docker.logDriver = "json-file";
 
   services.openiscsi = {
     enable = true;
     name = "iqn.2016-04.com.open-iscsi:${meta.hostname}";
   };
 
-  virtualisation.docker.enable = true;
-  virtualisation.docker.storageDriver = "btrfs";
+  virtualisation.docker = {
+    enable = true;
+    storageDriver = "btrfs";
+    logDriver = "json-file";
+    daemon.settings.features.cdi = true;
+    rootless.daemon.settings.features.cdi = true;
+  };
+
+  virtualisation.oci-containers.containers = {
+    traefik = {
+      image = "traefik:latest";
+      ports = [
+        "80:80"
+        "443:443"
+        "2222:2222"
+      ];
+      autoStart = true;
+      volumes = [
+        "/var/lib/traefik/letsencrypt:/letsencrypt"
+        "/var/run/docker.sock:/var/run/docker.sock:ro"
+      ];
+      extraOptions = [
+        "--log.level=DEBUG"
+        "--api.insecure=true"
+        "--providers.docker=true"
+        "--providers.docker.exposedbydefault=false"
+        "--entryPoints.web.address=:80"
+        "--entryPoints.websecure.address=:443"
+        "--entryPoints.gitea-ssh.address=:2222"
+        "--certificatesresolvers.myresolver.acme.dnschallenge=true"
+        "--certificatesresolvers.myresolver.acme.dnschallenge.provider=cloudflare"
+        "--certificatesresolvers.myresolver.acme.email=bill@joejad.com"
+        "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+        "--certificatesresolvers.myresolver.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
+        "--entrypoints.websecure.http.tls.domains[0].main=joejad.com"
+        "--entrypoints.websecure.http.tls.domains[0].sans=*.joejad.com"
+        "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+        "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+        "--entrypoints.websecure.http.tls.certResolver=myresolver"
+      ];
+    };
+    gitea = {
+      image = "gitea/gitea";
+      autoStart = true;
+      environment = [
+        "GITEA__server__SSH_PORT=2222"
+      ];
+      volumes = [
+        "/var/lib/gitea:/data"
+        "/etc/timezone:/etc/timezone:ro"
+        "/etc/localtime:/etc/localtime:ro"
+      ];
+    };
+    adguard = {
+      image = "adguard/adguardhome";
+      autoStart = true;
+      ports = [
+        "53:53/tcp"
+        "53:53/udp"
+        "853:853/tcp"
+        "853:853/udp"
+        "3000:3000"
+      ];
+      volumes = [
+        "/var/lib/adguard/work:/opt/adguardhome/work"
+        "/var/lib/adguard/conf:/opt/adguardhome/conf"
+      ];
+    };
+  };
 
   users.users.joejad = {
     isNormalUser = true;
