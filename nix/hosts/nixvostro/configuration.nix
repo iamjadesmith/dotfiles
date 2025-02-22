@@ -82,6 +82,7 @@
         "/var/lib/traefik/letsencrypt:/letsencrypt"
         "/var/run/docker.sock:/var/run/docker.sock:ro"
       ];
+      environmentFiles = [ "/var/lib/secrets/.env" ];
       extraOptions = [
         "--log.level=DEBUG"
         "--api.insecure=true"
@@ -105,9 +106,9 @@
     gitea = {
       image = "gitea/gitea";
       autoStart = true;
-      environment = [
-        "GITEA__server__SSH_PORT=2222"
-      ];
+      environment = {
+        GITEA__server__SSH_PORT = "2222";
+      };
       volumes = [
         "/var/lib/gitea:/data"
         "/etc/timezone:/etc/timezone:ro"
@@ -195,35 +196,35 @@
   services.logind.lidSwitch = "ignore";
 
   environment.systemPackages = with pkgs; [
-    unstable.neovim
-    cifs-utils
-    nfs-utils
-    git
-    samba
-    zsh
+    R
     bash
-    tmux
-    kubectl
-    helm
+    cifs-utils
     fluxcd
     fzf
-    zoxide
-    lua
-    stow
-    ripgrep
-    gnumake
     gcc
-    nil
-    R
+    git
+    gnumake
+    helm
+    kubectl
+    lazygit
+    lua
     lua-language-server
     luajitPackages.luarocks-nix
-    stylua
+    nfs-utils
+    nil
     nixfmt-rfc-style
     oh-my-posh
-    unstable.rustup
-    unstable.cargo
-    lazygit
     postgresql_17
+    ripgrep
+    samba
+    stow
+    stylua
+    tmux
+    unstable.cargo
+    unstable.neovim
+    unstable.rustup
+    zoxide
+    zsh
   ];
 
   services.openssh = {
