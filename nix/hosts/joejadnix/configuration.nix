@@ -2,9 +2,7 @@
   inputs,
   outputs,
   pkgs,
-  config,
   meta,
-  lib,
   ...
 }:
 
@@ -72,7 +70,6 @@
       image = "ollama/ollama";
       ports = [ "11434:11434" ];
       volumes = [
-        # "/home/joejad/projects/ollama/ollama:/root/.ollama"
         "/var/lib/ollama:/root/.ollama"
       ];
       autoStart = true;
@@ -84,7 +81,6 @@
       image = "ghcr.io/open-webui/open-webui:main";
       ports = [ "3000:8080" ];
       volumes = [
-        # "/home/joejad/projects/ollama/open-webui:/app/backend/data"
         "/var/lib/open-webui:/app/backend/data"
       ];
       autoStart = true;
