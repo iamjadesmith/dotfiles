@@ -36,7 +36,6 @@
   };
 
   programs.hyprland.enable = true;
-  programs.firefox.enable = true;
 
   services.printing.enable = true;
   security.rtkit.enable = true;
@@ -146,7 +145,6 @@
     cmake
     discord
     ente-auth
-    firefox
     fluxcd
     fzf
     gcc
