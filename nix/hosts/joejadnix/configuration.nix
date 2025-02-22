@@ -55,6 +55,8 @@
 
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
+    "d /var/lib/ollama 0755 root root - -"
+    "d /var/lib/open-webui 0755 root root - -"
   ];
 
   virtualisation.docker = {
