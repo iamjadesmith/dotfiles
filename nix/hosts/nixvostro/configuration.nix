@@ -83,7 +83,7 @@
         "/var/run/docker.sock:/var/run/docker.sock:ro"
       ];
       environmentFiles = [ "/var/lib/secrets/.env" ];
-      extraOptions = [
+      cmd = [
         "--log.level=DEBUG"
         "--api.insecure=true"
         "--providers.docker=true"
