@@ -69,6 +69,7 @@
     ollama = {
       image = "ollama/ollama";
       ports = [ "11434:11434" ];
+      pull = "always";
       volumes = [
         "/var/lib/ollama:/root/.ollama"
       ];
@@ -80,6 +81,7 @@
     open-webui = {
       image = "ghcr.io/open-webui/open-webui:main";
       ports = [ "3000:8080" ];
+      pull = "always";
       volumes = [
         "/var/lib/open-webui:/app/backend/data"
       ];
