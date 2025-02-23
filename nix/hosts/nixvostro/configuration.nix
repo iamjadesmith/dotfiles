@@ -78,6 +78,7 @@
         "2222:2222"
       ];
       autoStart = true;
+      networks = [ "traefik" ];
       volumes = [
         "/var/lib/traefik/letsencrypt:/letsencrypt"
         "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -109,6 +110,7 @@
       environment = {
         GITEA__server__SSH_PORT = "2222";
       };
+      networks = [ "traefik" ];
       volumes = [
         "/var/lib/gitea:/data"
         "/etc/timezone:/etc/timezone:ro"
@@ -127,6 +129,7 @@
     adguard = {
       image = "adguard/adguardhome";
       autoStart = true;
+      networks = [ "traefik" ];
       ports = [
         "53:53/tcp"
         "53:53/udp"
