@@ -70,6 +70,7 @@
   };
 
   virtualisation.oci-containers.containers = {
+
     traefik = {
       image = "traefik:latest";
       hostname = "traefik";
@@ -104,7 +105,24 @@
         "--entrypoints.web.http.redirections.entrypoint.scheme=https"
         "--entrypoints.websecure.http.tls.certResolver=myresolver"
       ];
+      labels = {
+        "traefik.http.routers.gitea.rule" = "Host(`gitea.joejad.com`)";
+        "traefik.http.routers.gitea.entrypoints" = "websecure";
+        "traefik.http.routers.gitea.service" = "gitea";
+        "traefik.http.services.gitea.loadbalancer.server.port" = "3000";
+
+        "traefik.tcp.routers.gitea.entrypoints" = "gitea-ssh";
+        "traefik.tcp.routers.gitea.rule" = "HostSNI(`*`)";
+        "traefik.tcp.routers.gitea.service" = "gitea";
+        "traefik.tcp.services.gitea.loadbalancer.server.port" = "22";
+
+        "traefik.http.routers.adguard.rule" = "Host(`ad3.joejad.com`)";
+        "traefik.http.routers.adguard.entrypoints" = "websecure";
+        "traefik.http.routers.adguard.service" = "adguard";
+        "traefik.http.services.adguard.loadbalancer.server.port" = "3000";
+      };
     };
+
     gitea = {
       image = "gitea/gitea";
       hostname = "gitea";
@@ -117,18 +135,8 @@
         "/etc/timezone:/etc/timezone:ro"
         "/etc/localtime:/etc/localtime:ro"
       ];
-      labels = {
-        "traefik.enable" = "true";
-        "traefik.http.routers.gitea.rule" = "Host(`gitea.joejad.com`)";
-        "traefik.http.routers.gitea.entrypoints" = "websecure";
-        "traefik.http.routers.gitea.service" = "gitea";
-        "traefik.http.services.gitea.loadbalancer.server.port" = "3000";
-        "traefik.tcp.routers.gitea.entrypoints" = "gitea-ssh";
-        "traefik.tcp.routers.gitea.rule" = "HostSNI(`*`)";
-        "traefik.tcp.routers.gitea.service" = "gitea";
-        "traefik.tcp.services.gitea.loadbalancer.server.port" = "22";
-      };
     };
+
     adguard = {
       image = "adguard/adguardhome";
       hostname = "adguard";
@@ -144,13 +152,6 @@
         "/var/lib/adguard/work:/opt/adguardhome/work"
         "/var/lib/adguard/conf:/opt/adguardhome/conf"
       ];
-      labels = {
-        "traefik.enable" = "true";
-        "traefik.http.routers.adguard.rule" = "Host(`ad3.joejad.com`)";
-        "traefik.http.routers.adguard.entrypoints" = "websecure";
-        "traefik.http.routers.adguard.service" = "adguard";
-        "traefik.http.services.adguard.loadbalancer.server.port" = "3000";
-      };
     };
   };
 
@@ -174,6 +175,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKgYIcGwg/BHL2nJ+DfZsa2nvGz+e6TgUzuvIGudKB+w Shortcuts on Jade’s iPad"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBreNu9nXnPthacxlodcL+dp81vmCLrI2U1D1u4zexV2 joejad@nixnas"
     ];
+
   };
 
   security.sudo.wheelNeedsPassword = false;
