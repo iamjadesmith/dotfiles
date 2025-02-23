@@ -83,7 +83,8 @@
       autoStart = true;
       volumes = [
         "/var/lib/traefik/letsencrypt:/letsencrypt"
-        "/var/run/docker.sock:/var/run/docker.sock:ro"
+        # "/var/run/docker.sock:/var/run/docker.sock:ro"
+        "/run/podman/podman.sock:/var/run/docker.sock:ro"
       ];
       environmentFiles = [ "/var/lib/secrets/.env" ];
       cmd = [
