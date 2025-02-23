@@ -69,7 +69,7 @@
     rootless.daemon.settings.features.cdi = true;
   };
 
-  # services.podman.enable = true;
+  services.podman.enable = true;
   systemd.services.traefik-net = {
     description = "Traefik Network";
     wants = [ "network.target" ];
