@@ -69,24 +69,16 @@
     rootless.daemon.settings.features.cdi = true;
   };
 
-  virtualisation.oci-containers = {
-    networks = {
-      traefik = {
-        name = "traefik";
-      };
-    };
-  };
-
   virtualisation.oci-containers.containers = {
     traefik = {
       image = "traefik:latest";
+      hostname = "traefik";
       ports = [
         "80:80"
         "443:443"
         "2222:2222"
       ];
       autoStart = true;
-      networks = [ "traefik" ];
       volumes = [
         "/var/lib/traefik/letsencrypt:/letsencrypt"
         "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -114,11 +106,11 @@
     };
     gitea = {
       image = "gitea/gitea";
+      hostname = "gitea";
       autoStart = true;
       environment = {
         GITEA__server__SSH_PORT = "2222";
       };
-      networks = [ "traefik" ];
       volumes = [
         "/var/lib/gitea:/data"
         "/etc/timezone:/etc/timezone:ro"
@@ -136,8 +128,8 @@
     };
     adguard = {
       image = "adguard/adguardhome";
+      hostname = "adguard";
       autoStart = true;
-      networks = [ "traefik" ];
       ports = [
         "53:53/tcp"
         "53:53/udp"
