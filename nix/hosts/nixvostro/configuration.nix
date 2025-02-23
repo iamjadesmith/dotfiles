@@ -69,6 +69,14 @@
     rootless.daemon.settings.features.cdi = true;
   };
 
+  # services.podman.enable = true;
+  systemd.services.traefik-net = {
+    description = "Traefik Network";
+    wants = [ "network.target" ];
+    after = [ "network.target" ];
+
+    serviceConfig.ExecStart = "/usr/bin/podman network create traefik --label com.docker.network.driver.api.version=fixed";
+  };
   services.podman.networks = {
     traefik = {
       name = "traefik";
