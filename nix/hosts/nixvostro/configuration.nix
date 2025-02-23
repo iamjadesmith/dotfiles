@@ -120,9 +120,11 @@
         "traefik.enable" = "true";
         "traefik.http.routers.gitea.rule" = "Host(`gitea.joejad.com`)";
         "traefik.http.routers.gitea.entrypoints" = "websecure";
+        "traefik.http.routers.gitea.service" = "gitea";
         "traefik.http.services.gitea.loadbalancer.server.port" = "3000";
         "traefik.tcp.routers.gitea.entrypoints" = "gitea-ssh";
         "traefik.tcp.routers.gitea.rule" = "HostSNI(`*`)";
+        "traefik.tcp.routers.gitea.service" = "gitea";
         "traefik.tcp.services.gitea.loadbalancer.server.port" = "22";
       };
     };
@@ -145,6 +147,7 @@
         "traefik.enable" = "true";
         "traefik.http.routers.adguard.rule" = "Host(`ad3.joejad.com`)";
         "traefik.http.routers.adguard.entrypoints" = "websecure";
+        "traefik.http.routers.adguard.service" = "adguard";
         "traefik.http.services.adguard.loadbalancer.server.port" = "3000";
       };
     };
