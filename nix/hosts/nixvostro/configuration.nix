@@ -69,6 +69,15 @@
     rootless.daemon.settings.features.cdi = true;
   };
 
+  virtualisation.oci-containers.networks = {
+    traefik = {
+      name = "traefik";
+      labels = {
+        "com.docker.network.driver.api.version" = "fixed";
+      };
+    };
+  };
+
   virtualisation.oci-containers.containers = {
     traefik = {
       image = "traefik:latest";
