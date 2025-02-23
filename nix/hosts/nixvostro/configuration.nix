@@ -106,7 +106,7 @@
         "--entrypoints.web.http.redirections.entrypoint.to=websecure"
         "--entrypoints.web.http.redirections.entrypoint.scheme=https"
         "--entrypoints.websecure.http.tls.certResolver=myresolver"
-        "--providers.file.directory=/config.yaml"
+        "--providers.file.filename=/config.yaml"
       ];
     };
 
