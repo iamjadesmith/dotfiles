@@ -70,7 +70,6 @@
   };
 
   virtualisation.oci-containers = {
-    enable = true;
     networks = {
       traefik = {
         name = "traefik";
