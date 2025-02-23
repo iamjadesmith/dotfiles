@@ -69,77 +69,79 @@
     rootless.daemon.settings.features.cdi = true;
   };
 
-  # virtualisation.oci-containers.containers = {
-  #
-  #   traefik = {
-  #     image = "traefik:latest";
-  #     hostname = "traefik";
-  #     ports = [
-  #       "80:80"
-  #       "443:443"
-  #       "8080:8080"
-  #       "2222:2222"
-  #     ];
-  #     autoStart = true;
-  #     volumes = [
-  #       "/var/lib/traefik/letsencrypt:/letsencrypt"
-  #       # "/var/run/docker.sock:/var/run/docker.sock:ro"
-  #       "/run/podman/podman.sock:/var/run/docker.sock:ro"
-  #     ];
-  #     environmentFiles = [ "/var/lib/secrets/.env" ];
-  #     cmd = [
-  #       "--log.level=DEBUG"
-  #       "--api.insecure=true"
-  #       "--providers.docker=true"
-  #       "--providers.docker.exposedbydefault=false"
-  #       "--entryPoints.web.address=:80"
-  #       "--entryPoints.websecure.address=:443"
-  #       "--entryPoints.gitea-ssh.address=:2222"
-  #       "--certificatesresolvers.myresolver.acme.dnschallenge=true"
-  #       "--certificatesresolvers.myresolver.acme.dnschallenge.provider=cloudflare"
-  #       "--certificatesresolvers.myresolver.acme.email=bill@joejad.com"
-  #       "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-  #       "--certificatesresolvers.myresolver.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
-  #       "--entrypoints.websecure.http.tls.domains[0].main=joejad.com"
-  #       "--entrypoints.websecure.http.tls.domains[0].sans=*.joejad.com"
-  #       "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-  #       "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-  #       "--entrypoints.websecure.http.tls.certResolver=myresolver"
-  #     ];
-  #   };
-  #
-  #   gitea = {
-  #     image = "gitea/gitea";
-  #     hostname = "gitea";
-  #     autoStart = true;
-  #     environment = {
-  #       GITEA__server__SSH_PORT = "2222";
-  #     };
-  #     volumes = [
-  #       "/var/lib/gitea:/data"
-  #       "/etc/timezone:/etc/timezone:ro"
-  #       "/etc/localtime:/etc/localtime:ro"
-  #     ];
-  #   };
-  #
-  #   adguard = {
-  #     image = "adguard/adguardhome";
-  #     hostname = "adguard";
-  #     autoStart = true;
-  #     ports = [
-  #       "53:53/tcp"
-  #       "53:53/udp"
-  #       "853:853/tcp"
-  #       "853:853/udp"
-  #       "3000:3000"
-  #     ];
-  #     volumes = [
-  #       "/var/lib/adguard/work:/opt/adguardhome/work"
-  #       "/var/lib/adguard/conf:/opt/adguardhome/conf"
-  #     ];
-  #   };
-  # };
-  #
+  virtualisation.oci-containers.containers = {
+
+    traefik = {
+      image = "traefik:latest";
+      hostname = "traefik";
+      ports = [
+        "80:80"
+        "443:443"
+        "8080:8080"
+        "2222:2222"
+      ];
+      autoStart = true;
+      volumes = [
+        "/var/lib/podman/traefik/letsencrypt:/letsencrypt"
+        "/var/lib/podman/traefik/config.yaml:/config.yaml:ro"
+        # "/var/run/docker.sock:/var/run/docker.sock:ro"
+        "/run/podman/podman.sock:/var/run/docker.sock:ro"
+      ];
+      environmentFiles = [ "/var/lib/secrets/.env" ];
+      cmd = [
+        "--log.level=DEBUG"
+        "--api.insecure=true"
+        "--providers.docker=true"
+        "--providers.docker.exposedbydefault=false"
+        "--entryPoints.web.address=:80"
+        "--entryPoints.websecure.address=:443"
+        "--entryPoints.gitea-ssh.address=:2222"
+        "--certificatesresolvers.myresolver.acme.dnschallenge=true"
+        "--certificatesresolvers.myresolver.acme.dnschallenge.provider=cloudflare"
+        "--certificatesresolvers.myresolver.acme.email=bill@joejad.com"
+        "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+        "--certificatesresolvers.myresolver.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
+        "--entrypoints.websecure.http.tls.domains[0].main=joejad.com"
+        "--entrypoints.websecure.http.tls.domains[0].sans=*.joejad.com"
+        "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+        "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+        "--entrypoints.websecure.http.tls.certResolver=myresolver"
+        "--providers.file.directory=/config.yaml"
+      ];
+    };
+
+    gitea = {
+      image = "gitea/gitea";
+      hostname = "gitea";
+      autoStart = true;
+      environment = {
+        GITEA__server__SSH_PORT = "2222";
+      };
+      volumes = [
+        "/var/lib/podman/gitea:/data"
+        "/etc/timezone:/etc/timezone:ro"
+        "/etc/localtime:/etc/localtime:ro"
+      ];
+    };
+
+    adguard = {
+      image = "adguard/adguardhome";
+      hostname = "adguard";
+      autoStart = true;
+      ports = [
+        "53:53/tcp"
+        "53:53/udp"
+        "853:853/tcp"
+        "853:853/udp"
+        "3000:3000"
+      ];
+      volumes = [
+        "/var/lib/podman/adguard/work:/opt/adguardhome/work"
+        "/var/lib/podman/adguard/conf:/opt/adguardhome/conf"
+      ];
+    };
+  };
+
   users.users.joejad = {
     isNormalUser = true;
     shell = pkgs.zsh;
