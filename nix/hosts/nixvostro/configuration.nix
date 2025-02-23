@@ -81,6 +81,7 @@
         "2222:2222"
       ];
       autoStart = true;
+      extraOptions = [ "--security-opt label=type:container_runtime_t" ];
       volumes = [
         "/var/lib/traefik/letsencrypt:/letsencrypt"
         # "/var/run/docker.sock:/var/run/docker.sock:ro"
