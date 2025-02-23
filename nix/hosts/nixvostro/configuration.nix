@@ -114,6 +114,15 @@
         "/etc/timezone:/etc/timezone:ro"
         "/etc/localtime:/etc/localtime:ro"
       ];
+      labels = {
+        "traefik.enable" = "true";
+        "traefik.http.routers.gitea.rule" = "Host(`gitea.joejad.com`)";
+        "traefik.http.routers.gitea.entrypoints" = "websecure";
+        "traefik.http.services.gitea.loadbalancer.server.port" = "3000";
+        "traefik.tcp.routers.gitea.entrypoints" = "gitea-ssh";
+        "traefik.tcp.routers.gitea.rule" = "HostSNI(`*`)";
+        "traefik.tcp.services.gitea.loadbalancer.server.port" = "22";
+      };
     };
     adguard = {
       image = "adguard/adguardhome";
@@ -129,6 +138,12 @@
         "/var/lib/adguard/work:/opt/adguardhome/work"
         "/var/lib/adguard/conf:/opt/adguardhome/conf"
       ];
+      labels = {
+        "traefik.enable" = "true";
+        "traefik.http.routers.adguard.rule" = "Host(`ad3.joejad.com`)";
+        "traefik.http.routers.adguard.entrypoints" = "websecure";
+        "traefik.http.services.adguard.loadbalancer.server.port" = "3000";
+      };
     };
   };
 
