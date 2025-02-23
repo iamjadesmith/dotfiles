@@ -69,11 +69,11 @@
     rootless.daemon.settings.features.cdi = true;
   };
 
-  virtualisation.oci-containers.networks = {
+  services.podman.networks = {
     traefik = {
       name = "traefik";
       labels = {
-        "com.docker.network.driver.api.version" = "fixed";
+        "com.docker.network.driver.api.version" = "fixed"; # For Traefik
       };
     };
   };
