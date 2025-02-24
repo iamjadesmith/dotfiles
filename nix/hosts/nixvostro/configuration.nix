@@ -50,10 +50,11 @@
 
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
-    "d /var/lib/traefik/letsencrypt 0755 root root - -"
-    "d /var/lib/gitea 0755 root root - -"
-    "d /var/lib/adguard/conf 0755 root root - -"
-    "d /var/lib/adguard/work 0755 root root - -"
+    "d /var/lib/podman 0755 root root - -"
+    "d /var/lib/podman/traefik/letsencrypt 0755 root root - -"
+    "d /var/lib/podman/gitea 0755 root root - -"
+    "d /var/lib/podman/adguard/conf 0755 root root - -"
+    "d /var/lib/podman/adguard/work 0755 root root - -"
   ];
 
   services.openiscsi = {
