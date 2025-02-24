@@ -53,8 +53,9 @@
 
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
-    "d /var/lib/ollama 0755 root root - -"
-    "d /var/lib/open-webui 0755 root root - -"
+    "d /var/lib/podman 0755 root root - -"
+    "d /var/lib/podman/ollama 0755 root root - -"
+    "d /var/lib/podman/open-webui 0755 root root - -"
   ];
 
   virtualisation.docker = {
@@ -70,7 +71,7 @@
       image = "ollama/ollama";
       ports = [ "11434:11434" ];
       volumes = [
-        "/var/lib/ollama:/root/.ollama"
+        "/var/lib/podman/ollama:/root/.ollama"
       ];
       autoStart = true;
       extraOptions = [
@@ -81,7 +82,7 @@
       image = "ghcr.io/open-webui/open-webui:main";
       ports = [ "3000:8080" ];
       volumes = [
-        "/var/lib/open-webui:/app/backend/data"
+        "/var/lib/podman/open-webui:/app/backend/data"
       ];
       autoStart = true;
     };
