@@ -137,35 +137,36 @@
   };
 
   environment.systemPackages = with pkgs; [
-    unstable.neovim
-    fluxcd
-    kubectl
-    helm
-    cifs-utils
-    nfs-utils
-    git
-    samba
-    postgresql_17
-    zsh
-    bash
-    tmux
-    fzf
-    zoxide
-    lua
-    stow
-    ripgrep
-    gnumake
-    gcc
-    nil
     R
+    bash
+    cifs-utils
+    fluxcd
+    fzf
+    gcc
+    git
+    gnumake
+    helm
+    kubectl
+    lazygit
+    lua
     lua-language-server
     luajitPackages.luarocks-nix
-    stylua
+    nfs-utils
+    nil
     nixfmt-rfc-style
     oh-my-posh
-    unstable.rustup
+    postgresql_17
+    ripgrep
+    samba
+    stow
+    stylua
+    syncthing
+    tmux
     unstable.cargo
-    lazygit
+    unstable.neovim
+    unstable.rustup
+    zoxide
+    zsh
   ];
 
   services.openssh = {
