@@ -131,7 +131,6 @@
             dock.autohide-delay = 0.0;
           };
 
-          services.nix-daemon.enable = true;
           nix.settings.experimental-features = "nix-command flakes";
           programs.zsh.enable = true;
           system.configurationRevision = self.rev or self.dirtyRev or null;
