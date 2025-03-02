@@ -160,7 +160,6 @@
     samba
     stow
     stylua
-    syncthing
     tmux
     unstable.cargo
     unstable.neovim
