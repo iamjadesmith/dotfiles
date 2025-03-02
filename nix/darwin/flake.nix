@@ -39,8 +39,6 @@
           ...
         }:
         {
-          # List packages installed in system profile. To search by name, run:
-          # $ nix-env -qaP | grep wget
           nixpkgs.config.allowUnfree = true;
           nixpkgs.overlays = [
             add-unstable-packages
@@ -134,7 +132,6 @@
           };
 
           services.nix-daemon.enable = true;
-          security.pam.enableSudoTouchIdAuth = true;
           nix.settings.experimental-features = "nix-command flakes";
           programs.zsh.enable = true;
           system.configurationRevision = self.rev or self.dirtyRev or null;
