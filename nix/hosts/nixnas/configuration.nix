@@ -97,6 +97,7 @@
     user = "joejad";
     dataDir = "/home/joejad/projects";
     configDir = "/home/joejad/.config/syncthing";
+    guiAddress = "0.0.0.0:8384";
   };
 
   services.nfs.server.enable = true;
