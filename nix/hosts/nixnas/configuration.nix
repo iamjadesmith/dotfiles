@@ -89,8 +89,15 @@
   };
 
   security.sudo.wheelNeedsPassword = false;
-
   programs.zsh.enable = true;
+
+  services.syncthing = {
+    enable = true;
+    group = "users";
+    user = "joejad";
+    dataDir = "/home/joejad/projects";
+    configDir = "/home/joejad/.config/syncthing";
+  };
 
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''
