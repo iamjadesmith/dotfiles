@@ -81,9 +81,9 @@
 
           homebrew = {
             enable = true;
-            brews = [
-              "mas"
-            ];
+            # brews = [
+            #   "mas"
+            # ];
             casks = [
               "alfred"
               "firefox"
@@ -93,11 +93,11 @@
             taps = [
               "nikitabobko/tap"
             ];
-            masApps = {
-            };
-            # onActivation.cleanup = "zap";
-            # onActivation.autoUpdate = true;
-            # onActivation.upgrade = true;
+            # masApps = {
+            # };
+            onActivation.cleanup = "zap";
+            onActivation.autoUpdate = true;
+            onActivation.upgrade = true;
           };
 
           system.activationScripts.applications.text =
