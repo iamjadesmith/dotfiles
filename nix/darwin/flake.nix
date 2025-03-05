@@ -95,7 +95,6 @@
             ];
             masApps = {
             };
-            global.lockfiles = false;
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
             onActivation.upgrade = true;
