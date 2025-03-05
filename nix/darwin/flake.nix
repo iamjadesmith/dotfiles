@@ -45,12 +45,14 @@
             alacritty-theme.overlays.default
           ];
           environment.systemPackages = with pkgs; [
+            R
             alacritty
             black
             ffmpeg-headless
             fluxcd
             git
             kubectl
+            kubernetes-helm
             lazygit
             lua-language-server
             mkalias
@@ -67,7 +69,6 @@
             syncthing
             tmux
             tree
-            tree-sitter
             yt-dlp
             yubikey-manager
             zoxide
@@ -82,10 +83,6 @@
             enable = true;
             brews = [
               "mas"
-              "helm"
-              "vapor"
-              "r"
-              "pipx"
             ];
             casks = [
               "alfred"
