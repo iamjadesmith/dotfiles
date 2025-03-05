@@ -110,6 +110,15 @@
   };
 
   security.sudo.wheelNeedsPassword = false;
+  programs.zsh.enable = true;
+
+  services.syncthing = {
+    enable = true;
+    group = "users";
+    user = "joejad";
+    configDir = "/home/joejad/.config/syncthing";
+    guiAddress = "0.0.0.0:8384";
+  };
 
   services.openssh = {
     enable = true;
@@ -118,8 +127,6 @@
       PermitRootLogin = "no";
     };
   };
-
-  programs.zsh.enable = true;
 
   nixpkgs = {
     overlays = [
