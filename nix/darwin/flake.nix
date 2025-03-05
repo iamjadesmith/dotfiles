@@ -46,30 +46,31 @@
           ];
           environment.systemPackages = with pkgs; [
             alacritty
+            black
+            ffmpeg-headless
+            fluxcd
             git
+            kubectl
+            lazygit
             lua-language-server
             mkalias
             neovim
-            tree-sitter
             nil
-            rustup
-            obsidian
-            nodejs
-            ripgrep
-            stylua
-            tmux
-            zoxide
-            kubectl
-            black
-            fluxcd
-            lazygit
-            postgresql_17
             nixfmt-rfc-style
-            yt-dlp
-            ffmpeg-headless
+            nodejs
+            obsidian
+            postgresql_17
+            ripgrep
             ruby
-            yubikey-manager
+            rustup
+            stylua
+            syncthing
+            tmux
             tree
+            tree-sitter
+            yt-dlp
+            yubikey-manager
+            zoxide
           ];
 
           users.users.jade = {
