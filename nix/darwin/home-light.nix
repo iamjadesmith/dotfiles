@@ -16,9 +16,15 @@ in
   xdg.enable = true;
 
   xdg.configFile.nvim.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/nvim";
-  #xdg.configFile.aerospace.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/aerospace";
 
   home.stateVersion = "24.05";
+
+  services.syncthing = {
+    enable = true;
+    group = "staff";
+    user = "jade";
+    configDir = "/Users/joejad/.config/syncthing";
+  };
 
   programs = {
     alacritty = import ../home/alacritty-light.nix {
