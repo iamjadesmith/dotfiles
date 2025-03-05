@@ -95,9 +95,9 @@
             ];
             masApps = {
             };
-            onActivation.cleanup = "zap";
-            onActivation.autoUpdate = true;
-            onActivation.upgrade = true;
+            # onActivation.cleanup = "zap";
+            # onActivation.autoUpdate = true;
+            # onActivation.upgrade = true;
           };
 
           system.activationScripts.applications.text =
