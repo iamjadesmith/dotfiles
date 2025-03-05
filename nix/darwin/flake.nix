@@ -66,7 +66,6 @@
             ruby
             rustup
             stylua
-            syncthing
             tmux
             tree
             yt-dlp
@@ -99,6 +98,14 @@
           #   onActivation.autoUpdate = true;
           #   onActivation.upgrade = true;
           # };
+
+          services.syncthing = {
+            enable = true;
+            group = "staff";
+            user = "jade";
+            configDir = "/Users/jade/.config/syncthing";
+            guiAddress = "0.0.0.0:8384";
+          };
 
           system.activationScripts.applications.text =
             let
