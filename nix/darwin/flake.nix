@@ -79,26 +79,26 @@
             home = "/Users/jade";
           };
 
-          homebrew = {
-            enable = true;
-            brews = [
-              "mas"
-            ];
-            casks = [
-              "alfred"
-              "firefox"
-              "discord"
-              "nikitabobko/tap/aerospace"
-            ];
-            taps = [
-              "nikitabobko/tap"
-            ];
-            masApps = {
-            };
-            onActivation.cleanup = "zap";
-            onActivation.autoUpdate = true;
-            onActivation.upgrade = true;
-          };
+          # homebrew = {
+          #   enable = true;
+          #   brews = [
+          #     "mas"
+          #   ];
+          #   casks = [
+          #     "alfred"
+          #     "firefox"
+          #     "discord"
+          #     "nikitabobko/tap/aerospace"
+          #   ];
+          #   taps = [
+          #     "nikitabobko/tap"
+          #   ];
+          #   masApps = {
+          #   };
+          #   onActivation.cleanup = "zap";
+          #   onActivation.autoUpdate = true;
+          #   onActivation.upgrade = true;
+          # };
 
           system.activationScripts.applications.text =
             let
