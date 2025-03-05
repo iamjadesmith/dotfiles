@@ -19,11 +19,7 @@ in
 
   home.stateVersion = "24.05";
 
-  services.syncthing = {
-    enable = true;
-    group = "staff";
-    user = "jade";
-  };
+  services.syncthing.enable = true;
 
   programs = {
     alacritty = import ../home/alacritty-light.nix {
