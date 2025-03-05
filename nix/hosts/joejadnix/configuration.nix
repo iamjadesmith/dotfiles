@@ -119,6 +119,7 @@
     configDir = "/home/joejad/.config/syncthing";
     guiAddress = "0.0.0.0:8384";
   };
+  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
 
   services.openssh = {
     enable = true;
