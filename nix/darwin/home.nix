@@ -24,7 +24,6 @@ in
     enable = true;
     group = "staff";
     user = "jade";
-    configDir = "/Users/joejad/.config/syncthing";
   };
 
   programs = {
