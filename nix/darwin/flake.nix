@@ -81,20 +81,20 @@
 
           homebrew = {
             enable = true;
-            # brews = [
-            #   "mas"
-            # ];
+            brews = [
+              "mas"
+            ];
             casks = [
               "alfred"
               "firefox"
               "discord"
-              "nikitabobko/tap/aerospace"
+              # "nikitabobko/tap/aerospace"
             ];
-            taps = [
-              "nikitabobko/tap"
-            ];
-            # masApps = {
-            # };
+            # taps = [
+            #   "nikitabobko/tap"
+            # ];
+            masApps = {
+            };
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
             onActivation.upgrade = true;
