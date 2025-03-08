@@ -141,6 +141,18 @@
     };
   };
 
+  services.cron = {
+    enable = true;
+    systemCronJobs = [
+      "* 4 * * *        joejad    . /etc/profile; /home/joejad/backups/pbbackup.sh"
+    ];
+  };
+
+  services.nfs.server.enable = true;
+  services.nfs.server.exports = ''
+    /home/joejad 10.47.59.0/24(rw,sync,no_root_squash,no_subtree_check)
+  '';
+
   environment.systemPackages = with pkgs.unstable; [
     R
     alacritty
@@ -182,7 +194,6 @@
     python314
     ripgrep
     rustup
-    sourcekit-lsp
     stow
     stylua
     thunderbird
