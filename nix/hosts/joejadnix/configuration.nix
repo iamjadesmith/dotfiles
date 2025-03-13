@@ -161,6 +161,7 @@
     bash
     bitwarden-cli
     bitwarden-desktop
+    black
     cargo
     cider
     cmake
