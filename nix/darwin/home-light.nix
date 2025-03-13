@@ -16,6 +16,7 @@ in
   xdg.enable = true;
 
   xdg.configFile.nvim.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/nvim";
+  xdg.configFile.aerospace.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/aerospace";
 
   home.stateVersion = "24.05";
 
