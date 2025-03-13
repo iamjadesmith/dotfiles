@@ -66,7 +66,6 @@
             ruby
             rustup
             stylua
-            syncthing
             tmux
             tree
             yt-dlp
