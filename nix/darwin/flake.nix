@@ -82,12 +82,14 @@
             enable = true;
             brews = [
               "mas"
+              "syncthing"
             ];
             casks = [
               "alfred"
               "firefox"
               "discord"
               "nikitabobko/tap/aerospace"
+              "prismlauncher"
             ];
             taps = [
               "nikitabobko/tap"
