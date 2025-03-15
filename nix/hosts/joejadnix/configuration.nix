@@ -145,6 +145,7 @@
     enable = true;
     systemCronJobs = [
       "* 4 * * *        joejad    . /etc/profile; /home/joejad/backups/pbbackup.sh"
+      "* 4 * * *        joejad    . /etc/profile; /home/joejad/backups/nextcloud.sh"
     ];
   };
 
