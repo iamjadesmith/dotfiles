@@ -255,4 +255,12 @@
 
   hardware.nvidia-container-toolkit.enable = true;
 
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [
+      5000
+      8384
+    ];
+  };
+
 }
