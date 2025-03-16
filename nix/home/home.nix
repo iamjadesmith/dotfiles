@@ -14,6 +14,8 @@ in
   xdg.enable = true;
 
   xdg.configFile.nvim.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/nvim";
+  xdg.configFile.waybar.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/waybar";
+  xdg.configFile.wofi.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/wofi";
 
   home.stateVersion = "24.05";
 
