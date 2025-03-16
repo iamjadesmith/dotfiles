@@ -201,6 +201,7 @@
     thunderbird
     tmux
     tree-sitter
+    waybar
     wget
     wl-clipboard
     wofi
