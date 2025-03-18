@@ -193,7 +193,6 @@
     openssl
     postgresql_17
     prismlauncher
-    python314
     ripgrep
     rustup
     stow
