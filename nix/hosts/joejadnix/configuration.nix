@@ -87,7 +87,7 @@
       autoStart = true;
     };
     workout = {
-      image = "workout:latest";
+      image = "docker.io/library/workout";
       autoStart = true;
       ports = [ "5000:5000" ];
     };
