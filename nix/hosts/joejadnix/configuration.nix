@@ -86,6 +86,11 @@
       ];
       autoStart = true;
     };
+    workout = {
+      image = "workout:latest";
+      autoStart = true;
+      ports = [ "5000:5000" ];
+    };
   };
 
   users.users.joejad = {
