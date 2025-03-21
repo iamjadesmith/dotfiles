@@ -258,12 +258,15 @@
     description = "Workout";
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      ExecStart = "/home/joejad/projects/workout_python/workout.sh";
-      User = "joejad";
-      Group = "users";
-      Restart = "on-failure";
-    };
+    # serviceConfig = {
+    #   ExecStart = "/home/joejad/projects/workout_python/workout.sh";
+    #   User = "joejad";
+    #   Group = "users";
+    #   Restart = "on-failure";
+    # };
+    script = ''
+      nix-shell /home/joejad/projects/workout_python/shell.nix --run "python /path/to/your-script.py"
+    '';
   };
 
   hardware.nvidia-container-toolkit.enable = true;
