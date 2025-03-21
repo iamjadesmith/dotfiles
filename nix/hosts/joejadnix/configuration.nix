@@ -254,6 +254,18 @@
     open = true;
   };
 
+  systemd.services.workout = {
+    description = "Workout";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      ExecStart = "/home/joejad/projects/workout_python/workout.sh";
+      User = "joejad";
+      Group = "users";
+      Restart = "on-failure";
+    };
+  };
+
   hardware.nvidia-container-toolkit.enable = true;
 
   networking.firewall = {
