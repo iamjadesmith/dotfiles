@@ -179,6 +179,7 @@
     git
     gnumake
     helm
+    inputs.rose-pine-hyprcursor
     kanata
     kubectl
     lazygit
@@ -186,7 +187,6 @@
     lua-language-server
     luajit
     luajitPackages.luarocks-nix
-    inputs.rose-pine-hyprcursor
     neofetch
     neovim
     nextcloud-client
@@ -200,6 +200,7 @@
     postgresql_17
     prismlauncher
     ripgrep
+    rose-pine-cursor
     rustup
     stow
     stylua
