@@ -58,10 +58,6 @@
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ];
-    # exec = [
-    #   ''gsettings set org.gnome.desktop.interface cursor-theme "rose-pine-cursor"''
-    #   ''gsettings set org.gnome.desktop.interface cursor-size 24''
-    # ];
     windowrulev2 = [
       ''workspace 1, class:^(Alacritty)$''
       ''workspace 2, class:^(firefox)$''
@@ -76,10 +72,6 @@
       "GBM_BACKEND,nvidia-drm"
       "__GLX_VENDOR_LIBRARY_NAME,nvidia"
       "NIXOS_OZONE_WL,1"
-      # "HYPRCURSOR_THEME,rose-pine-hyprcursor"
-      # "HYPRCURSOR_SIZE,24"
-      # "XCURSOR_THEME,rose-pine-cursor"
-      # "XCURSOR_SIZE,24"
     ];
   };
   extraConfig = ''
