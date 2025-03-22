@@ -59,8 +59,7 @@
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ];
     exec = [
-      ''gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"''
-      ''gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Classic"''
+      ''gsettings set org.gnome.desktop.interface cursor-theme "rose-pine-cursor"''
       ''gsettings set org.gnome.desktop.interface cursor-size 24''
     ];
     windowrulev2 = [
