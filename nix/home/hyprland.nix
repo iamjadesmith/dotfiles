@@ -52,6 +52,7 @@
       ''gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps''
       ''gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"''
       ''gsettings set org.gnome.desktop.interface cursor-theme "rose-pine-cursor"''
+      ''gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Classic"''
       ''gsettings set org.gnome.desktop.interface cursor-size 24''
     ];
     exec-once = [
@@ -80,7 +81,7 @@
       "NIXOS_OZONE_WL,1"
       "HYPRCURSOR_THEME,rose-pine-hyprcursor"
       "HYPRCURSOR_SIZE,24"
-      "XCURSOR_THEME,rose-pine-cursor"
+      "XCURSOR_THEME,Bibata-Modern-Classic"
       "XCURSOR_SIZE,24"
     ];
   };
