@@ -41,7 +41,7 @@ in
   dconf = {
     enable = true;
     settings."org/gnome/desktop/interface".cursor-theme = "rose-pine-cursor";
-    settings."org/gnome/desktop/interface".cursor-size = "24";
+    settings."org/gnome/desktop/interface".cursor-size = 24;
   };
 
   programs = {
