@@ -33,15 +33,13 @@ in
 
   home.pointerCursor = {
     gtk.enable = true;
-    package = pkgs.rose-pine-cursor;
-    name = "rose-pine-cursor";
-    size = 32;
+    package = pkgs.rose-pine-hyprcursor;
+    name = "rose-pine-hyprcursor";
+    size = 24;
   };
 
   dconf = {
     enable = true;
-    settings."org/gnome/desktop/interface".cursor-theme = "rose-pine-cursor";
-    settings."org/gnome/desktop/interface".cursor-size = 32;
   };
 
   programs = {
