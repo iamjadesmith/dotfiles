@@ -31,6 +31,12 @@ in
     enable = true;
   };
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.rose-pine-hyprcursor;
+    size = 24;
+  };
+
   dconf = {
     enable = true;
   };
