@@ -34,6 +34,7 @@ in
   home.pointerCursor = {
     gtk.enable = true;
     package = pkgs.rose-pine-hyprcursor;
+    name = "rose-pine-hyprcursor";
     size = 24;
   };
 
