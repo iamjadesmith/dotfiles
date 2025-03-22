@@ -73,6 +73,7 @@
       "__GLX_VENDOR_LIBRARY_NAME,nvidia"
       "HYPRCURSOR_THEME,rose-pine-hyprcursor"
       "HYPRCURSOR_SIZE,24"
+      "XCURSOR_SIZE,rose-pine-hyprcursor"
       "XCURSOR_SIZE,24"
     ];
   };
