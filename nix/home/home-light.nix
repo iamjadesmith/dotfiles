@@ -29,11 +29,6 @@ in
 
   gtk = {
     enable = true;
-
-    iconTheme = {
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
-    };
   };
 
   home.pointerCursor = {
@@ -45,6 +40,8 @@ in
 
   dconf = {
     enable = true;
+    settings."org/gnome/desktop/interface".cursor-theme = "rose-pine-cursor";
+    settings."org/gnome/desktop/interface".cursor-size = "24";
   };
 
   programs = {

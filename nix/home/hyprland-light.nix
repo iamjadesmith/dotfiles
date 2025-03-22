@@ -60,7 +60,7 @@
     ];
     exec = [
       ''gsettings set org.gnome.desktop.interface cursor-theme "rose-pine-cursor"''
-      ''gsettings set org.gnome.desktop.interface cursor-size 32''
+      ''gsettings set org.gnome.desktop.interface cursor-size 24''
     ];
     windowrulev2 = [
       ''workspace 1, class:^(Alacritty)$''
