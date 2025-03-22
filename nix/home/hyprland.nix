@@ -48,11 +48,11 @@
       "DP-3,3840x2160@239.99,0x0,1.5"
       "Unknown-1,disable"
     ];
-    exec = [
-      ''gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps''
-      ''gsettings set org.gnome.desktop.interface cursor-theme "rose-pine-cursor"''
-      ''gsettings set org.gnome.desktop.interface cursor-size 24''
-    ];
+    # exec = [
+    #   ''gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps''
+    #   ''gsettings set org.gnome.desktop.interface cursor-theme "rose-pine-cursor"''
+    #   ''gsettings set org.gnome.desktop.interface cursor-size 24''
+    # ];
     exec-once = [
       ''obsidian''
       ''firefox''
@@ -77,10 +77,10 @@
       "GBM_BACKEND,nvidia-drm"
       "__GLX_VENDOR_LIBRARY_NAME,nvidia"
       "NIXOS_OZONE_WL,1"
-      "HYPRCURSOR_THEME,rose-pine-hyprcursor"
-      "HYPRCURSOR_SIZE,24"
-      "XCURSOR_THEME,rose-pine-cursor"
-      "XCURSOR_SIZE,24"
+      # "HYPRCURSOR_THEME,rose-pine-hyprcursor"
+      # "HYPRCURSOR_SIZE,24"
+      # "XCURSOR_THEME,rose-pine-cursor"
+      # "XCURSOR_SIZE,24"
     ];
   };
   extraConfig = ''

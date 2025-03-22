@@ -34,8 +34,8 @@ in
   home.pointerCursor = {
     x11.enable = true;
     gtk.enable = true;
-    package = pkgs.rose-pine-hyprcursor;
-    name = "rose-pine-hyprcursor";
+    package = pkgs.rose-pine-cursor;
+    name = "BreezeX-RosePine-Linux";
     size = 24;
   };
 
