@@ -179,7 +179,6 @@
     git
     gnumake
     helm
-    inputs.rose-pine-hyprcursor
     kanata
     kubectl
     lazygit
