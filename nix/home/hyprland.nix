@@ -53,10 +53,6 @@
       ''firefox''
       ''alacritty''
     ];
-    # exec = [
-    #   ''gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"''
-    #   ''gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"''
-    # ];
     bindl = [
       ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
