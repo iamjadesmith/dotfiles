@@ -49,8 +49,10 @@
       "Unknown-1,disable"
     ];
     exec = [
-      ''gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"   # for GTK3 apps''
       ''gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"   # for GTK4 apps''
+      ''gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"''
+      ''gsettings set org.gnome.desktop.interface cursor-theme "rose-pine-cursor"''
+      ''gsettings set org.gnome.desktop.interface cursor-size 24''
     ];
     exec-once = [
       ''obsidian''

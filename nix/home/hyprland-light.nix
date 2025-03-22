@@ -58,6 +58,11 @@
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ];
+    exec = [
+      ''gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"''
+      ''gsettings set org.gnome.desktop.interface cursor-theme "rose-pine-cursor"''
+      ''gsettings set org.gnome.desktop.interface cursor-size 24''
+    ];
     windowrulev2 = [
       ''workspace 1, class:^(Alacritty)$''
       ''workspace 2, class:^(firefox)$''
