@@ -80,6 +80,7 @@
       "HYPRCURSOR_SIZE,24"
       "XCURSOR_THEME,rose-pine-cursor"
       "XCURSOR_SIZE,24"
+      "GDK_SCALE,2"
     ];
   };
   extraConfig = ''

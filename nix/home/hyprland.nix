@@ -80,7 +80,7 @@
       "HYPRCURSOR_THEME,rose-pine-hyprcursor"
       "HYPRCURSOR_SIZE,24"
       "XCURSOR_THEME,rose-pine-cursor"
-      "XCURSOR_SIZE,32"
+      "XCURSOR_SIZE,24"
     ];
   };
   extraConfig = ''
