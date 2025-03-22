@@ -186,7 +186,7 @@
     lua-language-server
     luajit
     luajitPackages.luarocks-nix
-    inputs.rose-pine-hyprcursor.packages
+    inputs.rose-pine-hyprcursor
     neofetch
     neovim
     nextcloud-client
