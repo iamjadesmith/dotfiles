@@ -34,6 +34,12 @@ in
     };
   };
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.rose-pine-hyprcursor;
+    size = 24;
+  };
+
   dconf = {
     enable = true;
     settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
