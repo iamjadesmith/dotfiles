@@ -60,7 +60,7 @@
     ];
     exec = [
       ''gsettings set org.gnome.desktop.interface cursor-theme "rose-pine-cursor"''
-      ''gsettings set org.gnome.desktop.interface cursor-size 24''
+      ''gsettings set org.gnome.desktop.interface cursor-size 32''
     ];
     windowrulev2 = [
       ''workspace 1, class:^(Alacritty)$''
@@ -78,8 +78,8 @@
       "NIXOS_OZONE_WL,1"
       "HYPRCURSOR_THEME,rose-pine-hyprcursor"
       "HYPRCURSOR_SIZE,24"
-      "XCURSOR_THEME,Bibata-Modern-Classic"
-      "XCURSOR_SIZE,24"
+      "XCURSOR_THEME,rose-pine-cursor"
+      "XCURSOR_SIZE,32"
     ];
   };
   extraConfig = ''
