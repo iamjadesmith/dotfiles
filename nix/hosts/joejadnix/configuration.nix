@@ -46,7 +46,7 @@
     pulse.enable = true;
   };
 
-  fonts.packages = with pkgs.unstable; [
+  fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     openmoji-color
   ];
@@ -139,6 +139,7 @@
       outputs.overlays.additions
       outputs.overlays.unstable
       inputs.alacritty-theme.overlays.default
+      inputs.rose-pine-hyprcursor.overlays.default
     ];
     config = {
       permittedInsecurePackages = [ "electron-25.9.0" ];
@@ -159,7 +160,7 @@
     /home/joejad 10.47.59.0/24(rw,sync,no_root_squash,no_subtree_check)
   '';
 
-  environment.systemPackages = with pkgs.unstable; [
+  environment.systemPackages = with pkgs; [
     R
     alacritty
     ansible
