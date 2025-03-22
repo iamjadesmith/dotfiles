@@ -32,6 +32,15 @@ in
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = true;
     };
+    theme = {
+      package = pkgs.flat-remix-gtk;
+      name = "Flat-Remix-GTK-Grey-Darkest";
+    };
+
+    iconTheme = {
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Adwaita";
+    };
   };
 
   home.pointerCursor = {
