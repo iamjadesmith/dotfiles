@@ -35,13 +35,13 @@ in
     gtk.enable = true;
     package = pkgs.rose-pine-cursor;
     name = "rose-pine-cursor";
-    size = 24;
+    size = 32;
   };
 
   dconf = {
     enable = true;
     settings."org/gnome/desktop/interface".cursor-theme = "rose-pine-cursor";
-    settings."org/gnome/desktop/interface".cursor-size = 24;
+    settings."org/gnome/desktop/interface".cursor-size = 32;
   };
 
   programs = {
