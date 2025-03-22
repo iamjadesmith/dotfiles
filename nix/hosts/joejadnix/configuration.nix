@@ -139,7 +139,6 @@
       outputs.overlays.additions
       outputs.overlays.unstable
       inputs.alacritty-theme.overlays.default
-      inputs.rose-pine-hyprcursor.overlays.default
     ];
     config = {
       permittedInsecurePackages = [ "electron-25.9.0" ];
@@ -187,6 +186,7 @@
     lua-language-server
     luajit
     luajitPackages.luarocks-nix
+    inputs.rose-pine-hyprcursor.packages.default
     neofetch
     neovim
     nextcloud-client
