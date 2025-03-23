@@ -182,7 +182,6 @@
     kanata
     kubectl
     lazygit
-    # libnotify
     lua
     lua-language-server
     luajit
