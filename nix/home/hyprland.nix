@@ -6,13 +6,13 @@
     bind =
       [
         "$mod, F, exec, firefox"
+        "$mod, N, exec, swaync-client -t"
         "$mod, RETURN, exec, alacritty"
         "$mod+SUPER, E, exit"
         "$mod+SUPER, S, exec, systemctl suspend"
         "$mod+SUPER, R, exec, systemctl restart"
         "$mod+SUPER, Q, exec, shutdown now"
         "$mod, Q, killactive"
-        "$mod, Y, exec, nautilus"
         "$mod, V, togglesplit"
         "$mod, H, movefocus, l"
         "$mod, L, movefocus, r"
