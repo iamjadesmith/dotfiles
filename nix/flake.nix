@@ -26,7 +26,7 @@
     }@inputs:
     let
       inherit (self) outputs;
-      dark_mode = true;
+      dark_mode = false;
       hosts = [
         {
           name = "joejadnix";

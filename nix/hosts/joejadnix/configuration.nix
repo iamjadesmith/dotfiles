@@ -203,6 +203,7 @@
     rustup
     stow
     stylua
+    swaynotificationcenter
     thunderbird
     tmux
     tree-sitter
