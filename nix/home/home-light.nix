@@ -14,6 +14,7 @@ in
   xdg.enable = true;
 
   xdg.configFile.nvim.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/nvim";
+  xdg.configFile.swaync.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/swaync";
   xdg.configFile.waybar.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/waybar";
   xdg.configFile.wofi.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/wofi";
 
