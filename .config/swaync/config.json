@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "example-script": {
+      "exec": "wpctl get-volume @DEFAULT_AUDIO_SINK@",
+      "app-name": "wpctl",
+      "body": "Volume"
+    }
+  }
+}
