@@ -178,9 +178,9 @@
     gcc
     git
     gnumake
-    helm
     kanata
     kubectl
+    kubernetes-helm
     lazygit
     lua
     lua-language-server
