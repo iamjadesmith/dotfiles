@@ -6,7 +6,7 @@ xcode-select --install
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 brew install neovim tmux bitwarden-cli syncthing r kubernetes-cli stow helm yt-dlp lazygit zoxide fzf ansible oh-my-posh lua-language-server stylua
-brew install --cask alacritty ente-auth discord raycast obsidian font-jetbrains-mono-nerd-font
+brew install --cask alacritty ente-auth discord raycast obsidian font-jetbrains-mono-nerd-font nextcloud
 
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 
