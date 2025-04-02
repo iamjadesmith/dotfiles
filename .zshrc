@@ -54,6 +54,7 @@ alias ls='ls --color'
 alias l='ls -la'
 alias c='clear'
 alias k='kubectl'
+alias v='nvim'
 
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
@@ -71,14 +72,4 @@ function lgit() {
         git commit -m 'update'
     fi
     git push -u origin main
-}
-
-function rebuild() {
-    git add .
-    if [ "$1" != "" ]; then
-        git commit -m "$1"
-    else
-        git commit -m 'update'
-    fi
-    sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#default
 }
