@@ -14,4 +14,5 @@ cd ~/.dotfiles
 stow .
 
 mkdir ~/.tmux
+mkdir ~/.tmux/plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
