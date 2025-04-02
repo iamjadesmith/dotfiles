@@ -2,6 +2,8 @@ if [[ -f "/opt/homebrew/bin/brew" ]] then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+PATH="$HOME/.local/bin:$PATH"
+
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME" ]; then
    mkdir -p "$(dirname $ZINIT_HOME)"
@@ -58,8 +60,6 @@ alias v='nvim'
 
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
-
-PATH="$HOME/.local/bin:$PATH"
 
 export EDITOR="nvim"
 export SHELL="zsh"
