@@ -1,6 +1,6 @@
 .git
 .gitignore
 README.md
-mac.sh
 nix
 scripts
+start
