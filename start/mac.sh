@@ -13,6 +13,5 @@ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 cd ~/.dotfiles
 stow .
 
-mkdir ~/.tmux
-mkdir ~/.tmux/plugins
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+mkdir ~/.config/tmux/plugins
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
