@@ -25,7 +25,7 @@ return {
 			})
 		end)
 		vim.keymap.set("n", "<leader>ed", function()
-			builtin.find_files({
+			builtin.git_files({
 				cwd = "~/.dotfiles",
 			})
 		end)
