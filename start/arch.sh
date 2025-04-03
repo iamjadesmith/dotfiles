@@ -1,9 +1,10 @@
 #!/bin/bash
 sudo pacman -Syu
-sudo pacman -S neofetch htop speedtest-cli stow tmux firefox bitwarden-cli alacritty hyprland syncthing r kubectl helm docker stow lazygit zoxide fzf ansible lua-language-server stylua discord obsidian ttf-jetbrains-mono-nerd nextcloud-client gcc base-devel wofi
+sudo pacman -S neofetch htop speedtest-cli stow tmux firefox bitwarden-cli alacritty hyprland syncthing r kubectl helm docker stow lazygit zoxide fzf ansible lua-language-server stylua discord obsidian ttf-jetbrains-mono-nerd nextcloud-client gcc base-devel wofi cmake ninja curl
 
 cd ~/.dotfiles
 stow .
+touch ~/.hushlogin
 
 git clone https://aur.archlinux.org/yay.git ~/yay
 cd ~/yay
