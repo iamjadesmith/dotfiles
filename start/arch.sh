@@ -10,8 +10,7 @@ git clone https://aur.archlinux.org/yay.git ~/yay
 cd ~/yay
 makepkg -si
 
-mkdir ~/.tmux
-mkdir ~/.tmux/plugins
+mkdir ~/.config/tmux/plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 curl -s https://ohmyposh.dev/install.sh | bash -s
