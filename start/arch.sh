@@ -17,5 +17,5 @@ cd ~
 curl -s https://ohmyposh.dev/install.sh | bash -s
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 
-echo "PasswordAuthentication yes" | sudo tee -a /etc/ssh/sshd_config
+echo "PasswordAuthentication no" | sudo tee -a /etc/ssh/sshd_config
 sudo systemctl restart sshd
