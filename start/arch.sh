@@ -20,4 +20,18 @@ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 echo "PasswordAuthentication no" | sudo tee -a /etc/ssh/sshd_config
 sudo systemctl restart sshd
 
+# kanata
 yay -S kanata
+sudo groupadd uinput
+sudo usermod -aG input joejad
+sudo usermod -aG uinput joejad
+
+text='KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"'
+echo "$text" | sudo tee -a /etc/udev/rules.d/99-input.rules
+sudo udevadm control --reload-rules && sudo udevadm trigger
+ls -l /dev/uinput
+
+systemctl --user daemon-reload
+systemctl --user enable kanata.service
+systemctl --user start kanata.service
+systemctl --user status kanata.service
