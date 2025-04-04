@@ -19,3 +19,5 @@ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 
 echo "PasswordAuthentication no" | sudo tee -a /etc/ssh/sshd_config
 sudo systemctl restart sshd
+
+yay -S kanata
