@@ -1,0 +1,10 @@
+(defsrc
+ caps
+)
+(defalias
+ caps esc
+)
+
+(deflayer base
+ @caps
+)
