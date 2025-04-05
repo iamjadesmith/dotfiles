@@ -21,6 +21,7 @@ echo "PasswordAuthentication no" | sudo tee -a /etc/ssh/sshd_config
 sudo systemctl restart sshd
 
 # kanata
+
 yay -S kanata
 sudo groupadd uinput
 sudo usermod -aG input joejad
@@ -35,3 +36,12 @@ systemctl --user daemon-reload
 systemctl --user enable kanata.service
 systemctl --user start kanata.service
 systemctl --user status kanata.service
+
+# docker
+sudo groupadd docker
+sudo usermod -aG docker $USER
+
+sudo systemctl start docker.service
+sudo systemctl start containerd.service
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
