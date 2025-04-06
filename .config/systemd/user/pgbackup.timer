@@ -1,0 +1,10 @@
+[Unit]
+Description=Run pgbackup daily
+
+[Timer]
+OnCalendar=*-*-* 1:00:00
+Persistent=true
+Unit=pgbackup.service
+
+[Install]
+WantedBy=timers.target
