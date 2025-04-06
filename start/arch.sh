@@ -45,3 +45,7 @@ sudo systemctl start docker.service
 sudo systemctl start containerd.service
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
+
+systemctl --user enable syncthing.service
+systemctl --user start syncthing.service
+systemctl --user status syncthing.service
