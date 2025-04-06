@@ -1,0 +1,10 @@
+[Unit]
+Description=PGBackup
+Wants=pgbackup.timer
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /home/joejad/backups/pgbackup.sh
+
+[Install]
+WantedBy=multi-user.target
