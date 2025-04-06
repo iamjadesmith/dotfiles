@@ -15,3 +15,5 @@ stow .
 
 mkdir ~/.config/tmux/plugins
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+
+brew services start syncthing
