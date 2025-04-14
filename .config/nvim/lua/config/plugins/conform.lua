@@ -1,36 +1,36 @@
 return {
-  "stevearc/conform.nvim",
-  event = { "BufWritePre" },
-  cmd = { "ConformInfo" },
-  keys = {
-    {
-      "<leader>p",
-      function()
-        require("conform").format({ lsp_fallback = "true", timeout_ms = 2000 })
-      end,
-      mode = "",
-      desc = "Format buffer",
-    },
-  },
-  opts = {
-    formatters = {
-      my_styler = {
-        command = "R",
-        args = { "-s", "-e", "styler::style_file(commandArgs(TRUE))", "--args", "$FILENAME" },
-        stdin = false,
-      },
-    },
-    notify_on_error = false,
-    formatters_by_ft = {
-      lua = { "stylua" },
-      python = { "black" },
-      r = { "my_styler" },
-      quarto = { "my_styler" },
-      rust = { "rustfmt" },
-    },
-    format_on_save = {
-      lsp_format = "fallback",
-      timeout_ms = 2000,
-    },
-  },
+	"stevearc/conform.nvim",
+	event = { "BufWritePre" },
+	cmd = { "ConformInfo" },
+	keys = {
+		{
+			"<leader>b",
+			function()
+				require("conform").format({ lsp_fallback = "true", timeout_ms = 2000 })
+			end,
+			mode = "",
+			desc = "Format buffer",
+		},
+	},
+	opts = {
+		formatters = {
+			my_styler = {
+				command = "R",
+				args = { "-s", "-e", "styler::style_file(commandArgs(TRUE))", "--args", "$FILENAME" },
+				stdin = false,
+			},
+		},
+		notify_on_error = false,
+		formatters_by_ft = {
+			lua = { "stylua" },
+			python = { "black" },
+			r = { "my_styler" },
+			quarto = { "my_styler" },
+			rust = { "rustfmt" },
+		},
+		format_on_save = {
+			lsp_format = "fallback",
+			timeout_ms = 2000,
+		},
+	},
 }
