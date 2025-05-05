@@ -49,3 +49,10 @@ sudo systemctl enable containerd.service
 systemctl --user enable syncthing.service
 systemctl --user start syncthing.service
 systemctl --user status syncthing.service
+
+# open-webui
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+systemctl --user enable open-webui.service
+systemctl --user start open-webui.service
+systemctl --user status open-webui.service
