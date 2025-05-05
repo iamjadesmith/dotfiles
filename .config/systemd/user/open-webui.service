@@ -1,0 +1,11 @@
+[Unit]
+Description=Open-Webui
+
+[Service]
+Environment=DATA_DIR=~/.open-webui
+ExecStart=/home/joejad/.local/bin/uvx --python 3.11 open-webui@latest serve
+Restart=on-failure
+KillMode=process
+
+[Install]
+WantedBy=default.target
