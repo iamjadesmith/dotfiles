@@ -5,6 +5,7 @@ sudo pacman -S neofetch htop speedtest-cli stow tmux firefox bitwarden-cli alacr
 cd ~/.dotfiles
 stow .
 touch ~/.hushlogin
+ln -s ~/.dotfiles/.config/alacritty/alacritty_linux.toml ~/.config/alacritty/alacritty.toml
 
 git clone https://aur.archlinux.org/yay.git ~/yay
 cd ~/yay
