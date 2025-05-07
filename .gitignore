@@ -1,6 +1,7 @@
 *~
 *.DS_Store
 .config/tmux/plugins/
+.config/alacritty/alacritty.toml
 node_modules/
 package-lock.json
 package.json
