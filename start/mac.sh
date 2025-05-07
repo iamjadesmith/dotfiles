@@ -12,6 +12,7 @@ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 
 cd ~/.dotfiles
 stow .
+ln -s ~/.dotfiles/.config/alacritty/alacritty_mac.toml ~/.config/alacritty/alacritty.toml
 
 mkdir ~/.config/tmux/plugins
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
