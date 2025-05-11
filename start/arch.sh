@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo pacman -Syu
-sudo pacman -S neofetch htop speedtest-cli stow tmux firefox bitwarden-cli alacritty hyprland syncthing r kubectl helm docker docker-compose stow lazygit zoxide fzf ansible lua-language-server stylua discord obsidian ttf-jetbrains-mono-nerd nextcloud-client gcc base-devel wofi cmake ninja curl prismlauncher nautilus xdg-desktop-portal-gtk xdg-desktop-portal-hyprland postgresql wl-clipboard nvidia-container-toolkit ollama-cuda waybar
+sudo pacman -S neofetch htop speedtest-cli stow tmux firefox bitwarden-cli alacritty hyprland syncthing r kubectl helm docker docker-compose stow lazygit zoxide fzf ansible lua-language-server stylua discord obsidian ttf-jetbrains-mono-nerd nextcloud-client gcc base-devel wofi cmake ninja curl prismlauncher nautilus xdg-desktop-portal-gtk xdg-desktop-portal-hyprland postgresql wl-clipboard nvidia-container-toolkit ollama-cuda waybar pipewire-pulse
 
 cd ~/.dotfiles
 stow .
