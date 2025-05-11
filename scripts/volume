@@ -1,4 +1,2 @@
-#! /usr/bin/env nix-shell
-#! nix-shell -i bash -p bash
-
+#!/bin/bash
 wpctl get-volume @DEFAULT_AUDIO_SINK@
