@@ -19,3 +19,6 @@ mkdir ~/.config/tmux/plugins
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 
 brew services start syncthing
+
+defaults write com.apple.dock autohide-delay -float 0;
+killall Dock
