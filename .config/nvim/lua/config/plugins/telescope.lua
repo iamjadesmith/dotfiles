@@ -32,6 +32,7 @@ return {
 		vim.keymap.set("n", "<leader>eo", function()
 			builtin.find_files({
 				cwd = "~/Obsidian",
+				find_command = { "rg", "--files", "--glob", "*.md" },
 			})
 		end)
 
