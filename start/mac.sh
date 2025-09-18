@@ -5,7 +5,7 @@ xcode-select --install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-brew install neovim tmux bitwarden-cli syncthing r kubernetes-cli stow helm yt-dlp lazygit zoxide fzf ansible oh-my-posh lua-language-server stylua ffmpeg
+brew install neovim tmux bitwarden-cli syncthing r kubernetes-cli stow helm yt-dlp lazygit zoxide fzf ansible oh-my-posh lua-language-server stylua ffmpeg ripgrep
 brew install --cask alacritty ente-auth discord raycast obsidian font-jetbrains-mono-nerd-font nextcloud
 brew install --cask nikitabobko/tap/aerospace
 
