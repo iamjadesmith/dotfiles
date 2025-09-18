@@ -16,11 +16,7 @@ return {
 		require("telescope").load_extension("fzf")
 
 		local mac = vim.loop.os_uname().sysname == "Darwin"
-		if not mac then
-			Obs_cwd = "~/Obsidian"
-		else
-			Obs_cwd = "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian"
-		end
+		local obs_cwd = mac and "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian" or "~/Obsidian"
 
 		local builtin = require("telescope.builtin")
 		vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
@@ -38,7 +34,7 @@ return {
 		end)
 		vim.keymap.set("n", "<leader>eo", function()
 			builtin.find_files({
-				cwd = Obs_cwd,
+				cwd = obs_cwd,
 				find_command = { "rg", "--files", "--glob", "*.md" },
 			})
 		end)
