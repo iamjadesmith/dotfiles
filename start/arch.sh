@@ -23,7 +23,7 @@ sudo systemctl restart sshd
 
 # kanata
 
-yay -S kanata
+yay -S kanata zen-browser-bin
 sudo groupadd uinput
 sudo usermod -aG input joejad
 sudo usermod -aG uinput joejad
