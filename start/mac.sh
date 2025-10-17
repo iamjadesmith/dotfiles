@@ -10,6 +10,7 @@ brew install --cask alacritty ente-auth discord raycast obsidian font-jetbrains-
 brew install --cask nikitabobko/tap/aerospace
 
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+rustup component add rust-analyzer
 
 cd ~/.dotfiles
 stow .
