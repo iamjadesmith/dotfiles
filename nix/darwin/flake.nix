@@ -61,6 +61,7 @@
             nixfmt-rfc-style
             nodejs
             obsidian
+            oh-my-posh
             postgresql_17
             ripgrep
             ruby
@@ -72,6 +73,12 @@
             yubikey-manager
             zoxide
           ];
+
+          fonts.packages = with pkgs; [
+            nerd-fonts.jetbrains-mono
+          ];
+
+          system.primaryUser = "jade";
 
           users.users.jade = {
             name = username;
@@ -106,7 +113,7 @@
               env = pkgs.buildEnv {
                 name = "system-applications";
                 paths = config.environment.systemPackages;
-                pathsToLink = "/Applications";
+                pathsToLink = ["/Applications"];
               };
             in
             pkgs.lib.mkForce ''
