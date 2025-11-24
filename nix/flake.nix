@@ -33,7 +33,7 @@
           server = false;
         }
         {
-          name = "nixnas";
+          name = "joejadserver";
           server = true;
         }
         {
