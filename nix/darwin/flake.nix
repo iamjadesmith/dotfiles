@@ -46,6 +46,7 @@
           ];
           environment.systemPackages = with pkgs; [
             R
+            age
             alacritty
             black
             ffmpeg-headless
@@ -66,6 +67,7 @@
             ripgrep
             ruby
             rustup
+            sops
             stylua
             tmux
             tree

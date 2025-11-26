@@ -103,6 +103,7 @@
 
   environment.systemPackages = with pkgs; [
     R
+    age
     bash
     cifs-utils
     fluxcd
@@ -123,6 +124,7 @@
     postgresql_17
     ripgrep
     samba
+    sops
     stow
     stylua
     tmux
