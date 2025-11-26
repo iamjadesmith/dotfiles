@@ -37,19 +37,7 @@ return {
 
 			require("fidget").setup({})
 
-			local lspconfig = require("lspconfig")
-
-			lspconfig.r_language_server.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.rust_analyzer.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.pyright.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
+			vim.lsp.config("lua_ls", {
 				settings = {
 					Lua = {
 						diagnostics = {
@@ -58,6 +46,11 @@ return {
 					},
 				},
 			})
+
+			vim.lsp.enable("r_language_server")
+			vim.lsp.enable("rust_analyzer")
+			vim.lsp.enable("pyright")
+			vim.lsp.enable("lua_ls")
 
 			local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
