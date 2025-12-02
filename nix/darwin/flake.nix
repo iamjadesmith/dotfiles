@@ -99,6 +99,7 @@
               "discord"
               "nikitabobko/tap/aerospace"
               "prismlauncher"
+              "nextcloud"
             ];
             taps = [
               "nikitabobko/tap"
