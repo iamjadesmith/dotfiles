@@ -52,6 +52,10 @@
           name = "agent-3";
           server = true;
         }
+        {
+          name = "sorserver";
+          server = true;
+        }
       ];
     in
     {
