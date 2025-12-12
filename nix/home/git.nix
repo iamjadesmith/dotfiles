@@ -5,15 +5,10 @@
 }: {
   enable = true;
   lfs.enable = true;
-  userName = "Jade Smith";
-  userEmail = "jade@jade-smith.com";
-
-  extraConfig = {
-    pull = {
-      rebase = true;
-    };
-    init = {
-      defaultBranch = "main";
-    };
+  settings = {
+    user.name = "Jade Smith";
+    user.email = "jade@jade-smith.com";
+    pull.rebase = true;
+    init.defaultBranch = "main";
   };
 }
