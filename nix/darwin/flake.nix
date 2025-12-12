@@ -25,7 +25,7 @@
     let
       add-unstable-packages = final: _prev: {
         unstable = import inputs.nixpkgs {
-          system = "aarch64-darwin";
+          stdenv.hostPlatform.system = "aarch64-darwin";
         };
       };
       username = "jade";
@@ -116,7 +116,7 @@
               env = pkgs.buildEnv {
                 name = "system-applications";
                 paths = config.environment.systemPackages;
-                pathsToLink = ["/Applications"];
+                pathsToLink = [ "/Applications" ];
               };
             in
             pkgs.lib.mkForce ''
