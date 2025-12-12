@@ -18,7 +18,7 @@
     proj = "source ~/.scripts/project.sh";
     o = "cd ~/Obsidian && nvim .";
   };
-  initExtra = ''
+  initContent = ''
     if [[ -f "/opt/homebrew/bin/brew" ]] then
       eval "$(/opt/homebrew/bin/brew shellenv)"
     fi

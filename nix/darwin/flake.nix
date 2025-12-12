@@ -25,7 +25,7 @@
     let
       add-unstable-packages = final: _prev: {
         unstable = import inputs.nixpkgs {
-          stdenv.hostPlatform.system = "aarch64-darwin";
+          system = "aarch64-darwin";
         };
       };
       username = "jade";
