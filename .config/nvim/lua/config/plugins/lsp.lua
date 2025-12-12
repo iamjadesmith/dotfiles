@@ -46,11 +46,16 @@ return {
 					},
 				},
 			})
+			vim.lsp.config("r_language_server", { cmd = { "true" } })
+			vim.lsp.config("rust_analyzer", { cmd = { "true" } })
+			vim.lsp.config("pyright", { cmd = { "true" } })
+			vim.lsp.config("nil_ls", { cmd = { "true" } })
 
 			vim.lsp.enable("r_language_server")
 			vim.lsp.enable("rust_analyzer")
 			vim.lsp.enable("pyright")
 			vim.lsp.enable("lua_ls")
+			vim.lsp.enable("nil_ls")
 
 			local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
