@@ -19,19 +19,34 @@ sudo nix --experimental-features "nix-command flakes" run github:nix-community/d
 Once complete, generate the config on the machine, telling nix to not generate filesystems.
 
 ```bash
-nixos-generate-config --no-filesystems --root /mnt
+sudo nixos-generate-config --no-filesystems --root /mnt
 ```
 
-Afterwards, copy both the config over, and the disko config
+Switch to root and create password
 
 ```bash
-scp configuration.nix root@nixos:/mnt/etc/nixos/configuration.nix
-scp disko-config.nix root@nixos:/mnt/etc/nixos/disko-config.nix
+sudo su -
+```
+
+```bash
+passwd
+```
+
+Copy over other nix config
+
+```bash
+scp -r ~/.dotfiles/nix/* root@nixos:/mnt/etc/nixos/
+```
+
+Move hardware config to host you are using
+
+```bash
+sudo mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/hosts/joejadnix/hardware-configuration.nix
 ```
 
 Finally, you can install nixos and then reboot
 
 ```bash
-nixos-install
-reboot
+sudo nixos-install --root /mnt --flake '/mnt/etc/nixos#joejadnix'
+sudo reboot
 ```
