@@ -94,7 +94,6 @@
               "syncthing"
             ];
             casks = [
-              "alfred"
               "firefox"
               "discord"
               "nikitabobko/tap/aerospace"
