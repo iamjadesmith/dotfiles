@@ -143,6 +143,10 @@
     };
   };
 
+  services.tailscale.enable = true;
+  services.tailscale.useRoutingFeatures = "both";
+  networking.firewall.checkReversePath = "loose";
+
   networking.firewall.enable = false;
   system.stateVersion = "23.11";
 }
