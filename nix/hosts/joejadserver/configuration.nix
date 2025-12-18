@@ -133,6 +133,8 @@
     unstable.rustup
     zoxide
     zsh
+    ethtool
+    networkd-dispatcher
   ];
 
   services.openssh = {
@@ -146,6 +148,17 @@
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "both";
   networking.firewall.checkReversePath = "loose";
+  services = {
+    networkd-dispatcher = {
+      enable = true;
+      rules."50-tailscale" = {
+        onState = ["routable"];
+        script = ''
+          ${lib.getExe ethtool} -K ens18 rx-udp-gro-forwarding on rx-gro-list off
+        '';
+      };
+    };
+  };
 
   networking.firewall.enable = false;
   system.stateVersion = "23.11";
