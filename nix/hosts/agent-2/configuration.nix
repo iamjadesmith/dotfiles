@@ -98,9 +98,8 @@
     ];
     hashedPassword = "$y$j9T$zCosUIu8eNq21sMsgQ7ya.$0oQ.aynDLokO77HvIjV.EEMDrnI25n8VQJgEd3RlSx8";
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVi+azblZeg5/wVvF0Y43JZQqqHcgZ1n9cFvKwfdPpS jade@Jades-MacBook-Pro.local"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM7AhzcZhHbieqRQlLjt3C4ieYLs+OTuH/Om3FToaSej joejad@joejadarch"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMsIXsntVmSz8vrofVuwqbxxepSvQJxyfZW05c16pir joejad@joejadserver"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDzIbh1w5EeOjFTWaQ9V5PFHf5ipVNQ33sjzpsNDNgfD jade@Jades-MacBook-Pro.local"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFmO691Ujio3I1tNUGEnSnyhjl0vLCBNi3Q/u0P+UvEX joejad@joejadserver"
     ];
   };
 
