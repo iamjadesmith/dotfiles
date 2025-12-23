@@ -104,6 +104,9 @@
               "nikitabobko/tap"
             ];
             masApps = {
+              Wireguard = 1451685025;
+              Bitwarden = 1352778147;
+              AdGuard = 1440147259;
             };
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
