@@ -48,5 +48,5 @@ Finally, you can install nixos and then reboot
 
 ```bash
 sudo nixos-install --root /mnt --flake '/mnt/etc/nixos#joejadnix'
-sudo reboot
+sudo reboot now
 ```
