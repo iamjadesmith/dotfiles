@@ -100,6 +100,8 @@
     neovim
     zoxide
     zsh
+    ethtool
+    networkd-dispatcher
   ];
 
   services.openssh = {
@@ -112,4 +114,20 @@
 
   networking.firewall.enable = false;
   system.stateVersion = "23.11";
+
+  services.tailscale.enable = true;
+  services.tailscale.useRoutingFeatures = "both";
+  networking.firewall.checkReversePath = "loose";
+  services = {
+    networkd-dispatcher = {
+      enable = true;
+      rules."50-tailscale" = {
+        onState = [ "routable" ];
+        script = ''
+          ethtool -K wlp3s0 rx-udp-gro-forwarding on rx-gro-list o
+        '';
+      };
+    };
+  };
+
 }
