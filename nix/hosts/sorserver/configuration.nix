@@ -79,7 +79,9 @@
     cifs-utils
     fluxcd
     fzf
+    gcc
     git
+    gnumake
     helm
     kubectl
     lazygit
