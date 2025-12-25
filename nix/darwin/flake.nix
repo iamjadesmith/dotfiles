@@ -107,6 +107,7 @@
               Wireguard = 1451685025;
               Bitwarden = 1352778147;
               AdGuard = 1440147259;
+              Tailscale = 1475387142;
             };
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
