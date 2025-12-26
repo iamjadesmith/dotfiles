@@ -16,9 +16,9 @@
     '';
   };
 
-  imports = [
-    ./nextcloud.nix
-  ];
+  # imports = [
+  #   ./nextcloud.nix
+  # ];
 
   nixpkgs = {
     overlays = [
@@ -128,7 +128,7 @@
       rules."50-tailscale" = {
         onState = [ "routable" ];
         script = ''
-          ethtool -K wlp3s0 rx-udp-gro-forwarding on rx-gro-list o
+          ethtool -K enp5s0 rx-udp-gro-forwarding on rx-gro-list o
         '';
       };
     };
