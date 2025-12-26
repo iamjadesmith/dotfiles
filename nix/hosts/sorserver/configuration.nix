@@ -76,6 +76,8 @@
     ];
   };
 
+  security.sudo.wheelNeedsPassword = false;
+
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
