@@ -16,6 +16,10 @@
     '';
   };
 
+  imports = [
+    ./nextcloud.nix
+  ];
+
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
