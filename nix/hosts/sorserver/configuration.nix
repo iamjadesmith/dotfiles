@@ -16,9 +16,9 @@
     '';
   };
 
-  # imports = [
-  #   ./nextcloud.nix
-  # ];
+  imports = [
+    ./nextcloud.nix
+  ];
 
   nixpkgs = {
     overlays = [
@@ -133,6 +133,34 @@
           ethtool -K enp5s0 rx-udp-gro-forwarding on rx-gro-list o
         '';
       };
+    };
+  };
+
+  services.unbound = {
+    enable = true;
+    settings = {
+      server = {
+        interface = [ "0.0.0.0" ];
+        access-control = [
+          "127.0.0.1/32 allow"
+          "192.168.86.0/24 allow"
+        ];
+        local-zone = "\"sorenson-fam.com.\" static";
+        local-data = [
+          "\"cloud.sorenson-fam.com. A 192.168.86.3\""
+          "\"cloud.sorenson-fam.com. AAAA ::ffff:192.168.86.3\""
+        ];
+      };
+      forward-zone = [
+        {
+          name = ".";
+          forward-tls-upstream = "yes";
+          forward-addr = [
+            "1.1.1.1@853#cloudflare-dns.com"
+            "8.8.8.8@853#dns.google.com"
+          ];
+        }
+      ];
     };
   };
 
