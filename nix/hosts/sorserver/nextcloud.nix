@@ -1,40 +1,36 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql_16;
-    ensureDatabases = [ "nextcloud" ];
-    ensureUsers = [
-      {
-        name = "nextcloud";
-        ensurePermissions = {
-          "DATABASE nextcloud" = "ALL PRIVILEGES";
-        };
-      }
-    ];
-  };
-
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud32;
     hostName = "cloud.sorenson-fam.com";
-
+    https = true;
+    database.createLocally = true;
+    caching.redis = true;
+    maxUploadSize = "5G";
     config = {
+      dbtype = "pgsql";
       adminuser = "admin";
       adminpassFile = "/run/secrets/nextcloud-admin-pass";
     };
-
-    database.createLocally = true;
-    config = {
-      dbtype = "pgsql";
-      dbhost = "/run/postgresql";
-      dbname = "nextcloud";
-      dbuser = "nextcloud";
-      dbpassFile = "/run/secrets/nextcloud-db-pass";
+    settings = {
+      trusted_domains = [ "cloud.sorenson-fam.com" ];
+      overwriteprotocol = "https";
+      maintenance_window_start = "1";
+      default_phone_region = "US";
     };
-
-    caching.redis = true;
+    phpOptions = lib.mkForce {
+      "opcache.interned_strings_buffer" = "64";
+      memory_limit = "512M";
+      post_max_size = "1G";
+      output_buffering = "0";
+    };
   };
 
   services.redis.servers.nextcloud = {
@@ -44,21 +40,17 @@
 
   services.nginx = {
     enable = true;
-    virtualHosts."${config.services.nextcloud.hostName}" = {
+    virtualHosts."cloud.sorenson-fam.com" = {
       forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://unix:/run/nextcloud/nextcloud.sock";
-      };
+      useACMEHost = "sorenson-fam.com";
     };
   };
 
   security.acme = {
     acceptTerms = true;
     defaults.email = "joejadjavajim@icloud.com";
-
     certs = {
-      "${config.services.nextcloud.hostName}" = {
+      "sorenson-fam.com" = {
         dnsProvider = "cloudflare";
         dnsPropagationCheck = true;
         environmentFile = "/var/lib/acme/.secrets/cert.env";
@@ -68,4 +60,5 @@
       };
     };
   };
+
 }
