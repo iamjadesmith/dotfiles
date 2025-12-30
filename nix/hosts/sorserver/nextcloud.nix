@@ -13,7 +13,7 @@
     https = true;
     database.createLocally = true;
     caching.redis = true;
-    maxUploadSize = "5G";
+    maxUploadSize = "16G";
     config = {
       dbtype = "pgsql";
       adminuser = "admin";
@@ -27,9 +27,12 @@
     };
     phpOptions = lib.mkForce {
       "opcache.interned_strings_buffer" = "64";
-      memory_limit = "512M";
-      post_max_size = "1G";
+      memory_limit = "2048M";
+      post_max_size = "16G";
+      upload_max_filesize = "16G";
       output_buffering = "0";
+      max_input_time = "3600";
+      max_execution_time = "3600";
     };
   };
 
