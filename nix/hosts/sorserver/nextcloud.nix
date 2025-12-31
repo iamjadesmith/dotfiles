@@ -24,6 +24,8 @@
       overwriteprotocol = "https";
       maintenance_window_start = "1";
       default_phone_region = "US";
+      mail_smtpmode = "sendmail";
+      mail_sendmailmode = "pipe";
     };
     phpOptions = lib.mkForce {
       "opcache.interned_strings_buffer" = "64";
