@@ -11,6 +11,7 @@
 {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
+    ./services.nix
   ];
 
   nix = {
@@ -152,7 +153,7 @@
     networkd-dispatcher = {
       enable = true;
       rules."50-tailscale" = {
-        onState = ["routable"];
+        onState = [ "routable" ];
         script = ''
           ethtool -K ens18 rx-udp-gro-forwarding on rx-gro-list off
         '';
