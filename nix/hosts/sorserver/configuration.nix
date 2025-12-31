@@ -145,10 +145,10 @@
           "127.0.0.1/32 allow"
           "192.168.86.0/24 allow"
         ];
-        local-zone = "\"sorenson-fam.com.\" static";
+        local-zone = "\"sorenson-fam.com.\" redirect";
         local-data = [
-          "\"cloud.sorenson-fam.com. A 192.168.86.3\""
-          "\"cloud.sorenson-fam.com. AAAA ::ffff:192.168.86.3\""
+          "\"sorenson-fam.com. IN A 192.168.86.3\""
+          "\"sorenson-fam.com. IN AAAA ::ffff:192.168.86.3\""
         ];
       };
       forward-zone = [
@@ -161,6 +161,42 @@
           ];
         }
       ];
+    };
+  };
+
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "joejadjavajim@icloud.com";
+    certs = {
+      "sorenson-fam.com" = {
+        dnsProvider = "cloudflare";
+        dnsPropagationCheck = true;
+        environmentFile = "/var/lib/acme/.secrets/cert.env";
+        group = "nginx";
+        domain = "*.sorenson-fam.com";
+        extraDomainNames = [ "sorenson-fam.com" ];
+      };
+    };
+  };
+
+  services.nginx.enable = true;
+
+  services.immich.enable = true;
+  services.immich.port = 2283;
+
+  services.nginx.virtualHosts."immich.sorenson-fam.com" = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://[::1]:${toString config.services.immich.port}";
+      proxyWebsockets = true;
+      recommendedProxySettings = true;
+      extraConfig = ''
+        client_max_body_size 50000M;
+        proxy_read_timeout   600s;
+        proxy_send_timeout   600s;
+        send_timeout         600s;
+      '';
     };
   };
 
