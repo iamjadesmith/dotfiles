@@ -122,6 +122,13 @@
   networking.firewall.enable = false;
   system.stateVersion = "23.11";
 
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+    ];
+  };
+
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "both";
   networking.firewall.checkReversePath = "loose";
