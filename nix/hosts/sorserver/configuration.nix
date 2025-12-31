@@ -5,6 +5,7 @@
   pkgs,
   meta,
   modulesPath,
+  config,
   ...
 }:
 
