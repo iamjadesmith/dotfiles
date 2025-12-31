@@ -186,7 +186,7 @@
   services.immich.port = 2283;
 
   services.nginx.virtualHosts."immich.sorenson-fam.com" = {
-    enableACME = true;
+    useACMEHost = "sorenson-fam.com";
     forceSSL = true;
     locations."/" = {
       proxyPass = "http://[::1]:${toString config.services.immich.port}";
