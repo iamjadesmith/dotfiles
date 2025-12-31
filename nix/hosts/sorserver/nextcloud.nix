@@ -43,27 +43,9 @@
     port = 6379;
   };
 
-  services.nginx = {
-    enable = true;
-    virtualHosts."cloud.sorenson-fam.com" = {
-      forceSSL = true;
-      useACMEHost = "sorenson-fam.com";
-    };
-  };
-
-  security.acme = {
-    acceptTerms = true;
-    defaults.email = "joejadjavajim@icloud.com";
-    certs = {
-      "sorenson-fam.com" = {
-        dnsProvider = "cloudflare";
-        dnsPropagationCheck = true;
-        environmentFile = "/var/lib/acme/.secrets/cert.env";
-        group = "nginx";
-        domain = "*.sorenson-fam.com";
-        extraDomainNames = [ "sorenson-fam.com" ];
-      };
-    };
+  services.nginx.virtualHosts."cloud.sorenson-fam.com" = {
+    forceSSL = true;
+    useACMEHost = "sorenson-fam.com";
   };
 
 }
