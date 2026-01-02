@@ -48,6 +48,7 @@
             R
             age
             alacritty
+            ansible
             black
             ffmpeg-headless
             fluxcd
