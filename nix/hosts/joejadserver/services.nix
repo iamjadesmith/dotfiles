@@ -15,6 +15,8 @@
     passwordFile = "/run/secrets/freshrss";
   };
 
+  services.uptime-kuma.enable = true;
+
   virtualisation.oci-containers.containers = {
     minecraft = {
       image = "itzg/minecraft-server";
