@@ -14,4 +14,25 @@
     baseUrl = "https://rss.joejad.com";
     passwordFile = "/run/secrets/freshrss";
   };
+
+  virtualisation.oci-containers.containers = {
+    minecraft = {
+      image = "itzg/minecraft-server";
+      ports = [ "25565:25565" ];
+      volumes = [
+        "./minecraft:/data"
+      ];
+      autoStart = true;
+      environment = {
+        EULA = "TRUE";
+        OPS = "JoeJad, Abbyb727";
+        LEVEL = "Great World";
+        MEMORY = "3G";
+        MOTD = "Great World";
+        DIFFICULTY = "normal";
+        ICON = "https =//img.freepik.com/premium-vector/cartoon-vector-illustration-cute-loving-bear-hugging_255358-3482.jpg";
+        TZ = "US/Central";
+      };
+    };
+  };
 }
