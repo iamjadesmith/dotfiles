@@ -49,6 +49,7 @@
             age
             alacritty
             ansible
+            arduino-cli
             black
             ffmpeg-headless
             fluxcd
