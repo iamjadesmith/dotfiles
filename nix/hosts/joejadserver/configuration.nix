@@ -57,15 +57,16 @@
 
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
+    "d /var/lib/minecraft 0755 root root - -"
   ];
+
+  virtualisation.docker.enable = true;
   virtualisation.docker.logDriver = "json-file";
 
   services.openiscsi = {
     enable = true;
     name = "iqn.2016-04.com.open-iscsi:${meta.hostname}";
   };
-
-  virtualisation.docker.enable = true;
 
   users.users.joejad = {
     isNormalUser = true;
