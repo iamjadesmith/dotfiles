@@ -111,6 +111,7 @@
     R
     age
     bash
+    bind
     cifs-utils
     fluxcd
     fzf
