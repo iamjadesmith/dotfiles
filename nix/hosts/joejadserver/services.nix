@@ -30,7 +30,7 @@
         MEMORY = "3G";
         MOTD = "Great World";
         DIFFICULTY = "normal";
-        ICON = "https =//img.freepik.com/premium-vector/cartoon-vector-illustration-cute-loving-bear-hugging_255358-3482.jpg";
+        ICON = "https://img.freepik.com/premium-vector/cartoon-vector-illustration-cute-loving-bear-hugging_255358-3482.jpg";
         TZ = "US/Central";
       };
     };
