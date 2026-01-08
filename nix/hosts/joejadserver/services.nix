@@ -20,7 +20,7 @@
       image = "itzg/minecraft-server";
       ports = [ "25565:25565" ];
       volumes = [
-        "./minecraft:/data"
+        "/var/lib/minecraft:/data"
       ];
       autoStart = true;
       environment = {
