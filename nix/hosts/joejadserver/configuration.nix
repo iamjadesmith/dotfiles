@@ -60,8 +60,12 @@
     "d /var/lib/minecraft 0755 root root - -"
   ];
 
-  virtualisation.docker.enable = true;
-  virtualisation.docker.logDriver = "json-file";
+  virtualisation.docker = {
+    enable = true;
+    logDriver = "json-file";
+    daemon.settings.features.cdi = true;
+    rootless.daemon.settings.features.cdi = true;
+  };
 
   services.openiscsi = {
     enable = true;
