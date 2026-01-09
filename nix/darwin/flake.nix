@@ -94,6 +94,9 @@
             brews = [
               "mas"
               "syncthing"
+              "cmake"
+              "ninja"
+              "dfu-util"
             ];
             casks = [
               "firefox"
