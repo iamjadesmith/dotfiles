@@ -97,6 +97,7 @@
               "cmake"
               "ninja"
               "dfu-util"
+              "anomalyco/tap/opencode"
             ];
             casks = [
               "firefox"
@@ -104,7 +105,6 @@
               "nikitabobko/tap/aerospace"
               "prismlauncher"
               "nextcloud"
-              "anomalyco/tap/opencode"
             ];
             taps = [
               "nikitabobko/tap"
