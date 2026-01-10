@@ -43,6 +43,14 @@
     autoResize = true;
     fsType = "ext4";
   };
+  fileSystems."/mnt/sorserver" = {
+    device = "sorserver:/var/lib";
+    fsType = "nfs";
+  };
+  fileSystems."/mnt/data" = {
+    device = "pve:/movies/media";
+    fsType = "nfs";
+  };
 
   networking.hostName = meta.hostname;
   networking.networkmanager.enable = true;
@@ -92,20 +100,6 @@
 
   security.sudo.wheelNeedsPassword = false;
   programs.zsh.enable = true;
-
-  services.syncthing = {
-    enable = true;
-    group = "users";
-    user = "joejad";
-    configDir = "/home/joejad/.config/syncthing";
-    guiAddress = "0.0.0.0:8384";
-  };
-  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
-
-  services.nfs.server.enable = true;
-  services.nfs.server.exports = ''
-    /home/joejad 10.47.59.0/24(rw,sync,no_root_squash,no_subtree_check)
-  '';
 
   environment.systemPackages = with pkgs; [
     R
