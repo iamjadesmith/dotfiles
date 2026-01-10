@@ -48,4 +48,10 @@
     useACMEHost = "sorenson-fam.com";
   };
 
+  services.postgresqlBackup = {
+    enable = true;
+    databases = [ "nextcloud" ];
+    location = "/var/lib/nextcloud/db_backups";
+  };
+
 }
