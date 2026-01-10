@@ -65,7 +65,6 @@
             nodejs
             obsidian
             oh-my-posh
-            opencode
             postgresql_17
             ripgrep
             ruby
@@ -105,9 +104,11 @@
               "nikitabobko/tap/aerospace"
               "prismlauncher"
               "nextcloud"
+              "anomalyco/tap/opencode"
             ];
             taps = [
               "nikitabobko/tap"
+              "anomalyco/tap"
             ];
             masApps = {
               Wireguard = 1451685025;
