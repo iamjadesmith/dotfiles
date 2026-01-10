@@ -65,6 +65,7 @@
             nodejs
             obsidian
             oh-my-posh
+            opencode
             postgresql_17
             ripgrep
             ruby
