@@ -42,6 +42,10 @@
 
     autoload -Uz compinit && compinit
 
+    autoload -U edit-command-line
+    zle -N edit-command-line
+    bindkey '^x^e' edit-command-line
+
     zinit cdreplay -q
 
     if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
