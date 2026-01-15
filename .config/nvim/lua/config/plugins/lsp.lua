@@ -4,6 +4,15 @@ return {
 		opts = {},
 	},
 	{
+		"github/copilot.vim",
+	},
+	{
+		"zbirenbaum/copilot-cmp",
+		config = function()
+			require("copilot_cmp").setup()
+		end,
+	},
+	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
@@ -73,6 +82,7 @@ return {
 					["<C-Space>"] = cmp.mapping.complete(),
 				}),
 				sources = cmp.config.sources({
+					{ name = "copilot" },
 					{ name = "nvim_lsp" },
 					{ name = "cmp_r" },
 					{ name = "vim-dadbod-completion" },
