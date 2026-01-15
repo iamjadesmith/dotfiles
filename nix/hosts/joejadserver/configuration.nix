@@ -122,6 +122,7 @@
     nil
     nixfmt-rfc-style
     oh-my-posh
+    opencode
     postgresql_17
     ripgrep
     samba

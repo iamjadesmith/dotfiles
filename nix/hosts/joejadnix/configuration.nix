@@ -190,6 +190,7 @@
     nvidia-container-toolkit
     obsidian
     oh-my-posh
+    opencode
     openssl
     postgresql_17
     prismlauncher
