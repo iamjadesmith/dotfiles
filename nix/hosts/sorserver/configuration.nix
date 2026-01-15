@@ -99,6 +99,7 @@
     nil
     nixfmt-rfc-style
     oh-my-posh
+    opencode
     ripgrep
     samba
     sops
