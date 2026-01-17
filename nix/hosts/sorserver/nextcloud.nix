@@ -51,7 +51,7 @@
   services.postgresqlBackup = {
     enable = true;
     databases = [ "nextcloud" ];
-    location = "/var/lib/nextcloud/db_backups";
+    location = "/var/lib/db_backups/nextcloud";
   };
 
 }
