@@ -121,8 +121,9 @@
     nfs-utils
     nil
     nixfmt-rfc-style
+    nodejs
     oh-my-posh
-    # opencode
+    opencode
     postgresql_17
     ripgrep
     samba
