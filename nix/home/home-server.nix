@@ -32,6 +32,7 @@ in
     tmux = import ./tmux.nix { inherit pkgs; };
     git = import ./git.nix { inherit config pkgs; };
     zoxide = import ./zoxide.nix { inherit pkgs; };
+    opencode.enable = true;
   };
 
 }
