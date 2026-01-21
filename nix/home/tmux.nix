@@ -63,7 +63,7 @@
         set -gu default-command
         set -g default-shell "$SHELL"
 
-        # Project session launcher
-        bind -n M-p run-shell "$HOME/.dotfiles/scripts/tmux-project-session.sh"
+        # Project session launcher (Ctrl-f works better on macOS)
+        bind -n C-f run-shell "$HOME/.dotfiles/scripts/tmux-project-session.sh"
   '';
 }
