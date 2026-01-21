@@ -62,5 +62,8 @@
 
         set -gu default-command
         set -g default-shell "$SHELL"
+
+        # Project session launcher
+        bind -n M-p run-shell "$HOME/.dotfiles/scripts/tmux-project-session.sh"
   '';
 }
