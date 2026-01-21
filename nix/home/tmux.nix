@@ -63,7 +63,7 @@
         set -gu default-command
         set -g default-shell "$SHELL"
 
-        # Project session launcher (prefix + o for open project)
-        bind o run-shell "$HOME/.dotfiles/scripts/tmux-project-session.sh"
+        # Project session launcher (prefix + \)
+        bind '\\' run-shell "$HOME/.dotfiles/scripts/tmux-project-session.sh"
   '';
 }
