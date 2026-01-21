@@ -31,16 +31,23 @@
 
     source "$ZINIT_HOME/zinit.zsh"
 
-    zinit light zsh-users/zsh-syntax-highlighting
-    zinit light zsh-users/zsh-completions
-    zinit light zsh-users/zsh-autosuggestions
-    zinit light Aloxaf/fzf-tab
+    zinit ice lucid wait'0' turbo; zinit light zsh-users/zsh-syntax-highlighting
+    zinit ice lucid wait'0' turbo; zinit light zsh-users/zsh-completions
+    zinit ice lucid wait'0' turbo; zinit light zsh-users/zsh-autosuggestions
+    zinit ice lucid wait'0' turbo; zinit light Aloxaf/fzf-tab
 
-    zinit snippet OMZP::git
-    zinit snippet OMZP::sudo
-    zinit snippet OMZP::command-not-found
+    zinit ice lucid wait'0' turbo; zinit snippet OMZP::git
+    zinit ice lucid wait'0' turbo; zinit snippet OMZP::sudo
+    zinit ice lucid wait'0' turbo; zinit snippet OMZP::command-not-found
 
-    autoload -Uz compinit && compinit
+    # Optimized compinit with caching.
+    # This checks if the completion dump file is older than 24 hours and rebuilds it if so.
+    autoload -Uz compinit
+    if [[ -n ${ZDOTDIR:-~}/.zcompdump(#qN.mh+24) ]]; then
+      compinit
+    else
+      compinit -C
+    fi
 
     autoload -U edit-command-line
     zle -N edit-command-line
@@ -48,9 +55,9 @@
 
     zinit cdreplay -q
 
-    if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-        eval "$(oh-my-posh init zsh --config $HOME/.dotfiles/.config/ohmyposh/zen.toml)"
-    fi
+    zinit ice lucid if'[[ "$TERM_PROGRAM" != "Apple_Terminal" ]]' \
+        atload'eval "$(oh-my-posh init zsh --config $HOME/.dotfiles/.config/ohmyposh/zen.toml)"'
+    zinit light zdharma-continuum/null
 
     bindkey -e
     bindkey '^p' history-search-backward
