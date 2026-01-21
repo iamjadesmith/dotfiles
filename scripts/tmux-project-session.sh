@@ -38,7 +38,7 @@ create_session() {
 
     tmux new-session -d -s "$session_name" -x 200 -y 50 -c "$selected_path"
 
-    tmux split-window -h -l 80 -t "$session_name:1" -c "$selected_path"
+    tmux split-window -h -l 20 -t "$session_name:1" -c "$selected_path"
 
     if command -v opencode &> /dev/null; then
         tmux send-keys -t "$session_name:1.1" "opencode ." Enter
@@ -50,6 +50,7 @@ create_session() {
     tmux select-window -t "$session_name:1"
     tmux select-pane -t "$session_name:1.0"
 
+    unset TMUX
     tmux attach-session -t "$session_name"
 }
 
