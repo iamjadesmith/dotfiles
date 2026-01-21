@@ -11,16 +11,15 @@ check_dependencies() {
 }
 
 get_projects() {
-    local PROJECT_DIRS=("$HOME/projects" "$HOME/.dotfiles")
     local PROJECTS=()
 
-    for dir in "${PROJECT_DIRS[@]}"; do
-        if [[ -d "$dir" ]]; then
-            while IFS= read -r line; do
-                PROJECTS+=("$line")
-            done < <(find "$dir" -maxdepth 1 -type d | sed "s|^$HOME/||" | sort)
-        fi
-    done
+    if [[ -d "$HOME/projects" ]]; then
+        while IFS= read -r line; do
+            PROJECTS+=("$line")
+        done < <(find "$HOME/projects" -mindepth 1 -maxdepth 1 -type d | sed "s|^$HOME/||" | sort)
+    fi
+
+    PROJECTS+=(".dotfiles")
 
     printf '%s\n' "${PROJECTS[@]}"
 }
