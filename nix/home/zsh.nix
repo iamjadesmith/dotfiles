@@ -15,7 +15,7 @@
     dot = "cd ~/.dotfiles && nvim .";
     k = "kubectl";
     h = "helm";
-    proj = "source ~/.scripts/tmux-project-session.sh";
+    proj = "source ~/.dotfiles/scripts/tmux-project-session.sh";
     o = "cd ~/Obsidian && nvim .";
   };
   initContent = ''
