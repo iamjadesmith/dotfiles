@@ -98,6 +98,7 @@
               "ninja"
               "dfu-util"
               "anomalyco/tap/opencode"
+              "gemini-cli"
             ];
             casks = [
               "firefox"
