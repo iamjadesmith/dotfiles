@@ -68,6 +68,7 @@
             postgresql_17
             ripgrep
             ruby
+            rust-analyzer
             rustup
             sops
             stylua
