@@ -19,8 +19,13 @@
     o = "cd ~/Obsidian && nvim .";
   };
   initContent = ''
-    if [[ -f "/opt/homebrew/bin/brew" ]] then
-      eval "$(/opt/homebrew/bin/brew shellenv)"
+    # Cache brew shellenv (only regenerate if homebrew updates)
+    if [[ -f "/opt/homebrew/bin/brew" ]]; then
+      BREW_CACHE="$HOME/.cache/brew-shellenv.zsh"
+      if [[ ! -f "$BREW_CACHE" ]] || [[ "/opt/homebrew/bin/brew" -nt "$BREW_CACHE" ]]; then
+        /opt/homebrew/bin/brew shellenv > "$BREW_CACHE"
+      fi
+      source "$BREW_CACHE"
     fi
 
     ZINIT_HOME="$HOME/.local/share/zinit/zinit.git"
@@ -31,19 +36,27 @@
 
     source "$ZINIT_HOME/zinit.zsh"
 
-    zinit ice lucid wait'0' turbo; zinit light zsh-users/zsh-syntax-highlighting
-    zinit ice lucid wait'0' turbo; zinit light zsh-users/zsh-completions
-    zinit ice lucid wait'0' turbo; zinit light zsh-users/zsh-autosuggestions
-    zinit ice lucid wait'0' turbo; zinit light Aloxaf/fzf-tab
+    # Load syntax-highlighting synchronously (needed for proper display)
+    zinit light zsh-users/zsh-syntax-highlighting
 
-    zinit ice lucid wait'0' turbo; zinit snippet OMZP::git
-    zinit ice lucid wait'0' turbo; zinit snippet OMZP::sudo
-    zinit ice lucid wait'0' turbo; zinit snippet OMZP::command-not-found
+    # Defer other plugins - use wait'1' for less critical ones
+    zinit ice wait lucid atload'_zsh_autosuggest_start'
+    zinit light zsh-users/zsh-autosuggestions
 
-    # Optimized compinit with caching.
-    # This checks if the completion dump file is older than 24 hours and rebuilds it if so.
+    zinit ice wait lucid blockf
+    zinit light zsh-users/zsh-completions
+
+    zinit ice wait lucid
+    zinit light Aloxaf/fzf-tab
+
+    # Defer OMZ snippets even more
+    zinit ice wait'1' lucid; zinit snippet OMZP::git
+    zinit ice wait'1' lucid; zinit snippet OMZP::sudo
+    zinit ice wait'1' lucid; zinit snippet OMZP::command-not-found
+
+    # Optimized compinit with caching
     autoload -Uz compinit
-    if [[ -n ${ZDOTDIR:-~}/.zcompdump(#qN.mh+24) ]]; then
+    if [[ -n ''${ZDOTDIR:-~}/.zcompdump(#qN.mh+24) ]]; then
       compinit
     else
       compinit -C
@@ -55,9 +68,15 @@
 
     zinit cdreplay -q
 
-    zinit ice lucid if'[[ "$TERM_PROGRAM" != "Apple_Terminal" ]]' \
-        atload'eval "$(oh-my-posh init zsh --config $HOME/.dotfiles/.config/ohmyposh/zen.toml)"'
-    zinit light zdharma-continuum/null
+    # Cache oh-my-posh init output
+    if [[ "$TERM_PROGRAM" != "Apple_Terminal" ]]; then
+      OMP_CACHE="$HOME/.cache/omp-init.zsh"
+      OMP_CONFIG="$HOME/.dotfiles/.config/ohmyposh/zen.toml"
+      if [[ ! -f "$OMP_CACHE" ]] || [[ "$OMP_CONFIG" -nt "$OMP_CACHE" ]]; then
+        oh-my-posh init zsh --config "$OMP_CONFIG" > "$OMP_CACHE"
+      fi
+      source "$OMP_CACHE"
+    fi
 
     bindkey -e
     bindkey '^p' history-search-backward
@@ -66,25 +85,26 @@
 
     SAVEHIST=$HISTSIZE
     HISTDUP=erase
-    setopt appendhistory
-    setopt sharehistory
-    setopt hist_ignore_space
-    setopt hist_ignore_all_dups
-    setopt hist_save_no_dups
-    setopt hist_ignore_dups
-    setopt hist_find_no_dups
+    setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_save_no_dups hist_ignore_dups hist_find_no_dups
 
     zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
     zstyle ':completion:*' menu no
     zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
     zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-    eval "$(fzf --zsh)"
-    eval "$(zoxide init --cmd cd zsh)"
+    # Cache fzf and zoxide init
+    FZF_CACHE="$HOME/.cache/fzf-init.zsh"
+    ZOXIDE_CACHE="$HOME/.cache/zoxide-init.zsh"
+
+    [[ ! -f "$FZF_CACHE" ]] && fzf --zsh > "$FZF_CACHE"
+    [[ ! -f "$ZOXIDE_CACHE" ]] && zoxide init --cmd cd zsh > "$ZOXIDE_CACHE"
+
+    source "$FZF_CACHE"
+    source "$ZOXIDE_CACHE"
 
     PATH="$HOME/.local/bin:$HOME/.dotfiles/scripts:$PATH"
 
-    if [[ -d "/Users/jade/Library/Python" ]] then
+    if [[ -d "/Users/jade/Library/Python" ]]; then
       export PATH="$PATH:$HOME/Library/Python/3.9/bin"
     fi
 
