@@ -27,9 +27,15 @@ return {
 				cwd = "~/.dotfiles/.config/nvim",
 			})
 		end)
-		vim.keymap.set("n", "<leader>ed", function()
+		vim.keymap.set("n", "<leader>edd", function()
 			builtin.git_files({
 				cwd = "~/.dotfiles",
+			})
+		end)
+		vim.keymap.set("n", "<leader>edn", function()
+			builtin.find_files({
+				cwd = "~/.dotfiles/nix",
+				find_command = { "rg", "--files", "--glob", "*.nix" },
 			})
 		end)
 		vim.keymap.set("n", "<leader>eo", function()
