@@ -185,7 +185,7 @@
     neovim
     nextcloud-client
     nil
-    nixfmt-rfc-style
+    nixfmt
     nodejs_22
     nvidia-container-toolkit
     obsidian
