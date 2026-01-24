@@ -1,0 +1,49 @@
+# Minimal starship config matching zen.toml style
+format = """
+$username$hostname$directory$git_branch$git_status
+$character"""
+
+right_format = "$cmd_duration"
+
+[username]
+format = "[$user]($style)@"
+style_user = "bright-black"
+show_always = true
+
+[hostname]
+format = "[$hostname]($style) "
+style = "bright-black"
+ssh_only = false
+
+[directory]
+format = "[$path]($style)"
+style = "blue"
+truncation_length = 0
+truncate_to_repo = false
+
+[git_branch]
+format = " [$branch]($style)"
+style = "bright-black"
+
+[git_status]
+format = "[$all_status$ahead_behind]($style)"
+style = "bright-black"
+conflicted = "="
+ahead = "[cyan]"
+behind = "[cyan]"
+diverged = "[cyan][cyan]"
+modified = "*"
+staged = "*"
+untracked = ""
+renamed = ""
+deleted = ""
+
+[cmd_duration]
+format = "[$duration]($style)"
+style = "yellow"
+min_time = 5000
+
+[character]
+format = "$symbol "
+success_symbol = "[>](magenta)"
+error_symbol = "[>](red)"

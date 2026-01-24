@@ -189,7 +189,6 @@
     nodejs_22
     nvidia-container-toolkit
     obsidian
-    oh-my-posh
     opencode
     openssl
     postgresql_17
@@ -197,6 +196,7 @@
     ripgrep
     rose-pine-cursor
     rustup
+    starship
     stow
     stylua
     swaynotificationcenter

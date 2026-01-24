@@ -19,6 +19,8 @@ in
   xdg.configFile.aerospace.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/aerospace";
   xdg.configFile."opencode/opencode.json".source =
     mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/opencode/opencode.json";
+  xdg.configFile."starship.toml".source =
+    mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/starship.toml";
 
   home.stateVersion = "24.05";
 
@@ -36,5 +38,6 @@ in
     zoxide = (import ../home/zoxide.nix { inherit config pkgs; });
     fzf = import ../home/fzf.nix { inherit pkgs; };
     git = import ../home/git.nix { inherit config pkgs; };
+    starship.enable = true;
   };
 }

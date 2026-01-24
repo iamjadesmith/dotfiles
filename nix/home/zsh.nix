@@ -68,14 +68,13 @@
 
     zinit cdreplay -q
 
-    # Cache oh-my-posh init output
+    # Initialize starship prompt
     if [[ "$TERM_PROGRAM" != "Apple_Terminal" ]]; then
-      OMP_CACHE="$HOME/.cache/omp-init.zsh"
-      OMP_CONFIG="$HOME/.dotfiles/.config/ohmyposh/zen.toml"
-      if [[ ! -f "$OMP_CACHE" ]] || [[ "$OMP_CONFIG" -nt "$OMP_CACHE" ]]; then
-        oh-my-posh init zsh --config "$OMP_CONFIG" > "$OMP_CACHE"
+      STARSHIP_CACHE="$HOME/.cache/starship-init.zsh"
+      if [[ ! -f "$STARSHIP_CACHE" ]]; then
+        starship init zsh > "$STARSHIP_CACHE"
       fi
-      source "$OMP_CACHE"
+      source "$STARSHIP_CACHE"
     fi
 
     bindkey -e
@@ -128,7 +127,7 @@
             git commit -m 'update'
         fi
         if [[ -d "/Users/jade" ]] then
-            darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac
+            sudo darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac
         else
             sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
         fi

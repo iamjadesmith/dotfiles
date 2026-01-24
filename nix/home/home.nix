@@ -19,6 +19,8 @@ in
   xdg.configFile.wofi.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/wofi";
   xdg.configFile."opencode/opencode.json".source =
     mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/opencode/opencode.json";
+  xdg.configFile."starship.toml".source =
+    mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/starship.toml";
 
   home.stateVersion = "24.05";
 
@@ -66,6 +68,7 @@ in
     tmux = import ./tmux.nix { inherit pkgs; };
     git = import ./git.nix { inherit config pkgs; };
     zoxide = import ./zoxide.nix { inherit pkgs; };
+    starship.enable = true;
   };
 
   wayland.windowManager = {

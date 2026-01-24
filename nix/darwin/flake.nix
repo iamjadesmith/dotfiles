@@ -64,13 +64,13 @@
             nixfmt-rfc-style
             nodejs
             obsidian
-            oh-my-posh
             postgresql_17
             ripgrep
             ruby
             rust-analyzer
             rustup
             sops
+            starship
             stylua
             tmux
             tree
