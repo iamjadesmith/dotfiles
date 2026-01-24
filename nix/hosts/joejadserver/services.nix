@@ -47,7 +47,7 @@
       User = "root";
     };
     script = ''
-      mkdir -p /mnt/data/mom-backup
+      mkdir -p /mnt/data/mom_backup
 
       TIMESTAMP=$(date +%Y%m%d_%H%M%S)
       BACKUP_FILE="/mnt/data/mom-backup/nextcloud_$TIMESTAMP.tar.gz"
