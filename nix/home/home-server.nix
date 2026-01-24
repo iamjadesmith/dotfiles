@@ -14,6 +14,7 @@ in
   xdg.enable = true;
 
   xdg.configFile.nvim.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/nvim";
+  # xdg.configFile.opencode.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/opencode/opencode.json";
 
   home.stateVersion = "24.05";
 
@@ -29,7 +30,8 @@ in
     zsh = import ./zsh.nix { inherit config; };
     fzf = import ./fzf.nix { inherit pkgs; };
     neovim = import ./neovim.nix { inherit config pkgs; };
-    tmux = import ./tmux.nix { inherit pkgs; };
+    opencode = import ./opencode.nix;
+    tmux = import ./tmux-server.nix { inherit pkgs; };
     git = import ./git.nix { inherit config pkgs; };
     zoxide = import ./zoxide.nix { inherit pkgs; };
   };
