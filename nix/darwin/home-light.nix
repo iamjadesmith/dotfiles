@@ -17,7 +17,8 @@ in
 
   xdg.configFile.nvim.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/nvim";
   xdg.configFile.aerospace.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/aerospace";
-  xdg.configFile.opencode.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/opencode/opencode.json";
+  xdg.configFile."opencode/opencode.json".source =
+    mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/opencode/opencode.json";
 
   home.stateVersion = "24.05";
 
