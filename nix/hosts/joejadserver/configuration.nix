@@ -120,7 +120,7 @@
     luajitPackages.luarocks-nix
     nfs-utils
     nil
-    nixfmt-rfc-style
+    nixfmt
     nodejs
     opencode
     postgresql_17

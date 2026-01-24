@@ -61,7 +61,7 @@
             mkalias
             neovim
             nil
-            nixfmt-rfc-style
+            nixfmt
             nodejs
             obsidian
             postgresql_17

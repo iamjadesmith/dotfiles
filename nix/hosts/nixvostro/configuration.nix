@@ -220,7 +220,7 @@
     luajitPackages.luarocks-nix
     nfs-utils
     nil
-    nixfmt-rfc-style
+    nixfmt
     oh-my-posh
     postgresql_17
     ripgrep
