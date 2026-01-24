@@ -29,9 +29,12 @@ style = "bright-black"
 format = "[$all_status$ahead_behind]($style)"
 style = "bright-black"
 conflicted = "="
-ahead = "[cyan]"
-behind = "[cyan]"
-diverged = "[cyan][cyan]"
+# Symbols for ahead/behind/diverged (no color markup here — starship
+# expects plain format strings). Use arrows and let the module's `style`
+# handle coloring.
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
 modified = "*"
 staged = "*"
 untracked = ""
