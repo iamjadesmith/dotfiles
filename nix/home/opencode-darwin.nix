@@ -1,5 +1,5 @@
 {
-  enable = true;
+  # enable = false;
   settings = {
     opencode = {
       model = "github-copilot/gpt-5-mini";
