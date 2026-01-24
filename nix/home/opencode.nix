@@ -1,0 +1,50 @@
+{
+  ...
+}:
+{
+  enable = true;
+  settings = {
+    opencode = {
+      model = "github-copilot/gpt-5-mini";
+      plugin = [ "opencode-gemini-auth@latest" ];
+      provider = {
+        google = {
+          models = {
+            "gemini-2.5-flash" = {
+              options = {
+                thinkingConfig = {
+                  thinkingBudget = "8192";
+                  includeThoughts = "true";
+                };
+              };
+            };
+            "gemini-2.5-pro" = {
+              options = {
+                thinkingConfig = {
+                  thinkingBudget = "8192";
+                  includeThoughts = "true";
+                };
+              };
+            };
+            "gemini-3-flash-preview" = {
+              options = {
+                thinkingConfig = {
+                  thinkingLevel = "low";
+                  includeThoughts = "true";
+                };
+              };
+            };
+            "gemini-3-pro-preview" = {
+              options = {
+                thinkingConfig = {
+                  thinkingLevel = "high";
+                  includeThoughts = "true";
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}
