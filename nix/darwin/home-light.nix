@@ -17,7 +17,7 @@ in
 
   xdg.configFile.nvim.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/nvim";
   xdg.configFile.aerospace.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/aerospace";
-  xdg.configFile.opencode.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/opencode/opencode.json";
+  # xdg.configFile.opencode.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/opencode/opencode.json";
 
   home.stateVersion = "24.05";
 
@@ -32,6 +32,7 @@ in
     };
     tmux = import ../home/tmux.nix { inherit pkgs; };
     zsh = import ../home/zsh.nix { inherit config pkgs lib; };
+    opencode = import ../home/opencode.nix;
     zoxide = (import ../home/zoxide.nix { inherit config pkgs; });
     fzf = import ../home/fzf.nix { inherit pkgs; };
     git = import ../home/git.nix { inherit config pkgs; };
