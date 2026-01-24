@@ -17,7 +17,8 @@ in
   xdg.configFile.swaync.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/swaync";
   xdg.configFile.waybar.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/waybar";
   xdg.configFile.wofi.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/wofi";
-  # xdg.configFile.opencode.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/opencode/opencode.json";
+  xdg.configFile."opencode/opencode.json".source =
+    mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/opencode/opencode.json";
 
   home.stateVersion = "24.05";
 
@@ -61,7 +62,6 @@ in
     zsh = import ./zsh.nix { inherit config; };
     fzf = import ./fzf.nix { inherit pkgs; };
     firefox = import ./firefox.nix;
-    opencode = import ./opencode.nix;
     neovim = import ./neovim.nix { inherit config pkgs; };
     tmux = import ./tmux.nix { inherit pkgs; };
     git = import ./git.nix { inherit config pkgs; };
