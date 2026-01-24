@@ -122,12 +122,12 @@
     nil
     nixfmt-rfc-style
     nodejs
-    oh-my-posh
     opencode
     postgresql_17
     ripgrep
     samba
     sops
+    starship
     stow
     stylua
     tmux

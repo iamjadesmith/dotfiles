@@ -98,11 +98,11 @@
     nfs-utils
     nil
     nixfmt-rfc-style
-    oh-my-posh
     opencode
     ripgrep
     samba
     sops
+    starship
     stylua
     tmux
     neovim
