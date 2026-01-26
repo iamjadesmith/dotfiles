@@ -1,6 +1,4 @@
-local mac = vim.loop.os_uname().sysname == "Darwin"
-local vault_path =
-	vim.fn.expand(mac and "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian" or "~/Obsidian")
+local vault_path = vim.fn.expand("~/obsidian")
 vim.g.last_work_buf = nil
 
 local function toggle_obsidian()
