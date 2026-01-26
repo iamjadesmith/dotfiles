@@ -40,4 +40,4 @@ local function toggle_obsidian()
 	builtin.find_files({ cwd = vault_path, find_command = { "rg", "--files", "--glob", "*.md" } })
 end
 
-vim.keymap.set("n", "<leader>o", toggle_obsidian, { desc = "Toggle to/from Obsidian buffer" })
+vim.keymap.set("n", "<leader>oo", toggle_obsidian, { desc = "Toggle to/from Obsidian buffer" })
