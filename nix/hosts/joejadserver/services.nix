@@ -41,7 +41,7 @@
   };
 
   systemd.services.nextcloud-backup = {
-    description = "Daily Nextcloud data and database backup";
+    description = "Weekly Nextcloud data and database backup";
     serviceConfig = {
       Type = "oneshot";
       User = "root";
@@ -60,10 +60,10 @@
   };
 
   systemd.timers.nextcloud-backup = {
-    description = "Daily Nextcloud data and database backup timer";
+    description = "Weekly Nextcloud data and database backup timer";
     wantedBy = [ "timers.target" ];
     timerConfig = {
-      OnCalendar = "daily";
+      OnCalendar = "weekly";
       Persistent = true;
     };
   };
