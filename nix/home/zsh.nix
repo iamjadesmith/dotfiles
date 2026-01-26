@@ -7,16 +7,13 @@
   history.size = 10000;
   history.path = "${config.xdg.dataHome}/zsh/history";
   shellAliases = {
-    vim = "nvim";
-    v = "nvim";
     ls = "ls --color";
     l = "ls -la";
-    c = "clear";
     dot = "cd ~/.dotfiles && nvim .";
     k = "kubectl";
     h = "helm";
     proj = "source ~/.dotfiles/scripts/tmux-project-session.sh";
-    o = "cd ~/Obsidian && nvim .";
+    obs = "cd ~/obsidian && nvim .";
   };
   initContent = ''
     # Cache brew shellenv (only regenerate if homebrew updates)
