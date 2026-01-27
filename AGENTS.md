@@ -198,9 +198,10 @@ return {
 - Use `#` for shell scripts, `--` for Lua, `#` for Nix
 
 **Security:**
-- Never commit secrets or sensitive information
-- Use proper file permissions for sensitive files
-- Be cautious with executable permissions
+- Never commit secrets or sensitive information (API keys, passwords, private keys, tokens).
+- Prefer environment variables, encrypted secret stores (e.g. `sops`, `git-crypt`), or the OS keychain for secrets instead of plaintext in the repo.
+- Add sensitive files to `.gitignore` when appropriate and use pre-commit secret scanners (e.g. `gitleaks`, `detect-secrets`) or `pre-commit` hooks to catch accidental commits.
+- Use least-privilege file permissions for sensitive files and be cautious with executable permissions.
 
 **Git Workflow:**
 - Use descriptive commit messages
