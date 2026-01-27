@@ -45,16 +45,17 @@
     serviceConfig = {
       Type = "oneshot";
       User = "root";
+      Environment = "PATH=/run/current-system/sw/bin:/run/current-system/sw/sbin";
     };
     script = ''
       mkdir -p /mnt/data/mom_backup
 
-      TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-      BACKUP_FILE="/mnt/data/mom-backup/nextcloud_$TIMESTAMP.tar.gz"
+      TIMESTAMP=$(date +%Y%m%d)
+      BACKUP_FILE="/mnt/data/mom_backup/sorserver_$TIMESTAMP.tar.gz"
 
-      tar -czf "$BACKUP_FILE" -C /mnt/sorserver nextcloud db_backups
+      tar -czf "$BACKUP_FILE" -C /mnt/sorserver nextcloud db_backups immich
 
-      cd /mnt/data/mom-backup
+      cd /mnt/data/mom_backup
       ls -t nextcloud_*.tar.gz | tail -n +8 | xargs -r rm --
     '';
   };
