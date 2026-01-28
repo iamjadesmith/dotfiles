@@ -107,6 +107,7 @@
               "nikitabobko/tap/aerospace"
               "prismlauncher"
               "nextcloud"
+              "linearmouse"
             ];
             taps = [
               "nikitabobko/tap"
