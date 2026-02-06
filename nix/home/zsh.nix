@@ -130,25 +130,5 @@
             sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
         fi
     }
-
-    function obs_sync() {
-        local obsidian_dir="$HOME/obsidian"
-        local original_dir="$PWD"
-        
-        if [[ ! -d "$obsidian_dir" ]]; then
-            echo "Error: $obsidian_dir does not exist"
-            return 1
-        fi
-        
-        cd "$obsidian_dir" || return 1
-        
-        git pull
-        git add .
-        local current_date=$(date +"%Y-%m-%d %H:%M")
-        git commit -m "sync $current_date"
-        git push -u origin main
-        
-        cd "$original_dir"
-    }
   '';
 }

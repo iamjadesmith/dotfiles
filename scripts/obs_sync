@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+obsidian_dir="$HOME/obsidian"
+original_dir="$PWD"
+
+if [[ ! -d "$obsidian_dir" ]]; then
+  echo "Error: $obsidian_dir does not exist"
+  exit 1
+fi
+
+cd "$obsidian_dir"
+
+git pull
+git add .
+current_date=$(date +"%Y-%m-%d %H:%M")
+git commit -m "sync $current_date"
+git push -u origin main
+
+cd "$original_dir"
