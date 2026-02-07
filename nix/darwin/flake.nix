@@ -108,6 +108,7 @@
               "prismlauncher"
               "nextcloud"
               "linearmouse"
+              "bettterdisplay"
             ];
             taps = [
               "nikitabobko/tap"
