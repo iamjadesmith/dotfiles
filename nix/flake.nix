@@ -11,6 +11,9 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
     alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
   };
 
@@ -19,6 +22,7 @@
       self,
       nixpkgs,
       disko,
+      sops-nix,
       alacritty-theme,
       nixpkgs-unstable,
       home-manager,
@@ -73,6 +77,7 @@
             system = "x86_64-linux";
             modules = [
               disko.nixosModules.disko
+              sops-nix.nixosModules.sops
               ./hosts/${host.name}/configuration.nix
               ./hosts/${host.name}/hardware-configuration.nix
               ./hosts/${host.name}/disko-config.nix
