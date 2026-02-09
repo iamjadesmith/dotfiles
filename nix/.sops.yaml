@@ -1,0 +1,18 @@
+# .sops.yaml - SOPS configuration for secrets encryption
+#
+# To get the age public key from a host's SSH key, run on that host:
+#   nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
+#
+# Or remotely:
+#   ssh-keyscan -t ed25519 <hostname> 2>/dev/null | ssh-to-age
+
+keys:
+  # Host keys (derived from SSH host ed25519 keys)
+  - &sorserver age1uukv9jeung20z2vg9msfsw868h0n9qleh89huvrlj7z02dwpk4lsmvnuqh
+
+creation_rules:
+  # Secrets for sorserver
+  - path_regex: secrets/sorserver/.*\.yaml$
+    key_groups:
+      - age:
+          - *sorserver
