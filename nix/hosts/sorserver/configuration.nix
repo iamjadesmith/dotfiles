@@ -21,14 +21,12 @@
     ./nextcloud.nix
   ];
 
-  # sops-nix configuration for secrets management
   sops = {
-    defaultSopsFile = ../../secrets/sorserver/wireguard.yaml;
+    defaultSopsFile = ../../secrets/sorserver/default.yaml;
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
       wireguard_private_key = { };
-      # Uncomment if using preshared key:
-      # wireguard_preshared_key = { };
+      nextcloud_admin_pass = { };
     };
   };
 

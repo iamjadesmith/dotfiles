@@ -16,8 +16,8 @@
     maxUploadSize = "16G";
     config = {
       dbtype = "pgsql";
-      # adminuser = "admin";
-      # adminpassFile = "/run/secrets/nextcloud-admin-pass";
+      adminuser = "admin";
+      adminpassFile = config.sops.secrets.nextcloud_admin_pass.path;
     };
     settings = {
       trusted_domains = [ "cloud.sorenson-fam.com" ];
