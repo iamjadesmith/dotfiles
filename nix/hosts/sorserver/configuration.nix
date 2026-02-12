@@ -50,6 +50,10 @@
   networking.networkmanager.dns = "systemd-resolved";
   networking.resolvconf.enable = true;
   networking.resolvconf.useLocalResolver = true;
+  networking.search = [ "joejad.lan" ];
+  networking.nameservers = [
+    "127.0.0.1"
+  ];
 
   time.timeZone = "America/Chicago";
 
