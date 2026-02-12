@@ -153,7 +153,10 @@
           "10.10.10.1"
           "10.47.59.51"
         ];
-        Domains = [ "~joejad.lan" ];
+        Domains = [
+          "joejad.lan"
+          "~joejad.lan"
+        ];
       };
     };
   };
