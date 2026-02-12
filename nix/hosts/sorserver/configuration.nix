@@ -147,11 +147,10 @@
   networking.firewall.checkReversePath = "loose";
   services.resolved = {
     enable = true;
-    dns = [
-      "10.10.10.1"
-      "10.47.59.51"
-    ];
-    domains = [ "~joejad.lan" ];
+    extraConfig = ''
+      DNS=10.10.10.1 10.47.59.51
+      Domains=~joejad.lan
+    '';
   };
   services = {
     networkd-dispatcher = {
