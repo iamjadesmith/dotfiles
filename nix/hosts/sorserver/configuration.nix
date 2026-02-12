@@ -47,7 +47,6 @@
 
   networking.hostName = meta.hostname;
   networking.networkmanager.enable = true;
-  networking.networkmanager.dns = "systemd-resolved";
 
   time.timeZone = "America/Chicago";
 
@@ -145,21 +144,6 @@
   services.tailscale.useRoutingFeatures = "both";
   services.tailscale.extraUpFlags = [ "--accept-dns=false" ];
   networking.firewall.checkReversePath = "loose";
-  services.resolved = {
-    enable = true;
-    settings = {
-      Resolve = {
-        DNS = [
-          "10.10.10.1"
-          "10.47.59.51"
-        ];
-        Domains = [
-          "joejad.lan"
-          "~joejad.lan"
-        ];
-      };
-    };
-  };
   services = {
     networkd-dispatcher = {
       enable = true;
@@ -211,6 +195,13 @@
         ];
       };
       forward-zone = [
+        {
+          name = "joejad.lan.";
+          forward-addr = [
+            "10.10.10.1"
+            "10.47.59.51"
+          ];
+        }
         {
           name = ".";
           forward-tls-upstream = "yes";
