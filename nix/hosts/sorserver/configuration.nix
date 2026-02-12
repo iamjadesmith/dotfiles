@@ -155,31 +155,18 @@
     };
   };
 
-  # WireGuard configuration to connect to home network
   networking.wg-quick.interfaces = {
     wg0 = {
       address = [ "10.10.10.8/32" ];
       privateKeyFile = config.sops.secrets.wireguard_private_key.path;
-      # DNS is handled by Tailscale/local resolver, so not setting DNS here
-
       peers = [
         {
-          # Home WireGuard server
-          # TODO: Replace with your home server's actual public key
           publicKey = "NfwRlI/IFxEfmK6VmtemBYEUpLJ0wF07wpmdz598jGs=";
-          # Uncomment if using preshared key:
-          # presharedKeyFile = config.sops.secrets.wireguard_preshared_key.path;
-
-          # Only route home network and WireGuard subnet through the tunnel
-          # This allows Tailscale exit node to continue working for other traffic
           allowedIPs = [
             "10.10.10.0/24"
             "10.47.59.0/24"
           ];
-
           endpoint = "";
-
-          # Keep the tunnel alive (important for NAT traversal)
           persistentKeepalive = 25;
         }
       ];
