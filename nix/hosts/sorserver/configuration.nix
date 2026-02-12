@@ -47,6 +47,9 @@
 
   networking.hostName = meta.hostname;
   networking.networkmanager.enable = true;
+  networking.networkmanager.dns = "systemd-resolved";
+  networking.resolvconf.enable = true;
+  networking.resolvconf.useLocalResolver = true;
 
   time.timeZone = "America/Chicago";
 
