@@ -196,6 +196,8 @@
           "127.0.0.1/32 allow"
           "192.168.86.0/24 allow"
         ];
+        private-domain = [ "joejad.lan" ];
+        domain-insecure = [ "joejad.lan" ];
         local-zone = "\"sorenson-fam.com.\" redirect";
         local-data = [
           "\"sorenson-fam.com. IN A 192.168.86.3\""
@@ -207,7 +209,6 @@
           name = "joejad.lan.";
           forward-addr = [
             "10.10.10.1"
-            "10.47.59.51"
           ];
         }
         {
