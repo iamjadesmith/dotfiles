@@ -145,6 +145,7 @@
     extraPackages = with pkgs; [
       intel-media-driver
     ];
+    nvidia.open = false;
   };
 
   services.tailscale.enable = true;
