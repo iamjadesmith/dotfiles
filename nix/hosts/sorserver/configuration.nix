@@ -45,6 +45,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.kernelParams = [
+    "intel_iommu=on"
+    "iommu=pt"
+    "module_blacklist=nouveau"
+    "tpm_tis.interrupts=0"
+  ];
+
   networking.hostName = meta.hostname;
   networking.networkmanager.enable = true;
   networking.networkmanager.dns = "systemd-resolved";
