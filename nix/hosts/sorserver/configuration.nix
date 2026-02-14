@@ -165,7 +165,9 @@
     };
     compression = "zstd,6";
     startAt = "weekly";
-    prune.keepWeekly = 3;
+    prune.keep = {
+      weekly = 3;
+    };
     environment = {
       BORG_RSH = "ssh -i /var/lib/borg/.ssh/id_ed25519";
     };
