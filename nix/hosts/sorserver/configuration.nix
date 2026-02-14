@@ -158,6 +158,7 @@
     paths = [
       "/var/lib/nextcloud"
       "/var/lib/db_backups"
+      "/var/lib/immich"
     ];
     repo = "root@pve:/movies/media/mom_backup/sorserver";
     encryption = {
