@@ -170,7 +170,7 @@
       weekly = 3;
     };
     environment = {
-      BORG_RSH = "ssh -i /var/lib/borg/.ssh/id_ed25519";
+      BORG_RSH = "ssh -i /var/lib/borg/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/var/lib/borg/.ssh/known_hosts";
     };
   };
 
