@@ -27,6 +27,7 @@
     secrets = {
       wireguard_private_key = { };
       nextcloud_admin_pass = { };
+      borgbackup_passphrase = { };
     };
   };
 
@@ -162,7 +163,8 @@
     ];
     repo = "root@pve:/movies/media/mom_backup/sorserver";
     encryption = {
-      mode = "none";
+      mode = "repokey-blake2";
+      passCommand = "cat ${config.sops.secrets.borgbackup_passphrase.path}";
     };
     compression = "zstd,6";
     startAt = "weekly";
@@ -171,7 +173,6 @@
     };
     environment = {
       BORG_RSH = "ssh -i /var/lib/borg/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/var/lib/borg/.ssh/known_hosts";
-      BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK = "yes";
     };
   };
 
