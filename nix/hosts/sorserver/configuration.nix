@@ -206,7 +206,6 @@
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "both";
   services.tailscale.extraUpFlags = [ "--accept-dns=false" ];
-  services.tailscale.extraDaemonFlags = [ "--no-resolvconf" ];
   networking.firewall.checkReversePath = "loose";
   services = {
     networkd-dispatcher = {
