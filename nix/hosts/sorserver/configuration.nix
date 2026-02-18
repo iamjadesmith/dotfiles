@@ -225,7 +225,7 @@
       address = [ "10.10.10.8/32" ];
       privateKeyFile = config.sops.secrets.wireguard_private_key.path;
       postUp = ''
-        wg set %i peer NfwRlI/IFxEfmK6VmtemBYEUpLJ0wF07wpmdz598jGs= endpoint "$(cat ${config.sops.secrets.wireguard_endpoint.path})"
+        wg set wg0 peer NfwRlI/IFxEfmK6VmtemBYEUpLJ0wF07wpmdz598jGs= endpoint "$(cat ${config.sops.secrets.wireguard_endpoint.path})"
       '';
       peers = [
         {
