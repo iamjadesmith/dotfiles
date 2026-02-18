@@ -26,6 +26,7 @@
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
       wireguard_private_key = { };
+      wireguard_endpoint = { };
       nextcloud_admin_pass = { };
       borgbackup_passphrase = { };
     };
@@ -223,6 +224,9 @@
     wg0 = {
       address = [ "10.10.10.8/32" ];
       privateKeyFile = config.sops.secrets.wireguard_private_key.path;
+      postUp = ''
+        wg set %i peer NfwRlI/IFxEfmK6VmtemBYEUpLJ0wF07wpmdz598jGs= endpoint "$(cat ${config.sops.secrets.wireguard_endpoint.path})"
+      '';
       peers = [
         {
           publicKey = "NfwRlI/IFxEfmK6VmtemBYEUpLJ0wF07wpmdz598jGs=";
@@ -230,7 +234,6 @@
             "10.10.10.0/24"
             "10.47.59.0/24"
           ];
-          endpoint = "";
           persistentKeepalive = 25;
         }
       ];
