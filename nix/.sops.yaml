@@ -9,6 +9,7 @@
 keys:
   # Host keys (derived from SSH host ed25519 keys)
   - &sorserver age1uukv9jeung20z2vg9msfsw868h0n9qleh89huvrlj7z02dwpk4lsmvnuqh
+  - &joejadserver age17lrgxpene4hfzh8zz0vezmwdagtekvlmnfl3mvuf9nrjwzmjhcdqvtfg0e
 
 creation_rules:
   # Secrets for sorserver
@@ -16,3 +17,8 @@ creation_rules:
     key_groups:
       - age:
           - *sorserver
+  # Secrets for joejadserver
+  - path_regex: secrets/joejadserver/.*\.yaml$
+    key_groups:
+      - age:
+          - *joejadserver
