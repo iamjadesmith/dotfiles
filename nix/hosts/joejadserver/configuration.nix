@@ -43,14 +43,6 @@
     autoResize = true;
     fsType = "ext4";
   };
-  fileSystems."/mnt/sorserver" = {
-    device = "sorserver:/var/lib";
-    fsType = "nfs";
-  };
-  fileSystems."/mnt/data" = {
-    device = "pve:/movies/media";
-    fsType = "nfs";
-  };
 
   networking.hostName = meta.hostname;
   networking.networkmanager.enable = true;
