@@ -163,7 +163,7 @@
 
   services.borgbackup.jobs.sorserver = {
     paths = [
-      "/var/lib/nextcloud/.snapshots/borg"
+      "/var/lib/nextcloud"
       "/var/lib/db_backups"
       "/var/lib/immich"
     ];
