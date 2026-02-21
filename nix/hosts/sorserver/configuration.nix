@@ -163,7 +163,7 @@
 
   services.borgbackup.jobs.sorserver = {
     paths = [
-      "/var/lib/nextcloud"
+      "/var/lib/nextcloud/.snapshots/borg"
       "/var/lib/db_backups"
       "/var/lib/immich"
     ];
@@ -194,6 +194,24 @@
       if [ ! -f /var/lib/borg/.ssh/id_ed25519 ]; then
         install -d -m 700 -o borg -g borg /var/lib/borg/.ssh
         ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -N "" -f /var/lib/borg/.ssh/id_ed25519
+      fi
+    '';
+  };
+
+  systemd.services.borgbackup-job-sorserver = {
+    preStart = ''
+      SNAP_DIR="/var/lib/nextcloud/.snapshots"
+      SNAP_PATH="${SNAP_DIR}/borg"
+      ${pkgs.coreutils}/bin/mkdir -p "${SNAP_DIR}"
+      if [ -d "${SNAP_PATH}" ]; then
+        ${pkgs.btrfs-progs}/bin/btrfs subvolume delete "${SNAP_PATH}"
+      fi
+      ${pkgs.btrfs-progs}/bin/btrfs subvolume snapshot -r /var/lib/nextcloud "${SNAP_PATH}"
+    '';
+    postStop = ''
+      SNAP_PATH="/var/lib/nextcloud/.snapshots/borg"
+      if [ -d "${SNAP_PATH}" ]; then
+        ${pkgs.btrfs-progs}/bin/btrfs subvolume delete "${SNAP_PATH}"
       fi
     '';
   };
