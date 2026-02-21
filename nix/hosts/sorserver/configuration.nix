@@ -201,10 +201,10 @@
   systemd.services.borgbackup-job-sorserver = {
     serviceConfig = {
       ExecStartPre = ''
-        ${pkgs.sudo}/bin/sudo -u nextcloud ${config.services.nextcloud.occ} maintenance:mode --on
+        ${pkgs.sudo}/bin/sudo -u nextcloud /run/current-system/sw/bin/nextcloud-occ maintenance:mode --on
       '';
       ExecStartPost = ''
-        ${pkgs.sudo}/bin/sudo -u nextcloud ${config.services.nextcloud.occ} maintenance:mode --off
+        ${pkgs.sudo}/bin/sudo -u nextcloud /run/current-system/sw/bin/nextcloud-occ maintenance:mode --off
       '';
     };
   };
