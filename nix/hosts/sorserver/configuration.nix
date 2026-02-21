@@ -201,17 +201,17 @@
   systemd.services.borgbackup-job-sorserver = {
     preStart = ''
       SNAP_DIR="/var/lib/nextcloud/.snapshots"
-      SNAP_PATH="${SNAP_DIR}/borg"
-      ${pkgs.coreutils}/bin/mkdir -p "${SNAP_DIR}"
-      if [ -d "${SNAP_PATH}" ]; then
-        ${pkgs.btrfs-progs}/bin/btrfs subvolume delete "${SNAP_PATH}"
+      SNAP_PATH="$SNAP_DIR/borg"
+      ${pkgs.coreutils}/bin/mkdir -p "$SNAP_DIR"
+      if [ -d "$SNAP_PATH" ]; then
+        ${pkgs.btrfs-progs}/bin/btrfs subvolume delete "$SNAP_PATH"
       fi
-      ${pkgs.btrfs-progs}/bin/btrfs subvolume snapshot -r /var/lib/nextcloud "${SNAP_PATH}"
+      ${pkgs.btrfs-progs}/bin/btrfs subvolume snapshot -r /var/lib/nextcloud "$SNAP_PATH"
     '';
     postStop = ''
       SNAP_PATH="/var/lib/nextcloud/.snapshots/borg"
-      if [ -d "${SNAP_PATH}" ]; then
-        ${pkgs.btrfs-progs}/bin/btrfs subvolume delete "${SNAP_PATH}"
+      if [ -d "$SNAP_PATH" ]; then
+        ${pkgs.btrfs-progs}/bin/btrfs subvolume delete "$SNAP_PATH"
       fi
     '';
   };
