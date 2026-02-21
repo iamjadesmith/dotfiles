@@ -113,6 +113,7 @@
     shell = pkgs.bash;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBzV9hRmrCdQvofmglcIftsYllcHAHJ//nhhY3Zc2T4/ borg@joejadserver"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILsxquijn6kxbSGwpWPwmry8e11pxOcDGBhgQ0JII8d8 root@git"
     ];
   };
 
