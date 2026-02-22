@@ -11,10 +11,13 @@ fi
 
 cd "$obsidian_dir"
 
+if [[ -n "$(git status --porcelain)" ]]; then
+  git add .
+  current_date=$(date +"%Y-%m-%d %H:%M")
+  git commit -m "sync $current_date"
+fi
+
 git pull
-git add .
-current_date=$(date +"%Y-%m-%d %H:%M")
-git commit -m "sync $current_date"
 git push -u origin main
 
 cd "$original_dir"
