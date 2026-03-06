@@ -15,14 +15,6 @@
     passwordFile = "/run/secrets/freshrss";
   };
 
-  services.rss-bridge = {
-    enable = true;
-    config = {
-      system.enabled_bridges = [ "*" ];
-    };
-    virtualHost = "rss-bridge.joejad.com";
-  };
-
   services.uptime-kuma.enable = true;
   services.uptime-kuma.settings.UPTIME_KUMA_HOST = "0.0.0.0";
 
