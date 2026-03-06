@@ -20,6 +20,7 @@
     config = {
       system.enabled_bridges = [ "*" ];
     };
+    virtualHost = "rss-bridge.joejad.com";
   };
 
   services.uptime-kuma.enable = true;
