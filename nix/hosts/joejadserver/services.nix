@@ -27,7 +27,7 @@
       ];
       autoStart = true;
       extraOptions = [
-        "--health-start-period=10m"
+        "--no-healthcheck"
       ];
       environment = {
         EULA = "TRUE";
