@@ -20,12 +20,15 @@
 
   virtualisation.oci-containers.containers = {
     minecraft = {
-      image = "itzg/minecraft-server";
+      image = "itzg/minecraft-server:latest";
       ports = [ "25565:25565" ];
       volumes = [
         "/var/lib/minecraft:/data"
       ];
       autoStart = true;
+      extraOptions = [
+        "--health-start-period=10m"
+      ];
       environment = {
         EULA = "TRUE";
         OPS = "JoeJad, Abbyb727";
