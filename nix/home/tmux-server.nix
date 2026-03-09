@@ -10,7 +10,7 @@
   secureSocket = true;
   shell = "${pkgs.zsh}/bin/zsh";
   shortcut = "b";
-  terminal = "screen-256color";
+  terminal = "tmux-256color";
 
   plugins = with pkgs.tmuxPlugins; [
     yank
@@ -18,7 +18,9 @@
   ];
 
   extraConfig = ''
-        set -as terminal-features ",xterm-256color:RGB"
+        set -as terminal-features ",xterm-256color:RGB,tmux-256color:RGB"
+        set-environment -g LANG C.UTF-8
+        set-environment -g LC_CTYPE C.UTF-8
         set -g mouse on
 
         bind -r ^ last-window
