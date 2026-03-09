@@ -18,7 +18,6 @@
   ];
 
   extraConfig = ''
-        setq -g status-utf8 on
         setw -g utf-8 on
         set -as terminal-features ",xterm-256color:RGB"
         set -g mouse on
