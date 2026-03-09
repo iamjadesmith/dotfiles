@@ -15,6 +15,7 @@
     h = "helm";
     proj = "source ~/.dotfiles/scripts/tmux-project-session.sh";
     obs = "cd ~/obsidian && nvim .";
+    tmux = "command tmux -u";
   };
   initContent = ''
     # Cache brew shellenv (only regenerate if homebrew updates)
