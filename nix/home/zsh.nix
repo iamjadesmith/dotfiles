@@ -14,7 +14,7 @@
     k = "kubectl";
     h = "helm";
     proj = "source ~/.dotfiles/scripts/tmux-project-session.sh";
-    obs = "cd ~/obsidian && nvim .";
+    obs = "cd ~/obsidian && nvim Todo.md";
     tmux = "command tmux -u";
   };
   initContent = ''
