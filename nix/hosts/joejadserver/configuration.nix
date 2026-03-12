@@ -18,9 +18,9 @@
   sops = {
     defaultSopsFile = ../../secrets/joejadserver/default.yaml;
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    secrets = {
-      borgbackup_passphrase = { };
-    };
+    # secrets = {
+    #   borgbackup_passphrase = { };
+    # };
   };
 
   nix = {
@@ -67,7 +67,6 @@
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
     "d /var/lib/minecraft 0755 root root - -"
-    "d /var/lib/borg/.ssh 0700 borg borg - -"
   ];
 
   virtualisation.docker = {
@@ -99,15 +98,6 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN6MCnmxn47X/aP9pQxNmHc2I6kkZqh5R+J4KdcJUhZI jade@mini"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOciDf2c/QVPKjPVgSXYg7LSg8nwL4J7JDf8mYO4cs11 iPad"
     ];
-  };
-
-  users.groups.borg = { };
-  users.users.borg = {
-    isSystemUser = true;
-    group = "borg";
-    home = "/var/lib/borg";
-    createHome = true;
-    shell = pkgs.bash;
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -158,41 +148,6 @@
       PasswordAuthentication = false;
       PermitRootLogin = "no";
     };
-  };
-
-  services.borgbackup.jobs.joejadserver = {
-    paths = [
-      "/var/local/vaultwarden/backup"
-    ];
-    repo = "borg@sorserver:/var/lib/borg/joejadserver";
-    encryption = {
-      mode = "repokey-blake2";
-      passCommand = "cat ${config.sops.secrets.borgbackup_passphrase.path}";
-    };
-    compression = "zstd,6";
-    startAt = "weekly";
-    prune.keep = {
-      weekly = 3;
-    };
-    environment = {
-      BORG_RSH = "ssh -i /var/lib/borg/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/var/lib/borg/.ssh/known_hosts";
-    };
-  };
-
-  systemd.services.borg-ssh-keygen = {
-    description = "Generate borg SSH key if missing";
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      User = "borg";
-      Group = "borg";
-    };
-    script = ''
-      if [ ! -f /var/lib/borg/.ssh/id_ed25519 ]; then
-        install -d -m 700 -o borg -g borg /var/lib/borg/.ssh
-        ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -N "" -f /var/lib/borg/.ssh/id_ed25519
-      fi
-    '';
   };
 
   services.tailscale.enable = true;

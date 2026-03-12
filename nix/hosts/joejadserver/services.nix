@@ -3,21 +3,6 @@
 }:
 
 {
-  services.vaultwarden = {
-    enable = true;
-    backupDir = "/var/local/vaultwarden/backup";
-    environmentFile = "/var/lib/vaultwarden/vaultwarden.env";
-  };
-
-  services.freshrss = {
-    enable = true;
-    baseUrl = "https://rss.joejad.com";
-    passwordFile = "/run/secrets/freshrss";
-  };
-
-  services.uptime-kuma.enable = true;
-  services.uptime-kuma.settings.UPTIME_KUMA_HOST = "0.0.0.0";
-
   virtualisation.oci-containers.containers = {
     minecraft = {
       image = "itzg/minecraft-server:latest";
