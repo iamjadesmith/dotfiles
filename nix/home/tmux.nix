@@ -18,7 +18,8 @@
   ];
 
   extraConfig = ''
-        set -as terminal-features ",xterm-256color:RGB,tmux-256color:RGB"
+        set -s set-clipboard on
+        set -as terminal-features ",xterm-256color:RGB,tmux-256color:RGB,xterm-256color:clipboard"
         set-environment -g LANG C.UTF-8
         set-environment -g LC_CTYPE C.UTF-8
         set -g mouse on
