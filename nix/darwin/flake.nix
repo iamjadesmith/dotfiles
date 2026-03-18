@@ -70,6 +70,7 @@
             rust-analyzer
             rustup
             sops
+            speedtest-cli
             starship
             stylua
             tmux
