@@ -164,7 +164,8 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "tree-sitter-src": "tree-sitter-src"
       }
     },
     "sops-nix": {
@@ -184,6 +185,23 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "tree-sitter-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1765231503,
+        "narHash": "sha256-k8X2qtxUne8C6znYAKeb4zoBf+vffmcJZQHUmBvsilA=",
+        "owner": "tree-sitter",
+        "repo": "tree-sitter",
+        "rev": "8a3dcc6155a9faae677544303b6bc0caf1aef296",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tree-sitter",
+        "ref": "v0.26.1",
+        "repo": "tree-sitter",
         "type": "github"
       }
     }

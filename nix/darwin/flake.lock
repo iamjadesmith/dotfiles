@@ -146,7 +146,25 @@
         "alacritty-theme": "alacritty-theme",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "tree-sitter-src": "tree-sitter-src"
+      }
+    },
+    "tree-sitter-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1765231503,
+        "narHash": "sha256-k8X2qtxUne8C6znYAKeb4zoBf+vffmcJZQHUmBvsilA=",
+        "owner": "tree-sitter",
+        "repo": "tree-sitter",
+        "rev": "8a3dcc6155a9faae677544303b6bc0caf1aef296",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tree-sitter",
+        "ref": "v0.26.1",
+        "repo": "tree-sitter",
+        "type": "github"
       }
     }
   },

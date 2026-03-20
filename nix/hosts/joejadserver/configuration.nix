@@ -133,6 +133,7 @@
     stow
     stylua
     tmux
+    tree-sitter-cli
     unstable.cargo
     unstable.neovim
     unstable.rustup

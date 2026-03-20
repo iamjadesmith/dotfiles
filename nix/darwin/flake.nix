@@ -11,6 +11,11 @@
 
     alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
 
+    tree-sitter-src = {
+      url = "github:tree-sitter/tree-sitter/v0.26.1";
+      flake = false;
+    };
+
   };
 
   outputs =
@@ -18,6 +23,7 @@
       self,
       nix-darwin,
       alacritty-theme,
+      tree-sitter-src,
       nixpkgs,
       home-manager,
       ...
@@ -26,6 +32,24 @@
       add-unstable-packages = final: _prev: {
         unstable = import inputs.nixpkgs {
           system = "aarch64-darwin";
+        };
+      };
+      tree-sitter-overlay = final: prev: {
+        tree-sitter-cli = prev.rustPlatform.buildRustPackage {
+          pname = "tree-sitter-cli";
+          version = "0.26.1";
+          src = tree-sitter-src;
+          buildAndTestSubdir = "crates/cli";
+          cargoBuildFlags = [
+            "-p"
+            "tree-sitter-cli"
+          ];
+          cargoLock.lockFile = "${tree-sitter-src}/Cargo.lock";
+          doCheck = false;
+
+          meta = prev.tree-sitter.meta // {
+            mainProgram = "tree-sitter";
+          };
         };
       };
       username = "jade";
@@ -42,6 +66,7 @@
           nixpkgs.config.allowUnfree = true;
           nixpkgs.overlays = [
             add-unstable-packages
+            tree-sitter-overlay
             alacritty-theme.overlays.default
           ];
           environment.systemPackages = with pkgs; [
@@ -74,6 +99,7 @@
             starship
             stylua
             tmux
+            tree-sitter-cli
             tree
             yt-dlp
             yubikey-manager

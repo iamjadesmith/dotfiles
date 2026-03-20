@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    tree-sitter-src = {
+      url = "github:tree-sitter/tree-sitter/v0.26.1";
+      flake = false;
+    };
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -84,6 +88,9 @@
               inputs.home-manager.nixosModules.default
               home-manager.nixosModules.home-manager
               {
+                nixpkgs.overlays = [
+                  outputs.overlays.modifications
+                ];
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.users.joejad =
