@@ -17,6 +17,7 @@
         prev.llvmPackages.libclang
       ];
       LIBCLANG_PATH = "${prev.llvmPackages.libclang.lib}/lib";
+      BINDGEN_EXTRA_CLANG_ARGS = prev.lib.optionalString prev.stdenv.hostPlatform.isLinux "-isystem ${prev.stdenv.cc.libc.dev}/include";
       doCheck = false;
 
       meta = prev.tree-sitter.meta // {
