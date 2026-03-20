@@ -13,6 +13,10 @@
         "tree-sitter-cli"
       ];
       cargoLock.lockFile = "${inputs.tree-sitter-src}/Cargo.lock";
+      nativeBuildInputs = [
+        prev.llvmPackages.libclang
+      ];
+      LIBCLANG_PATH = "${prev.llvmPackages.libclang.lib}/lib";
       doCheck = false;
 
       meta = prev.tree-sitter.meta // {
