@@ -1,6 +1,7 @@
 return {
 	{
 		"R-nvim/R.nvim",
+		ft = { "r", "rmd", "quarto", "rnoweb" },
 		config = function()
 			local opts = {
 				R_args = { "--quiet", "--no-save" },
@@ -27,6 +28,5 @@ return {
 			end
 			require("r").setup(opts)
 		end,
-		lazy = false,
 	},
 }
