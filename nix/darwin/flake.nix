@@ -94,6 +94,7 @@
             nixfmt
             nodejs
             obsidian
+            poppler
             postgresql_17
             ripgrep
             ruby
