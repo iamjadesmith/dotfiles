@@ -143,6 +143,7 @@
               "linearmouse"
               "betterdisplay"
               "adguard"
+              "google-chrome"
             ];
             taps = [
               "nikitabobko/tap"
