@@ -142,7 +142,6 @@
               "nextcloud"
               "linearmouse"
               "betterdisplay"
-              "adguard"
               "google-chrome"
             ];
             taps = [
