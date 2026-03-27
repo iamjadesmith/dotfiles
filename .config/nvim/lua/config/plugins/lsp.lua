@@ -31,11 +31,9 @@ return {
 			local cmp_lsp = require("cmp_nvim_lsp")
 			local opts = { noremap = true, silent = true }
 			local on_attach = function(_, bufnr)
-				opts.buffer = bufnr
-				opts.desc = "Show line diagnostics"
-				vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
-				opts.desc = "Show documentation for what is under cursor"
-				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+				local keymap_opts = vim.tbl_extend("force", opts, { buffer = bufnr })
+				vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, vim.tbl_extend("force", keymap_opts, { desc = "Show line diagnostics" }))
+				vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", keymap_opts, { desc = "Show hover documentation" }))
 			end
 			local capabilities = vim.tbl_deep_extend(
 				"force",

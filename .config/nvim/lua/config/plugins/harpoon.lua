@@ -10,30 +10,30 @@ return {
 
 			vim.keymap.set("n", "<leader>a", function()
 				harpoon:list():add()
-			end)
+			end, { desc = "Add file to Harpoon" })
 			vim.keymap.set("n", "<C-e>", function()
 				harpoon.ui:toggle_quick_menu(harpoon:list())
-			end)
+			end, { desc = "Toggle Harpoon menu" })
 
 			vim.keymap.set("n", "<C-h>", function()
 				harpoon:list():select(1)
-			end)
+			end, { desc = "Go to Harpoon file 1" })
 			vim.keymap.set("n", "<C-j>", function()
 				harpoon:list():select(2)
-			end)
+			end, { desc = "Go to Harpoon file 2" })
 			vim.keymap.set("n", "<C-k>", function()
 				harpoon:list():select(3)
-			end)
+			end, { desc = "Go to Harpoon file 3" })
 			vim.keymap.set("n", "<C-l>", function()
 				harpoon:list():select(4)
-			end)
+			end, { desc = "Go to Harpoon file 4" })
 
 			vim.keymap.set("n", "<C-S-P>", function()
 				harpoon:list():prev()
-			end)
+			end, { desc = "Go to previous Harpoon file" })
 			vim.keymap.set("n", "<C-S-N>", function()
 				harpoon:list():next()
-			end)
+			end, { desc = "Go to next Harpoon file" })
 		end,
 	},
 }

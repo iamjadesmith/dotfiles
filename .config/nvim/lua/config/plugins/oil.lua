@@ -5,5 +5,5 @@ return {
 	opts = {},
 	dependencies = { { "echasnovski/mini.icons", opts = {} } },
 
-	vim.keymap.set("n", "<leader>fd", "<cmd>Oil<CR>"),
+	vim.keymap.set("n", "<leader>fd", "<cmd>Oil<CR>", { desc = "Open parent directory" }),
 }
