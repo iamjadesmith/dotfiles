@@ -7,17 +7,16 @@ return {
 	},
 	{
 		"folke/which-key.nvim",
-		keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
-		cmd = "WhichKey",
+		event = "VeryLazy",
 		config = function(_, opts)
 			local wk = require("which-key")
+			wk.setup(opts)
 			wk.add({
 				{ "<leader>f", group = "Find" },
 				{ "<leader>e", group = "Edit" },
 				{ "<leader>s", desc = "Search Current Word" },
 				{ "<leader>a", desc = "Add to Harpoon" },
 			})
-			wk.setup(opts)
 		end,
 	},
 }
