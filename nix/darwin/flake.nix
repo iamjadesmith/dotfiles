@@ -80,6 +80,7 @@
             alacritty
             ansible
             arduino-cli
+            basedpyright
             black
             ffmpeg-headless
             fluxcd
@@ -87,6 +88,7 @@
             kubectl
             kubernetes-helm
             lazygit
+            lemminx
             lua-language-server
             mkalias
             neovim
@@ -98,6 +100,7 @@
             postgresql_17
             ripgrep
             ruby
+            ruff
             rust-analyzer
             rustup
             sops
@@ -105,8 +108,10 @@
             starship
             stylua
             tmux
-            tree-sitter-cli
             tree
+            tree-sitter-cli
+            vscode-json-languageserver
+            yaml-language-server
             yt-dlp
             yubikey-manager
             zoxide

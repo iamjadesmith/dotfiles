@@ -73,6 +73,15 @@ return {
 				capabilities = capabilities,
 			})
 			vim.lsp.config("nil_ls", {})
+			vim.lsp.config("yamlls", {
+				capabilities = capabilities,
+			})
+			vim.lsp.config("jsonls", {
+				capabilities = capabilities,
+			})
+			vim.lsp.config("lemminx", {
+				capabilities = capabilities,
+			})
 
 			vim.lsp.enable("r_language_server")
 			vim.lsp.enable("rust_analyzer")
@@ -80,6 +89,9 @@ return {
 			vim.lsp.enable("ruff")
 			vim.lsp.enable("lua_ls")
 			vim.lsp.enable("nil_ls")
+			vim.lsp.enable("yamlls")
+			vim.lsp.enable("jsonls")
+			vim.lsp.enable("lemminx")
 
 			local cmp_select = { behavior = cmp.SelectBehavior.Select }
 

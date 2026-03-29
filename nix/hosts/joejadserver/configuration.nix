@@ -106,9 +106,11 @@
   environment.systemPackages = with pkgs; [
     R
     age
+    basedpyright
     bash
     bind
     cifs-utils
+    ethtool
     fluxcd
     fzf
     gcc
@@ -117,9 +119,11 @@
     helm
     kubectl
     lazygit
+    lemminx
     lua
     lua-language-server
     luajitPackages.luarocks-nix
+    networkd-dispatcher
     nfs-utils
     nil
     nixfmt
@@ -127,6 +131,7 @@
     opencode
     postgresql_17
     ripgrep
+    ruff
     samba
     sops
     starship
@@ -137,10 +142,10 @@
     unstable.cargo
     unstable.neovim
     unstable.rustup
+    vscode-json-languageserver
+    yaml-language-server
     zoxide
     zsh
-    ethtool
-    networkd-dispatcher
   ];
 
   services.openssh = {
