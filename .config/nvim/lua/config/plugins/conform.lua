@@ -6,7 +6,7 @@ return {
 		{
 			"<leader>b",
 			function()
-				require("conform").format({ lsp_fallback = "true", timeout_ms = 2000 })
+				require("conform").format({ lsp_fallback = true, timeout_ms = 2000 })
 			end,
 			mode = "",
 			desc = "Format buffer",
@@ -23,7 +23,7 @@ return {
 		notify_on_error = false,
 		formatters_by_ft = {
 			lua = { "stylua" },
-			python = { "pyright" },
+			python = { "ruff_format", "ruff_organize_imports" },
 			r = { "my_styler" },
 			quarto = { "my_styler" },
 			rust = { "rustfmt" },
