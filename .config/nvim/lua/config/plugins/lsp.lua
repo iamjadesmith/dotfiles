@@ -35,12 +35,21 @@ return {
 				vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, vim.tbl_extend("force", keymap_opts, { desc = "Show line diagnostics" }))
 				vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", keymap_opts, { desc = "Show hover documentation" }))
 			end
+
+			local python_on_attach = function(client, bufnr)
+				if client.name == "ruff" then
+					client.server_capabilities.hoverProvider = false
+				end
+				on_attach(client, bufnr)
+			end
 			local capabilities = vim.tbl_deep_extend(
 				"force",
 				{},
 				vim.lsp.protocol.make_client_capabilities(),
 				cmp_lsp.default_capabilities()
 			)
+			capabilities.general = capabilities.general or {}
+			capabilities.general.positionEncodings = { "utf-16" }
 
 			require("fidget").setup({})
 
@@ -53,14 +62,22 @@ return {
 					},
 				},
 			})
-		vim.lsp.config("r_language_server", {})
-		vim.lsp.config("rust_analyzer", {})
-		vim.lsp.config("pyright", {})
-		vim.lsp.config("nil_ls", {})
+			vim.lsp.config("r_language_server", {})
+			vim.lsp.config("rust_analyzer", {})
+			vim.lsp.config("basedpyright", {
+				on_attach = python_on_attach,
+				capabilities = capabilities,
+			})
+			vim.lsp.config("ruff", {
+				on_attach = python_on_attach,
+				capabilities = capabilities,
+			})
+			vim.lsp.config("nil_ls", {})
 
 			vim.lsp.enable("r_language_server")
 			vim.lsp.enable("rust_analyzer")
-			vim.lsp.enable("pyright")
+			vim.lsp.enable("basedpyright")
+			vim.lsp.enable("ruff")
 			vim.lsp.enable("lua_ls")
 			vim.lsp.enable("nil_ls")
 
