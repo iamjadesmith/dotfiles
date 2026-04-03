@@ -77,7 +77,6 @@
           environment.systemPackages = with pkgs; [
             R
             age
-            alacritty
             ansible
             arduino-cli
             basedpyright
@@ -95,7 +94,6 @@
             nil
             nixfmt
             nodejs
-            obsidian
             poppler-utils
             postgresql_17
             ripgrep
@@ -148,6 +146,8 @@
               "linearmouse"
               "betterdisplay"
               "google-chrome"
+              "alacritty"
+              "obsidian"
             ];
             taps = [
               "nikitabobko/tap"
