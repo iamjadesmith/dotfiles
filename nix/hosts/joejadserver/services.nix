@@ -48,14 +48,4 @@
     baseUrl = "https://rss.joejad.com";
     passwordFile = config.sops.secrets.freshrss_pass.path;
   };
-
-  systemd.services.freshrss-updater = {
-    description = "FreshRSS feed updater";
-    serviceConfig = {
-      Type = "oneshot";
-      User = "freshrss";
-      ExecStart = "${config.services.freshrss.package}/bin/php ${config.services.freshrss.package}/share/freshrss/app/actualize_script.php";
-    };
-    startAt = "*:0/20";
-  };
 }
