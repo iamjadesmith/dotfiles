@@ -24,6 +24,7 @@
         group = "vaultwarden";
         mode = "0400";
       };
+      freshrss_db_pass = { };
     };
   };
 

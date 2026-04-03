@@ -34,4 +34,16 @@
     backupDir = "/var/local/vaultwarden/backup";
     environmentFile = [ config.sops.secrets.vaultwarden_env.path ];
   };
+
+  services.freshrss = {
+    enable = true;
+    database = {
+      type = "pgsql";
+      passFile = config.sops.secrets.freshrss_db_pass.path;
+      port = 5432;
+      user = "postgres";
+    };
+    api.enable = true;
+    baseUrl = "https://rss.joejad.com";
+  };
 }
