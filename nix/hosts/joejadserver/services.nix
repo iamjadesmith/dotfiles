@@ -45,5 +45,6 @@
     };
     api.enable = true;
     baseUrl = "https://rss.joejad.com";
+    passwordFile = config.sops.secrets.freshrss_pass.path;
   };
 }

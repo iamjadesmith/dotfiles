@@ -25,6 +25,7 @@
         mode = "0400";
       };
       freshrss_db_pass = { };
+      freshrss_pass = { };
     };
   };
 
