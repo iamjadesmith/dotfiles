@@ -42,6 +42,7 @@
       passFile = config.sops.secrets.freshrss_db_pass.path;
       port = 5432;
       user = "postgres";
+      host = "postgres";
     };
     api.enable = true;
     baseUrl = "https://rss.joejad.com";
