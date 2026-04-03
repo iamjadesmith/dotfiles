@@ -18,9 +18,13 @@
   sops = {
     defaultSopsFile = ../../secrets/joejadserver/default.yaml;
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    # secrets = {
-    #   borgbackup_passphrase = { };
-    # };
+    secrets = {
+      vaultwarden_env = {
+        owner = "vaultwarden";
+        group = "vaultwarden";
+        mode = "0400";
+      };
+    };
   };
 
   nix = {
@@ -67,6 +71,7 @@
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
     "d /var/lib/minecraft 0755 root root - -"
+    "d /var/local/vaultwarden/backup 0750 vaultwarden vaultwarden - -"
   ];
 
   virtualisation.docker = {

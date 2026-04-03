@@ -1,4 +1,5 @@
 {
+  config,
   ...
 }:
 
@@ -26,5 +27,11 @@
         VERSION = "26.1-snapshot-9";
       };
     };
+  };
+
+  services.vaultwarden = {
+    enable = true;
+    backupDir = "/var/local/vaultwarden/backup";
+    environmentFile = [ config.sops.secrets.vaultwarden_env.path ];
   };
 }
