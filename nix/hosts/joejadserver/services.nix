@@ -50,4 +50,5 @@
   };
 
   services.uptime-kuma.enable = true;
+  services.uptime-kuma.settings.UPTIME_KUMA_HOST = "0.0.0.0";
 }
