@@ -48,4 +48,6 @@
     baseUrl = "https://rss.joejad.com";
     passwordFile = config.sops.secrets.freshrss_pass.path;
   };
+
+  services.uptime-kuma.enable = true;
 }
