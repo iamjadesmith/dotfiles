@@ -79,7 +79,6 @@
             tree
             vscode-json-languageserver
             yaml-language-server
-            yt-dlp
             yubikey-manager
             zoxide
           ];
@@ -106,6 +105,7 @@
               "anomalyco/tap/opencode"
               "gemini-cli"
               "tree-sitter-cli"
+              "yt-dlp"
             ];
             casks = [
               "firefox"
