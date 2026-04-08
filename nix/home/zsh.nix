@@ -25,6 +25,11 @@
         /opt/homebrew/bin/brew shellenv > "$BREW_CACHE"
       fi
       source "$BREW_CACHE"
+
+      LIBPQ_BIN="$HOMEBREW_PREFIX/opt/libpq/bin"
+      if [[ -d "$LIBPQ_BIN" ]] && [[ ":$PATH:" != *":$LIBPQ_BIN:"* ]]; then
+        export PATH="$LIBPQ_BIN:$PATH"
+      fi
     fi
 
     ZINIT_HOME="$HOME/.local/share/zinit/zinit.git"
