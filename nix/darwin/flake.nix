@@ -65,7 +65,6 @@
             nixfmt
             nodejs
             poppler-utils
-            postgresql_17
             ripgrep
             ruby
             ruff
@@ -106,6 +105,7 @@
               "gemini-cli"
               "tree-sitter-cli"
               "yt-dlp"
+              "postgresql@17"
             ];
             casks = [
               "firefox"
