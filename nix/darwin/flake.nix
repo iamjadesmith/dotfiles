@@ -105,7 +105,7 @@
               "gemini-cli"
               "tree-sitter-cli"
               "yt-dlp"
-              "libpq@17"
+              "libpq"
             ];
             casks = [
               "firefox"
