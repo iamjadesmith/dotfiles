@@ -1,4 +1,12 @@
-local vault_path = vim.fn.expand("~/obsidian")
+local function get_obsidian_vault_path()
+	if vim.fn.has("macunix") == 1 then
+		return vim.fn.expand("~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian")
+	end
+
+	return vim.fn.expand("~/obsidian")
+end
+
+local vault_path = get_obsidian_vault_path()
 vim.g.last_work_buf = nil
 
 local function toggle_obsidian()

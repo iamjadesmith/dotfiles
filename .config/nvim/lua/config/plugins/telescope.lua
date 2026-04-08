@@ -15,7 +15,15 @@ return {
 
 		require("telescope").load_extension("fzf")
 
-		local obs_cwd = "~/obsidian"
+		local function get_obsidian_cwd()
+			if vim.fn.has("macunix") == 1 then
+				return vim.fn.expand("~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian")
+			end
+
+			return vim.fn.expand("~/obsidian")
+		end
+
+		local obs_cwd = get_obsidian_cwd()
 
 		local builtin = require("telescope.builtin")
 		vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
