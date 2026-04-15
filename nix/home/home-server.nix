@@ -31,6 +31,10 @@ in
 
   programs = {
     zsh = import ./zsh.nix { inherit config; };
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
     fzf = import ./fzf.nix { inherit pkgs; };
     neovim = import ./neovim.nix { inherit config pkgs; };
     tmux = import ./tmux-server.nix { inherit pkgs; };
