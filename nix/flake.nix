@@ -64,6 +64,10 @@
           name = "sorserver";
           server = true;
         }
+        {
+          name = "mjolnir";
+          server = true;
+        }
       ];
     in
     {

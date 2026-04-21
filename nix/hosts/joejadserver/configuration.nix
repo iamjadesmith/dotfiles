@@ -136,7 +136,7 @@
     nixfmt
     nodejs
     opencode
-    postgresql_17
+    postgresql_18
     ripgrep
     ruff
     samba
