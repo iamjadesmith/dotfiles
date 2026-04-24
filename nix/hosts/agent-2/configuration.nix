@@ -89,7 +89,7 @@
     name = "iqn.2016-04.com.open-iscsi:${meta.hostname}";
   };
 
-  users.users.joejad = {
+  users.users.jade = {
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [ "wheel" ];

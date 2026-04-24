@@ -3,24 +3,27 @@
   pkgs,
   lib,
   meta,
+  user,
+  homeDirectory,
   ...
 }:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
+  dotfilesDirectory = "${homeDirectory}/.dotfiles";
 in
 {
-  home.username = "joejad";
-  home.homeDirectory = "/home/joejad";
+  home.username = user;
+  home.homeDirectory = homeDirectory;
   xdg.enable = true;
 
-  xdg.configFile.nvim.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/nvim";
-  xdg.configFile.swaync.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/swaync";
-  xdg.configFile.waybar.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/waybar";
-  xdg.configFile.wofi.source = mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/wofi";
+  xdg.configFile.nvim.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/nvim";
+  xdg.configFile.swaync.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/swaync";
+  xdg.configFile.waybar.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/waybar";
+  xdg.configFile.wofi.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/wofi";
   xdg.configFile."opencode/opencode.json".source =
-    mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/opencode/opencode.json";
+    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/opencode/opencode.json";
   xdg.configFile."starship.toml".source =
-    mkOutOfStoreSymlink "/home/joejad/.dotfiles/.config/starship.toml";
+    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/starship.toml";
 
   home.stateVersion = "24.05";
 

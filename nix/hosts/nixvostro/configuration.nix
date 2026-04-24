@@ -143,7 +143,7 @@
     };
   };
 
-  users.users.joejad = {
+  users.users.jade = {
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [
@@ -166,7 +166,7 @@
 
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''
-    /home/joejad 10.47.59.0/24(rw,sync,no_root_squash,no_subtree_check)
+    /home/jade 10.47.59.0/24(rw,sync,no_root_squash,no_subtree_check)
   '';
 
   services.samba = {
@@ -191,10 +191,10 @@
         "usershare allow guests" = "yes";
       };
       "private" = {
-        "path" = "/home/joejad";
+        "path" = "/home/jade";
         "read only" = "no";
         "guest ok" = "no";
-        "valid users" = "joejad";
+        "valid users" = "jade";
         "public" = "no";
         "writeable" = "yes";
       };

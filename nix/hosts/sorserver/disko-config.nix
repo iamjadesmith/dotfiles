@@ -32,7 +32,7 @@
                     mountOptions = [ "compress=zstd" ];
                     mountpoint = "/home";
                   };
-                  "/home/joejad" = { };
+                  "/home/jade" = { };
                   "/nix" = {
                     mountOptions = [
                       "compress=zstd"

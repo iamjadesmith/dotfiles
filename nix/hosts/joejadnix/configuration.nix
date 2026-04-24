@@ -93,9 +93,9 @@
     };
   };
 
-  users.users.joejad = {
+  users.users.jade = {
     isNormalUser = true;
-    description = "joejad";
+    description = "jade";
     shell = pkgs.zsh;
     extraGroups = [
       "networkmanager"
@@ -115,8 +115,8 @@
   services.syncthing = {
     enable = true;
     group = "users";
-    user = "joejad";
-    configDir = "/home/joejad/.config/syncthing";
+    user = "jade";
+    configDir = "/home/jade/.config/syncthing";
     guiAddress = "0.0.0.0:8384";
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
@@ -144,14 +144,14 @@
   services.cron = {
     enable = true;
     systemCronJobs = [
-      "* 4 * * *        joejad    . /etc/profile; /home/joejad/backups/pbbackup.sh"
-      "* 4 * * *        joejad    . /etc/profile; /home/joejad/backups/nextcloud.sh"
+      "* 4 * * *        jade    . /etc/profile; /home/jade/backups/pbbackup.sh"
+      "* 4 * * *        jade    . /etc/profile; /home/jade/backups/nextcloud.sh"
     ];
   };
 
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''
-    /home/joejad 10.47.59.0/24(rw,sync,no_root_squash,no_subtree_check)
+    /home/jade 10.47.59.0/24(rw,sync,no_root_squash,no_subtree_check)
   '';
 
   environment.systemPackages = with pkgs; [

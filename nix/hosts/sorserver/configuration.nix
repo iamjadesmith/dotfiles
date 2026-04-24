@@ -85,7 +85,7 @@
     rootless.daemon.settings.features.cdi = true;
   };
 
-  users.users.joejad = {
+  users.users.jade = {
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [
