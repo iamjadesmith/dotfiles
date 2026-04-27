@@ -13,7 +13,7 @@
   };
 
   services.nginx.virtualHosts."vault.joejad.com" = {
-    enableACME = true;
+    useACMEHost = "joejad.com";
     forceSSL = true;
     locations."/" = {
       proxyPass = "http://127.0.0.1:8000";
@@ -23,7 +23,7 @@
   services.uptime-kuma.enable = true;
 
   services.nginx.virtualHosts."uptime.joejad.com" = {
-    enableACME = true;
+    useACMEHost = "joejad.com";
     forceSSL = true;
     locations."/" = {
       proxyPass = "http://127.0.0.1:3001";
