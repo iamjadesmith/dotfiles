@@ -17,18 +17,18 @@
     '';
   };
 
-  # imports = [
-  #   ./homelab.nix
-  # ];
+  imports = [
+    ./homelab.nix
+  ];
 
-  # sops = {
-  #   defaultSopsFile = ../../secrets/mjolnir/default.yaml;
-  #   age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  #   secrets = {
-  #     nextcloud_admin_pass = { };
-  #     borgbackup_passphrase = { };
-  #   };
-  # };
+  sops = {
+    defaultSopsFile = ../../secrets/mjolnir/default.yaml;
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    secrets = {
+      acme_cloudflare_env = { };
+      vaultwarden_env = { };
+    };
+  };
 
   nixpkgs = {
     overlays = [
@@ -47,13 +47,9 @@
 
   networking.hostName = meta.hostname;
   networking.networkmanager.enable = true;
-  # networking.networkmanager.dns = "systemd-resolved";
-  # networking.resolvconf.enable = true;
-  # networking.resolvconf.useLocalResolver = true;
-  # networking.search = [ "joejad.lan" ];
-  # networking.nameservers = [
-  #   "127.0.0.1"
-  # ];
+  networking.search = [ "joejad.lan" ];
+  networking.nameservers = [ "127.0.0.1" ];
+  networking.enableIPv6 = false;
 
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -64,7 +60,6 @@
 
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
-    # "d /var/lib/borg/.ssh 0700 borg borg - -"
   ];
 
   virtualisation.docker = {
@@ -167,99 +162,57 @@
     # };
   };
 
-  # services.tailscale.enable = true;
-  # services.tailscale.useRoutingFeatures = "both";
-  # services.tailscale.extraUpFlags = [ "--accept-dns=false" ];
-  # networking.firewall.checkReversePath = "loose";
-  # services = {
-  #   networkd-dispatcher = {
-  #     enable = true;
-  #     rules."50-tailscale" = {
-  #       onState = [ "routable" ];
-  #       script = ''
-  #         ethtool -K enp5s0 rx-udp-gro-forwarding on rx-gro-list o
-  #       '';
-  #     };
-  #   };
-  # };
+  services.unbound = {
+    enable = true;
+    settings = {
+      server = {
+        interface = [ "0.0.0.0" ];
+        do-ip6 = false;
+        access-control = [
+          "127.0.0.1/32 allow"
+          "10.47.59.0/24 allow"
+        ];
+        private-domain = [ "joejad.lan" ];
+        domain-insecure = [ "joejad.lan" ];
+        local-zone = "\"joejad.com.\" redirect";
+        local-data = [
+          "\"joejad.com. IN A 10.47.59.30\""
+        ];
+      };
+      forward-zone = [
+        {
+          name = "joejad.lan.";
+          forward-addr = [
+            "10.47.59.1"
+          ];
+        }
+        {
+          name = ".";
+          forward-tls-upstream = "yes";
+          forward-addr = [
+            "1.1.1.1@853#cloudflare-dns.com"
+            "8.8.8.8@853#dns.google.com"
+          ];
+        }
+      ];
+    };
+  };
 
-  # services.unbound = {
-  #   enable = true;
-  #   settings = {
-  #     server = {
-  #       interface = [ "0.0.0.0" ];
-  #       access-control = [
-  #         "127.0.0.1/32 allow"
-  #         "192.168.86.0/24 allow"
-  #       ];
-  #       private-domain = [ "joejad.lan" ];
-  #       domain-insecure = [ "joejad.lan" ];
-  #       local-zone = "\"sorenson-fam.com.\" redirect";
-  #       local-data = [
-  #         "\"sorenson-fam.com. IN A 192.168.86.3\""
-  #         "\"sorenson-fam.com. IN AAAA ::ffff:192.168.86.3\""
-  #       ];
-  #     };
-  #     forward-zone = [
-  #       {
-  #         name = "joejad.lan.";
-  #         forward-addr = [
-  #           "10.10.10.1"
-  #         ];
-  #       }
-  #       {
-  #         name = ".";
-  #         forward-tls-upstream = "yes";
-  #         forward-addr = [
-  #           "1.1.1.1@853#cloudflare-dns.com"
-  #           "8.8.8.8@853#dns.google.com"
-  #         ];
-  #       }
-  #     ];
-  #   };
-  # };
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "joejadjavajim@icloud.com";
+    certs = {
+      "joejad.com" = {
+        dnsProvider = "cloudflare";
+        dnsPropagationCheck = true;
+        environmentFile = config.sops.secrets.acme_cloudflare_env.path;
+        group = "nginx";
+        domain = "*.joejad.com";
+        extraDomainNames = [ "joejad.com" ];
+      };
+    };
+  };
 
-  # security.acme = {
-  #   acceptTerms = true;
-  #   defaults.email = "joejadjavajim@icloud.com";
-  #   certs = {
-  #     "sorenson-fam.com" = {
-  #       dnsProvider = "cloudflare";
-  #       dnsPropagationCheck = true;
-  #       environmentFile = "/var/lib/acme/.secrets/cert.env";
-  #       group = "nginx";
-  #       domain = "*.sorenson-fam.com";
-  #       extraDomainNames = [ "sorenson-fam.com" ];
-  #     };
-  #   };
-  # };
-
-  # services.nginx.enable = true;
-
-  # services.immich = {
-  #   enable = true;
-  #   port = 2283;
-  #   accelerationDevices = [ "/dev/dri/renderD128" ];
-  # };
-  # users.users.immich.extraGroups = [
-  #   "video"
-  #   "render"
-  # ];
-
-  # services.nginx.virtualHosts."immich.sorenson-fam.com" = {
-  #   useACMEHost = "sorenson-fam.com";
-  #   forceSSL = true;
-  #   locations."/" = {
-  #     proxyPass = "http://[::1]:${toString config.services.immich.port}";
-  #     proxyWebsockets = true;
-  #     recommendedProxySettings = true;
-  #     extraConfig = ''
-  #       client_max_body_size 50000M;
-  #       proxy_read_timeout   600s;
-  #       proxy_send_timeout   600s;
-  #       send_timeout         600s;
-  #     '';
-  #   };
-  # };
+  services.nginx.enable = true;
 
 }

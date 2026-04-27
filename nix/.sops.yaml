@@ -10,6 +10,8 @@ keys:
   # Host keys (derived from SSH host ed25519 keys)
   - &sorserver age1uukv9jeung20z2vg9msfsw868h0n9qleh89huvrlj7z02dwpk4lsmvnuqh
   - &joejadserver age17lrgxpene4hfzh8zz0vezmwdagtekvlmnfl3mvuf9nrjwzmjhcdqvtfg0e
+  - &mjolnir age17q4u0f0p82l97e2lsvdklxcsp699ynsr6d3xd8rkupsssq3p3sxql6fdhn
+  - &jade age1pe2tlqj0lgfdjfrv2ztcgaltgnyt82wdx4dwcgwt85q52l4ujpkq8qcycv
 
 creation_rules:
   # Secrets for sorserver
@@ -22,3 +24,8 @@ creation_rules:
     key_groups:
       - age:
           - *joejadserver
+  - path_regex: secrets/mjolnir/.*\.yaml$
+    key_groups:
+      - age:
+          - *mjolnir
+          - *jade
