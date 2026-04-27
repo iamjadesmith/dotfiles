@@ -209,6 +209,7 @@
         group = "nginx";
         domain = "*.joejad.com";
         extraDomainNames = [ "joejad.com" ];
+        dnsResolver = "1.1.1.1:53";
       };
     };
   };
