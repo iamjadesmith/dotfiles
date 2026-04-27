@@ -178,6 +178,7 @@
         local-data = [
           "\"joejad.com. IN A 10.47.59.30\""
         ];
+        module-config = "'respip validator iterator'";
       };
       forward-zone = [
         {
@@ -193,6 +194,12 @@
             "1.1.1.1@853#cloudflare-dns.com"
             "8.8.8.8@853#dns.google.com"
           ];
+        }
+      ];
+      rpz = [
+        {
+          name = "hageziPro";
+          url = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/rpz/pro.txt";
         }
       ];
     };
