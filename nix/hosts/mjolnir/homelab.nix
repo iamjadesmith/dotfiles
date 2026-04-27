@@ -16,7 +16,7 @@
     enableACME = true;
     forceSSL = true;
     locations."/" = {
-      proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
+      proxyPass = "http://127.0.0.1:8222";
     };
   };
 
@@ -26,7 +26,7 @@
     enableACME = true;
     forceSSL = true;
     locations."/" = {
-      proxyPass = "http://127.0.0.1:${toString config.services.uptime-kuma.settings.PORT}";
+      proxyPass = "http://127.0.0.1:4000";
     };
   };
 
