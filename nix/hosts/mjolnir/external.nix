@@ -64,8 +64,11 @@
     };
   };
 
-  "default" = {
-    rejectSSL = true;
-    locations."/".return = "404";
+  "_" = {
+    default = true;
+    addSSL = true;
+    useACMEHost = "joejad.com";
+    locations."/".return = 503;
   };
+
 }
