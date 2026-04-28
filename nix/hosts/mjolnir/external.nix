@@ -62,5 +62,13 @@
         proxyPass = "http://10.47.59.21:80";
       };
     };
+
+    "catchall" = {
+      serverName = "_";
+      default = true;
+      addSSL = true;
+      useACMEHost = "joejad.com";
+      locations."/".return = "404";
+    };
   };
 }
