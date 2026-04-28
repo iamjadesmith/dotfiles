@@ -63,11 +63,4 @@
       };
     };
   };
-
-  "_" = {
-    default = true;
-    rejectSSL = true;
-    locations."/".return = 503;
-  };
-
 }
