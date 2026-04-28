@@ -65,7 +65,6 @@
   };
 
   "default" = {
-    default = true;
     rejectSSL = true;
     locations."/".return = "404";
   };
