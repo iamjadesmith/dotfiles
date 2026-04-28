@@ -66,8 +66,7 @@
 
   "_" = {
     default = true;
-    addSSL = true;
-    useACMEHost = "joejad.com";
+    rejectSSL = true;
     locations."/".return = 503;
   };
 
