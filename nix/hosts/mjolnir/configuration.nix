@@ -177,7 +177,7 @@
         domain-insecure = [ "joejad.lan" ];
         local-zone = "\"joejad.com.\" redirect";
         local-data = [
-          "\"joejad.com. IN A 10.47.59.30\""
+          "\"joejad.com. IN A 127.0.0.1\""
         ];
         module-config = "'respip validator iterator'";
       };
