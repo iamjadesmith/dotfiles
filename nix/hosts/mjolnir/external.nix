@@ -12,6 +12,7 @@
       forceSSL = true;
       locations."/" = {
         proxyPass = "https://10.47.59.5:8006";
+        proxyWebsockets = true;
       };
     };
 
@@ -28,6 +29,7 @@
       forceSSL = true;
       locations."/" = {
         proxyPass = "https://10.47.59.47:8007";
+        proxyWebsockets = true;
       };
     };
 
@@ -52,6 +54,7 @@
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://10.47.59.10:8123";
+        proxyWebsockets = true;
       };
     };
 
@@ -60,6 +63,7 @@
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://10.47.59.21:80";
+        proxyWebsockets = true;
       };
     };
 
