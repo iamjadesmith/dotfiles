@@ -171,6 +171,7 @@
         do-ip6 = false;
         access-control = [
           "127.0.0.1/32 allow"
+          "10.10.10.0/24 allow"
           "10.47.59.0/24 allow"
         ];
         private-domain = [ "joejad.lan" ];
