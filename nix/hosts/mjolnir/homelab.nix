@@ -31,6 +31,45 @@
     };
   };
 
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_18;
+    enableTCPIP = false;
+    authentication = lib.mkForce ''
+      local all postgres peer map=postgres
+      local all all peer
+    '';
+    ensureDatabases = [
+      "budget"
+      "food"
+      "freshrss"
+      "golf"
+      "workout"
+    ];
+    ensureUsers = [
+      {
+        name = "budget";
+        ensureDBOwnership = true;
+      }
+      {
+        name = "food";
+        ensureDBOwnership = true;
+      }
+      {
+        name = "freshrss";
+        ensureDBOwnership = true;
+      }
+      {
+        name = "golf";
+        ensureDBOwnership = true;
+      }
+      {
+        name = "workout";
+        ensureDBOwnership = true;
+      }
+    ];
+  };
+
   # services.nextcloud = {
   #   enable = true;
   #   package = pkgs.nextcloud32;
