@@ -70,6 +70,18 @@
     ];
   };
 
+  services.postgresqlBackup = {
+    enable = true;
+    databases = [
+      "budget"
+      "food"
+      "freshrss"
+      "golf"
+      "workout"
+    ];
+    location = "/var/lib/db_backups/postgres";
+  };
+
   # services.nextcloud = {
   #   enable = true;
   #   package = pkgs.nextcloud32;
@@ -110,12 +122,6 @@
   # services.nginx.virtualHosts."cloud.sorenson-fam.com" = {
   #   forceSSL = true;
   #   useACMEHost = "sorenson-fam.com";
-  # };
-  #
-  # services.postgresqlBackup = {
-  #   enable = true;
-  #   databases = [ "nextcloud" ];
-  #   location = "/var/lib/db_backups/nextcloud";
   # };
 
 }
