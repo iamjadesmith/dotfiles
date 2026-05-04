@@ -44,6 +44,7 @@
       "food"
       "freshrss"
       "golf"
+      "receipt"
       "workout"
     ];
     ensureUsers = [
@@ -64,6 +65,10 @@
         ensureDBOwnership = true;
       }
       {
+        name = "receipt";
+        ensureDBOwnership = true;
+      }
+      {
         name = "workout";
         ensureDBOwnership = true;
       }
@@ -77,6 +82,7 @@
       "food"
       "freshrss"
       "golf"
+      "receipt"
       "workout"
     ];
     location = "/var/lib/db_backups/postgres";
