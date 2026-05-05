@@ -27,7 +27,11 @@
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
       acme_cloudflare_env = { };
-      freshrss_pass = { };
+      freshrss_pass = {
+        owner = "freshrss";
+        group = "freshrss";
+        mode = "0400";
+      };
       vaultwarden_env = { };
     };
   };
