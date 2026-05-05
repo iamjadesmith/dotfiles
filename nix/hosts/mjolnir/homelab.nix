@@ -96,6 +96,7 @@
       user = "freshrss";
       name = "freshrss";
       host = "/run/postgresql";
+      tableprefix = "";
     };
     api.enable = true;
     baseUrl = "https://rss.joejad.com";
