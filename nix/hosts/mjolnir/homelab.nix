@@ -88,6 +88,25 @@
     location = "/var/lib/db_backups/postgres";
   };
 
+  services.freshrss = {
+    enable = true;
+    virtualHost = "rss.joejad.com";
+    database = {
+      type = "pgsql";
+      user = "freshrss";
+      name = "freshrss";
+      host = "/run/postgresql";
+    };
+    api.enable = true;
+    baseUrl = "https://rss.joejad.com";
+    passwordFile = config.sops.secrets.freshrss_pass.path;
+  };
+
+  services.nginx.virtualHosts."rss.joejad.com" = {
+    useACMEHost = "joejad.com";
+    forceSSL = true;
+  };
+
   # services.nextcloud = {
   #   enable = true;
   #   package = pkgs.nextcloud32;
