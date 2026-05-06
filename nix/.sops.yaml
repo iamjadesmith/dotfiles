@@ -24,6 +24,7 @@ creation_rules:
     key_groups:
       - age:
           - *joejadserver
+          - *jade
   - path_regex: secrets/mjolnir/.*\.yaml$
     key_groups:
       - age:
