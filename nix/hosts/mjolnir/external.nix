@@ -67,6 +67,18 @@
       };
     };
 
+    "git.joejad.com" = {
+      useACMEHost = "joejad.com";
+      forceSSL = true;
+      extraConfig = ''
+        client_max_body_size 512M;
+      '';
+      locations."/" = {
+        proxyPass = "http://10.47.59.35:3000";
+        proxyWebsockets = true;
+      };
+    };
+
     "catchall" = {
       serverName = "_";
       default = true;
