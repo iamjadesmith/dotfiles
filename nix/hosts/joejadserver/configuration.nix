@@ -26,6 +26,18 @@
       };
       freshrss_db_pass = { };
       freshrss_pass = { };
+      forgejo-mailer-password = {
+        owner = "forgejo";
+        mode = "0400";
+      };
+      forgejo-mailer-user = {
+        owner = "forgejo";
+        mode = "0400";
+      };
+      forgejo-mailer-from = {
+        owner = "forgejo";
+        mode = "0400";
+      };
     };
   };
 

@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   ...
 }:
 
@@ -51,4 +52,30 @@
 
   services.uptime-kuma.enable = true;
   services.uptime-kuma.settings.UPTIME_KUMA_HOST = "0.0.0.0";
+
+  services.forgejo = {
+    enable = true;
+    database.type = "postgres";
+    lfs.enable = true;
+    settings = {
+      server = {
+        DOMAIN = "git.joejad.com";
+        ROOT_URL = "https://git.joejad.com/";
+        HTTP_PORT = 3000;
+        SSH_PORT = lib.head config.services.openssh.ports;
+      };
+      service.DISABLE_REGISTRATION = false;
+      mailer = {
+        ENABLED = true;
+        PROTOCOL = "smtp+starttls";
+        SMTP_ADDR = "smtp.mail.me.com";
+        SMTP_PORT = 587;
+      };
+    };
+    secrets = {
+      mailer.USER = config.sops.secrets.forgejo-mailer-user.path;
+      mailer.FROM = config.sops.secrets.forgejo-mailer-from.path;
+      mailer.PASSWD = config.sops.secrets.forgejo-mailer-password.path;
+    };
+  };
 }
