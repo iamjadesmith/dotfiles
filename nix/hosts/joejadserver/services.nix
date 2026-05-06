@@ -63,6 +63,7 @@
         ROOT_URL = "https://git.joejad.com/";
         HTTP_PORT = 3000;
         SSH_PORT = lib.head config.services.openssh.ports;
+        SSH_DOMAIN = "joejadserver.joejad.lan";
       };
       service.DISABLE_REGISTRATION = false;
       mailer = {
