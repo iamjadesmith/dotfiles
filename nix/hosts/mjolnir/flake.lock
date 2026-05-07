@@ -43,15 +43,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1778072025,
-        "narHash": "sha256-fE0nBdQ7dUIIPpXyBc0pQuBFIUgUFeT29+FAfpTtQoo=",
-        "path": "/home/jade/projects/budget",
-        "type": "path"
+        "lastModified": 1778072023,
+        "narHash": "sha256-TqR9QIcd7FoF0opqLWzJpcGTNt4N9AMCDgstTO9oM4A=",
+        "ref": "refs/heads/main",
+        "rev": "eb5c25f9b1333d4aa7290cff5a699cfbfc21e80c",
+        "revCount": 13,
+        "type": "git",
+        "url": "https://git.joejad.com/jade/budget.git"
       },
       "original": {
-        "ref": "main",
         "type": "git",
-        "url": "ssh://git@git.joejad.com/joe/budget.git"
+        "url": "https://git.joejad.com/jade/budget.git"
       }
     },
     "disko": {
@@ -99,15 +101,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1778072147,
-        "narHash": "sha256-eVU7wba/3kwz6z/J8ZDQ3aJDCBwwiTh58fC3aLJiCng=",
-        "path": "/home/jade/projects/food_log",
-        "type": "path"
+        "lastModified": 1778072146,
+        "narHash": "sha256-n3xOvAeZU++yCCOiPNL8NE+d/vupxtWaEA2lrfvht6A=",
+        "ref": "refs/heads/main",
+        "rev": "30b771384d8e5285ec48f98c5f28088533a46a0d",
+        "revCount": 16,
+        "type": "git",
+        "url": "https://git.joejad.com/jade/food_log.git"
       },
       "original": {
-        "ref": "main",
         "type": "git",
-        "url": "ssh://git@git.joejad.com/joe/food_log.git"
+        "url": "https://git.joejad.com/jade/food_log.git"
       }
     },
     "golfRust": {
@@ -118,14 +122,16 @@
       },
       "locked": {
         "lastModified": 1778072155,
-        "narHash": "sha256-VfLlvlPo+C7/iHFBPWVwWlLAVPFeV32O4A6B0kAMWzI=",
-        "path": "/home/jade/projects/golf_rust",
-        "type": "path"
+        "narHash": "sha256-SsjBxJYLp6G9QSBZ9ZnmtYhCGF8NA0qbU9KUYvVDr1E=",
+        "ref": "refs/heads/main",
+        "rev": "7410fc2e7cb6165dd2e2627d8c0d6d682f6bf5b6",
+        "revCount": 11,
+        "type": "git",
+        "url": "https://git.joejad.com/jade/golf_rust.git"
       },
       "original": {
-        "ref": "main",
         "type": "git",
-        "url": "ssh://git@git.joejad.com/joe/golf_rust.git"
+        "url": "https://git.joejad.com/jade/golf_rust.git"
       }
     },
     "home-manager": {
@@ -135,11 +141,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778009629,
-        "narHash": "sha256-nUoQtf4Zq7DRYJrfv904hjrxjAlWVP6a1pNNFKx3FCg=",
+        "lastModified": 1778110974,
+        "narHash": "sha256-7V7bW5uZSdKPRmemMQUulXRffnlnjRj5N/HGHOsOda8=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "00ed86e58bb6979a7921859fd1615d19382eac5c",
+        "rev": "75fac363324f18d2b83a30fd916e509d2a02fb0e",
         "type": "github"
       },
       "original": {
@@ -219,14 +225,16 @@
       },
       "locked": {
         "lastModified": 1778072160,
-        "narHash": "sha256-OuY223GsqHi94zYgaTi1OeKingRnsKzOdZsh+7sC8AE=",
-        "path": "/home/jade/projects/receipt",
-        "type": "path"
+        "narHash": "sha256-ZOoBbCjGBuhL/ztR/v+Y+gCuiuiU62haMnPQsm01TIA=",
+        "ref": "refs/heads/main",
+        "rev": "d52b04bc320fff72b94aed35713ff2e3cfbbc0e7",
+        "revCount": 3,
+        "type": "git",
+        "url": "https://git.joejad.com/jade/receipt.git"
       },
       "original": {
-        "ref": "main",
         "type": "git",
-        "url": "ssh://git@git.joejad.com/joe/receipt.git"
+        "url": "https://git.joejad.com/jade/receipt.git"
       }
     },
     "root": {
@@ -253,15 +261,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1778072167,
-        "narHash": "sha256-XKkBVkzGMlDGLf3melxNcTtGR7JWPYBOmRb7Oa3seQk=",
-        "path": "/home/jade/projects/running",
-        "type": "path"
+        "lastModified": 1778117609,
+        "narHash": "sha256-ygLVrxlIJuFDknoyFQyv1HHAt9PgCrLUhMwGgj0IJWI=",
+        "ref": "refs/heads/main",
+        "rev": "e3b17ffae97c127f76a212b838254ab6308ac297",
+        "revCount": 7,
+        "type": "git",
+        "url": "https://git.joejad.com/jade/running.git"
       },
       "original": {
-        "ref": "main",
         "type": "git",
-        "url": "ssh://git@git.joejad.com/joe/running.git"
+        "url": "https://git.joejad.com/jade/running.git"
       }
     },
     "sops-nix": {
@@ -309,14 +319,16 @@
       },
       "locked": {
         "lastModified": 1778072173,
-        "narHash": "sha256-z3ZEk/qZ1+v5WnBreLHPFyd4iS1v0J9YBLcLAXIGlTo=",
-        "path": "/home/jade/projects/workout_rust",
-        "type": "path"
+        "narHash": "sha256-TvDg0mTJ3yryHPZgbs4nTIUliNYlohg3HBnaHwJ1NNQ=",
+        "ref": "refs/heads/main",
+        "rev": "599a45b389106ef42e9060b6f4bf6a022be5f101",
+        "revCount": 7,
+        "type": "git",
+        "url": "https://git.joejad.com/jade/workout_rust.git"
       },
       "original": {
-        "ref": "main",
         "type": "git",
-        "url": "ssh://git@git.joejad.com/joe/workout_rust.git"
+        "url": "https://git.joejad.com/jade/workout_rust.git"
       }
     }
   },

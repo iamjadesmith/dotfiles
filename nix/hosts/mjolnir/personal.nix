@@ -16,8 +16,8 @@
 
   sops.secrets = {
     running_env = {
-      owner = "running";
-      group = "running";
+      owner = "workout";
+      group = "workout";
       mode = "0400";
     };
     workout_env = {
