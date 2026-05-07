@@ -21,27 +21,27 @@
     alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
 
     budget = {
-      url = "git+ssh://git@git.joejad.com/joe/budget.git";
+      url = "git+ssh://forgejo@joejadserver.joejad.lan/jade/budget.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     foodLog = {
-      url = "git+ssh://git@git.joejad.com/joe/food_log.git";
+      url = "git+ssh://forgejo@joejadserver.joejad.lan/jade/food_log.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     golfRust = {
-      url = "git+ssh://git@git.joejad.com/joe/golf_rust.git";
+      url = "git+ssh://forgejo@joejadserver.joejad.lan/jade/golf_rust.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     receipt = {
-      url = "git+ssh://git@git.joejad.com/joe/receipt.git";
+      url = "git+ssh://forgejo@joejadserver.joejad.lan/jade/receipt.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     running = {
-      url = "git+ssh://git@git.joejad.com/joe/running.git";
+      url = "git+ssh://forgejo@joejadserver.joejad.lan/jade/running.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     workoutRust = {
-      url = "git+ssh://git@git.joejad.com/joe/workout_rust.git";
+      url = "git+ssh://forgejo@joejadserver.joejad.lan/jade/workout_rust.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
