@@ -130,10 +130,14 @@
         else
             git commit -m 'update'
         fi
-        if [[ -d "/Users/jade" ]] then
+        if [[ -d "/Users/jade" ]]; then
             sudo darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac
         else
-            sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
+            if [[ "$(hostname)" == "mjolnir" ]]; then
+                sudo nixos-rebuild switch --flake ~/.dotfiles/nix/hosts/mjolnir#mjolnir
+            else
+                sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
+            fi
         fi
     }
   '';
