@@ -108,6 +108,27 @@
     forceSSL = true;
   };
 
+  systemd.services.jellyfin.environment.LIBVA_DRIVER_NAME = "iHD";
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  };
+  services.jellyfin.enable = true;
+
+  services.nginx.virtualHosts."jellyfin.joejad.com" = {
+    useACMEHost = "joejad.com";
+    forceSSL = true;
+    extraConfig = ''
+      client_max_body_size 20M;
+    '';
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:8096";
+      proxyWebsockets = true;
+      extraConfig = ''
+        proxy_buffering off;
+      '';
+    };
+  };
+
   # services.nextcloud = {
   #   enable = true;
   #   package = pkgs.nextcloud32;
