@@ -352,7 +352,7 @@ in
     };
   };
 
-  services.jellyseerr.enable = true;
+  services.seerr.enable = true;
   services.nginx.virtualHosts."jellyseerr.joejad.com" = {
     useACMEHost = "joejad.com";
     forceSSL = true;
