@@ -201,7 +201,7 @@ in
         exit 1
       fi
 
-      IFS= read -r nordvpnEndpoint < ${config.sops.secrets.nordvpn_wireguard_endpoint.path}
+      nordvpnEndpoint=$(< ${config.sops.secrets.nordvpn_wireguard_endpoint.path})
       case "$nordvpnEndpoint" in
         *:*) ;;
         *)
@@ -211,7 +211,7 @@ in
       esac
     '';
     postSetup = ''
-      IFS= read -r nordvpnEndpoint < ${config.sops.secrets.nordvpn_wireguard_endpoint.path}
+      nordvpnEndpoint=$(< ${config.sops.secrets.nordvpn_wireguard_endpoint.path})
       nordvpnHost=''${nordvpnEndpoint%:*}
       nordvpnPort=''${nordvpnEndpoint##*:}
 
