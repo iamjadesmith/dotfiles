@@ -157,12 +157,6 @@ in
     };
   };
 
-  # Secret file examples for nix/secrets/mjolnir/default.yaml:
-  # nordvpn_wireguard_private_key: <base64 private key>
-  # nordvpn_wireguard_endpoint: us1234.nordvpn.com:51820
-  #
-  # Each secret should contain only the raw value, with no `PrivateKey =`
-  # or `Endpoint =` prefix. Quotes are optional in YAML, but they are fine.
   systemd.services.vpn-namespace = {
     description = "Shared VPN namespace";
     path = [ pkgs.iproute2 ];
