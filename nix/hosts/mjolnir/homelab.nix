@@ -299,7 +299,6 @@ in
   };
 
   services.prowlarr.enable = true;
-  users.users.prowlarr.extraGroups = [ "media" ];
   services.nginx.virtualHosts."prowlarr.joejad.com" = {
     useACMEHost = "joejad.com";
     forceSSL = true;
@@ -354,7 +353,6 @@ in
   };
 
   services.jellyseerr.enable = true;
-  users.users.jellyseerr.extraGroups = [ "media" ];
   services.nginx.virtualHosts."jellyseerr.joejad.com" = {
     useACMEHost = "joejad.com";
     forceSSL = true;
