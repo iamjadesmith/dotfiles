@@ -353,7 +353,7 @@ in
   };
 
   services.seerr.enable = true;
-  services.nginx.virtualHosts."jellyseerr.joejad.com" = {
+  services.nginx.virtualHosts."seerr.joejad.com" = {
     useACMEHost = "joejad.com";
     forceSSL = true;
     locations."/" = {
