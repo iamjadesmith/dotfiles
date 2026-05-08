@@ -157,6 +157,12 @@ in
     };
   };
 
+  # Secret file examples for nix/secrets/mjolnir/default.yaml:
+  # nordvpn_wireguard_private_key: <base64 private key>
+  # nordvpn_wireguard_endpoint: us1234.nordvpn.com:51820
+  #
+  # Each secret should contain only the raw value, with no `PrivateKey =`
+  # or `Endpoint =` prefix. Quotes are optional in YAML, but they are fine.
   systemd.services.vpn-namespace = {
     description = "Shared VPN namespace";
     path = [ pkgs.iproute2 ];
@@ -189,9 +195,47 @@ in
     ips = [ vpnAddress ];
     privateKeyFile = config.sops.secrets.nordvpn_wireguard_private_key.path;
     interfaceNamespace = vpnNamespace;
+    preSetup = ''
+      if ! wg pubkey < ${config.sops.secrets.nordvpn_wireguard_private_key.path} >/dev/null 2>&1; then
+        echo "nordvpn_wireguard_private_key must contain only the raw base64 private key" >&2
+        exit 1
+      fi
+
+      IFS= read -r nordvpnEndpoint < ${config.sops.secrets.nordvpn_wireguard_endpoint.path}
+      case "$nordvpnEndpoint" in
+        *:*) ;;
+        *)
+          echo "nordvpn_wireguard_endpoint must look like hostname:port or ip:port" >&2
+          exit 1
+          ;;
+      esac
+    '';
     postSetup = ''
       IFS= read -r nordvpnEndpoint < ${config.sops.secrets.nordvpn_wireguard_endpoint.path}
-      ip netns exec ${vpnNamespace} wg set ${vpnWireGuardInterface} peer "${vpnPeerPublicKey}" endpoint "$nordvpnEndpoint"
+      nordvpnHost=''${nordvpnEndpoint%:*}
+      nordvpnPort=''${nordvpnEndpoint##*:}
+
+      case "$nordvpnPort" in
+        ""|*[!0-9]*)
+          echo "nordvpn_wireguard_endpoint must end with a numeric port" >&2
+          exit 1
+          ;;
+      esac
+
+      case "$nordvpnHost" in
+        *[!0-9.]*)
+          nordvpnHostIp=$(getent ahostsv4 "$nordvpnHost" | awk 'NR == 1 { print $1; exit }')
+          if [ -z "$nordvpnHostIp" ]; then
+            echo "failed to resolve NordVPN endpoint host: $nordvpnHost" >&2
+            exit 1
+          fi
+          ;;
+        *)
+          nordvpnHostIp="$nordvpnHost"
+          ;;
+      esac
+
+      ip netns exec ${vpnNamespace} wg set ${vpnWireGuardInterface} peer "${vpnPeerPublicKey}" endpoint "$nordvpnHostIp:$nordvpnPort"
     '';
     peers = [
       {
@@ -207,6 +251,11 @@ in
     after = [ "vpn-namespace.service" ];
     bindsTo = [ "vpn-namespace.service" ];
     requires = [ "vpn-namespace.service" ];
+    path = [
+      pkgs.gawk
+      pkgs.getent
+      pkgs.wireguard-tools
+    ];
   };
 
   services.deluge = {
