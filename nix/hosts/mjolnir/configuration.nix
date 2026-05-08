@@ -32,6 +32,8 @@
         group = "freshrss";
         mode = "0400";
       };
+      nordvpn_wireguard_private_key = { };
+      nordvpn_wireguard_endpoint = { };
       vaultwarden_env = { };
     };
   };
@@ -53,6 +55,10 @@
 
   networking.hostName = meta.hostname;
   networking.networkmanager.enable = true;
+  networking.networkmanager.unmanaged = [
+    "interface-name:vpn0"
+    "interface-name:vpn1"
+  ];
   networking.search = [ "joejad.lan" ];
   networking.nameservers = [ "127.0.0.1" ];
   networking.enableIPv6 = false;

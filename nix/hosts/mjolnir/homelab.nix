@@ -5,6 +5,32 @@
   ...
 }:
 
+let
+  vpnNamespace = "vpn";
+  vpnNamespacePath = "/run/netns/${vpnNamespace}";
+  vpnHostAddress = "10.200.0.1/30";
+  vpnNamespaceAddress = "10.200.0.2/30";
+  vpnNamespaceIp = "10.200.0.2";
+  vpnWireGuardInterface = "wg-vpn";
+  vpnPeerName = "wg";
+
+  vpnPeerPublicKey = "4zxWLHGjsKHn0Pw88uHTo78SULgbVMHpyKMqJFEpCHg=";
+  vpnAddress = "10.5.0.2/32";
+
+  vpnDnsServers = [
+    "103.86.96.100"
+    "103.86.99.100"
+  ];
+  vpnResolvConf = pkgs.writeText "vpn-resolv.conf" (
+    lib.concatMapStrings (server: "nameserver ${server}\n") vpnDnsServers
+  );
+  vpnResolvBindMount = "${vpnResolvConf}:/etc/resolv.conf";
+  vpnNamespaceDependencies = [
+    "vpn-namespace.service"
+    "wireguard-${vpnWireGuardInterface}.service"
+    "wireguard-${vpnWireGuardInterface}-peer-${vpnPeerName}.service"
+  ];
+in
 {
   services.vaultwarden = {
     enable = true;
@@ -113,6 +139,8 @@
     LIBVA_DRIVER_NAME = "iHD";
   };
   services.jellyfin.enable = true;
+  users.groups.media = { };
+  users.users.jellyfin.extraGroups = [ "media" ];
 
   services.nginx.virtualHosts."jellyfin.joejad.com" = {
     useACMEHost = "joejad.com";
@@ -122,6 +150,104 @@
     '';
     locations."/" = {
       proxyPass = "http://127.0.0.1:8096";
+      proxyWebsockets = true;
+      extraConfig = ''
+        proxy_buffering off;
+      '';
+    };
+  };
+
+  systemd.services.vpn-namespace = {
+    description = "Shared VPN namespace";
+    path = [ pkgs.iproute2 ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      ip link del vpn0 2>/dev/null || true
+      ip netns del ${vpnNamespace} 2>/dev/null || true
+
+      ip netns add ${vpnNamespace}
+      ip link add vpn0 type veth peer name vpn1
+      ip link set vpn1 netns ${vpnNamespace}
+
+      ip addr add ${vpnHostAddress} dev vpn0
+      ip link set vpn0 up
+
+      ip netns exec ${vpnNamespace} ip addr add ${vpnNamespaceAddress} dev vpn1
+      ip netns exec ${vpnNamespace} ip link set lo up
+      ip netns exec ${vpnNamespace} ip link set vpn1 up
+    '';
+    preStop = ''
+      ip link del vpn0 2>/dev/null || true
+      ip netns del ${vpnNamespace} 2>/dev/null || true
+    '';
+  };
+
+  networking.wireguard.interfaces.${vpnWireGuardInterface} = {
+    ips = [ vpnAddress ];
+    privateKeyFile = config.sops.secrets.nordvpn_wireguard_private_key.path;
+    interfaceNamespace = vpnNamespace;
+    postSetup = ''
+      IFS= read -r nordvpnEndpoint < ${config.sops.secrets.nordvpn_wireguard_endpoint.path}
+      ip netns exec ${vpnNamespace} wg set ${vpnWireGuardInterface} peer "${vpnPeerPublicKey}" endpoint "$nordvpnEndpoint"
+    '';
+    peers = [
+      {
+        name = vpnPeerName;
+        publicKey = vpnPeerPublicKey;
+        allowedIPs = [ "0.0.0.0/0" ];
+        persistentKeepalive = 25;
+      }
+    ];
+  };
+
+  systemd.services."wireguard-${vpnWireGuardInterface}" = {
+    after = [ "vpn-namespace.service" ];
+    bindsTo = [ "vpn-namespace.service" ];
+    requires = [ "vpn-namespace.service" ];
+  };
+
+  services.deluge = {
+    enable = true;
+    web.enable = true;
+  };
+
+  users.users.deluge.extraGroups = [ "media" ];
+
+  systemd.services.deluged = {
+    after = vpnNamespaceDependencies;
+    bindsTo = vpnNamespaceDependencies;
+    requires = vpnNamespaceDependencies;
+    serviceConfig = {
+      NetworkNamespacePath = vpnNamespacePath;
+      BindReadOnlyPaths = [ vpnResolvBindMount ];
+    };
+  };
+
+  systemd.services.delugeweb = {
+    after = vpnNamespaceDependencies;
+    bindsTo = vpnNamespaceDependencies;
+    requires = vpnNamespaceDependencies;
+    serviceConfig = {
+      NetworkNamespacePath = vpnNamespacePath;
+      BindReadOnlyPaths = [ vpnResolvBindMount ];
+      ExecStart = lib.mkForce ''
+        ${config.services.deluge.package}/bin/deluge-web \
+          --do-not-daemonize \
+          --config ${config.services.deluge.dataDir}/.config/deluge \
+          --port ${toString config.services.deluge.web.port} \
+          --interface ${vpnNamespaceIp}
+      '';
+    };
+  };
+
+  services.nginx.virtualHosts."deluge.joejad.com" = {
+    useACMEHost = "joejad.com";
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://${vpnNamespaceIp}:${toString config.services.deluge.web.port}";
       proxyWebsockets = true;
       extraConfig = ''
         proxy_buffering off;
