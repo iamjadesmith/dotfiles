@@ -298,6 +298,72 @@ in
     };
   };
 
+  services.prowlarr.enable = true;
+  users.users.prowlarr.extraGroups = [ "media" ];
+  services.nginx.virtualHosts."prowlarr.joejad.com" = {
+    useACMEHost = "joejad.com";
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:9696";
+      proxyWebsockets = true;
+    };
+  };
+
+  services.radarr.enable = true;
+  users.users.radarr.extraGroups = [ "media" ];
+  services.nginx.virtualHosts."radarr.joejad.com" = {
+    useACMEHost = "joejad.com";
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:7878";
+      proxyWebsockets = true;
+    };
+  };
+
+  services.sonarr.enable = true;
+  users.users.sonarr.extraGroups = [ "media" ];
+  services.nginx.virtualHosts."sonarr.joejad.com" = {
+    useACMEHost = "joejad.com";
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:8989";
+      proxyWebsockets = true;
+    };
+  };
+
+  services.readarr.enable = true;
+  users.users.readarr.extraGroups = [ "media" ];
+  services.nginx.virtualHosts."readarr.joejad.com" = {
+    useACMEHost = "joejad.com";
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:8787";
+      proxyWebsockets = true;
+    };
+  };
+
+  services.lidarr.enable = true;
+  users.users.lidarr.extraGroups = [ "media" ];
+  services.nginx.virtualHosts."lidarr.joejad.com" = {
+    useACMEHost = "joejad.com";
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:8686";
+      proxyWebsockets = true;
+    };
+  };
+
+  services.jellyseerr.enable = true;
+  users.users.jellyseerr.extraGroups = [ "media" ];
+  services.nginx.virtualHosts."jellyseerr.joejad.com" = {
+    useACMEHost = "joejad.com";
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:5055";
+      proxyWebsockets = true;
+    };
+  };
+
   # services.nextcloud = {
   #   enable = true;
   #   package = pkgs.nextcloud32;
