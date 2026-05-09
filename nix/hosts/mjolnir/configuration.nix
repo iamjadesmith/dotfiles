@@ -35,6 +35,7 @@
       nordvpn_wireguard_private_key = { };
       nordvpn_wireguard_endpoint = { };
       vaultwarden_env = { };
+      nextcloud_admin_pass = { };
     };
   };
 
