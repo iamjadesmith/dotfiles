@@ -362,6 +362,8 @@ in
     };
   };
 
+  services.flaresolverr.enable = true;
+
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud33;
