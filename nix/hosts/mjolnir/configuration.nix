@@ -71,6 +71,15 @@
     keyMap = "us";
   };
 
+  fileSystems."/mnt/data" = {
+    device = "/dev/disk/by-uuid/036cff31-c5f3-4834-a626-07184f27055b";
+    fsType = "ext4";
+    options = [
+      "defaults"
+      "nofail"
+    ];
+  };
+
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
   ];
