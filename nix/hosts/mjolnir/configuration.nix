@@ -123,6 +123,7 @@
     bind
     cargo
     cifs-utils
+    cloudflared
     ethtool
     fluxcd
     fzf
