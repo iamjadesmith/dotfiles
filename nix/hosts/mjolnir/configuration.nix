@@ -36,10 +36,7 @@
       nordvpn_wireguard_endpoint = { };
       vaultwarden_env = { };
       nextcloud_admin_pass = { };
-      cloudflared_creds = {
-        owner = "cloudflared";
-        group = "cloudflared";
-      };
+      cloudflared_creds = { };
     };
   };
 
