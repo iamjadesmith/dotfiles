@@ -436,7 +436,7 @@ in
     enable = true;
     tunnels = {
       "1d6ffc99-27ce-4866-98d5-a104e1ab5784" = {
-        credentialsFile = "${config.sops.secrets.cloudflared_creds.path}";
+        credentialsFile = config.sops.secrets.cloudflared_creds.path;
         default = "http_status:404";
       };
     };
