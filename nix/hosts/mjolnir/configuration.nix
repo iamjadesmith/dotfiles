@@ -180,13 +180,13 @@
       intel-compute-runtime
       vpl-gpu-rt
     ];
-    # nvidia-container-toolkit.enable = true;
-    # nvidia = {
-    #   modesetting.enable = true;
-    #   powerManagement.enable = true;
-    #   open = true;
-    # };
   };
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = true;
+  };
+
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   services.unbound = {
     enable = true;

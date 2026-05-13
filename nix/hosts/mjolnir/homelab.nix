@@ -442,4 +442,13 @@ in
     };
   };
 
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-cuda;
+    loadModels = [
+      "llama3.1:8b"
+      "llama3.2-vision"
+    ];
+  };
+
 }
