@@ -456,14 +456,12 @@ in
     openDefaultPorts = true;
     guiPasswordFile = config.sops.secrets.syncthing_pass.path;
     settings.gui.user = "jade";
+    guiAddress = "0.0.0.0:8384";
   };
 
   services.nginx.virtualHosts."sync.joejad.com" = {
     useACMEHost = "joejad.com";
     forceSSL = true;
-    extraConfig = ''
-      proxy_set_header Host localhost;
-    '';
     locations."/" = {
       proxyPass = "http://127.0.0.1:8384";
       proxyWebsockets = true;
