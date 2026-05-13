@@ -318,11 +318,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778711270,
-        "narHash": "sha256-u+bnjIGXqtsIAADXem6tgGt3h7nEsFYuYovEiYaa6t4=",
+        "lastModified": 1778712571,
+        "narHash": "sha256-TIYQBj/92ZtLadftnbLGbJsb/Y0A5OtXHptPafrfB9o=",
         "ref": "refs/heads/main",
-        "rev": "916e2654e5cb8b4cb528ddbbdeff241a538276d6",
-        "revCount": 13,
+        "rev": "ff923da0b03512e727b01e328bc4f5d6dd42cd0f",
+        "revCount": 14,
         "type": "git",
         "url": "https://git.joejad.com/jade/workout_rust.git"
       },
