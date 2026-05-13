@@ -458,7 +458,10 @@ in
     settings.gui.user = "jade";
     guiAddress = "0.0.0.0:8384";
     user = "jade";
+    group = "users";
+    configDir = "/home/jade/.config/syncthing";
   };
+  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
 
   services.nginx.virtualHosts."sync.joejad.com" = {
     useACMEHost = "joejad.com";
