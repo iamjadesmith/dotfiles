@@ -457,6 +457,7 @@ in
     guiPasswordFile = config.sops.secrets.syncthing_pass.path;
     settings.gui.user = "jade";
     guiAddress = "0.0.0.0:8384";
+    user = "jade";
   };
 
   services.nginx.virtualHosts."sync.joejad.com" = {
