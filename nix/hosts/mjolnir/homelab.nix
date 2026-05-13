@@ -461,6 +461,9 @@ in
   services.nginx.virtualHosts."sync.joejad.com" = {
     useACMEHost = "joejad.com";
     forceSSL = true;
+    extraConfig = ''
+      proxy_set_header Host localhost;
+    '';
     locations."/" = {
       proxyPass = "http://127.0.0.1:8384";
       proxyWebsockets = true;
