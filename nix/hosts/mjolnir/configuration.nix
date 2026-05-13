@@ -37,6 +37,7 @@
       vaultwarden_env = { };
       nextcloud_admin_pass = { };
       cloudflared_creds = { };
+      syncthing_pass = { };
     };
   };
 

@@ -451,4 +451,20 @@ in
     ];
   };
 
+  services.syncthing = {
+    enable = true;
+    openDefaultPorts = true;
+    guiPasswordFile = config.sops.secrets.syncthing_pass.path;
+    settings.gui.user = "jade";
+  };
+
+  services.nginx.virtualHosts."sync.joejad.com" = {
+    useACMEHost = "joejad.com";
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:8384";
+      proxyWebsockets = true;
+    };
+  };
+
 }
