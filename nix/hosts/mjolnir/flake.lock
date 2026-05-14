@@ -141,11 +141,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778706808,
-        "narHash": "sha256-ihH1UnI6nYSOkjAg4QsOadg6sp2LxXnWO9urPbo3/hw=",
+        "lastModified": 1778764020,
+        "narHash": "sha256-SGDbsxHy/OPPYyh7pLnWueW3HbDCOwt/XpWzlsZNUGI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "9760b31dab3016fc6e422ca241cfeac605fb89c9",
+        "rev": "4f9cbe4384e00cf2cf80e99741e93f12a67a8f32",
         "type": "github"
       },
       "original": {
@@ -318,11 +318,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778723292,
-        "narHash": "sha256-Dpv0TMzSW5+a/KRhMYp2ORVl0L745eZklHEs3Ngi/Ig=",
+        "lastModified": 1778768398,
+        "narHash": "sha256-z08slp7xc3MYH00Qdk6jqsUoVmEXy9V3pe2mLWEcOTM=",
         "ref": "refs/heads/main",
-        "rev": "db3cf095bd2c451e4298a8f51ff0750ae3452434",
-        "revCount": 16,
+        "rev": "1a13e0ea8f592e16c1fa4e743a10fb486f938ded",
+        "revCount": 17,
         "type": "git",
         "url": "https://git.joejad.com/jade/workout_rust.git"
       },
