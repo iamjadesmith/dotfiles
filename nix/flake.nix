@@ -34,7 +34,6 @@
     }@inputs:
     let
       inherit (self) outputs;
-      dark_mode = true;
       linuxUser = "jade";
       linuxHomeDirectory = "/home/${linuxUser}";
       hosts = [
@@ -100,12 +99,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.users.${linuxUser} =
-                  if host.server == true then
-                    import ./home/home-server.nix
-                  else if dark_mode == true then
-                    import ./home/home.nix
-                  else
-                    import ./home/home-light.nix;
+                  if host.server == true then import ./home/home-server.nix else import ./home/home.nix;
                 home-manager.extraSpecialArgs = {
                   inherit inputs;
                   meta = host;
