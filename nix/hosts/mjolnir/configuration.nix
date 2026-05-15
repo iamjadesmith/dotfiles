@@ -156,7 +156,7 @@
     stow
     stylua
     tmux
-    tree-sitter-cli
+    tree-sitter
     vscode-json-languageserver
     yaml-language-server
     zoxide

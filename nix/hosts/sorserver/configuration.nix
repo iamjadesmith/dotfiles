@@ -146,7 +146,7 @@
     starship
     stylua
     tmux
-    tree-sitter-cli
+    tree-sitter
     neovim
     zoxide
     zsh
