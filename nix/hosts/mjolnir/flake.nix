@@ -83,6 +83,7 @@
         };
         system = "x86_64-linux";
         modules = [
+          ../../modules/nix-maintenance.nix
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
           ./configuration.nix

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["nix"],
+  "ignorePaths": ["nix/hosts/mjolnir/**"],
+  "schedule": ["before 6am on monday"],
+  "automerge": true,
+  "automergeType": "pr",
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "matchManagers": ["nix"],
+      "groupName": "nix flake inputs",
+      "automerge": true
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+name: Nix
+
+on:
+  pull_request:
+    paths:
+      - "nix/**"
+      - ".github/workflows/nix.yml"
+      - "renovate.json"
+  push:
+    branches: ["main"]
+    paths:
+      - "nix/**"
+      - ".github/workflows/nix.yml"
+      - "renovate.json"
+  workflow_dispatch:
+
+jobs:
+  linux-flake:
+    name: Linux flake check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Check main Linux flake
+        run: nix flake check ./nix --print-build-logs
+
+  linux-hosts:
+    name: Build ${{ matrix.host }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        host:
+          - joejadnix
+          - joejadserver
+          - nixvostro
+          - agent-1
+          - agent-2
+          - agent-3
+          - sorserver
+          - mjolnir
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Build NixOS closure
+        run: nix build ./nix#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel --print-build-logs
+
+  darwin-flake:
+    name: Darwin flake metadata
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Validate Darwin flake metadata
+        run: nix flake metadata ./nix/darwin
