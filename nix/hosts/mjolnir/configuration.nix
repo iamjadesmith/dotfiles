@@ -20,6 +20,7 @@
   imports = [
     ./homelab.nix
     ./external.nix
+    ./personal.nix
   ];
 
   sops = {

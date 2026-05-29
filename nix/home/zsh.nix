@@ -133,11 +133,7 @@
         if [[ -d "/Users/jade" ]]; then
             sudo darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac
         else
-            if [[ "$(hostname)" == "mjolnir" ]]; then
-                sudo nixos-rebuild switch --flake ~/.dotfiles/nix/hosts/mjolnir#mjolnir
-            else
-                sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
-            fi
+            sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
         fi
     }
   '';

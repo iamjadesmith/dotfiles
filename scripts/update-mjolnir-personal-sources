@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+forgejo="http://joejadserver.joejad.lan:3000/jade"
+output="nix/hosts/mjolnir/personal-sources.nix"
+tmp="$(mktemp)"
+trap 'rm -f "$tmp"' EXIT
+
+apps=(
+  "budget budget"
+  "foodLog food_log"
+  "golfRust golf_rust"
+  "receipt receipt"
+  "running running"
+  "workoutRust workout_rust"
+)
+
+{
+  cat <<'EOF'
+let
+  forgejo = "http://joejadserver.joejad.lan:3000/jade";
+
+  fetchApp =
+    name: rev: narHash:
+    builtins.fetchTree {
+      type = "git";
+      url = "${forgejo}/${name}.git";
+      ref = "main";
+      inherit rev narHash;
+    };
+in
+{
+EOF
+
+  for app in "${apps[@]}"; do
+    attr="${app%% *}"
+    repo="${app##* }"
+    metadata="$(nix flake prefetch --json "git+${forgejo}/${repo}.git?ref=main")"
+    rev="$(jq -r '.locked.rev' <<<"$metadata")"
+    hash="$(jq -r '.hash' <<<"$metadata")"
+    printf '  %s = fetchApp "%s" "%s" "%s";\n' "$attr" "$repo" "$rev" "$hash"
+  done
+
+  cat <<'EOF'
+}
+EOF
+} >"$tmp"
+
+mv "$tmp" "$output"
+trap - EXIT

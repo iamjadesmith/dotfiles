@@ -1,17 +1,59 @@
 {
-  personalInputs,
   config,
+  pkgs,
   ...
 }:
 
+let
+  sources = import ./personal-sources.nix;
+  system = pkgs.stdenv.hostPlatform.system;
+
+  mkApp =
+    src: extraBuildArgs:
+    let
+      cargoToml = builtins.fromTOML (builtins.readFile "${src}/Cargo.toml");
+      packageMeta = cargoToml.package;
+      package = pkgs.rustPlatform.buildRustPackage (
+        {
+          pname = packageMeta.name;
+          version = packageMeta.version;
+          inherit src;
+          cargoLock.lockFile = "${src}/Cargo.lock";
+          doCheck = false;
+
+          meta.mainProgram = packageMeta.name;
+        }
+        // extraBuildArgs
+      );
+      self = {
+        packages.${system}.default = package;
+      };
+    in
+    {
+      module = import "${src}/nix/module.nix" { inherit self; };
+      inherit package;
+    };
+
+  apps = {
+    budget = mkApp sources.budget { };
+    foodLog = mkApp sources.foodLog { };
+    golfRust = mkApp sources.golfRust { };
+    receipt = mkApp sources.receipt {
+      nativeBuildInputs = [ pkgs.pkg-config ];
+      buildInputs = [ pkgs.openssl ];
+    };
+    running = mkApp sources.running { };
+    workoutRust = mkApp sources.workoutRust { };
+  };
+in
 {
   imports = [
-    personalInputs.budget.nixosModules.default
-    personalInputs.foodLog.nixosModules.default
-    personalInputs.golfRust.nixosModules.default
-    personalInputs.receipt.nixosModules.default
-    personalInputs.running.nixosModules.default
-    personalInputs.workoutRust.nixosModules.default
+    apps.budget.module
+    apps.foodLog.module
+    apps.golfRust.module
+    apps.receipt.module
+    apps.running.module
+    apps.workoutRust.module
   ];
 
   sops.secrets = {

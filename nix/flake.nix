@@ -77,6 +77,7 @@
               inherit inputs outputs;
               meta = {
                 hostname = host.name;
+                inherit (host) server;
               };
             };
             system = "x86_64-linux";
