@@ -207,7 +207,7 @@
         domain-insecure = [ "joejad.lan" ];
         local-zone = "\"joejad.com.\" redirect";
         local-data = [
-          "\"joejad.com. IN A 10.47.59.30\""
+          "\"joejad.com. IN A 10.3.0.2\""
         ];
         module-config = "'respip validator iterator'";
       };
@@ -215,7 +215,7 @@
         {
           name = "joejad.lan.";
           forward-addr = [
-            "10.47.59.1"
+            "10.3.0.1"
           ];
         }
         {

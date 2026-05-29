@@ -7,45 +7,11 @@
 
 {
   services.nginx.virtualHosts = {
-    "proxmox.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "https://10.47.59.5:8006";
-        proxyWebsockets = true;
-      };
-    };
-
-    "opnsense.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "https://10.47.59.1:10443";
-      };
-    };
-
-    "backup.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "https://10.47.59.47:8007";
-        proxyWebsockets = true;
-      };
-    };
-
     "scrypted.joejad.com" = {
       useACMEHost = "joejad.com";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "https://10.47.59.11:10443";
-      };
-    };
-
-    "unifi.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "https://10.47.59.50:11443";
+        proxyPass = "https://10.4.25.5:10443";
       };
     };
 
@@ -53,16 +19,7 @@
       useACMEHost = "joejad.com";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://10.47.59.10:8123";
-        proxyWebsockets = true;
-      };
-    };
-
-    "kvm.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.47.59.21:80";
+        proxyPass = "http://10.26.27.2:8123";
         proxyWebsockets = true;
       };
     };
