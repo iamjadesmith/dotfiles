@@ -31,7 +31,7 @@
         client_max_body_size 512M;
       '';
       locations."/" = {
-        proxyPass = "http://10.47.59.35:3000";
+        proxyPass = "http://10.3.0.3:3000";
         proxyWebsockets = true;
       };
     };
