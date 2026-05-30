@@ -47,7 +47,6 @@
             R
             age
             ansible
-            arduino-cli
             basedpyright
             black
             ffmpeg-headless
