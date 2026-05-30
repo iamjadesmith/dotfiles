@@ -29,29 +29,6 @@
     };
   };
 
-  services.vaultwarden = {
-    enable = true;
-    backupDir = "/var/local/vaultwarden/backup";
-    environmentFile = [ config.sops.secrets.vaultwarden_env.path ];
-  };
-
-  services.freshrss = {
-    enable = true;
-    database = {
-      type = "pgsql";
-      passFile = config.sops.secrets.freshrss_db_pass.path;
-      port = 5432;
-      user = "postgres";
-      host = "postgres";
-    };
-    api.enable = true;
-    baseUrl = "https://rss.joejad.com";
-    passwordFile = config.sops.secrets.freshrss_pass.path;
-  };
-
-  services.uptime-kuma.enable = true;
-  services.uptime-kuma.settings.UPTIME_KUMA_HOST = "0.0.0.0";
-
   services.forgejo = {
     enable = true;
     database.type = "postgres";

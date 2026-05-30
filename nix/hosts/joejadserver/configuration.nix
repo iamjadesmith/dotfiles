@@ -19,13 +19,6 @@
     defaultSopsFile = ../../secrets/joejadserver/default.yaml;
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
-      vaultwarden_env = {
-        owner = "vaultwarden";
-        group = "vaultwarden";
-        mode = "0400";
-      };
-      freshrss_db_pass = { };
-      freshrss_pass = { };
       forgejo-mailer-password = {
         owner = "forgejo";
         mode = "0400";
