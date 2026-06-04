@@ -129,18 +129,6 @@ in
     passwordFile = config.sops.secrets.freshrss_pass.path;
   };
 
-  services.rsshub = {
-    enable = true;
-    redis = {
-      enable = true;
-      port = 6380;
-    };
-    settings = {
-      PORT = 1200;
-      LISTEN_INADDR_ANY = false;
-    };
-  };
-
   services.nginx.virtualHosts."rss.joejad.com" = {
     useACMEHost = "joejad.com";
     forceSSL = true;
