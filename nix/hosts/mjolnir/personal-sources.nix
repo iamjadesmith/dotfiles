@@ -17,5 +17,5 @@ in
   receipt = fetchApp "receipt" "d52b04bc320fff72b94aed35713ff2e3cfbbc0e7" "sha256-ZOoBbCjGBuhL/ztR/v+Y+gCuiuiU62haMnPQsm01TIA=";
   running = fetchApp "running" "e3b17ffae97c127f76a212b838254ab6308ac297" "sha256-ygLVrxlIJuFDknoyFQyv1HHAt9PgCrLUhMwGgj0IJWI=";
   workoutRust = fetchApp "workout_rust" "1a13e0ea8f592e16c1fa4e743a10fb486f938ded" "sha256-z08slp7xc3MYH00Qdk6jqsUoVmEXy9V3pe2mLWEcOTM=";
-  stock = fetchApp "stock" "cf33a4bac9c87f8653aa5db1a211150db64e8044" "sha256-GfOWcfrTOJJwnv+zh/MAdjGxSk8RR/+0F0PIOHogRlg=";
+  stock = fetchApp "stock" "78af7f0fdf308b8bab5512928e63082ca8061edb" "sha256-optrcT9mFEJ4DGBflHk3qFyVsSnxAyF0mK6WnWIfXWk=";
 }
