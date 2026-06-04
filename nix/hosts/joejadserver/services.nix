@@ -12,6 +12,9 @@
     url = "https://github.com/iamjadesmith/dotfiles";
     tokenFile = config.sops.secrets.github-runner-token.path;
     serviceOverrides = {
+      ExecStartPre = lib.mkAfter [
+        "${pkgs.coreutils}/bin/mkdir -p /run/github-runner/joejadserver/dotfiles/dotfiles"
+      ];
       RuntimeDirectoryPreserve = true;
     };
     extraLabels = [
