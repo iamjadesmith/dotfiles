@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repo_root="$(git rev-parse --show-toplevel)"
+script_path="$(readlink -f "${BASH_SOURCE[0]}")"
+script_dir="$(cd -- "$(dirname -- "$script_path")" && pwd)"
+repo_root="$(git -C "$script_dir" rev-parse --show-toplevel)"
 cd "$repo_root"
 
 if ! git diff --cached --quiet; then
@@ -15,8 +17,8 @@ updated_files=(
   "nix/hosts/mjolnir/personal-sources.nix"
 )
 
-nix flake update ./nix
-nix flake update ./nix/darwin
+nix flake update --flake ./nix
+nix flake update --flake ./nix/darwin
 nix shell nixpkgs#jq -c ./scripts/update-mjolnir-personal-sources
 
 git add "${updated_files[@]}"
