@@ -16,6 +16,7 @@ apps=(
   "receipt receipt"
   "running running"
   "workoutRust workout_rust"
+  "stock stock"
 )
 
 {

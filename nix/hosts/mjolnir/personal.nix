@@ -44,6 +44,7 @@ let
     };
     running = mkApp sources.running { };
     workoutRust = mkApp sources.workoutRust { };
+    stock = mkApp sources.stock { };
   };
 in
 {
@@ -54,6 +55,7 @@ in
     apps.receipt.module
     apps.running.module
     apps.workoutRust.module
+    apps.stock.module
   ];
 
   sops.secrets = {
@@ -65,6 +67,11 @@ in
     workout_env = {
       owner = "workout";
       group = "workout";
+      mode = "0400";
+    };
+    stock_env = {
+      owner = "stock";
+      group = "stock";
       mode = "0400";
     };
   };
@@ -85,6 +92,11 @@ in
   services."workout-rust" = {
     enable = true;
     environmentFiles = [ config.sops.secrets.workout_env.path ];
+  };
+
+  services.stock = {
+    enable = true;
+    environmentFiles = [ config.sops.secrets.stock_env.path ];
   };
 
   services.nginx.virtualHosts = {
