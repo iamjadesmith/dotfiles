@@ -5,15 +5,19 @@
   ...
 }:
 
+let
+  githubRunnerWorkDir = "/var/lib/github-runner/joejadserver/work";
+in
 {
   services.github-runners.joejadserver = {
     enable = true;
     name = "joejadserver";
     url = "https://github.com/iamjadesmith/dotfiles";
     tokenFile = config.sops.secrets.github-runner-token.path;
-    workDir = "/var/lib/github-runner/joejadserver/work";
+    workDir = githubRunnerWorkDir;
     serviceOverrides = {
       BindPaths = lib.mkForce [ ];
+      ExecStartPre = lib.mkBefore [ "${pkgs.coreutils}/bin/mkdir -p ${githubRunnerWorkDir}" ];
       InaccessiblePaths = lib.mkForce [ "-/run/secrets/github-runner-token" ];
       WorkingDirectory = lib.mkForce "%S/github-runner/joejadserver";
     };
