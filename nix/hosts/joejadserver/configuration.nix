@@ -130,6 +130,7 @@
     git
     gnumake
     helm
+    jq
     kubectl
     lazygit
     lemminx
