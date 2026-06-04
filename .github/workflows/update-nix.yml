@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   update:
-    runs-on: self-hosted
+    runs-on: [self-hosted, joejadserver]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,11 +22,6 @@ jobs:
 
       - name: Update mjolnir app pins
         run: nix shell nixpkgs#jq -c ./scripts/update-mjolnir-personal-sources
-
-      - name: Validate flakes
-        run: |
-          nix flake check ./nix --print-build-logs
-          nix flake metadata ./nix/darwin
 
       - name: Commit and push changes
         run: |

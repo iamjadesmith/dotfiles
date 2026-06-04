@@ -1,10 +1,26 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
 {
+  services.github-runners.joejadserver = {
+    enable = true;
+    name = "joejadserver";
+    url = "https://github.com/iamjadesmith/dotfiles";
+    tokenFile = config.sops.secrets.github-runner-token.path;
+    extraLabels = [
+      "joejadserver"
+    ];
+    extraPackages = [
+      pkgs.git
+      pkgs.jq
+      pkgs.nixVersions.latest
+    ];
+  };
+
   virtualisation.oci-containers.containers = {
     minecraft = {
       image = "itzg/minecraft-server:latest";
