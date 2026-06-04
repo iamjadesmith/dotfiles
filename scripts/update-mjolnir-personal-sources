@@ -39,7 +39,7 @@ EOF
   for app in "${apps[@]}"; do
     attr="${app%% *}"
     repo="${app##* }"
-    metadata="$(nix flake prefetch --json "git+${forgejo}/${repo}.git?ref=main")"
+    metadata="$(nix flake prefetch --refresh --json "git+${forgejo}/${repo}.git?ref=main")"
     rev="$(jq -r '.locked.rev' <<<"$metadata")"
     hash="$(jq -r '.hash' <<<"$metadata")"
     printf '  %s = fetchApp "%s" "%s" "%s";\n' "$attr" "$repo" "$rev" "$hash"
