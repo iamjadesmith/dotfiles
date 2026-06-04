@@ -131,7 +131,10 @@ in
 
   services.rsshub = {
     enable = true;
-    redis.enable = true;
+    redis = {
+      enable = true;
+      port = 6380;
+    };
     settings = {
       PORT = 1200;
       LISTEN_INADDR_ANY = false;
