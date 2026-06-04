@@ -32,7 +32,7 @@
         mode = "0400";
       };
       github-runner-token = {
-        owner = "root";
+        owner = "github-runner";
         mode = "0400";
       };
     };
