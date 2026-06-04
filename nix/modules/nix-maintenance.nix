@@ -1,5 +1,13 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
+let
+  dotfilesRepo = "git@github.com:iamjadesmith/dotfiles.git";
+  deploymentPath = "/etc/nixos/dotfiles";
+in
 {
   nix.gc = {
     automatic = true;
@@ -14,9 +22,19 @@
   };
 
   systemd.services.nixos-upgrade = {
-    path = [ pkgs.git ];
+    path = [
+      pkgs.coreutils
+      pkgs.git
+      pkgs.openssh
+    ];
     preStart = ''
-      cd /etc/nixos/dotfiles
+      install -d /etc/nixos
+
+      if [ ! -d ${deploymentPath}/.git ]; then
+        git clone ${dotfilesRepo} ${deploymentPath}
+      fi
+
+      cd ${deploymentPath}
       git fetch origin main
       git reset --hard origin/main
     '';
@@ -24,7 +42,7 @@
 
   system.autoUpgrade = {
     enable = true;
-    flake = "/etc/nixos/dotfiles/nix#${config.networking.hostName}";
+    flake = "${deploymentPath}/nix#${config.networking.hostName}";
     flags = [
       "-L"
       "--accept-flake-config"

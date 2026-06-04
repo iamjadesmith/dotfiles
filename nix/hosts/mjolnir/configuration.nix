@@ -9,6 +9,9 @@
   ...
 }:
 
+let
+  dotfilesPath = "/home/jade/.dotfiles";
+in
 {
   nix = {
     package = pkgs.nixVersions.latest;
@@ -86,6 +89,33 @@
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
   ];
+
+  systemd.services.update-nix-inputs = {
+    description = "Update Nix flake inputs";
+    path = [
+      pkgs.bash
+      pkgs.coreutils
+      pkgs.git
+      pkgs.nix
+      pkgs.openssh
+    ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "jade";
+      Environment = "HOME=/home/jade";
+      WorkingDirectory = dotfilesPath;
+      ExecStart = "${dotfilesPath}/scripts/update-nix-inputs";
+    };
+  };
+
+  systemd.timers.update-nix-inputs = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "Sat *-*-* 23:30:00";
+      RandomizedDelaySec = "30min";
+      Persistent = true;
+    };
+  };
 
   virtualisation.docker = {
     enable = true;
