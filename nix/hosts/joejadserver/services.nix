@@ -15,6 +15,7 @@
     serviceOverrides = {
       BindPaths = lib.mkForce [ ];
       InaccessiblePaths = lib.mkForce [ "-/run/secrets/github-runner-token" ];
+      WorkingDirectory = lib.mkForce "%S/github-runner/joejadserver";
     };
     extraLabels = [
       "joejadserver"
