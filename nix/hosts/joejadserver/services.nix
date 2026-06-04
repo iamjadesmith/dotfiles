@@ -12,7 +12,10 @@
     url = "https://github.com/iamjadesmith/dotfiles";
     tokenFile = config.sops.secrets.github-runner-token.path;
     workDir = "/var/lib/github-runner/joejadserver";
-    serviceOverrides.BindPaths = lib.mkForce [ ];
+    serviceOverrides = {
+      BindPaths = lib.mkForce [ ];
+      InaccessiblePaths = lib.mkForce [ "-/run/secrets/github-runner-token" ];
+    };
     extraLabels = [
       "joejadserver"
     ];
