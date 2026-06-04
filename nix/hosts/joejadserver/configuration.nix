@@ -31,10 +31,6 @@
         owner = "forgejo";
         mode = "0400";
       };
-      github-runner-token = {
-        owner = "github-runner";
-        mode = "0400";
-      };
     };
   };
 

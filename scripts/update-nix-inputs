@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+if ! git diff --cached --quiet; then
+  echo "Refusing to continue: staged changes already exist."
+  exit 1
+fi
+
+updated_files=(
+  "nix/flake.lock"
+  "nix/darwin/flake.lock"
+  "nix/hosts/mjolnir/personal-sources.nix"
+)
+
+nix flake update ./nix
+nix flake update ./nix/darwin
+nix shell nixpkgs#jq -c ./scripts/update-mjolnir-personal-sources
+
+git add "${updated_files[@]}"
+
+if git diff --cached --quiet; then
+  echo "No update changes to commit."
+  exit 0
+fi
+
+git commit -m "chore: update nix inputs"
+git push

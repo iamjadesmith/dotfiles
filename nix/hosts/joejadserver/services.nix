@@ -1,46 +1,10 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
 {
-  users.groups.github-runner = { };
-  users.users.github-runner = {
-    isSystemUser = true;
-    group = "github-runner";
-    home = "/var/lib/github-runner";
-    createHome = true;
-  };
-
-  systemd.tmpfiles.rules = [
-    "d /var/lib/github-runner-work 0750 github-runner github-runner - -"
-    "d /var/lib/github-runner-work/joejadserver 0750 github-runner github-runner - -"
-  ];
-
-  services.github-runners.joejadserver = {
-    enable = true;
-    name = "joejadserver";
-    url = "https://github.com/iamjadesmith/dotfiles";
-    tokenFile = config.sops.secrets.github-runner-token.path;
-    user = "github-runner";
-    group = "github-runner";
-    workDir = "/var/lib/github-runner-work/joejadserver";
-    serviceOverrides = {
-      InaccessiblePaths = lib.mkForce [ "-/run/secrets/github-runner-token" ];
-      WorkingDirectory = lib.mkForce "%S/github-runner/joejadserver";
-    };
-    extraLabels = [
-      "joejadserver"
-    ];
-    extraPackages = [
-      pkgs.git
-      pkgs.jq
-      pkgs.nixVersions.latest
-    ];
-  };
-
   virtualisation.oci-containers.containers = {
     minecraft = {
       image = "itzg/minecraft-server:latest";
