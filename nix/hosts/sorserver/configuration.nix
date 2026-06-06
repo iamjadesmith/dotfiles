@@ -237,18 +237,13 @@
           publicKey = "NfwRlI/IFxEfmK6VmtemBYEUpLJ0wF07wpmdz598jGs=";
           allowedIPs = [
             "10.10.10.0/24"
-            "10.47.59.0/24"
+            "10.3.0.0/24"
           ];
           persistentKeepalive = 25;
         }
       ];
     };
   };
-
-  services.nfs.server.enable = true;
-  services.nfs.server.exports = ''
-    /var/lib 100.94.157.2/32(rw,sync,no_root_squash,no_subtree_check)
-  '';
 
   services.unbound = {
     enable = true;
