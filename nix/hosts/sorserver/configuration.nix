@@ -148,6 +148,7 @@
     tmux
     tree-sitter
     neovim
+    yaml-language-server
     zoxide
     zsh
     ethtool
