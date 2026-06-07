@@ -21,6 +21,8 @@
       title = "Alacritty";
       dynamic_title = true;
       decorations_theme_variant = "None";
+    } // lib.optionalAttrs pkgs.stdenv.isDarwin {
+      option_as_alt = "Both";
     };
 
     general = {
