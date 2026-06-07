@@ -19,6 +19,7 @@ creation_rules:
     key_groups:
       - age:
           - *sorserver
+          - *jade
   # Secrets for joejadserver
   - path_regex: secrets/joejadserver/.*\.yaml$
     key_groups:
