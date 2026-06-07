@@ -5,7 +5,7 @@
 }:
 
 let
-  dotfilesRepo = "git@github.com:iamjadesmith/dotfiles.git";
+  dotfilesRepo = "https://github.com/iamjadesmith/dotfiles.git";
   deploymentPath = "/etc/nixos/dotfiles";
 in
 {
