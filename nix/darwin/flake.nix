@@ -126,7 +126,6 @@
               Bitwarden = 1352778147;
               Tailscale = 1475387142;
             };
-            onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
             onActivation.upgrade = true;
           };
