@@ -11,7 +11,7 @@
       useACMEHost = "joejad.com";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "https://10.4.25.5:10443";
+        proxyPass = "https://10.26.27.13:10443";
       };
     };
 
