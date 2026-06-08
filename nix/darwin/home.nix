@@ -7,6 +7,7 @@
 }:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
+  dotfilesDirectory = "/Users/jade/.dotfiles";
 in
 {
   programs.home-manager.enable = true;
@@ -15,14 +16,43 @@ in
   home.homeDirectory = "/Users/jade";
   xdg.enable = true;
 
-  xdg.configFile.nvim.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/nvim";
-  xdg.configFile.aerospace.source = mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/aerospace";
+  xdg.configFile.nvim.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/nvim";
+  xdg.configFile.aerospace.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/aerospace";
   xdg.configFile."opencode/opencode.json".source =
-    mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/opencode/opencode.json";
+    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/opencode/opencode.json";
   xdg.configFile."starship.toml".source =
-    mkOutOfStoreSymlink "/Users/jade/.dotfiles/.config/starship.toml";
+    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/starship.toml";
+  xdg.configFile."alacritty/themes/tokyonight.toml".source =
+    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/alacritty/tokyonight-night.toml";
+  xdg.configFile."alacritty/themes/catppuccin-latte.toml".source =
+    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/alacritty/catppuccin-latte.toml";
 
   home.stateVersion = "24.05";
+
+  home.activation.initTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -e "$HOME/.config/theme-mode" ]; then
+      printf '%s\n' dark > "$HOME/.config/theme-mode"
+    fi
+
+    if [ ! -e "$HOME/.config/alacritty/theme.toml" ]; then
+      mkdir -p "$HOME/.config/alacritty"
+      cp "$HOME/.config/alacritty/themes/tokyonight.toml" "$HOME/.config/alacritty/theme.toml"
+    fi
+  '';
+
+  launchd.agents.theme-mode-sync = {
+    enable = true;
+    config = {
+      ProgramArguments = [
+        "${dotfilesDirectory}/scripts/theme-mode"
+        "sync-macos"
+      ];
+      RunAtLoad = true;
+      StartInterval = 300;
+      StandardOutPath = "/tmp/theme-mode-sync.out.log";
+      StandardErrorPath = "/tmp/theme-mode-sync.err.log";
+    };
+  };
 
   programs = {
     alacritty = import ../home/alacritty.nix {

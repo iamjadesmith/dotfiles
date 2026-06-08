@@ -28,6 +28,12 @@ in
 
   home.file = { };
 
+  home.activation.initTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -e "$HOME/.config/theme-mode" ]; then
+      printf '%s\n' dark > "$HOME/.config/theme-mode"
+    fi
+  '';
+
   home.sessionVariables = { };
 
   programs.home-manager.enable = true;

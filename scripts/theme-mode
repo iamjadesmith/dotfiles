@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+mode_file="$config_home/theme-mode"
+alacritty_dir="$config_home/alacritty"
+themes_dir="$alacritty_dir/themes"
+
+usage() {
+  printf 'usage: %s [dark|light|toggle|current|sync-macos]\n' "${0##*/}" >&2
+}
+
+current_mode() {
+  if [[ -n "${JADE_THEME:-}" ]]; then
+    case "$JADE_THEME" in
+      dark | light)
+        printf '%s\n' "$JADE_THEME"
+        return
+        ;;
+    esac
+  fi
+
+  if [[ -f "$mode_file" ]]; then
+    case "$(<"$mode_file")" in
+      dark | light)
+        printf '%s\n' "$(<"$mode_file")"
+        return
+        ;;
+    esac
+  fi
+
+  printf '%s\n' dark
+}
+
+macos_mode() {
+  if [[ "$(uname -s)" != "Darwin" ]]; then
+    printf 'sync-macos is only supported on macOS\n' >&2
+    exit 1
+  fi
+
+  if [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null || true)" == "Dark" ]]; then
+    printf '%s\n' dark
+  else
+    printf '%s\n' light
+  fi
+}
+
+apply_mode() {
+  local mode="$1"
+  local alacritty_theme=""
+
+  case "$mode" in
+    dark)
+      alacritty_theme="$themes_dir/tokyonight.toml"
+      ;;
+    light)
+      alacritty_theme="$themes_dir/catppuccin-latte.toml"
+      ;;
+    *)
+      printf 'invalid theme mode: %s\n' "$mode" >&2
+      exit 1
+      ;;
+  esac
+
+  mkdir -p "$config_home"
+  printf '%s\n' "$mode" > "$mode_file"
+
+  if [[ -f "$alacritty_theme" ]]; then
+    mkdir -p "$alacritty_dir"
+    cp "$alacritty_theme" "$alacritty_dir/theme.toml"
+  fi
+
+  printf '%s\n' "$mode"
+}
+
+command="${1:-toggle}"
+
+case "$command" in
+  current)
+    current_mode
+    ;;
+  dark | light)
+    apply_mode "$command"
+    ;;
+  toggle)
+    if [[ "$(current_mode)" == "dark" ]]; then
+      apply_mode light
+    else
+      apply_mode dark
+    fi
+    ;;
+  sync-macos)
+    apply_mode "$(macos_mode)"
+    ;;
+  *)
+    usage
+    exit 2
+    ;;
+esac

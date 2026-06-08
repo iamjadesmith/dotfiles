@@ -24,12 +24,27 @@ in
     mkOutOfStoreSymlink "${dotfilesDirectory}/.config/opencode/opencode.json";
   xdg.configFile."starship.toml".source =
     mkOutOfStoreSymlink "${dotfilesDirectory}/.config/starship.toml";
+  xdg.configFile."alacritty/themes/tokyonight.toml".source =
+    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/alacritty/tokyonight-night.toml";
+  xdg.configFile."alacritty/themes/catppuccin-latte.toml".source =
+    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/alacritty/catppuccin-latte.toml";
 
   home.stateVersion = "24.05";
 
   home.packages = [ ];
 
   home.file = { };
+
+  home.activation.initTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -e "$HOME/.config/theme-mode" ]; then
+      printf '%s\n' dark > "$HOME/.config/theme-mode"
+    fi
+
+    if [ ! -e "$HOME/.config/alacritty/theme.toml" ]; then
+      mkdir -p "$HOME/.config/alacritty"
+      cp "$HOME/.config/alacritty/themes/tokyonight.toml" "$HOME/.config/alacritty/theme.toml"
+    fi
+  '';
 
   home.sessionVariables = { };
 
