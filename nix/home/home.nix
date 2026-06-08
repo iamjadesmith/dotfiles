@@ -42,7 +42,7 @@ in
 
     if [ ! -e "$HOME/.config/alacritty/theme.toml" ]; then
       mkdir -p "$HOME/.config/alacritty"
-      cp "$HOME/.config/alacritty/themes/tokyonight.toml" "$HOME/.config/alacritty/theme.toml"
+      cp "${dotfilesDirectory}/.config/alacritty/tokyonight-night.toml" "$HOME/.config/alacritty/theme.toml"
     fi
   '';
 
