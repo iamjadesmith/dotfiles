@@ -124,7 +124,9 @@
 
   environment.systemPackages = with pkgs; [
     age
+    borgbackup
     cifs-utils
+    ethtool
     fluxcd
     fzf
     gcc
@@ -136,6 +138,8 @@
     lua
     lua-language-server
     luajitPackages.luarocks-nix
+    neovim
+    networkd-dispatcher
     nfs-utils
     nil
     nixfmt
@@ -147,12 +151,9 @@
     stylua
     tmux
     tree-sitter
-    neovim
     yaml-language-server
     zoxide
     zsh
-    ethtool
-    networkd-dispatcher
   ];
 
   services.openssh = {
