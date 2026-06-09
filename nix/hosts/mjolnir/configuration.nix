@@ -88,6 +88,7 @@ in
 
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
+    "d /var/lib/borg/.ssh 0700 borg borg - -"
   ];
 
   systemd.services.update-nix-inputs = {
@@ -143,6 +144,34 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN6MCnmxn47X/aP9pQxNmHc2I6kkZqh5R+J4KdcJUhZI jade@mini"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOciDf2c/QVPKjPVgSXYg7LSg8nwL4J7JDf8mYO4cs11 iPad"
     ];
+  };
+
+  users.groups.borg = { };
+  users.users.borg = {
+    isSystemUser = true;
+    group = "borg";
+    home = "/var/lib/borg";
+    createHome = true;
+    shell = pkgs.bash;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMDQXSAmgoIWDeMwrjqNpuEuLE8NJ7oRYdER5V7dkQ4t borg@sorserver"
+    ];
+  };
+
+  systemd.services.borg-ssh-keygen = {
+    description = "Generate borg SSH key if missing";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "borg";
+      Group = "borg";
+    };
+    script = ''
+      if [ ! -f /var/lib/borg/.ssh/id_ed25519 ]; then
+        install -d -m 700 -o borg -g borg /var/lib/borg/.ssh
+        ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -N "" -f /var/lib/borg/.ssh/id_ed25519
+      fi
+    '';
   };
 
   security.sudo.wheelNeedsPassword = false;
