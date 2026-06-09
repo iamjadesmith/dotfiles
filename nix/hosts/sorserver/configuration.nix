@@ -119,7 +119,6 @@
   };
 
   security.sudo.wheelNeedsPassword = false;
-
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -170,7 +169,7 @@
       "/var/lib/db_backups"
       "/var/lib/immich"
     ];
-    repo = "root@pve:/movies/media/mom_backup/sorserver";
+    repo = "borg@mjolnir:/var/lib/borg/sorserver";
     encryption = {
       mode = "repokey-blake2";
       passCommand = "cat ${config.sops.secrets.borgbackup_passphrase.path}";
