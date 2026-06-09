@@ -66,11 +66,6 @@ return {
 			end, {})
 
 			vim.api.nvim_create_user_command("ThemeReload", apply_theme, {})
-
-			vim.api.nvim_create_autocmd("FocusGained", {
-				group = vim.api.nvim_create_augroup("jade-theme", { clear = true }),
-				callback = apply_theme,
-			})
 		end,
 	},
 }
