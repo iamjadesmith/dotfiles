@@ -154,6 +154,7 @@ in
     basedpyright
     bash
     bind
+    borgbackup
     cargo
     cifs-utils
     cloudflared
