@@ -177,7 +177,7 @@
     compression = "zstd,6";
     startAt = "weekly";
     prune.keep = {
-      weekly = 3;
+      weekly = 7;
     };
     environment = {
       BORG_RSH = "ssh -i /var/lib/borg/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/var/lib/borg/.ssh/known_hosts";
