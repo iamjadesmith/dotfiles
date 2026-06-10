@@ -42,6 +42,7 @@ in
       nextcloud_admin_pass = { };
       cloudflared_creds = { };
       syncthing_pass = { };
+      borgbackup_passphrase = { };
     };
   };
 
@@ -172,6 +173,39 @@ in
         ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -N "" -f /var/lib/borg/.ssh/id_ed25519
       fi
     '';
+  };
+
+  services.borgbackup.jobs.mjolnir = {
+    paths = [
+      "/var/lib/nextcloud"
+      "/var/lib/immich"
+      "/var/lib/db_backups"
+      "/var/local/vaultwarden/backup"
+      "/var/lib/freshrss"
+      "/var/lib/uptime-kuma"
+      "/home/jade/.config/syncthing"
+      "/var/lib/jellyfin"
+      "/var/lib/prowlarr"
+      "/var/lib/radarr/.config/Radarr"
+      "/var/lib/sonarr/.config/NzbDrone"
+      "/var/lib/readarr"
+      "/var/lib/lidarr/.config/Lidarr"
+      "/var/lib/jellyseerr"
+      "/var/lib/deluge"
+    ];
+    repo = "borg@sorserver:/var/lib/borg/mjolnir";
+    encryption = {
+      mode = "repokey-blake2";
+      passCommand = "cat ${config.sops.secrets.borgbackup_passphrase.path}";
+    };
+    compression = "zstd,6";
+    startAt = "weekly";
+    prune.keep = {
+      weekly = 3;
+    };
+    environment = {
+      BORG_RSH = "ssh -i /var/lib/borg/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/var/lib/borg/.ssh/known_hosts";
+    };
   };
 
   security.sudo.wheelNeedsPassword = false;
