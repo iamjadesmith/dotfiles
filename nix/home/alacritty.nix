@@ -23,7 +23,7 @@
       decorations_theme_variant = "None";
     }
     // lib.optionalAttrs pkgs.stdenv.isDarwin {
-      decorations = "Transparent";
+      decorations = "Buttonless";
       option_as_alt = "Both";
     };
 
