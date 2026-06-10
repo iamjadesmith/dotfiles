@@ -110,6 +110,8 @@ in
       "golf"
       "receipt"
       "workout"
+      "nextcloud"
+      "immich"
     ];
     location = "/var/lib/db_backups/postgres";
   };
