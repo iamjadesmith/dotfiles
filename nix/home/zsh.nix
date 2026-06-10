@@ -66,10 +66,6 @@
       compinit -C
     fi
 
-    autoload -U edit-command-line
-    zle -N edit-command-line
-    bindkey '^x^e' edit-command-line
-
     zinit cdreplay -q
 
     # Initialize starship prompt
@@ -82,6 +78,9 @@
     fi
 
     bindkey -e
+    autoload -U edit-command-line
+    zle -N edit-command-line
+    bindkey '^x^e' edit-command-line
     bindkey '^p' history-search-backward
     bindkey '^n' history-search-forward
     bindkey '^[w' kill-region
@@ -112,6 +111,7 @@
     fi
 
     export EDITOR="nvim"
+    export VISUAL="$EDITOR"
 
     function lgit() {
         git add .
