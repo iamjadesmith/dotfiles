@@ -31,7 +31,7 @@
         owner = "forgejo";
         mode = "0400";
       };
-      # borgbackup_passphrase = { };
+      borgbackup_passphrase = { };
     };
   };
 
@@ -143,26 +143,26 @@
     '';
   };
 
-  # services.borgbackup.jobs.joejadserver = {
-  #   paths = [
-  #     "/var/lib/forgejo"
-  #     # "/var/lib/minecraft"
-  #     "/var/lib/db_backups"
-  #   ];
-  #   repo = "borg@sorserver:/var/lib/borg/joejadserver";
-  #   encryption = {
-  #     mode = "repokey-blake2";
-  #     passCommand = "cat ${config.sops.secrets.borgbackup_passphrase.path}";
-  #   };
-  #   compression = "zstd,6";
-  #   startAt = "weekly";
-  #   prune.keep = {
-  #     weekly = 7;
-  #   };
-  #   environment = {
-  #     BORG_RSH = "ssh -i /var/lib/borg/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/var/lib/borg/.ssh/known_hosts";
-  #   };
-  # };
+  services.borgbackup.jobs.joejadserver = {
+    paths = [
+      "/var/lib/forgejo"
+      # "/var/lib/minecraft"
+      "/var/lib/db_backups"
+    ];
+    repo = "borg@sorserver:/var/lib/borg/joejadserver";
+    encryption = {
+      mode = "repokey-blake2";
+      passCommand = "cat ${config.sops.secrets.borgbackup_passphrase.path}";
+    };
+    compression = "zstd,6";
+    startAt = "weekly";
+    prune.keep = {
+      weekly = 7;
+    };
+    environment = {
+      BORG_RSH = "ssh -i /var/lib/borg/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/var/lib/borg/.ssh/known_hosts";
+    };
+  };
 
   security.sudo.wheelNeedsPassword = false;
   programs.zsh.enable = true;

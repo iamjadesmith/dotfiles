@@ -55,4 +55,10 @@
       mailer.PASSWD = config.sops.secrets.forgejo-mailer-password.path;
     };
   };
+
+  services.postgresqlBackup = {
+    enable = true;
+    databases = [ "forgejo" ];
+    location = "/var/lib/db_backups/postgres";
+  };
 }
