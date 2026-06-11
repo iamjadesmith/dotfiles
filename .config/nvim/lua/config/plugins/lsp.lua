@@ -1,9 +1,5 @@
 return {
 	{
-		"mason-org/mason.nvim",
-		opts = {},
-	},
-	{
 		"github/copilot.vim",
 	},
 	{
@@ -32,8 +28,18 @@ return {
 			local opts = { noremap = true, silent = true }
 			local on_attach = function(_, bufnr)
 				local keymap_opts = vim.tbl_extend("force", opts, { buffer = bufnr })
-				vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, vim.tbl_extend("force", keymap_opts, { desc = "Show line diagnostics" }))
-				vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", keymap_opts, { desc = "Show hover documentation" }))
+				vim.keymap.set(
+					"n",
+					"<leader>d",
+					vim.diagnostic.open_float,
+					vim.tbl_extend("force", keymap_opts, { desc = "Show line diagnostics" })
+				)
+				vim.keymap.set(
+					"n",
+					"K",
+					vim.lsp.buf.hover,
+					vim.tbl_extend("force", keymap_opts, { desc = "Show hover documentation" })
+				)
 			end
 
 			local python_on_attach = function(client, bufnr)
