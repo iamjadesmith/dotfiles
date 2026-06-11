@@ -48,7 +48,9 @@
       tmux
       tree
       tree-sitter
+      unzip
       vscode-json-languageserver
+      wget
       yaml-language-server
       zoxide
       zsh
