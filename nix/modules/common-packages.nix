@@ -29,7 +29,6 @@
       kubectl
       lazygit
       lemminx
-      lua
       lua5_1
       lua-language-server
       luajitPackages.luarocks-nix
