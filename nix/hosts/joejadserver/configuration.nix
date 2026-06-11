@@ -146,7 +146,7 @@
   services.borgbackup.jobs.joejadserver = {
     paths = [
       "/var/lib/forgejo"
-      # "/var/lib/minecraft"
+      "/var/lib/minecraft"
       "/var/lib/db_backups"
     ];
     repo = "borg@sorserver:/var/lib/borg/joejadserver";
@@ -159,6 +159,12 @@
     prune.keep = {
       weekly = 7;
     };
+    preHook = ''
+      systemctl stop podman-minecraft.service
+    '';
+    postHook = ''
+      systemctl start podman-minecraft.service
+    '';
     environment = {
       BORG_RSH = "ssh -i /var/lib/borg/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/var/lib/borg/.ssh/known_hosts";
     };
