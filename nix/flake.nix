@@ -34,27 +34,7 @@
       linuxHomeDirectory = "/home/${linuxUser}";
       hosts = [
         {
-          name = "joejadnix";
-          server = false;
-        }
-        {
           name = "joejadserver";
-          server = true;
-        }
-        {
-          name = "nixvostro";
-          server = true;
-        }
-        {
-          name = "agent-1";
-          server = true;
-        }
-        {
-          name = "agent-2";
-          server = true;
-        }
-        {
-          name = "agent-3";
           server = true;
         }
         {
