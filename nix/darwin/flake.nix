@@ -57,7 +57,9 @@
             kubernetes-helm
             lazygit
             lemminx
+            lua5_1
             lua-language-server
+            luajitPackages.luarocks
             mkalias
             neovim
             nil
