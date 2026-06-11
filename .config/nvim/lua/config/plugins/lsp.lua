@@ -81,12 +81,14 @@ return {
 			vim.lsp.config("nil_ls", {})
 			vim.lsp.config("yamlls", {
 				capabilities = capabilities,
+				filetypes = { "yaml" },
 			})
 			vim.lsp.config("jsonls", {
 				capabilities = capabilities,
 			})
 			vim.lsp.config("lemminx", {
 				capabilities = capabilities,
+				filetypes = { "xml", "xsd", "xslt", "svg" },
 			})
 
 			vim.lsp.enable("r_language_server")
