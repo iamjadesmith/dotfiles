@@ -49,6 +49,7 @@
             ansible
             basedpyright
             black
+            fd
             ffmpeg-headless
             fluxcd
             git
