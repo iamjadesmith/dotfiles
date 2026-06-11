@@ -102,9 +102,6 @@
       "wheel"
       "docker"
     ];
-    packages = with pkgs; [
-      tree
-    ];
     hashedPassword = "$y$j9T$zCosUIu8eNq21sMsgQ7ya.$0oQ.aynDLokO77HvIjV.EEMDrnI25n8VQJgEd3RlSx8";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDzIbh1w5EeOjFTWaQ9V5PFHf5ipVNQ33sjzpsNDNgfD jade@Jades-MacBook-Pro.local"
@@ -174,50 +171,10 @@
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
-    R
-    age
-    basedpyright
-    bash
     bind
     borgbackup
-    cifs-utils
     ethtool
-    fluxcd
-    fzf
-    gcc
-    git
-    gnumake
-    helm
-    jq
-    kubectl
-    lazygit
-    lemminx
-    lua
-    lua-language-server
-    luajitPackages.luarocks-nix
     networkd-dispatcher
-    nfs-utils
-    nil
-    nixfmt
-    nodejs
-    opencode
-    postgresql_18
-    ripgrep
-    ruff
-    samba
-    sops
-    starship
-    stow
-    stylua
-    tmux
-    tree-sitter
-    unstable.cargo
-    unstable.neovim
-    unstable.rustup
-    vscode-json-languageserver
-    yaml-language-server
-    zoxide
-    zsh
   ];
 
   services.openssh = {

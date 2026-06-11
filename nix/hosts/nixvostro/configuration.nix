@@ -150,9 +150,6 @@
       "wheel"
       "docker"
     ];
-    packages = with pkgs; [
-      tree
-    ];
     hashedPassword = "$y$j9T$zCosUIu8eNq21sMsgQ7ya.$0oQ.aynDLokO77HvIjV.EEMDrnI25n8VQJgEd3RlSx8";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDzIbh1w5EeOjFTWaQ9V5PFHf5ipVNQ33sjzpsNDNgfD jade@Jades-MacBook-Pro.local"
@@ -202,38 +199,6 @@
   };
 
   services.logind.lidSwitch = "ignore";
-
-  environment.systemPackages = with pkgs; [
-    R
-    bash
-    cifs-utils
-    fluxcd
-    fzf
-    gcc
-    git
-    gnumake
-    helm
-    kubectl
-    lazygit
-    lua
-    lua-language-server
-    luajitPackages.luarocks-nix
-    nfs-utils
-    nil
-    nixfmt
-    oh-my-posh
-    postgresql_17
-    ripgrep
-    samba
-    stow
-    stylua
-    tmux
-    unstable.cargo
-    unstable.neovim
-    unstable.rustup
-    zoxide
-    zsh
-  ];
 
   services.openssh = {
     enable = true;

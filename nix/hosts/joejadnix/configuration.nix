@@ -102,7 +102,6 @@
       "wheel"
       "docker"
     ];
-    packages = with pkgs; [ tree ];
     hashedPassword = "$6$sI71vFKosWWmZeD3$04iWnWU3aXy/s9QOM6MDK8Zljnu9OaYuJGLMay.rix0TmT94W.fDQKVCmwdi.B0grPzDfpzkXVviPvEFY162T1";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDzIbh1w5EeOjFTWaQ9V5PFHf5ipVNQ33sjzpsNDNgfD jade@Jades-MacBook-Pro.local"
@@ -155,62 +154,32 @@
   '';
 
   environment.systemPackages = with pkgs; [
-    R
     alacritty
     ansible
     apacheHttpd
-    bash
     bitwarden-cli
     bitwarden-desktop
     black
-    cargo
-    cider
     cmake
     discord
     ente-auth
-    fluxcd
-    fzf
-    gcc
-    git
-    gnumake
     kanata
-    kubectl
-    kubernetes-helm
-    lazygit
-    lua
-    lua-language-server
     luajit
-    luajitPackages.luarocks-nix
-    neofetch
-    neovim
+    fastfetch
     nextcloud-client
-    nil
-    nixfmt
-    nodejs_22
     nvidia-container-toolkit
     obsidian
-    opencode
     openssl
-    postgresql_17
     prismlauncher
-    ripgrep
     rose-pine-cursor
-    rustup
-    starship
-    stow
-    stylua
     swaynotificationcenter
     thunderbird
-    tmux
-    tree-sitter
     unzip
     waybar
     wget
     wl-clipboard
     wofi
     yubikey-manager
-    zoxide
-    zsh
     zulu
   ];
 
