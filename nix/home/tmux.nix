@@ -6,7 +6,6 @@
   baseIndex = 1;
   disableConfirmationPrompt = true;
   keyMode = "vi";
-  newSession = true;
   secureSocket = true;
   shell = "${pkgs.zsh}/bin/zsh";
   shortcut = "space";
@@ -31,7 +30,6 @@
         bind -r h select-pane -L
         bind -r l select-pane -R
 
-        set -g base-index 1
         set -g pane-base-index 1
         set-window-option -g pane-base-index 1
         set-option -g renumber-windows on
