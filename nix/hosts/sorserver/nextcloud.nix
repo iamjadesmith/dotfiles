@@ -5,11 +5,18 @@
   ...
 }:
 
+let
+  domain = "sorenson-fam.com";
+  ssl = {
+    useACMEHost = domain;
+    forceSSL = true;
+  };
+in
 {
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud33;
-    hostName = "cloud.sorenson-fam.com";
+    hostName = "cloud.${domain}";
     https = true;
     database.createLocally = true;
     caching.redis = true;
@@ -20,7 +27,7 @@
       adminpassFile = config.sops.secrets.nextcloud_admin_pass.path;
     };
     settings = {
-      trusted_domains = [ "cloud.sorenson-fam.com" ];
+      trusted_domains = [ "cloud.${domain}" ];
       overwriteprotocol = "https";
       maintenance_window_start = "1";
       default_phone_region = "US";
@@ -43,10 +50,7 @@
     port = 6379;
   };
 
-  services.nginx.virtualHosts."cloud.sorenson-fam.com" = {
-    forceSSL = true;
-    useACMEHost = "sorenson-fam.com";
-  };
+  services.nginx.virtualHosts."cloud.${domain}" = ssl;
 
   services.postgresqlBackup = {
     enable = true;

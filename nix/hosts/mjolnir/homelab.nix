@@ -6,6 +6,12 @@
 }:
 
 let
+  domain = "joejad.com";
+  ssl = {
+    useACMEHost = domain;
+    forceSSL = true;
+  };
+
   vpnNamespace = "vpn";
   vpnNamespacePath = "/run/netns/${vpnNamespace}";
   vpnHostAddress = "10.200.0.1/30";
@@ -32,30 +38,116 @@ let
   ];
 in
 {
+  services.nginx.virtualHosts = {
+    "vault.${domain}" = ssl // {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8000";
+        proxyWebsockets = true;
+      };
+    };
+
+    "uptime.${domain}" = ssl // {
+      locations."/".proxyPass = "http://127.0.0.1:3001";
+    };
+
+    "rss.${domain}" = ssl;
+
+    "jellyfin.${domain}" = ssl // {
+      extraConfig = ''
+        client_max_body_size 20M;
+      '';
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8096";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_buffering off;
+        '';
+      };
+    };
+
+    "deluge.${domain}" = ssl // {
+      locations."/" = {
+        proxyPass = "http://${vpnNamespaceIp}:${toString config.services.deluge.web.port}";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_buffering off;
+        '';
+      };
+    };
+
+    "prowlarr.${domain}" = ssl // {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:9696";
+        proxyWebsockets = true;
+      };
+    };
+
+    "radarr.${domain}" = ssl // {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:7878";
+        proxyWebsockets = true;
+      };
+    };
+
+    "sonarr.${domain}" = ssl // {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8989";
+        proxyWebsockets = true;
+      };
+    };
+
+    "readarr.${domain}" = ssl // {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8787";
+        proxyWebsockets = true;
+      };
+    };
+
+    "lidarr.${domain}" = ssl // {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8686";
+        proxyWebsockets = true;
+      };
+    };
+
+    "seerr.${domain}" = ssl // {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:5055";
+        proxyWebsockets = true;
+      };
+    };
+
+    "cloud.${domain}" = ssl;
+
+    "immich.${domain}" = ssl // {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString config.services.immich.port}";
+        proxyWebsockets = true;
+        recommendedProxySettings = true;
+        extraConfig = ''
+          client_max_body_size 50000M;
+          proxy_read_timeout   600s;
+          proxy_send_timeout   600s;
+          send_timeout         600s;
+        '';
+      };
+    };
+
+    "sync.${domain}" = ssl // {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8384";
+        proxyWebsockets = true;
+      };
+    };
+  };
+
   services.vaultwarden = {
     enable = true;
     backupDir = "/var/local/vaultwarden/backup";
     environmentFile = [ config.sops.secrets.vaultwarden_env.path ];
   };
 
-  services.nginx.virtualHosts."vault.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:8000";
-      proxyWebsockets = true;
-    };
-  };
-
   services.uptime-kuma.enable = true;
-
-  services.nginx.virtualHosts."uptime.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:3001";
-    };
-  };
 
   services.postgresql = {
     enable = true;
@@ -131,11 +223,6 @@ in
     passwordFile = config.sops.secrets.freshrss_pass.path;
   };
 
-  services.nginx.virtualHosts."rss.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-  };
-
   systemd.services.jellyfin.environment.LIBVA_DRIVER_NAME = "iHD";
   environment.sessionVariables = {
     LIBVA_DRIVER_NAME = "iHD";
@@ -143,21 +230,6 @@ in
   services.jellyfin.enable = true;
   users.groups.media = { };
   users.users.jellyfin.extraGroups = [ "media" ];
-
-  services.nginx.virtualHosts."jellyfin.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    extraConfig = ''
-      client_max_body_size 20M;
-    '';
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:8096";
-      proxyWebsockets = true;
-      extraConfig = ''
-        proxy_buffering off;
-      '';
-    };
-  };
 
   systemd.services.vpn-namespace = {
     description = "Shared VPN namespace";
@@ -288,81 +360,21 @@ in
     };
   };
 
-  services.nginx.virtualHosts."deluge.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://${vpnNamespaceIp}:${toString config.services.deluge.web.port}";
-      proxyWebsockets = true;
-      extraConfig = ''
-        proxy_buffering off;
-      '';
-    };
-  };
-
   services.prowlarr.enable = true;
-  services.nginx.virtualHosts."prowlarr.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:9696";
-      proxyWebsockets = true;
-    };
-  };
 
   services.radarr.enable = true;
   users.users.radarr.extraGroups = [ "media" ];
-  services.nginx.virtualHosts."radarr.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:7878";
-      proxyWebsockets = true;
-    };
-  };
 
   services.sonarr.enable = true;
   users.users.sonarr.extraGroups = [ "media" ];
-  services.nginx.virtualHosts."sonarr.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:8989";
-      proxyWebsockets = true;
-    };
-  };
 
   services.readarr.enable = true;
   users.users.readarr.extraGroups = [ "media" ];
-  services.nginx.virtualHosts."readarr.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:8787";
-      proxyWebsockets = true;
-    };
-  };
 
   services.lidarr.enable = true;
   users.users.lidarr.extraGroups = [ "media" ];
-  services.nginx.virtualHosts."lidarr.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:8686";
-      proxyWebsockets = true;
-    };
-  };
 
   services.seerr.enable = true;
-  services.nginx.virtualHosts."seerr.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:5055";
-      proxyWebsockets = true;
-    };
-  };
 
   services.flaresolverr.enable = true;
 
@@ -403,11 +415,6 @@ in
     port = 6379;
   };
 
-  services.nginx.virtualHosts."cloud.joejad.com" = {
-    forceSSL = true;
-    useACMEHost = "joejad.com";
-  };
-
   services.immich = {
     enable = true;
     port = 2283;
@@ -417,22 +424,6 @@ in
     "video"
     "render"
   ];
-
-  services.nginx.virtualHosts."immich.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:${toString config.services.immich.port}";
-      proxyWebsockets = true;
-      recommendedProxySettings = true;
-      extraConfig = ''
-        client_max_body_size 50000M;
-        proxy_read_timeout   600s;
-        proxy_send_timeout   600s;
-        send_timeout         600s;
-      '';
-    };
-  };
 
   services.cloudflared = {
     enable = true;
@@ -464,14 +455,5 @@ in
     configDir = "/home/jade/.config/syncthing";
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
-
-  services.nginx.virtualHosts."sync.joejad.com" = {
-    useACMEHost = "joejad.com";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:8384";
-      proxyWebsockets = true;
-    };
-  };
 
 }

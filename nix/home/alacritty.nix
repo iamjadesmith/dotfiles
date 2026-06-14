@@ -7,7 +7,7 @@
 }:
 {
   enable = true;
-  package = pkgs.unstable.alacritty;
+  package = pkgs.alacritty;
 
   settings = {
     window = {

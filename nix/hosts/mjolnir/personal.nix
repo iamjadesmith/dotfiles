@@ -5,6 +5,12 @@
 }:
 
 let
+  domain = "joejad.com";
+  ssl = {
+    useACMEHost = domain;
+    forceSSL = true;
+  };
+
   sources = import ./personal-sources.nix;
   system = pkgs.stdenv.hostPlatform.system;
 
@@ -100,39 +106,27 @@ in
   };
 
   services.nginx.virtualHosts = {
-    "budget.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
+    "budget.${domain}" = ssl // {
       locations."/".proxyPass = "http://127.0.0.1:8080";
     };
 
-    "food.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
+    "food.${domain}" = ssl // {
       locations."/".proxyPass = "http://127.0.0.1:8083";
     };
 
-    "golf.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
+    "golf.${domain}" = ssl // {
       locations."/".proxyPass = "http://127.0.0.1:8081";
     };
 
-    "receipt.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
+    "receipt.${domain}" = ssl // {
       locations."/".proxyPass = "http://127.0.0.1:3000";
     };
 
-    "run.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
+    "run.${domain}" = ssl // {
       locations."/".proxyPass = "http://127.0.0.1:8085";
     };
 
-    "workout.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
+    "workout.${domain}" = ssl // {
       locations."/".proxyPass = "http://127.0.0.1:8086";
     };
   };

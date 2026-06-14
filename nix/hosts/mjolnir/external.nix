@@ -1,32 +1,28 @@
 {
-  config,
-  pkgs,
-  lib,
   ...
 }:
 
+let
+  domain = "joejad.com";
+  ssl = {
+    useACMEHost = domain;
+    forceSSL = true;
+  };
+in
 {
   services.nginx.virtualHosts = {
-    "scrypted.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "https://10.26.27.13:10443";
-      };
+    "scrypted.${domain}" = ssl // {
+      locations."/".proxyPass = "https://10.26.27.13:10443";
     };
 
-    "ha.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
+    "ha.${domain}" = ssl // {
       locations."/" = {
         proxyPass = "http://10.26.27.2:8123";
         proxyWebsockets = true;
       };
     };
 
-    "git.joejad.com" = {
-      useACMEHost = "joejad.com";
-      forceSSL = true;
+    "git.${domain}" = ssl // {
       extraConfig = ''
         client_max_body_size 512M;
       '';
@@ -36,11 +32,11 @@
       };
     };
 
-    "catchall" = {
+    catchall = {
       serverName = "_";
       default = true;
       addSSL = true;
-      useACMEHost = "joejad.com";
+      useACMEHost = domain;
       locations."/".return = "404";
     };
   };

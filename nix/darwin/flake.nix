@@ -23,11 +23,6 @@
       ...
     }:
     let
-      add-unstable-packages = final: _prev: {
-        unstable = import inputs.nixpkgs {
-          system = "aarch64-darwin";
-        };
-      };
       username = "jade";
       meta = "joejadmbp";
       configuration =
@@ -40,7 +35,6 @@
         {
           nixpkgs.config.allowUnfree = true;
           nixpkgs.overlays = [
-            add-unstable-packages
             alacritty-theme.overlays.default
           ];
           environment.systemPackages = with pkgs; [

@@ -2,32 +2,37 @@
   config,
   pkgs,
   lib,
-  meta,
+  meta ? null,
   user,
   homeDirectory,
+  extraConfigFiles ? { },
+  enableAlacritty ? false,
+  enableAlacrittyTheme ? false,
+  enableNeovim ? true,
   ...
 }:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
   dotfilesDirectory = "${homeDirectory}/.dotfiles";
+  configFiles = {
+    nvim = ".config/nvim";
+    "opencode/opencode.json" = ".config/opencode/opencode.json";
+    "starship.toml" = ".config/starship.toml";
+  }
+  // lib.optionalAttrs enableAlacrittyTheme {
+    "alacritty/themes/tokyonight.toml" = ".config/alacritty/tokyonight-night.toml";
+    "alacritty/themes/catppuccin-latte.toml" = ".config/alacritty/catppuccin-latte.toml";
+  }
+  // extraConfigFiles;
 in
 {
   home.username = user;
   home.homeDirectory = homeDirectory;
   xdg.enable = true;
 
-  xdg.configFile.nvim.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/nvim";
-  xdg.configFile.swaync.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/swaync";
-  xdg.configFile.waybar.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/waybar";
-  xdg.configFile.wofi.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/wofi";
-  xdg.configFile."opencode/opencode.json".source =
-    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/opencode/opencode.json";
-  xdg.configFile."starship.toml".source =
-    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/starship.toml";
-  xdg.configFile."alacritty/themes/tokyonight.toml".source =
-    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/alacritty/tokyonight-night.toml";
-  xdg.configFile."alacritty/themes/catppuccin-latte.toml".source =
-    mkOutOfStoreSymlink "${dotfilesDirectory}/.config/alacritty/catppuccin-latte.toml";
+  xdg.configFile = lib.mapAttrs (_name: source: {
+    source = mkOutOfStoreSymlink "${dotfilesDirectory}/${source}";
+  }) configFiles;
 
   home.stateVersion = "24.05";
 
@@ -35,42 +40,32 @@ in
 
   home.file = { };
 
-  home.activation.initTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    if [ ! -e "$HOME/.config/theme-mode" ]; then
-      printf '%s\n' dark > "$HOME/.config/theme-mode"
-    fi
-
-    if [ ! -e "$HOME/.config/alacritty/theme.toml" ]; then
-      mkdir -p "$HOME/.config/alacritty"
-      cp "${dotfilesDirectory}/.config/alacritty/tokyonight-night.toml" "$HOME/.config/alacritty/theme.toml"
-    fi
-  '';
+  home.activation.initTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] (
+    ''
+      if [ ! -e "$HOME/.config/theme-mode" ]; then
+        printf '%s\n' dark > "$HOME/.config/theme-mode"
+      fi
+    ''
+    + lib.optionalString enableAlacrittyTheme ''
+      if [ ! -e "$HOME/.config/alacritty/theme.toml" ]; then
+        mkdir -p "$HOME/.config/alacritty"
+        cp "${dotfilesDirectory}/.config/alacritty/tokyonight-night.toml" "$HOME/.config/alacritty/theme.toml"
+      fi
+    ''
+  );
 
   home.sessionVariables = { };
 
-  programs.home-manager.enable = true;
-
-  gtk = {
-    enable = true;
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-    };
-  };
-
-  home.pointerCursor = {
-    x11.enable = true;
-    gtk.enable = true;
-    package = pkgs.rose-pine-cursor;
-    name = "BreezeX-RosePine-Linux";
-    size = 24;
-  };
-
-  dconf = {
-    enable = true;
-    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
-  };
-
   programs = {
+    home-manager.enable = true;
+    zsh = import ./zsh.nix { inherit config; };
+    fzf = import ./fzf.nix { inherit pkgs; };
+    tmux = import ./tmux.nix { inherit pkgs; };
+    git = import ./git.nix { inherit config pkgs; };
+    zoxide = import ./zoxide.nix { inherit pkgs; };
+    starship.enable = true;
+  }
+  // lib.optionalAttrs enableAlacritty {
     alacritty = import ./alacritty.nix {
       inherit
         config
@@ -79,18 +74,8 @@ in
         meta
         ;
     };
-    zsh = import ./zsh.nix { inherit config; };
-    fzf = import ./fzf.nix { inherit pkgs; };
-    firefox = import ./firefox.nix;
+  }
+  // lib.optionalAttrs enableNeovim {
     neovim = import ./neovim.nix { inherit config pkgs; };
-    tmux = import ./tmux.nix { inherit pkgs; };
-    git = import ./git.nix { inherit config pkgs; };
-    zoxide = import ./zoxide.nix { inherit pkgs; };
-    starship.enable = true;
   };
-
-  wayland.windowManager = {
-    hyprland = import ./hyprland.nix { inherit config; };
-  };
-
 }

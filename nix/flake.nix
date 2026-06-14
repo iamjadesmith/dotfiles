@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -19,17 +18,13 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       disko,
       sops-nix,
-      alacritty-theme,
-      nixpkgs-unstable,
       home-manager,
       ...
     }@inputs:
     let
-      inherit (self) outputs;
       linuxUser = "jade";
       linuxHomeDirectory = "/home/${linuxUser}";
       hosts = [
@@ -48,13 +43,12 @@
       ];
     in
     {
-      overlays = import ./overlays { inherit inputs; };
       nixosConfigurations = builtins.listToAttrs (
         map (host: {
           name = host.name;
           value = nixpkgs.lib.nixosSystem {
             specialArgs = {
-              inherit inputs outputs;
+              inherit inputs;
               meta = {
                 hostname = host.name;
                 inherit (host) server;
@@ -62,6 +56,11 @@
             };
             system = "x86_64-linux";
             modules = [
+              ./modules/dotfiles/server.nix
+              ./modules/dotfiles/jade.nix
+              ./modules/dotfiles/sops.nix
+              ./modules/dotfiles/docker.nix
+              ./modules/dotfiles/borg.nix
               ./modules/nix-maintenance.nix
               ./modules/common-packages.nix
               disko.nixosModules.disko
@@ -69,16 +68,13 @@
               ./hosts/${host.name}/configuration.nix
               ./hosts/${host.name}/hardware-configuration.nix
               ./hosts/${host.name}/disko-config.nix
-              inputs.home-manager.nixosModules.default
               home-manager.nixosModules.home-manager
               {
-                nixpkgs.overlays = [
-                  outputs.overlays.modifications
-                ];
+                dotfiles.server.enable = host.server;
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.users.${linuxUser} =
-                  if host.server == true then import ./home/home-server.nix else import ./home/home.nix;
+                  if host.server == true then import ./home/home-server.nix else import ./home/home-desktop.nix;
                 home-manager.extraSpecialArgs = {
                   inherit inputs;
                   meta = host;

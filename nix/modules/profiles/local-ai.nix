@@ -7,12 +7,7 @@
     "d /var/lib/podman/open-webui 0755 root root - -"
   ];
 
-  virtualisation.docker = {
-    enable = true;
-    logDriver = "json-file";
-    daemon.settings.features.cdi = true;
-    rootless.daemon.settings.features.cdi = true;
-  };
+  dotfiles.docker.enable = true;
 
   virtualisation.oci-containers.containers = {
     ollama = {
