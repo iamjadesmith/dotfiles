@@ -1,247 +1,197 @@
 # AGENTS.md - Development Guidelines for Dotfiles Repository
 
-This document provides guidelines for agentic coding assistants working on this dotfiles repository. The repository contains NixOS configurations, shell scripts, and various tool configurations.
+This repository contains personal dotfiles, NixOS configurations, nix-darwin configuration, Home Manager modules, shell scripts, and Neovim configuration.
 
-## Build, Lint, and Test Commands
+## Repository Structure
 
-### Nix Configuration Testing and Building
+- `nix/flake.nix` is the single flake for NixOS and Darwin.
+- `nix/hosts/<hostname>/` contains host-specific NixOS config.
+- `nix/hosts/darwin/configuration.nix` contains macOS nix-darwin config.
+- `nix/home/home.nix` is the shared Home Manager base.
+- `nix/home/home-server.nix`, `nix/home/home-desktop.nix`, and `nix/home/home-darwin.nix` are Home Manager entrypoints.
+- `nix/modules/common-packages.nix` contains shared package groups.
+- `nix/modules/dotfiles/` contains small custom NixOS modules for repeated host patterns.
+- `nix/modules/profiles/` contains optional Linux desktop/profile modules and should be preserved even if currently unused.
+- `nix/darwin/` is intentionally removed; use `nix#mac` for Darwin.
 
-**Build a specific NixOS configuration:**
+## Build, Lint, And Test Commands
+
+Run Nix flake commands from `nix/` unless using an absolute flake path.
+
+Check the consolidated flake:
+
+```bash
+nix flake check --accept-flake-config
+```
+
+Check the consolidated flake when new files are untracked:
+
+```bash
+nix flake check path:. --accept-flake-config
+```
+
+Build a NixOS host:
+
 ```bash
 nixos-rebuild build --flake .#hostname
 ```
 
-**Test a NixOS configuration (dry run):**
+Test a NixOS host:
+
 ```bash
 nixos-rebuild test --flake .#hostname
 ```
 
-**Switch to a new NixOS configuration:**
+Switch a NixOS host:
+
 ```bash
-sudo nixos-rebuild switch --flake .#hostname
+sudo nixos-rebuild switch --flake ~/.dotfiles/nix#hostname
 ```
 
-**Build home-manager configuration:**
+Switch the Darwin host:
+
 ```bash
-home-manager build --flake .#hostname
+sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mac
 ```
 
-**Test home-manager configuration:**
-```bash
-home-manager switch --flake .#hostname
-```
+Update flake inputs:
 
-**Check Nix flake for syntax errors:**
-```bash
-nix flake check
-```
-
-**Update flake inputs:**
 ```bash
 nix flake update
 ```
 
-### Shell Script Linting and Testing
+Format touched Nix files:
 
-**Lint shell scripts with shellcheck:**
+```bash
+nixfmt path/to/file.nix
+```
+
+Lint shell scripts:
+
 ```bash
 shellcheck scripts/*
 shellcheck start/*.sh
 ```
 
-**Run shell scripts in dry-run mode (if applicable):**
+Syntax-check shell scripts:
+
 ```bash
 bash -n scripts/script_name
 bash -n start/arch.sh
 ```
 
-### Lua Code Linting and Formatting
+Lint Lua files:
 
-**Lint Lua files (Neovim configs):**
 ```bash
 luacheck .config/nvim/lua/
 ```
 
-**Format Lua files with stylua:**
+Format Lua files:
+
 ```bash
 stylua --check .config/nvim/lua/
 stylua .config/nvim/lua/
 ```
 
-### General Repository Commands
+Check repository status:
 
-**Check repository status:**
 ```bash
-git status
+git status --short
 ```
 
-**Run pre-commit checks (if configured):**
+Run pre-commit checks if configured:
+
 ```bash
 pre-commit run --all-files
 ```
 
-## Code Style Guidelines
+## Nix Conventions
 
-### Nix Code Style
+- Use 2-space indentation in Nix files.
+- Prefer clear host-local config over custom abstractions when the abstraction saves only a few lines.
+- Use readable local helpers such as `domain` and `ssl` for repeated nginx values.
+- Keep custom `dotfiles.*` modules small, explainable, and behavior-preserving.
+- Add shared Nix packages to `nix/modules/common-packages.nix`.
+- Add Darwin Homebrew formulas, casks, and App Store apps to `nix/hosts/darwin/configuration.nix`.
+- Use Homebrew for Darwin GUI apps and Darwin packages that are broken in the current Nix channel.
+- Do not restore the old `nix/darwin#mac` flake path.
+- Do not introduce a second nixpkgs input unless there is a concrete platform-specific need.
+- Run `nixfmt` on touched Nix files only.
+- Avoid formatting generated `hardware-configuration.nix` files unless intentionally changing them.
 
-**File Structure:**
-- Use consistent indentation (2 spaces)
-- Group related attributes together
-- Use `inherit` for commonly used variables
-- Prefer `let ... in` blocks for complex expressions
+## Nix Module Style
 
-**Example:**
+Use standard module structure for custom modules:
+
 ```nix
 {
   config,
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
+
 let
-  inherit (config.lib.file) mkOutOfStoreSymlink;
+  cfg = config.dotfiles.example;
 in
 {
-  # Configuration here
+  options.dotfiles.example.enable = lib.mkEnableOption "example defaults";
+
+  config = lib.mkIf cfg.enable {
+    # Configuration here
+  };
 }
 ```
 
-**Naming Conventions:**
-- Use `camelCase` for attribute names
-- Use `snake_case` for variable names in `let` expressions
-- Host names should be descriptive and lowercase
-- Use meaningful names for derivations and packages
+- Use `lib.mkEnableOption` for module enable flags.
+- Use `lib.mkOption` when host config needs a typed input.
+- Use `lib.mkIf` for conditional config.
+- Use `lib.mkDefault` only when host-specific config should be able to override a default.
+- Prefer explicit attrsets over dense chains of `// lib.optionalAttrs` if readability suffers.
+- Add short comments for non-obvious module behavior.
 
-**Imports and Modules:**
-- Group imports at the top
-- Use relative imports when possible
-- Follow the pattern: `{ config, pkgs, lib, ... }:`
+## Shell Script Style
 
-**Error Handling:**
-- Use `lib.mkIf` for conditional configurations
-- Use `lib.mkDefault` for default values that can be overridden
-- Validate inputs where appropriate
+- Use `#!/bin/bash` or `#!/bin/zsh`.
+- Use `set -euo pipefail` for new Bash scripts unless there is a specific reason not to.
+- Quote variable expansions.
+- Use `[[ ]]` for string and file tests.
+- Use descriptive names for variables and functions.
+- Keep scripts executable when they are intended to be run directly.
 
-### Shell Script Style
+## Lua Style
 
-**Shebang and Permissions:**
-- Always include `#!/bin/bash` or `#!/bin/zsh`
-- Ensure scripts are executable: `chmod +x script_name`
+- Use 2-space indentation.
+- Follow existing Neovim plugin patterns.
+- Use `pcall` around optional or failure-prone integrations.
+- Keep startup-sensitive config lazy-loaded where practical.
 
-**Error Handling:**
-```bash
-set -euo pipefail
-# Enable error checking
-```
+## Security Rules
 
-**Variable Naming:**
-- Use `UPPER_CASE` for environment variables and constants
-- Use `lower_case` for local variables
-- Use descriptive names
-
-**Example:**
-```bash
-#!/bin/bash
-set -euo pipefail
-
-readonly CONFIG_DIR="$HOME/.config"
-local temp_file
-
-function setup_config() {
-  # Function implementation
-}
-```
-
-**Best Practices:**
-- Quote all variable expansions: `"$variable"`
-- Use `[[ ]]` for string/file tests instead of `[ ]`
-- Use functions for reusable code
-- Add comments for complex logic
-
-### Lua Code Style (Neovim Configuration)
-
-**Formatting:**
-- Use 2-space indentation
-- Use consistent spacing around operators
-- Follow the existing patterns in the codebase
-
-**Structure:**
-```lua
-return {
-  "plugin/name",
-  event = { "BufReadPre", "BufNewFile" },
-  config = function()
-    -- Configuration here
-  end,
-}
-```
-
-**Naming Conventions:**
-- Use `camelCase` for variables and functions
-- Use `UPPER_CASE` for constants
-- Use descriptive names
-
-**Error Handling:**
-- Use `pcall` for potentially failing operations
-- Provide meaningful error messages
-
-### General Guidelines
-
-**File Organization:**
-- Keep related configurations together
-- Use descriptive directory structures
-- Avoid deep nesting where possible
-
-**Comments:**
-- Use comments to explain complex logic
-- Keep comments concise and meaningful
-- Use `#` for shell scripts, `--` for Lua, `#` for Nix
-
-**Security:**
-- Never commit secrets or sensitive information (API keys, passwords, private keys, tokens).
-- Prefer environment variables, encrypted secret stores (e.g. `sops`, `git-crypt`), or the OS keychain for secrets instead of plaintext in the repo.
+- Never commit secrets, API keys, passwords, private keys, or tokens.
 - Never use `sops` to decrypt secrets in this repository.
-- Add sensitive files to `.gitignore` when appropriate and use pre-commit secret scanners (e.g. `gitleaks`, `detect-secrets`) or `pre-commit` hooks to catch accidental commits.
-- Use least-privilege file permissions for sensitive files and be cautious with executable permissions.
+- Never inspect decrypted secret contents.
+- Prefer encrypted secret stores, environment variables, or OS keychains over plaintext secrets.
+- Add sensitive local files to `.gitignore` when needed.
+- Preserve least-privilege permissions for sensitive files.
 
-**Git Workflow:**
-- Use descriptive commit messages
-- Follow conventional commit format when possible
-- Keep commits focused on single changes
+## Git Workflow
 
-**Testing:**
-- Test NixOS configurations in VMs before deploying
-- Verify shell scripts on target systems
-- Test Neovim configurations after changes
+- Inspect `git status --short` before and after non-trivial changes.
+- Do not revert user changes unless explicitly asked.
+- Keep commits focused when the user asks for commits.
+- Do not amend commits unless explicitly requested.
 
-### Platform-Specific Considerations
+## Platform Notes
 
-**Linux (Arch/NixOS):**
-- Test on target hardware when possible
-- Verify package availability in repositories
-- Check systemd service configurations
+- NixOS hosts are built from `nix#<hostname>`.
+- Darwin is built from `nix#mac`.
+- Home Manager is managed through the system flakes, not standalone Home Manager commands.
+- Linux desktop profiles are intentionally kept for possible future Linux desktop hosts.
+- Test platform-specific service changes on the target platform when possible.
 
-**macOS:**
-- Use Homebrew for package management
-- Test with aerospace instead of hyprland
-- Verify macOS-specific paths and configurations
+## Documentation
 
-### Performance Considerations
-
-**Nix:**
-- Minimize rebuilds by using `lib.mkIf` for conditional logic
-- Use `pkgs.callPackage` for custom derivations
-- Cache frequently used expressions
-
-**Shell Scripts:**
-- Avoid unnecessary subprocess calls
-- Use built-in shell features when possible
-- Profile long-running scripts
-
-**Neovim:**
-- Lazy load plugins appropriately
-- Minimize startup time impact
-- Use efficient Lua patterns
-
-This document should be updated as the codebase evolves and new patterns emerge.</content>
-<parameter name="filePath">/Users/jade/.dotfiles/AGENTS.md
+- Keep `nix/README.md` as the detailed Nix operations document.
+- Keep root `README.md` short and point to `nix/README.md` for NixOS and Darwin details.
+- Update this file when repository structure, build commands, or conventions change.

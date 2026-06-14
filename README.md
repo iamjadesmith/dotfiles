@@ -1,45 +1,44 @@
-# README
+# Dotfiles
 
-## Prerequisites
+Personal dotfiles and system configuration for NixOS, macOS, Home Manager, shell tooling, tmux, and Neovim.
 
-- Install git
-- Install stow
-- Install fzf
-- Install zoxide
-- Install tmux
-- Install oh-my-posh
-- Install JetBrains Mono Nerd Font
+## Layout
 
-Installing Zoxide on Debian
+- `.config/`: application configuration managed as dotfiles.
+- `nix/`: consolidated NixOS and nix-darwin flake.
+- `scripts/`: helper scripts used by shell aliases and system jobs.
+- `start/`: bootstrap scripts for non-Nix setup flows.
 
-```bash
-curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
-```
+## Basic Dotfile Setup
 
-## Installation
-
-Clone the dotfiles and change into the `.dotfiles` directory
+Clone the repository:
 
 ```bash
-git clone git@github.com:iamjadesmith/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
+git clone git@github.com:iamjadesmith/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
 ```
 
-Then use GNU stow to create symlinks
+Use GNU Stow for non-Nix dotfile symlinks when needed:
 
 ```bash
 stow .
 ```
 
-## Installing Other Things
+## NixOS And macOS
 
-### TPM (for tmux)
+NixOS and macOS are managed from the consolidated flake in `nix/`.
+
+See `nix/README.md` for host layout, rebuild commands, package conventions, and install notes.
+
+Common commands:
 
 ```bash
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+sudo nixos-rebuild switch --flake ~/.dotfiles/nix#<hostname>
+sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mac
 ```
 
-Run tmux and hit `prefix` + `I` to install tmux plugins (`prefix` should be `ctrl` + `space`)
+Home Manager is managed through the system flakes, not standalone Home Manager commands.
 
 ## Reference
 
-[Link to Dreams of Autonomy Video for Dotfiles](https://www.youtube.com/watch?v=y6XCebnB9gs)
+[Dreams of Autonomy dotfiles video](https://www.youtube.com/watch?v=y6XCebnB9gs)
