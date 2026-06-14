@@ -65,7 +65,6 @@ let
     ansible
     black
     ffmpeg-headless
-    kubernetes-helm
     luajitPackages.luarocks
     mkalias
     poppler-utils

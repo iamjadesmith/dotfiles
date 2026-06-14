@@ -34,6 +34,7 @@ in
       "cmake"
       "ninja"
       "dfu-util"
+      "helm"
       "anomalyco/tap/opencode"
       "gemini-cli"
       "tree-sitter-cli"
