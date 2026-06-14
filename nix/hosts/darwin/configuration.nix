@@ -35,7 +35,6 @@ in
       "ninja"
       "dfu-util"
       "helm"
-      "anomalyco/tap/opencode"
       "gemini-cli"
       "tree-sitter-cli"
       "yt-dlp"
@@ -44,7 +43,7 @@ in
     casks = [
       "firefox"
       "discord"
-      "nikitabobko/tap/aerospace"
+      # "nikitabobko/tap/aerospace"
       "prismlauncher"
       "nextcloud"
       "linearmouse"
@@ -54,8 +53,7 @@ in
       "obsidian"
     ];
     taps = [
-      "nikitabobko/tap"
-      "anomalyco/tap"
+      # "nikitabobko/tap"
     ];
     masApps = {
       Wireguard = 1451685025;
