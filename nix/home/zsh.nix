@@ -131,7 +131,7 @@
             git commit -m 'update'
         fi
         if [[ -d "/Users/jade" ]]; then
-            sudo darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac
+            sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mac
         else
             sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
         fi

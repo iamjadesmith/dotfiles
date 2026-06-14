@@ -13,12 +13,17 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
   };
 
   outputs =
     {
+      self,
       nixpkgs,
+      nix-darwin,
       disko,
       sops-nix,
       home-manager,
@@ -27,6 +32,9 @@
     let
       linuxUser = "jade";
       linuxHomeDirectory = "/home/${linuxUser}";
+      darwinUser = "jade";
+      darwinHomeDirectory = "/Users/${darwinUser}";
+      darwinMeta = "joejadmbp";
       hosts = [
         {
           name = "joejadserver";
@@ -86,5 +94,28 @@
           };
         }) hosts
       );
+
+      darwinConfigurations."mac" = nix-darwin.lib.darwinSystem {
+        specialArgs = {
+          inherit inputs self;
+        };
+        modules = [
+          ./modules/common-packages.nix
+          ./hosts/darwin/configuration.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${darwinUser} = import ./home/home-darwin.nix;
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+              meta = darwinMeta;
+              user = darwinUser;
+              homeDirectory = darwinHomeDirectory;
+            };
+          }
+        ];
+      };
+
     };
 }

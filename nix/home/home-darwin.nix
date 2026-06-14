@@ -1,24 +1,27 @@
 {
   config,
-  pkgs,
+  homeDirectory,
   lib,
   meta,
+  pkgs,
+  user,
   ...
 }:
+
 let
-  dotfilesDirectory = "/Users/jade/.dotfiles";
+  dotfilesDirectory = "${homeDirectory}/.dotfiles";
 in
 {
   imports = [
-    (import ../home/home.nix {
+    (import ./home.nix {
       inherit
         config
         pkgs
         lib
         meta
+        user
+        homeDirectory
         ;
-      user = "jade";
-      homeDirectory = "/Users/jade";
       enableAlacritty = true;
       enableAlacrittyTheme = true;
       enableNeovim = false;
