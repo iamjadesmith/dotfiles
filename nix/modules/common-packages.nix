@@ -1,63 +1,88 @@
 {
   lib,
-  meta,
+  meta ? { },
   pkgs,
   ...
 }:
 
+let
+  isServer = meta.server or false;
+
+  commonPackages = with pkgs; [
+    R
+    age
+    basedpyright
+    fd
+    fluxcd
+    git
+    kubectl
+    lazygit
+    lemminx
+    lua5_1
+    lua-language-server
+    neovim
+    nil
+    nixfmt
+    nodejs
+    opencode
+    ripgrep
+    ruff
+    rustup
+    sops
+    starship
+    stylua
+    tmux
+    tree
+    vscode-json-languageserver
+    yaml-language-server
+    zoxide
+  ];
+
+  linuxPackages = with pkgs; [
+    bash
+    cargo
+    fzf
+    gcc
+    gnumake
+    helm
+    jq
+    luajitPackages.luarocks-nix
+    postgresql_18
+    stow
+    tree-sitter
+    unzip
+    wget
+    zsh
+  ];
+
+  linuxServerPackages = with pkgs; [
+    cifs-utils
+    nfs-utils
+    samba
+  ];
+
+  darwinPackages = with pkgs; [
+    ansible
+    black
+    ffmpeg-headless
+    kubernetes-helm
+    luajitPackages.luarocks
+    mkalias
+    poppler-utils
+    ruby
+    rust-analyzer
+    speedtest-cli
+    yubikey-manager
+  ];
+in
 {
   nixpkgs.config.permittedInsecurePackages = [
     "electron-39.8.10"
   ];
 
   environment.systemPackages =
-    with pkgs;
-    [
-      R
-      age
-      basedpyright
-      bash
-      cargo
-      fd
-      fluxcd
-      fzf
-      gcc
-      git
-      gnumake
-      helm
-      jq
-      kubectl
-      lazygit
-      lemminx
-      lua5_1
-      lua-language-server
-      luajitPackages.luarocks-nix
-      neovim
-      nil
-      nixfmt
-      nodejs
-      opencode
-      postgresql_18
-      ripgrep
-      ruff
-      rustup
-      sops
-      starship
-      stow
-      stylua
-      tmux
-      tree
-      tree-sitter
-      unzip
-      vscode-json-languageserver
-      wget
-      yaml-language-server
-      zoxide
-      zsh
-    ]
-    ++ lib.optionals meta.server [
-      cifs-utils
-      nfs-utils
-      samba
-    ];
+    commonPackages
+    ++ lib.optionals pkgs.stdenv.isLinux linuxPackages
+    ++ lib.optionals (pkgs.stdenv.isLinux && isServer) linuxServerPackages
+    ++ lib.optionals pkgs.stdenv.isDarwin darwinPackages;
 }

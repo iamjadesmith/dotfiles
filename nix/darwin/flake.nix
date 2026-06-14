@@ -37,45 +37,6 @@
           nixpkgs.overlays = [
             alacritty-theme.overlays.default
           ];
-          environment.systemPackages = with pkgs; [
-            R
-            age
-            ansible
-            basedpyright
-            black
-            fd
-            ffmpeg-headless
-            fluxcd
-            git
-            kubectl
-            kubernetes-helm
-            lazygit
-            lemminx
-            lua5_1
-            lua-language-server
-            luajitPackages.luarocks
-            mkalias
-            neovim
-            nil
-            nixfmt
-            nodejs
-            poppler-utils
-            ripgrep
-            ruby
-            ruff
-            rust-analyzer
-            rustup
-            sops
-            speedtest-cli
-            starship
-            stylua
-            tmux
-            tree
-            vscode-json-languageserver
-            yaml-language-server
-            yubikey-manager
-            zoxide
-          ];
 
           fonts.packages = with pkgs; [
             nerd-fonts.jetbrains-mono
@@ -177,6 +138,7 @@
       # $ darwin-rebuild build --flake .#mac
       darwinConfigurations."mac" = nix-darwin.lib.darwinSystem {
         modules = [
+          ../modules/common-packages.nix
           configuration
           home-manager.darwinModules.home-manager
           {
