@@ -16,22 +16,10 @@
     proj = "source ~/.dotfiles/scripts/tmux-project-session.sh";
     obs = "cd ~/obsidian && nvim Todo.md";
     tmux = "command tmux -u";
+    rebuild = "~/.dotfiles/scripts/rebuild";
+    lgit = "~/.dotfiles/scripts/dotfiles-commit";
   };
   initContent = ''
-    # Cache brew shellenv (only regenerate if homebrew updates)
-    if [[ -f "/opt/homebrew/bin/brew" ]]; then
-      BREW_CACHE="$HOME/.cache/brew-shellenv.zsh"
-      if [[ ! -f "$BREW_CACHE" ]] || [[ "/opt/homebrew/bin/brew" -nt "$BREW_CACHE" ]]; then
-        /opt/homebrew/bin/brew shellenv > "$BREW_CACHE"
-      fi
-      source "$BREW_CACHE"
-
-      LIBPQ_BIN="$HOMEBREW_PREFIX/opt/libpq/bin"
-      if [[ -d "$LIBPQ_BIN" ]] && [[ ":$PATH:" != *":$LIBPQ_BIN:"* ]]; then
-        export PATH="$LIBPQ_BIN:$PATH"
-      fi
-    fi
-
     ZINIT_HOME="$HOME/.local/share/zinit/zinit.git"
     if [ ! -d "$ZINIT_HOME" ]; then
        mkdir -p "$(dirname $ZINIT_HOME)"
@@ -106,35 +94,7 @@
 
     PATH="$HOME/.local/bin:$HOME/.dotfiles/scripts:$PATH"
 
-    if [[ -d "/Users/jade/Library/Python" ]]; then
-      export PATH="$PATH:$HOME/Library/Python/3.9/bin"
-    fi
-
     export EDITOR="nvim"
     export VISUAL="$EDITOR"
-
-    function lgit() {
-        git add .
-        if [ "$1" != "" ]; then
-            git commit -m "$1"
-        else
-            git commit -m 'update'
-        fi
-        git push -u origin main
-    }
-
-    function rebuild() {
-        git add .
-        if [ "$1" != "" ]; then
-            git commit -m "$1"
-        else
-            git commit -m 'update'
-        fi
-        if [[ -d "/Users/jade" ]]; then
-            sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mac
-        else
-            sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
-        fi
-    }
   '';
 }
