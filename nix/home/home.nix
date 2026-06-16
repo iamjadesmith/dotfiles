@@ -64,6 +64,7 @@ in
     git = import ./git.nix { inherit config pkgs; };
     zoxide = import ./zoxide.nix { inherit pkgs; };
     starship.enable = true;
+    yazi = import ./yazi.nix;
   }
   // lib.optionalAttrs enableAlacritty {
     alacritty = import ./alacritty.nix {
