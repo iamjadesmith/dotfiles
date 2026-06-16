@@ -74,7 +74,10 @@ in
     "iommu=pt"
     "module_blacklist=nouveau"
     "tpm_tis.interrupts=0"
+    "reboot=pci"
   ];
+
+  hardware.enableRedistributableFirmware = true;
 
   networking.networkmanager.dns = "systemd-resolved";
   networking.resolvconf.enable = true;
@@ -108,7 +111,7 @@ in
       rules."50-tailscale" = {
         onState = [ "routable" ];
         script = ''
-          ethtool -K enp5s0 rx-udp-gro-forwarding on rx-gro-list o
+          ethtool -K enp5s0 rx-udp-gro-forwarding on rx-gro-list off
         '';
       };
     };
