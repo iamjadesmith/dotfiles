@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 dotfiles_dir="${DOTFILES_DIR:-$HOME/.dotfiles}"

@@ -152,7 +152,7 @@ in
 
 ## Shell Script Style
 
-- Use `#!/bin/bash` or `#!/bin/zsh`.
+- Use `#!/usr/bin/env bash` for Bash scripts that should run on NixOS and macOS.
 - Use `set -euo pipefail` for new Bash scripts unless there is a specific reason not to.
 - Quote variable expansions.
 - Use `[[ ]]` for string and file tests.
