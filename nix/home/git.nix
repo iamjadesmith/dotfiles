@@ -11,6 +11,8 @@
     user.email = "jade@jade-smith.com";
     pull.rebase = true;
     init.defaultBranch = "main";
+    diff.tool = "nvim";
+    difftool.nvim.cmd = "nvim -d \"$LOCAL\" \"$REMOTE\"";
   };
   signing.format = "openpgp";
 }
