@@ -138,6 +138,11 @@ in
     open = true;
   };
 
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "intel";
+  };
+
   services.xserver.videoDrivers = [ "nvidia" ];
 
   services.unbound = {
