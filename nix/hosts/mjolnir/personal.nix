@@ -92,6 +92,7 @@ in
 
   services.running = {
     enable = true;
+    manageLocalDatabase = false;
     environmentFiles = [ config.sops.secrets.running_env.path ];
   };
 

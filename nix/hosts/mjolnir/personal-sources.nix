@@ -11,11 +11,11 @@ let
     };
 in
 {
-  budget = fetchApp "budget" "eb5c25f9b1333d4aa7290cff5a699cfbfc21e80c" "sha256-TqR9QIcd7FoF0opqLWzJpcGTNt4N9AMCDgstTO9oM4A=";
-  foodLog = fetchApp "food_log" "30b771384d8e5285ec48f98c5f28088533a46a0d" "sha256-n3xOvAeZU++yCCOiPNL8NE+d/vupxtWaEA2lrfvht6A=";
-  golfRust = fetchApp "golf_rust" "7410fc2e7cb6165dd2e2627d8c0d6d682f6bf5b6" "sha256-SsjBxJYLp6G9QSBZ9ZnmtYhCGF8NA0qbU9KUYvVDr1E=";
-  receipt = fetchApp "receipt" "d52b04bc320fff72b94aed35713ff2e3cfbbc0e7" "sha256-ZOoBbCjGBuhL/ztR/v+Y+gCuiuiU62haMnPQsm01TIA=";
-  running = fetchApp "running" "e3b17ffae97c127f76a212b838254ab6308ac297" "sha256-ygLVrxlIJuFDknoyFQyv1HHAt9PgCrLUhMwGgj0IJWI=";
-  workoutRust = fetchApp "workout_rust" "1a13e0ea8f592e16c1fa4e743a10fb486f938ded" "sha256-z08slp7xc3MYH00Qdk6jqsUoVmEXy9V3pe2mLWEcOTM=";
+  budget = fetchApp "budget" "879ef776fec6ab61d63d5afae5589413b2950b51" "sha256-bjMzdO4micdq38X+2Xb8raHAmSnLnnqEOGJ+RPShFFg=";
+  foodLog = fetchApp "food_log" "af0b6e07177ebdab3e39074929bf69dc36667f3a" "sha256-BS6M+ywpcSI/plXM15LzeE+C1pMIGqhyyuGTPfNrG0k=";
+  golfRust = fetchApp "golf_rust" "ce8d24653f4a4bb6f24c076bb6831177bc0a1499" "sha256-ORwmlAkpr+N/8klsOWXEMEwRugx9h5XbyJZjrwGBVPE=";
+  receipt = fetchApp "receipt" "435a56e861a7b63fc949721952d18d060ad16b01" "sha256-fnemQWj6adXnP5kbwgRJgXJj81shPWn+cOrMOHTMzg0=";
+  running = fetchApp "running" "3ad7233939389a0f7aaf72b89d451c0db70e6236" "sha256-iPENz3DFH4KZsNPZWKad5/IJiSYRdp/kGra49v2cl7Y=";
+  workoutRust = fetchApp "workout_rust" "9bf231cb1a024d6342d0ed7f1ec787811a950d04" "sha256-vtm3CEwP8TbpjgHlZVCQonzifSpouiU76uSASs1/roM=";
   stock = fetchApp "stock" "78af7f0fdf308b8bab5512928e63082ca8061edb" "sha256-optrcT9mFEJ4DGBflHk3qFyVsSnxAyF0mK6WnWIfXWk=";
 }

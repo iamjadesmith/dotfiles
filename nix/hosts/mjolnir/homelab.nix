@@ -158,36 +158,11 @@ in
       local all all peer
     '';
     ensureDatabases = [
-      "budget"
-      "food"
       "freshrss"
-      "golf"
-      "receipt"
-      "workout"
     ];
     ensureUsers = [
       {
-        name = "budget";
-        ensureDBOwnership = true;
-      }
-      {
-        name = "food";
-        ensureDBOwnership = true;
-      }
-      {
         name = "freshrss";
-        ensureDBOwnership = true;
-      }
-      {
-        name = "golf";
-        ensureDBOwnership = true;
-      }
-      {
-        name = "receipt";
-        ensureDBOwnership = true;
-      }
-      {
-        name = "workout";
         ensureDBOwnership = true;
       }
     ];
