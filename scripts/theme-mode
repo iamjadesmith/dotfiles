@@ -54,7 +54,7 @@ apply_mode() {
       alacritty_theme="$themes_dir/tokyonight.toml"
       ;;
     light)
-      alacritty_theme="$themes_dir/catppuccin-latte.toml"
+      alacritty_theme="$themes_dir/catppuccin-frappe.toml"
       ;;
     *)
       printf 'invalid theme mode: %s\n' "$mode" >&2

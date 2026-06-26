@@ -21,6 +21,7 @@ let
   }
   // lib.optionalAttrs enableAlacrittyTheme {
     "alacritty/themes/tokyonight.toml" = ".config/alacritty/tokyonight-night.toml";
+    "alacritty/themes/catppuccin-frappe.toml" = ".config/alacritty/catppuccin-frappe.toml";
     "alacritty/themes/catppuccin-latte.toml" = ".config/alacritty/catppuccin-latte.toml";
   }
   // extraConfigFiles;

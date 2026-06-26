@@ -16,8 +16,9 @@ end
 
 local function apply_theme()
 	if theme_mode() == "light" then
-		vim.o.background = "light"
-		vim.cmd.colorscheme("catppuccin-latte")
+		-- "light" is daytime mode; Frappe still uses a dark background.
+		vim.o.background = "dark"
+		vim.cmd.colorscheme("catppuccin-frappe")
 	else
 		vim.o.background = "dark"
 		vim.cmd.colorscheme("tokyonight-night")
