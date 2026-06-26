@@ -51,6 +51,7 @@ in
       "google-chrome"
       "alacritty"
       "obsidian"
+      "raycast"
     ];
     taps = [
       # "nikitabobko/tap"
