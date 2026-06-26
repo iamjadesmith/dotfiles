@@ -68,6 +68,7 @@ let
     luajitPackages.luarocks
     mkalias
     poppler-utils
+    rbw
     ruby
     rust-analyzer
     speedtest-cli
