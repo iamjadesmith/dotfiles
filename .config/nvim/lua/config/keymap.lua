@@ -35,7 +35,11 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete to black hol
 vim.keymap.set("n", "Q", "<nop>", { desc = "Disable Ex mode" })
 
 vim.keymap.set("i", "<C-c>", "<Esc>", { desc = "Escape insert mode" })
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Substitute word under cursor" })
+vim.keymap.set(
+	"n",
+	"<leader>s",
+	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+	{ desc = "Substitute word under cursor" }
+)
 
 vim.keymap.set("n", "<leader>t", "<cmd>Floaterminal<CR>", { desc = "Toggle floating terminal" })
-vim.keymap.set("n", "<leader>os", "<cmd>!obs_sync<CR>", { desc = "Sync Obsidian vault" })
