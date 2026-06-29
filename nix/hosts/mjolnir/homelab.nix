@@ -351,7 +351,16 @@ in
 
   services.seerr.enable = true;
 
-  services.flaresolverr.enable = true;
+  virtualisation.oci-containers.containers = {
+    flaresolverr = {
+      image = "ghcr.io/flaresolverr/flaresolverr:latest";
+      ports = [ "127.0.0.1:8191:8191" ];
+      autoStart = true;
+      environment = {
+        LOG_LEVEL = "info";
+      };
+    };
+  };
 
   services.nextcloud = {
     enable = true;
