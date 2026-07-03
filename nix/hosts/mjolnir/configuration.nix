@@ -79,6 +79,16 @@ in
   networking.search = [ "joejad.lan" ];
   networking.nameservers = [ "127.0.0.1" ];
   networking.enableIPv6 = false;
+  networking.firewall.checkReversePath = "loose";
+
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
+    extraSetFlags = [
+      "--accept-dns=false"
+      "--advertise-routes=10.3.0.1/32,10.3.0.2/32"
+    ];
+  };
 
   fileSystems."/mnt/data" = {
     device = "/dev/disk/by-uuid/036cff31-c5f3-4834-a626-07184f27055b";
@@ -157,6 +167,7 @@ in
           "10.10.10.0/24 allow"
           "10.26.27.0/24 allow"
           "10.47.59.0/24 allow"
+          "100.64.0.0/10 allow"
         ];
         private-domain = [ "joejad.lan" ];
         domain-insecure = [ "joejad.lan" ];
