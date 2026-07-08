@@ -78,7 +78,6 @@ in
   ];
   networking.search = [ "joejad.lan" ];
   networking.nameservers = [ "127.0.0.1" ];
-  networking.enableIPv6 = false;
   networking.firewall.checkReversePath = "loose";
 
   services.tailscale = {

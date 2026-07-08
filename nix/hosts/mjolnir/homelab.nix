@@ -208,7 +208,10 @@ in
 
   systemd.services.vpn-namespace = {
     description = "Shared VPN namespace";
-    path = [ pkgs.iproute2 ];
+    path = [
+      pkgs.iproute2
+      pkgs.procps
+    ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -218,6 +221,9 @@ in
       ip netns del ${vpnNamespace} 2>/dev/null || true
 
       ip netns add ${vpnNamespace}
+      ip netns exec ${vpnNamespace} sysctl -qw net.ipv6.conf.all.disable_ipv6=1
+      ip netns exec ${vpnNamespace} sysctl -qw net.ipv6.conf.default.disable_ipv6=1
+
       ip link add vpn0 type veth peer name vpn1
       ip link set vpn1 netns ${vpnNamespace}
 
@@ -238,6 +244,7 @@ in
     ips = [ vpnAddress ];
     privateKeyFile = config.sops.secrets.nordvpn_wireguard_private_key.path;
     interfaceNamespace = vpnNamespace;
+    allowedIPsAsRoutes = false;
     preSetup = ''
       if ! wg pubkey < ${config.sops.secrets.nordvpn_wireguard_private_key.path} >/dev/null 2>&1; then
         echo "nordvpn_wireguard_private_key must contain only the raw base64 private key" >&2
@@ -279,12 +286,16 @@ in
       esac
 
       ip netns exec ${vpnNamespace} wg set ${vpnWireGuardInterface} peer "${vpnPeerPublicKey}" endpoint "$nordvpnHostIp:$nordvpnPort"
+      ip netns exec ${vpnNamespace} ip -4 route replace default dev ${vpnWireGuardInterface}
     '';
     peers = [
       {
         name = vpnPeerName;
         publicKey = vpnPeerPublicKey;
-        allowedIPs = [ "0.0.0.0/0" ];
+        allowedIPs = [
+          "0.0.0.0/0"
+          "::/0"
+        ];
         persistentKeepalive = 25;
       }
     ];
