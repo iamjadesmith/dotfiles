@@ -6,6 +6,22 @@
 
 let
   dotfilesPath = "/home/jade/.dotfiles";
+  lanInterface = "enp132s0";
+  staticUlaAddress = "fd3a:3dab:51b8:50::2/64";
+  addStaticUla = ''
+    ${pkgs.iproute2}/bin/ip -6 addr replace "${staticUlaAddress}" dev "${lanInterface}"
+  '';
+  staticUlaDispatcher = pkgs.writeShellScript "mjolnir-static-ula" ''
+    if [[ "$1" != "${lanInterface}" ]]; then
+      exit 0
+    fi
+
+    case "$2" in
+      up|dhcp6-change)
+        ${addStaticUla}
+        ;;
+    esac
+  '';
 in
 {
   imports = [
@@ -79,6 +95,21 @@ in
   networking.search = [ "joejad.lan" ];
   networking.nameservers = [ "127.0.0.1" ];
   networking.firewall.checkReversePath = "loose";
+  networking.networkmanager.dispatcherScripts = [
+    {
+      source = staticUlaDispatcher;
+      type = "basic";
+    }
+  ];
+
+  systemd.services.static-ula-address = {
+    description = "Add static ULA address to ${lanInterface}";
+    wantedBy = [ "multi-user.target" ];
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    serviceConfig.Type = "oneshot";
+    script = addStaticUla;
+  };
 
   services.tailscale = {
     enable = true;

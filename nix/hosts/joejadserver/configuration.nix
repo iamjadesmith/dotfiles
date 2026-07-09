@@ -6,6 +6,25 @@
   ...
 }:
 
+let
+  lanInterface = "ens18";
+  staticUlaAddress = "fd3a:3dab:51b8:50::3/64";
+  addStaticUla = ''
+    ${pkgs.iproute2}/bin/ip -6 addr replace "${staticUlaAddress}" dev "${lanInterface}"
+  '';
+  staticUlaDispatcher = pkgs.writeShellScript "joejadserver-static-ula" ''
+    if [[ "$1" != "${lanInterface}" ]]; then
+      exit 0
+    fi
+
+    case "$2" in
+      up|dhcp6-change)
+        ${addStaticUla}
+        ;;
+    esac
+  '';
+in
+
 {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -88,6 +107,20 @@
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "both";
   networking.firewall.checkReversePath = "loose";
+  networking.networkmanager.dispatcherScripts = [
+    {
+      source = staticUlaDispatcher;
+      type = "basic";
+    }
+  ];
+  systemd.services.static-ula-address = {
+    description = "Add static ULA address to ${lanInterface}";
+    wantedBy = [ "multi-user.target" ];
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    serviceConfig.Type = "oneshot";
+    script = addStaticUla;
+  };
   services = {
     networkd-dispatcher = {
       enable = true;
