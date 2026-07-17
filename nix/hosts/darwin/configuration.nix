@@ -26,6 +26,8 @@ in
     home = "/Users/${username}";
   };
 
+  networking.localHostName = "joejadmbp";
+
   homebrew = {
     enable = true;
     brews = [

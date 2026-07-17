@@ -87,6 +87,7 @@ Prefer Nix packages for shared command-line tools when they build reliably on ea
 The `modules/dotfiles/` directory contains small modules that remove repeated NixOS host boilerplate.
 
 - `server.nix`: shared server defaults such as bootloader, locale, SSH, Nix settings, and common system behavior.
+- `mdns.nix`: shared Avahi hostname publication and `.local` resolution for NixOS hosts.
 - `jade.nix`: shared `jade` user setup with host-specific password and SSH key additions.
 - `docker.nix`: shared Docker defaults.
 - `borg.nix`: shared Borg user, SSH key generation, and backup job defaults.

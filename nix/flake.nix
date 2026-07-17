@@ -64,6 +64,7 @@
             };
             system = "x86_64-linux";
             modules = [
+              ./modules/dotfiles/mdns.nix
               ./modules/dotfiles/server.nix
               ./modules/dotfiles/jade.nix
               ./modules/dotfiles/sops.nix
