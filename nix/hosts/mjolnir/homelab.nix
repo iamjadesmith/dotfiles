@@ -314,6 +314,42 @@ in
 
   services.deluge = {
     enable = true;
+    # Deluge 2.2.0 uses APIs removed by setuptools 82 and pyOpenSSL 26.3.
+    package =
+      let
+        package = pkgs.deluge-2_x.override {
+          python3Packages = pkgs.python3Packages.overrideScope (
+            _: prev: {
+              setuptools = prev.setuptools_80;
+            }
+          );
+        };
+      in
+      package.overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [
+          (pkgs.writeText "deluge-pyopenssl-26.patch" ''
+            --- a/deluge/crypto_utils.py
+            +++ b/deluge/crypto_utils.py
+            @@ -111,6 +111,0 @@
+            -    # Generate cert request
+            -    req = crypto.X509Req()
+            -    subj = req.get_subject()
+            -    setattr(subj, 'CN', 'Deluge Daemon')
+            -    req.set_pubkey(pkey)
+            -    req.sign(pkey, digest)
+            @@ -119,1 +113,3 @@
+                 cert = crypto.X509()
+            +    subj = cert.get_subject()
+            +    setattr(subj, 'CN', 'Deluge Daemon')
+            @@ -123,3 +119,2 @@
+            -    cert.set_issuer(req.get_subject())
+            -    cert.set_subject(req.get_subject())
+            -    cert.set_pubkey(req.get_pubkey())
+            +    cert.set_issuer(subj)
+            +    cert.set_pubkey(pkey)
+          '')
+        ];
+      });
     web.enable = true;
   };
 
@@ -375,7 +411,7 @@ in
 
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud33;
+    package = pkgs.nextcloud34;
     hostName = "cloud.joejad.com";
     https = true;
     database.createLocally = true;
