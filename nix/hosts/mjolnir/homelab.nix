@@ -41,13 +41,13 @@ in
   services.nginx.virtualHosts = {
     "vault.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://127.0.0.1:8000";
+        proxyPass = "http://localhost:8000";
         proxyWebsockets = true;
       };
     };
 
     "uptime.${domain}" = ssl // {
-      locations."/".proxyPass = "http://127.0.0.1:3001";
+      locations."/".proxyPass = "http://localhost:3001";
     };
 
     "rss.${domain}" = ssl;
@@ -57,7 +57,7 @@ in
         client_max_body_size 20M;
       '';
       locations."/" = {
-        proxyPass = "http://127.0.0.1:8096";
+        proxyPass = "http://localhost:8096";
         proxyWebsockets = true;
         extraConfig = ''
           proxy_buffering off;
@@ -77,42 +77,42 @@ in
 
     "prowlarr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://127.0.0.1:9696";
+        proxyPass = "http://localhost:9696";
         proxyWebsockets = true;
       };
     };
 
     "radarr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://127.0.0.1:7878";
+        proxyPass = "http://localhost:7878";
         proxyWebsockets = true;
       };
     };
 
     "sonarr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://127.0.0.1:8989";
+        proxyPass = "http://localhost:8989";
         proxyWebsockets = true;
       };
     };
 
     "readarr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://127.0.0.1:8787";
+        proxyPass = "http://localhost:8787";
         proxyWebsockets = true;
       };
     };
 
     "lidarr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://127.0.0.1:8686";
+        proxyPass = "http://localhost:8686";
         proxyWebsockets = true;
       };
     };
 
     "seerr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://127.0.0.1:5055";
+        proxyPass = "http://localhost:5055";
         proxyWebsockets = true;
       };
     };
@@ -121,7 +121,7 @@ in
 
     "immich.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.immich.port}";
+        proxyPass = "http://localhost:${toString config.services.immich.port}";
         proxyWebsockets = true;
         recommendedProxySettings = true;
         extraConfig = ''
@@ -135,7 +135,7 @@ in
 
     "sync.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://127.0.0.1:8384";
+        proxyPass = "http://localhost:8384";
         proxyWebsockets = true;
       };
     };
@@ -315,41 +315,35 @@ in
   services.deluge = {
     enable = true;
     # Deluge 2.2.0 uses APIs removed by setuptools 82 and pyOpenSSL 26.3.
-    package =
-      let
-        package = pkgs.deluge-2_x.override {
-          python3Packages = pkgs.python3Packages.overrideScope (
-            _: prev: {
-              setuptools = prev.setuptools_80;
-            }
-          );
-        };
-      in
-      package.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [
-          (pkgs.writeText "deluge-pyopenssl-26.patch" ''
-            --- a/deluge/crypto_utils.py
-            +++ b/deluge/crypto_utils.py
-            @@ -111,6 +111,0 @@
-            -    # Generate cert request
-            -    req = crypto.X509Req()
-            -    subj = req.get_subject()
-            -    setattr(subj, 'CN', 'Deluge Daemon')
-            -    req.set_pubkey(pkey)
-            -    req.sign(pkey, digest)
-            @@ -119,1 +113,3 @@
-                 cert = crypto.X509()
-            +    subj = cert.get_subject()
-            +    setattr(subj, 'CN', 'Deluge Daemon')
-            @@ -123,3 +119,2 @@
-            -    cert.set_issuer(req.get_subject())
-            -    cert.set_subject(req.get_subject())
-            -    cert.set_pubkey(req.get_pubkey())
-            +    cert.set_issuer(subj)
-            +    cert.set_pubkey(pkey)
-          '')
-        ];
-      });
+    package = pkgs.deluge-2_x.overrideAttrs (old: {
+      propagatedBuildInputs = map (
+        dependency:
+        if (dependency.pname or "") == "setuptools" then pkgs.python3Packages.setuptools_80 else dependency
+      ) old.propagatedBuildInputs;
+      patches = (old.patches or [ ]) ++ [
+        (pkgs.writeText "deluge-pyopenssl-26.patch" ''
+          --- a/deluge/crypto_utils.py
+          +++ b/deluge/crypto_utils.py
+          @@ -111,6 +111,0 @@
+          -    # Generate cert request
+          -    req = crypto.X509Req()
+          -    subj = req.get_subject()
+          -    setattr(subj, 'CN', 'Deluge Daemon')
+          -    req.set_pubkey(pkey)
+          -    req.sign(pkey, digest)
+          @@ -119,1 +113,3 @@
+               cert = crypto.X509()
+          +    subj = cert.get_subject()
+          +    setattr(subj, 'CN', 'Deluge Daemon')
+          @@ -123,3 +119,2 @@
+          -    cert.set_issuer(req.get_subject())
+          -    cert.set_subject(req.get_subject())
+          -    cert.set_pubkey(req.get_pubkey())
+          +    cert.set_issuer(subj)
+          +    cert.set_pubkey(pkey)
+        '')
+      ];
+    });
     web.enable = true;
   };
 
@@ -468,7 +462,13 @@ in
 
   services.ollama = {
     enable = true;
-    package = pkgs.ollama-cuda;
+    package = pkgs.ollama-cuda.overrideAttrs (oldAttrs: {
+      # Remove after nixos-unstable includes NixOS/nixpkgs#545542.
+      preBuild = ''
+        export CUDAToolkit_ROOT="$CUDA_PATH-12"
+      ''
+      + oldAttrs.preBuild;
+    });
     loadModels = [
       "llama3.1:8b"
       "llama3.2-vision"

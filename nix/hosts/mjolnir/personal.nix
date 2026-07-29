@@ -108,27 +108,27 @@ in
 
   services.nginx.virtualHosts = {
     "budget.${domain}" = ssl // {
-      locations."/".proxyPass = "http://127.0.0.1:8080";
+      locations."/".proxyPass = "http://localhost:8080";
     };
 
     "food.${domain}" = ssl // {
-      locations."/".proxyPass = "http://127.0.0.1:8083";
+      locations."/".proxyPass = "http://localhost:8083";
     };
 
     "golf.${domain}" = ssl // {
-      locations."/".proxyPass = "http://127.0.0.1:8081";
+      locations."/".proxyPass = "http://localhost:8081";
     };
 
     "receipt.${domain}" = ssl // {
-      locations."/".proxyPass = "http://127.0.0.1:3000";
+      locations."/".proxyPass = "http://localhost:3000";
     };
 
     "run.${domain}" = ssl // {
-      locations."/".proxyPass = "http://127.0.0.1:8085";
+      locations."/".proxyPass = "http://localhost:8085";
     };
 
     "workout.${domain}" = ssl // {
-      locations."/".proxyPass = "http://127.0.0.1:8086";
+      locations."/".proxyPass = "http://localhost:8086";
     };
   };
 }
