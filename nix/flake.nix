@@ -34,8 +34,7 @@
       linuxHomeDirectory = "/home/${linuxUser}";
       darwinUser = "jade";
       darwinHomeDirectory = "/Users/${darwinUser}";
-      darwinMeta = "joejadmbp";
-      hosts = [
+      nixosHosts = [
         {
           name = "joejadserver";
           server = true;
@@ -48,6 +47,10 @@
           name = "mjolnir";
           server = true;
         }
+      ];
+      darwinHosts = [
+        { name = "mini"; }
+        { name = "joejadmbp"; }
       ];
     in
     {
@@ -93,30 +96,36 @@
               }
             ];
           };
-        }) hosts
+        }) nixosHosts
       );
 
-      darwinConfigurations."mac" = nix-darwin.lib.darwinSystem {
-        specialArgs = {
-          inherit inputs self;
-        };
-        modules = [
-          ./modules/common-packages.nix
-          ./hosts/darwin/configuration.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${darwinUser} = import ./home/home-darwin.nix;
-            home-manager.extraSpecialArgs = {
-              inherit inputs;
-              meta = darwinMeta;
-              user = darwinUser;
-              homeDirectory = darwinHomeDirectory;
+      darwinConfigurations = builtins.listToAttrs (
+        map (host: {
+          name = host.name;
+          value = nix-darwin.lib.darwinSystem {
+            specialArgs = {
+              inherit inputs self;
+              meta = host;
             };
-          }
-        ];
-      };
+            modules = [
+              ./modules/common-packages.nix
+              ./hosts/darwin/configuration.nix
+              home-manager.darwinModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.${darwinUser} = import ./home/home-darwin.nix;
+                home-manager.extraSpecialArgs = {
+                  inherit inputs;
+                  meta = host;
+                  user = darwinUser;
+                  homeDirectory = darwinHomeDirectory;
+                };
+              }
+            ];
+          };
+        }) darwinHosts
+      );
 
     };
 }

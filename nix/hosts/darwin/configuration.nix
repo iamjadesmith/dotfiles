@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  meta,
   pkgs,
   self,
   ...
@@ -26,7 +27,7 @@ in
     home = "/Users/${username}";
   };
 
-  networking.localHostName = "joejadmbp";
+  networking.localHostName = meta.name;
 
   homebrew = {
     enable = true;

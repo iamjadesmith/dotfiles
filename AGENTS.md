@@ -12,7 +12,7 @@ This repository contains personal dotfiles, NixOS configurations, nix-darwin con
 - `nix/modules/common-packages.nix` contains shared package groups.
 - `nix/modules/dotfiles/` contains small custom NixOS modules for repeated host patterns.
 - `nix/modules/profiles/` contains optional Linux desktop/profile modules and should be preserved even if currently unused.
-- `nix/darwin/` is intentionally removed; use `nix#mac` for Darwin.
+- `nix/darwin/` is intentionally removed; use `nix#mini` or `nix#joejadmbp` for Darwin.
 
 ## Build, Lint, And Test Commands
 
@@ -48,10 +48,11 @@ Switch a NixOS host:
 sudo nixos-rebuild switch --flake ~/.dotfiles/nix#hostname
 ```
 
-Switch the Darwin host:
+Switch a Darwin host:
 
 ```bash
-sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mac
+sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mini
+sudo darwin-rebuild switch --flake ~/.dotfiles/nix#joejadmbp
 ```
 
 Update flake inputs:
@@ -114,7 +115,7 @@ pre-commit run --all-files
 - Add shared Nix packages to `nix/modules/common-packages.nix`.
 - Add Darwin Homebrew formulas, casks, and App Store apps to `nix/hosts/darwin/configuration.nix`.
 - Use Homebrew for Darwin GUI apps and Darwin packages that are broken in the current Nix channel.
-- Do not restore the old `nix/darwin#mac` flake path.
+- Do not restore the old `nix/darwin` flake.
 - Do not introduce a second nixpkgs input unless there is a concrete platform-specific need.
 - Run `nixfmt` on touched Nix files only.
 - Avoid formatting generated `hardware-configuration.nix` files unless intentionally changing them.
@@ -185,7 +186,7 @@ in
 ## Platform Notes
 
 - NixOS hosts are built from `nix#<hostname>`.
-- Darwin is built from `nix#mac`.
+- Darwin hosts are built from `nix#mini` and `nix#joejadmbp`.
 - Home Manager is managed through the system flakes, not standalone Home Manager commands.
 - Linux desktop profiles are intentionally kept for possible future Linux desktop hosts.
 - Test platform-specific service changes on the target platform when possible.

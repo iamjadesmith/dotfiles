@@ -34,7 +34,8 @@ Common commands:
 
 ```bash
 sudo nixos-rebuild switch --flake ~/.dotfiles/nix#<hostname>
-sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mac
+sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mini
+sudo darwin-rebuild switch --flake ~/.dotfiles/nix#joejadmbp
 ```
 
 Home Manager is managed through the system flakes, not standalone Home Manager commands.

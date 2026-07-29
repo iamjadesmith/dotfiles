@@ -42,7 +42,7 @@
         };
       in
       {
-        size = if meta == "joejadmbp" then 18 else 14;
+        size = if meta.name == "joejadmbp" then 18 else 14;
         normal = jetbrainsMono "Regular";
         bold = jetbrainsMono "Bold";
         italic = jetbrainsMono "Italic";

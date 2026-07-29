@@ -1,13 +1,13 @@
 # Nix Configuration
 
-This directory contains the shared Nix flake for NixOS hosts and the macOS nix-darwin host.
+This directory contains the shared Nix flake for NixOS hosts and macOS nix-darwin hosts.
 
 ## Layout
 
 - `flake.nix`: single flake entrypoint for NixOS and Darwin.
 - `flake.lock`: shared lockfile for all Nix and Darwin systems.
 - `hosts/<hostname>/`: host-specific NixOS configuration, hardware configuration, and disko layout.
-- `hosts/darwin/configuration.nix`: macOS nix-darwin system configuration.
+- `hosts/darwin/configuration.nix`: shared macOS nix-darwin system configuration.
 - `home/home.nix`: shared Home Manager base.
 - `home/home-server.nix`: server Home Manager entrypoint.
 - `home/home-desktop.nix`: Linux desktop Home Manager entrypoint.
@@ -21,7 +21,8 @@ This directory contains the shared Nix flake for NixOS hosts and the macOS nix-d
 - `joejadserver`: NixOS server.
 - `sorserver`: NixOS server.
 - `mjolnir`: NixOS server.
-- `mac`: nix-darwin configuration for macOS.
+- `mini`: nix-darwin configuration for the Mac mini.
+- `joejadmbp`: nix-darwin configuration for the MacBook Pro.
 
 ## Common Commands
 
@@ -51,10 +52,11 @@ Switch a NixOS host:
 sudo nixos-rebuild switch --flake ~/.dotfiles/nix#mjolnir
 ```
 
-Switch the macOS host:
+Switch a macOS host:
 
 ```bash
-sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mac
+sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mini
+sudo darwin-rebuild switch --flake ~/.dotfiles/nix#joejadmbp
 ```
 
 Update flake inputs:
@@ -146,10 +148,11 @@ sudo reboot now
 
 ## macOS Bootstrap
 
-Install Nix, clone the repository, then run:
+Install Nix, clone the repository, then run the command matching the host:
 
 ```bash
-sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mac
+sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mini
+sudo darwin-rebuild switch --flake ~/.dotfiles/nix#joejadmbp
 ```
 
 Homebrew packages, casks, and App Store apps are managed by nix-darwin in `hosts/darwin/configuration.nix`.
