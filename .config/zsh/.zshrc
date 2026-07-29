@@ -111,17 +111,7 @@ function lgit() {
 }
 
 function rebuild() {
-    git add .
-    if [ "$1" != "" ]; then
-        git commit -m "$1"
-    else
-        git commit -m 'update'
-    fi
-    if [[ -d "/Users/jade" ]] then
-        sudo darwin-rebuild switch --flake ~/.dotfiles/nix/darwin#mac
-    else
-        sudo nixos-rebuild switch --flake ~/.dotfiles/nix/#$(hostname)
-    fi
+    "$HOME/.dotfiles/scripts/rebuild" "$@"
 }
 
 function obs_sync() {

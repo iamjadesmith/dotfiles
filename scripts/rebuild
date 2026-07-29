@@ -18,7 +18,11 @@ fi
 
 case "$(uname -s)" in
   Darwin)
-    exec sudo darwin-rebuild switch --flake "path:${flake_dir}#mac"
+    if ! flake_host="$(scutil --get LocalHostName 2>/dev/null)" || [[ -z "$flake_host" ]]; then
+      echo "error: unable to determine the Darwin flake host from LocalHostName" >&2
+      exit 1
+    fi
+    exec sudo darwin-rebuild switch --flake "path:${flake_dir}#${flake_host}"
     ;;
   Linux)
     exec sudo nixos-rebuild switch --flake "path:${flake_dir}#$(hostname)"
