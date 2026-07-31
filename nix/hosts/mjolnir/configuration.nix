@@ -7,7 +7,11 @@
 let
   dotfilesPath = "/home/jade/.dotfiles";
   lanInterface = "enp132s0";
-  staticUlaAddress = "fd3a:3dab:51b8:50::2/64";
+  ulaSitePrefix = "fd3a:3dab:51b8";
+  ulaPrefix = "${ulaSitePrefix}:50";
+  staticUlaIp = "${ulaPrefix}::2";
+  staticUlaAddress = "${staticUlaIp}/64";
+  opnsenseUlaIp = "${ulaPrefix}::1";
   addStaticUla = ''
     ${pkgs.iproute2}/bin/ip -6 addr replace "${staticUlaAddress}" dev "${lanInterface}"
   '';
@@ -41,11 +45,32 @@ in
       };
       nordvpn_wireguard_private_key = { };
       nordvpn_wireguard_endpoint = { };
+      unbound_gua_prefix = { };
+      unbound_mjolnir_gua = { };
+      unbound_opnsense_gua = { };
       vaultwarden_env = { };
       nextcloud_admin_pass = { };
       cloudflared_creds = { };
       syncthing_pass = { };
     };
+  };
+
+  sops.templates."unbound-private.conf" = {
+    content = ''
+      server:
+        access-control: ${config.sops.placeholder.unbound_gua_prefix} allow
+        local-data: "joejad.com. IN AAAA ${config.sops.placeholder.unbound_mjolnir_gua}"
+
+      forward-zone:
+        name: "joejad.lan."
+        forward-addr: 10.3.0.1
+        forward-addr: ${opnsenseUlaIp}
+        forward-addr: ${config.sops.placeholder.unbound_opnsense_gua}
+    '';
+    owner = "unbound";
+    group = "unbound";
+    mode = "0400";
+    restartUnits = [ "unbound.service" ];
   };
 
   dotfiles.jade = {
@@ -187,12 +212,19 @@ in
 
   services.unbound = {
     enable = true;
+    checkconf = false;
     settings = {
+      include-toplevel = "\"${config.sops.templates."unbound-private.conf".path}\"";
       server = {
-        interface = [ "0.0.0.0" ];
-        do-ip6 = false;
+        interface = [
+          "0.0.0.0"
+          "::0"
+        ];
+        do-ip6 = true;
         access-control = [
           "127.0.0.1/32 allow"
+          "::1/128 allow"
+          "${ulaSitePrefix}::/48 allow"
           "10.3.0.0/24 allow"
           "10.10.10.0/24 allow"
           "10.26.27.0/24 allow"
@@ -204,22 +236,19 @@ in
         local-zone = "\"joejad.com.\" redirect";
         local-data = [
           "\"joejad.com. IN A 10.3.0.2\""
+          "\"joejad.com. IN AAAA ${staticUlaIp}\""
         ];
         module-config = "'respip validator iterator'";
       };
       forward-zone = [
         {
-          name = "joejad.lan.";
-          forward-addr = [
-            "10.3.0.1"
-          ];
-        }
-        {
           name = ".";
           forward-tls-upstream = "yes";
           forward-addr = [
             "1.1.1.1@853#cloudflare-dns.com"
+            "2606:4700:4700::1111@853#cloudflare-dns.com"
             "8.8.8.8@853#dns.google.com"
+            "2001:4860:4860::8888@853#dns.google.com"
           ];
         }
       ];
@@ -231,6 +260,10 @@ in
       ];
     };
   };
+
+  systemd.services.unbound.preStart = ''
+    ${config.services.unbound.package}/bin/unbound-checkconf /etc/unbound/unbound.conf
+  '';
 
   security.acme = {
     acceptTerms = true;
