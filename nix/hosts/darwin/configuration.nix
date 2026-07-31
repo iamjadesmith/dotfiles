@@ -55,6 +55,7 @@ in
       "alacritty"
       "obsidian"
       "raycast"
+      "hammerspoon"
     ];
     taps = [
       # "nikitabobko/tap"

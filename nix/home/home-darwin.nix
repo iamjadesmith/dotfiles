@@ -51,6 +51,11 @@ in
     fi
   '';
 
+  home.file.".hammerspoon/init.lua" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/.hammerspoon/init.lua";
+    force = true;
+  };
+
   launchd.agents.theme-mode-sync = {
     enable = true;
     config = {
