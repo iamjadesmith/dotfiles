@@ -2,7 +2,6 @@
   pkgs,
   meta,
   lib,
-  config,
   ...
 }:
 {
@@ -43,13 +42,10 @@
       in
       {
         size =
-          if
-            builtins.elem meta.name [
-              "joejadmbp"
-              "mini"
-            ]
-          then
+          if meta.name == "joejadmbp" then
             18
+          else if meta.name == "mini" then
+            21
           else
             14;
         normal = jetbrainsMono "Regular";

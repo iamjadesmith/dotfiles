@@ -70,7 +70,6 @@ in
   // lib.optionalAttrs enableAlacritty {
     alacritty = import ./alacritty.nix {
       inherit
-        config
         pkgs
         lib
         meta
