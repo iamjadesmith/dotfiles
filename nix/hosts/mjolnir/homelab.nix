@@ -41,13 +41,13 @@ in
   services.nginx.virtualHosts = {
     "vault.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://localhost:8000";
+        proxyPass = "http://127.0.0.1:8000";
         proxyWebsockets = true;
       };
     };
 
     "uptime.${domain}" = ssl // {
-      locations."/".proxyPass = "http://localhost:3001";
+      locations."/".proxyPass = "http://127.0.0.1:3001";
     };
 
     "rss.${domain}" = ssl;
@@ -57,7 +57,7 @@ in
         client_max_body_size 20M;
       '';
       locations."/" = {
-        proxyPass = "http://localhost:8096";
+        proxyPass = "http://127.0.0.1:8096";
         proxyWebsockets = true;
         extraConfig = ''
           proxy_buffering off;
@@ -77,42 +77,42 @@ in
 
     "prowlarr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://localhost:9696";
+        proxyPass = "http://[::1]:9696";
         proxyWebsockets = true;
       };
     };
 
     "radarr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://localhost:7878";
+        proxyPass = "http://[::1]:7878";
         proxyWebsockets = true;
       };
     };
 
     "sonarr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://localhost:8989";
+        proxyPass = "http://[::1]:8989";
         proxyWebsockets = true;
       };
     };
 
     "readarr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://localhost:8787";
+        proxyPass = "http://[::1]:8787";
         proxyWebsockets = true;
       };
     };
 
     "lidarr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://localhost:8686";
+        proxyPass = "http://[::1]:8686";
         proxyWebsockets = true;
       };
     };
 
     "seerr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://localhost:5055";
+        proxyPass = "http://[::1]:5055";
         proxyWebsockets = true;
       };
     };
@@ -121,7 +121,7 @@ in
 
     "immich.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://localhost:${toString config.services.immich.port}";
+        proxyPass = "http://[::1]:${toString config.services.immich.port}";
         proxyWebsockets = true;
         recommendedProxySettings = true;
         extraConfig = ''
@@ -135,7 +135,7 @@ in
 
     "sync.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://localhost:8384";
+        proxyPass = "http://[::1]:8384";
         proxyWebsockets = true;
       };
     };
@@ -460,15 +460,16 @@ in
     };
   };
 
+  nix.settings = {
+    substituters = [ "https://cache.nixos-cuda.org" ];
+    trusted-public-keys = [
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+    ];
+  };
+
   services.ollama = {
     enable = true;
-    package = pkgs.ollama-cuda.overrideAttrs (oldAttrs: {
-      # Remove after nixos-unstable includes NixOS/nixpkgs#545542.
-      preBuild = ''
-        export CUDAToolkit_ROOT="$CUDA_PATH-12"
-      ''
-      + oldAttrs.preBuild;
-    });
+    package = pkgs.ollama-cuda;
     loadModels = [
       "llama3.1:8b"
       "llama3.2-vision"
