@@ -52,6 +52,12 @@ in
       nextcloud_admin_pass = { };
       cloudflared_creds = { };
       syncthing_pass = { };
+      opencode_server_password = {
+        owner = "jade";
+        group = "users";
+        mode = "0400";
+        restartUnits = [ "opencode-web.service" ];
+      };
     };
   };
 
