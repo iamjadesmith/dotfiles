@@ -31,6 +31,7 @@ in
   imports = [
     ./homelab.nix
     ./external.nix
+    ./livesync.nix
     ./personal.nix
   ];
 
@@ -114,8 +115,18 @@ in
         "/var/lib/lidarr/.config/Lidarr"
         "/var/lib/jellyseerr"
         "/var/lib/deluge"
+        "/var/lib/couchdb"
+        "/var/lib/livesync-cli"
       ];
       repo = "borg@sorserver:/var/lib/borg/mjolnir";
+      preHook = ''
+        exec 9>/run/lock/livesync-cli.lock
+        ${pkgs.util-linux}/bin/flock 9
+        systemctl stop podman-livesync-cli.service couchdb.service
+      '';
+      postHook = ''
+        systemctl start couchdb.service podman-livesync-cli.service
+      '';
     };
   };
 
@@ -141,6 +152,10 @@ in
     serviceConfig.Type = "oneshot";
     script = addStaticUla;
   };
+
+  systemd.services.borgbackup-job-mjolnir.serviceConfig.ReadWritePaths = [
+    "/run/lock/livesync-cli.lock"
+  ];
 
   services.tailscale = {
     enable = true;

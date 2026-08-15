@@ -84,6 +84,53 @@ Darwin Homebrew packages live in `hosts/darwin/configuration.nix` under `homebre
 
 Prefer Nix packages for shared command-line tools when they build reliably on each platform. Prefer Homebrew for Darwin GUI apps or Darwin packages that are broken in the current Nix channel.
 
+## Self-hosted LiveSync On Mjolnir
+
+Mjolnir runs CouchDB natively and the official Self-hosted LiveSync CLI daemon in Podman. CouchDB listens only on `127.0.0.1:5984`; Nginx provides `https://livesync.joejad.com` to the configured LAN, WireGuard, Tailscale, and private IPv6 ranges. Requests forwarded by Cloudflare Tunnel are rejected.
+
+Persistent data and units:
+
+- CouchDB data: `/var/lib/couchdb`
+- CLI database and settings: `/var/lib/livesync-cli/database`
+- Materialised vault: `/var/lib/livesync-cli/vault`
+- Services: `couchdb.service` and `podman-livesync-cli.service`
+- CouchDB database: `obsidian`
+- CouchDB client: `livesync`, with its password in the `couchdb_livesync_user_password` SOPS key
+
+The administrator credential is used only by the local provisioning service. Clients are restricted to the `obsidian` database, and Nginx does not expose CouchDB's server-management APIs. The CLI service is skipped safely until `/var/lib/livesync-cli/database/.livesync/settings.json` exists and reports `isConfigured: true`. The `jade` user is a member of the `livesync` group and can access the materialised vault after starting a new login session. The CLI does not materialise hidden paths such as `.obsidian`.
+
+For an existing Obsidian device that is the source of truth:
+
+1. Back up the vault and disable every other synchronisation tool for that vault.
+2. Rebuild mjolnir. Retrieve the generated database-user password from the root-only runtime secret and store it in a password manager:
+
+```bash
+sudo cat /run/secrets/couchdb_livesync_user_password
+```
+
+3. Explicitly reset the remote database so the authoritative upload cannot merge with data from an earlier attempt. This permanently deletes the `obsidian` database, quarantines any previous CLI database and mirror under `/var/lib/livesync-cli/reset-backup.*`, and recreates empty CLI directories:
+
+```bash
+sudo livesync-couchdb-reset --confirm-delete-obsidian
+```
+
+4. Connect the Self-hosted LiveSync plug-in manually to `https://livesync.joejad.com` with user `livesync`, the SOPS-managed password, and database `obsidian`. Skip the optional server-requirements check because Nix manages those settings and the client deliberately has no server-administrator access.
+5. Enable end-to-end encryption, choose the existing device as authoritative, and initialise or overwrite the verified-empty remote database. Keep Obsidian open until the initial upload finishes.
+6. Create a fresh Setup URI with `Self-hosted LiveSync: Copy settings as a new Setup URI`. Do not reuse an initial provisioning URI. Keep the URI and its passphrase separate.
+7. Initialise the CLI settings, paste the fresh Setup URI when `read` waits for input, and enter its passphrase at the CLI prompt:
+
+```bash
+sudo systemctl stop podman-livesync-cli.service
+sudo livesync-cli init-settings /data/.livesync/settings.json
+read -rs setup_uri
+sudo livesync-cli setup "$setup_uri"
+unset setup_uri
+sudo systemctl start podman-livesync-cli.service
+sudo journalctl -u podman-livesync-cli.service -f
+```
+
+Stop `podman-livesync-cli.service` before any later one-off `sudo livesync-cli ...` command. One-off commands and the Borg job share a lock so that neither can copy or open the CLI database while the other is using it. CouchDB and the full CLI state are included in mjolnir's weekly Borg job; the job stops both services for a consistent cold backup and starts them afterward. Synchronisation is not a substitute for a tested backup restore.
+
 ## Custom Modules
 
 The `modules/dotfiles/` directory contains small modules that remove repeated NixOS host boilerplate.
