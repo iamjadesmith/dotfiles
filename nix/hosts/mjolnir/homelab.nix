@@ -88,7 +88,7 @@ in
 
     "prowlarr.${domain}" = ssl // {
       locations."/" = {
-        proxyPass = "http://[::1]:9696";
+        proxyPass = "http://127.0.0.1:9696";
         proxyWebsockets = true;
       };
     };
@@ -447,6 +447,17 @@ in
   };
 
   services.prowlarr.enable = true;
+  systemd.services.prowlarr = {
+    wants = [
+      "network-online.target"
+      "podman-flaresolverr.service"
+    ];
+    after = [
+      "network-online.target"
+      "podman-flaresolverr.service"
+    ];
+    environment.DOTNET_SYSTEM_NET_DISABLEIPV6 = "1";
+  };
 
   services.radarr.enable = true;
   users.users.radarr.extraGroups = [ "media" ];
