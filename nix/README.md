@@ -93,11 +93,12 @@ Persistent data and units:
 - CouchDB data: `/var/lib/couchdb`
 - CLI database and settings: `/var/lib/livesync-cli/database`
 - Materialised vault: `/var/lib/livesync-cli/vault`
+- User-facing vault path: `~/obsidian`, a symlink to `/var/lib/livesync-cli/vault`
 - Services: `couchdb.service` and `podman-livesync-cli.service`
 - CouchDB database: `obsidian`
 - CouchDB client: `livesync`, with its password in the `couchdb_livesync_user_password` SOPS key
 
-The administrator credential is used only by the local provisioning service. Clients are restricted to the `obsidian` database, and Nginx does not expose CouchDB's server-management APIs. The CLI service is skipped safely until `/var/lib/livesync-cli/database/.livesync/settings.json` exists and reports `isConfigured: true`. The `jade` user is a member of the `livesync` group and can access the materialised vault after starting a new login session. The CLI does not materialise hidden paths such as `.obsidian`.
+The administrator credential is used only by the local provisioning service. Clients are restricted to the `obsidian` database, and Nginx does not expose CouchDB's server-management APIs. The CLI service is skipped safely until `/var/lib/livesync-cli/database/.livesync/settings.json` exists and reports `isConfigured: true`. Before each daemon start, the service atomically enables `liveSync` in that settings file so a Setup URI cannot leave the headless mirror idle after its initial scan. The `jade` user is a member of the `livesync` group and can access the materialised vault through `~/obsidian` after starting a new login session. The CLI does not materialise hidden paths such as `.obsidian`.
 
 For an existing Obsidian device that is the source of truth:
 

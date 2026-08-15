@@ -184,6 +184,33 @@ let
     exec ${pkgs.jq}/bin/jq --exit-status '.isConfigured == true' ${lib.escapeShellArg settingsFile} > /dev/null
   '';
 
+  enableContinuousSync = pkgs.writeShellApplication {
+    name = "livesync-cli-enable-continuous-sync";
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.jq
+    ];
+    text = ''
+      settings_file=${lib.escapeShellArg settingsFile}
+
+      if jq --exit-status '.liveSync == true' "$settings_file" > /dev/null; then
+        exit 0
+      fi
+
+      temporary_file="$(mktemp "$settings_file.XXXXXXXXXX")"
+      cleanup() {
+        rm -f "$temporary_file"
+      }
+      trap cleanup EXIT
+
+      jq '.liveSync = true' "$settings_file" > "$temporary_file"
+      chown --reference="$settings_file" "$temporary_file"
+      chmod --reference="$settings_file" "$temporary_file"
+      mv "$temporary_file" "$settings_file"
+      trap - EXIT
+    '';
+  };
+
   couchdbReset = pkgs.writeShellApplication {
     name = "livesync-couchdb-reset";
     runtimeInputs = [
@@ -482,6 +509,7 @@ in
     "d ${stateDir} 0750 livesync livesync - -"
     "d ${databaseDir} 0700 livesync livesync - -"
     "d ${vaultDir} 2770 livesync livesync - -"
+    "L /home/jade/obsidian - - - - ${vaultDir}"
     "f ${lockFile} 0600 root root - -"
     "z /var/log/couchdb.log 0640 couchdb couchdb - -"
   ];
@@ -527,6 +555,7 @@ in
     serviceConfig = {
       LimitNOFILE = 65536;
       ExecCondition = settingsConfigured;
+      ExecStartPre = "${enableContinuousSync}/bin/livesync-cli-enable-continuous-sync";
       RestartSec = "10s";
       TimeoutStartSec = lib.mkForce "300s";
     };
