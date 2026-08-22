@@ -29,6 +29,7 @@ let
 in
 {
   imports = [
+    ./dictation.nix
     ./homelab.nix
     ./external.nix
     ./livesync.nix
