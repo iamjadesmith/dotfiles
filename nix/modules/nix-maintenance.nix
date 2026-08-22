@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -49,6 +50,6 @@ in
     ];
     dates = "Sun *-*-* 02:30:00";
     randomizedDelaySec = "45min";
-    allowReboot = true;
+    allowReboot = lib.mkDefault true;
   };
 }

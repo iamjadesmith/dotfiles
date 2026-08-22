@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }:
 
@@ -76,6 +77,8 @@ in
     "tpm_tis.interrupts=0"
     "reboot=pci"
   ];
+
+  system.autoUpgrade.allowReboot = false;
 
   hardware.enableRedistributableFirmware = true;
 
