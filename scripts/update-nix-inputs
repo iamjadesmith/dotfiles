@@ -13,12 +13,10 @@ fi
 
 updated_files=(
   "nix/flake.lock"
-  "nix/darwin/flake.lock"
   "nix/hosts/mjolnir/personal-sources.nix"
 )
 
 nix flake update --flake ./nix
-nix flake update --flake ./nix/darwin
 nix shell nixpkgs#jq -c ./scripts/update-mjolnir-personal-sources
 
 git add "${updated_files[@]}"
