@@ -128,6 +128,8 @@ in
       };
     };
 
+    "search.${domain}" = ssl;
+
     "cloud.${domain}" = ssl;
 
     "immich.${domain}" = ssl // {
@@ -472,6 +474,18 @@ in
   users.users.lidarr.extraGroups = [ "media" ];
 
   services.seerr.enable = true;
+
+  services.searx = {
+    enable = true;
+    domain = "search.${domain}";
+    environmentFile = config.sops.templates."searx.env".path;
+    configureNginx = true;
+    settings.server.secret_key = "$SEARX_SECRET_KEY";
+    uwsgiConfig = lib.mkForce {
+      socket = "/run/searx/uwsgi.sock";
+      chmod-socket = "660";
+    };
+  };
 
   virtualisation.oci-containers.containers = {
     flaresolverr = {

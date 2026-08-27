@@ -60,6 +60,7 @@ in
         mode = "0400";
         restartUnits = [ "opencode-web.service" ];
       };
+      searx_secret_key = { };
     };
   };
 
@@ -79,6 +80,19 @@ in
     group = "unbound";
     mode = "0400";
     restartUnits = [ "unbound.service" ];
+  };
+
+  sops.templates."searx.env" = {
+    content = ''
+      SEARX_SECRET_KEY=${config.sops.placeholder.searx_secret_key}
+    '';
+    owner = "searx";
+    group = "searx";
+    mode = "0400";
+    restartUnits = [
+      "searx-init.service"
+      "uwsgi.service"
+    ];
   };
 
   dotfiles.jade = {
