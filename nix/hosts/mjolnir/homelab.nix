@@ -481,6 +481,10 @@ in
     environmentFile = config.sops.templates."searx.env".path;
     configureNginx = true;
     settings.server.secret_key = "$SEARX_SECRET_KEY";
+    settings.search.formats = [
+      "html"
+      "json"
+    ];
     uwsgiConfig = lib.mkForce {
       socket = "/run/searx/uwsgi.sock";
       chmod-socket = "660";
