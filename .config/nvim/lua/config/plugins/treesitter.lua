@@ -11,6 +11,7 @@ return {
 			ts.install({
 				"bash",
 				"c",
+				"html",
 				"lua",
 				"markdown",
 				"markdown_inline",

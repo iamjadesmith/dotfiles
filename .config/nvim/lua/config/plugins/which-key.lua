@@ -17,6 +17,7 @@ return {
 			wk.add({
 				{ "<leader>f", group = "Find" },
 				{ "<leader>e", group = "Edit" },
+				{ "<leader>m", group = "Markdown" },
 				{ "<leader>s", desc = "Search Current Word" },
 				{ "<leader>a", desc = "Add to Harpoon" },
 			})
