@@ -152,7 +152,23 @@ in
         proxyWebsockets = true;
       };
     };
+
+    "study.${domain}" = ssl // {
+      locations."/" = {
+        root = "/var/lib/study-html";
+        extraConfig = ''
+          try_files $uri $uri/ =404;
+          add_header Cache-Control "public, max-age=300";
+          add_header X-Content-Type-Options "nosniff" always;
+          add_header Referrer-Policy "no-referrer" always;
+        '';
+      };
+    };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /var/lib/study-html 0755 jade nginx -"
+  ];
 
   services.vaultwarden = {
     enable = true;
@@ -386,35 +402,12 @@ in
 
   services.deluge = {
     enable = true;
-    # Deluge 2.2.0 uses APIs removed by setuptools 82 and pyOpenSSL 26.3.
+    # Deluge 2.2.0 uses APIs removed by setuptools 82.
     package = pkgs.deluge-2_x.overrideAttrs (old: {
       propagatedBuildInputs = map (
         dependency:
         if (dependency.pname or "") == "setuptools" then pkgs.python3Packages.setuptools_80 else dependency
       ) old.propagatedBuildInputs;
-      patches = (old.patches or [ ]) ++ [
-        (pkgs.writeText "deluge-pyopenssl-26.patch" ''
-          --- a/deluge/crypto_utils.py
-          +++ b/deluge/crypto_utils.py
-          @@ -111,6 +111,0 @@
-          -    # Generate cert request
-          -    req = crypto.X509Req()
-          -    subj = req.get_subject()
-          -    setattr(subj, 'CN', 'Deluge Daemon')
-          -    req.set_pubkey(pkey)
-          -    req.sign(pkey, digest)
-          @@ -119,1 +113,3 @@
-               cert = crypto.X509()
-          +    subj = cert.get_subject()
-          +    setattr(subj, 'CN', 'Deluge Daemon')
-          @@ -123,3 +119,2 @@
-          -    cert.set_issuer(req.get_subject())
-          -    cert.set_subject(req.get_subject())
-          -    cert.set_pubkey(req.get_pubkey())
-          +    cert.set_issuer(subj)
-          +    cert.set_pubkey(pkey)
-        '')
-      ];
     });
     web.enable = true;
   };
