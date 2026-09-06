@@ -569,9 +569,12 @@ in
   services.ollama = {
     enable = true;
     package = pkgs.ollama-cuda;
+    host = "0.0.0.0";
+    environmentVariables.OLLAMA_KEEP_ALIVE = "30m";
     loadModels = [
       "llama3.1:8b"
       "llama3.2-vision"
+      "qwen2.5-coder:7b"
     ];
   };
 

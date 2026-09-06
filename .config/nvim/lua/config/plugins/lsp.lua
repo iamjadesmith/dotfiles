@@ -1,11 +1,47 @@
 return {
 	{
-		"github/copilot.vim",
-	},
-	{
-		"zbirenbaum/copilot-cmp",
+		"milanglacier/minuet-ai.nvim",
+		event = "InsertEnter",
 		config = function()
-			require("copilot_cmp").setup()
+			require("minuet").setup({
+				provider = "openai_fim_compatible",
+				n_completions = 1,
+				context_window = 4096,
+				throttle = 1000,
+				debounce = 300,
+				request_timeout = 3,
+				virtualtext = {
+					auto_trigger_ft = { "*" },
+					auto_trigger_ignore_ft = { "TelescopePrompt", "lazy", "oil" },
+					keymap = {
+						next = "<M-]>",
+						prev = "<M-[>",
+					},
+				},
+				provider_options = {
+					openai_fim_compatible = {
+						api_key = function()
+							return "ollama"
+						end,
+						name = "Ollama",
+						end_point = "http://mjolnir.joejad.lan:11434/v1/completions",
+						model = "qwen2.5-coder:7b",
+						optional = {
+							max_tokens = 64,
+							top_p = 0.9,
+						},
+					},
+				},
+			})
+
+			local virtualtext = require("minuet.virtualtext")
+			vim.keymap.set("i", "<Tab>", function()
+				if virtualtext.action.is_visible() then
+					virtualtext.action.accept()
+					return ""
+				end
+				return "<Tab>"
+			end, { expr = true, silent = true, desc = "Accept AI completion or insert tab" })
 		end,
 	},
 	{
@@ -117,7 +153,6 @@ return {
 					["<C-Space>"] = cmp.mapping.complete(),
 				}),
 				sources = cmp.config.sources({
-					{ name = "copilot" },
 					{ name = "nvim_lsp" },
 					{ name = "cmp_r" },
 					{ name = "vim-dadbod-completion" },
