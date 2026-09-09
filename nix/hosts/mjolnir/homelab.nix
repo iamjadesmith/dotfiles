@@ -154,8 +154,8 @@ in
     };
 
     "study.${domain}" = ssl // {
+      root = "/var/lib/study-html/current";
       locations."/" = {
-        root = "/var/lib/study-html";
         extraConfig = ''
           try_files $uri $uri/ =404;
           add_header Cache-Control "public, max-age=300";
