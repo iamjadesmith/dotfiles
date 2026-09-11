@@ -82,7 +82,7 @@ in
 
   environment.systemPackages =
     commonPackages
-    ++ lib.optionals pkgs.stdenv.isLinux linuxPackages
-    ++ lib.optionals (pkgs.stdenv.isLinux && isServer) linuxServerPackages
-    ++ lib.optionals pkgs.stdenv.isDarwin darwinPackages;
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux linuxPackages
+    ++ lib.optionals (pkgs.stdenv.hostPlatform.isLinux && isServer) linuxServerPackages
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin darwinPackages;
 }

@@ -21,7 +21,7 @@
       dynamic_title = true;
       decorations_theme_variant = "None";
     }
-    // lib.optionalAttrs pkgs.stdenv.isDarwin {
+    // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
       decorations = "Buttonless";
       option_as_alt = "Both";
     };
