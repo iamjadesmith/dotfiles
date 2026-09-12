@@ -203,7 +203,10 @@ in
     "interface-name:vpn0"
     "interface-name:vpn1"
   ];
-  networking.search = [ "joejad.lan" ];
+  networking.search = [
+    "taildfe4ce.ts.net"
+    "joejad.lan"
+  ];
   networking.nameservers = [ "127.0.0.1" ];
   networking.firewall.checkReversePath = "loose";
   networking.networkmanager.dispatcherScripts = [
@@ -331,6 +334,10 @@ in
         module-config = "'respip validator iterator'";
       };
       forward-zone = [
+        {
+          name = "taildfe4ce.ts.net.";
+          forward-addr = [ "100.100.100.100" ];
+        }
         {
           name = ".";
           forward-tls-upstream = "yes";
