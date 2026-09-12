@@ -10,6 +10,7 @@
 
 let
   dotfilesDirectory = "${homeDirectory}/.dotfiles";
+  themeMode = "dark"; # Set to "auto" to follow the macOS appearance.
 in
 {
   imports = [
@@ -61,7 +62,7 @@ in
     config = {
       ProgramArguments = [
         "${dotfilesDirectory}/scripts/theme-mode"
-        "sync-macos"
+        (if themeMode == "auto" then "sync-macos" else themeMode)
       ];
       RunAtLoad = true;
       StartInterval = 300;
