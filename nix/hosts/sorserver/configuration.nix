@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }:
 
@@ -79,7 +80,30 @@ in
         "--security-opt=no-new-privileges"
       ];
     };
+
+    containers.scrypted = {
+      image = "ghcr.io/koush/scrypted@sha256:294be875371dc4f2897174120ce707c43bde8d18e41545077c4c6c88911af990";
+      autoStart = true;
+      volumes = [
+        "/var/lib/scrypted:/server/volume"
+      ];
+      devices = [ "/dev/dri:/dev/dri" ];
+      environment.SCRYPTED_DOCKER_AVAHI = "true";
+      log-driver = "none";
+      extraOptions = [
+        "--network=host"
+        "--dns=1.1.1.1"
+        "--dns=8.8.8.8"
+      ];
+    };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /var/lib/scrypted 0750 root root -"
+  ];
+
+  # Scrypted's internal Avahi must own port 5353 for HomeKit discovery.
+  services.avahi.enable = lib.mkForce false;
 
   dotfiles.borg = {
     enable = true;
@@ -92,6 +116,7 @@ in
         "/var/lib/nextcloud"
         "/var/lib/db_backups"
         "/var/lib/immich"
+        "/var/lib/scrypted"
       ];
       repo = "borg@mjolnir:/var/lib/borg/sorserver";
     };
@@ -108,6 +133,14 @@ in
         proxy_send_timeout   600s;
         send_timeout         600s;
       '';
+    };
+  };
+
+  services.nginx.virtualHosts."scrypted.${domain}" = ssl // {
+    locations."/" = {
+      proxyPass = "https://127.0.0.1:10443";
+      proxyWebsockets = true;
+      recommendedProxySettings = true;
     };
   };
 
