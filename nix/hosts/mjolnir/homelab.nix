@@ -22,6 +22,8 @@ let
 
   vpnPeerPublicKey = "4zxWLHGjsKHn0Pw88uHTo78SULgbVMHpyKMqJFEpCHg=";
   vpnAddress = "10.5.0.2/32";
+  vpnEndpointPort = 51820;
+  vpnRecommendationsUrl = "https://api.nordvpn.com/v1/servers/recommendations?limit=10&filters%5Bservers_technologies%5D%5Bidentifier%5D=wireguard_udp";
 
   vpnDnsServers = [
     "103.86.96.100"
@@ -35,6 +37,7 @@ let
     "vpn-namespace.service"
     "wireguard-${vpnWireGuardInterface}.service"
     "wireguard-${vpnWireGuardInterface}-peer-${vpnPeerName}.service"
+    "vpn-ready.service"
   ];
 in
 {
@@ -343,42 +346,8 @@ in
         echo "nordvpn_wireguard_private_key must contain only the raw base64 private key" >&2
         exit 1
       fi
-
-      nordvpnEndpoint=$(< ${config.sops.secrets.nordvpn_wireguard_endpoint.path})
-      case "$nordvpnEndpoint" in
-        *:*) ;;
-        *)
-          echo "nordvpn_wireguard_endpoint must look like hostname:port or ip:port" >&2
-          exit 1
-          ;;
-      esac
     '';
     postSetup = ''
-      nordvpnEndpoint=$(< ${config.sops.secrets.nordvpn_wireguard_endpoint.path})
-      nordvpnHost=''${nordvpnEndpoint%:*}
-      nordvpnPort=''${nordvpnEndpoint##*:}
-
-      case "$nordvpnPort" in
-        ""|*[!0-9]*)
-          echo "nordvpn_wireguard_endpoint must end with a numeric port" >&2
-          exit 1
-          ;;
-      esac
-
-      case "$nordvpnHost" in
-        *[!0-9.]*)
-          nordvpnHostIp=$(getent ahostsv4 "$nordvpnHost" | awk 'NR == 1 { print $1; exit }')
-          if [ -z "$nordvpnHostIp" ]; then
-            echo "failed to resolve NordVPN endpoint host: $nordvpnHost" >&2
-            exit 1
-          fi
-          ;;
-        *)
-          nordvpnHostIp="$nordvpnHost"
-          ;;
-      esac
-
-      ip netns exec ${vpnNamespace} wg set ${vpnWireGuardInterface} peer "${vpnPeerPublicKey}" endpoint "$nordvpnHostIp:$nordvpnPort"
       ip netns exec ${vpnNamespace} ip -4 route replace default dev ${vpnWireGuardInterface}
     '';
     peers = [
@@ -398,11 +367,86 @@ in
     after = [ "vpn-namespace.service" ];
     bindsTo = [ "vpn-namespace.service" ];
     requires = [ "vpn-namespace.service" ];
+  };
+
+  systemd.services.vpn-ready = {
+    description = "Select a NordVPN endpoint and verify the VPN tunnel";
+    wants = [ "network-online.target" ];
+    after = [
+      "network-online.target"
+      "vpn-namespace.service"
+      "wireguard-${vpnWireGuardInterface}.service"
+      "wireguard-${vpnWireGuardInterface}-peer-${vpnPeerName}.service"
+    ];
+    bindsTo = [
+      "vpn-namespace.service"
+      "wireguard-${vpnWireGuardInterface}.service"
+      "wireguard-${vpnWireGuardInterface}-peer-${vpnPeerName}.service"
+    ];
+    requires = [
+      "vpn-namespace.service"
+      "wireguard-${vpnWireGuardInterface}.service"
+      "wireguard-${vpnWireGuardInterface}-peer-${vpnPeerName}.service"
+    ];
     path = [
+      pkgs.curl
       pkgs.gawk
-      pkgs.getent
+      pkgs.iproute2
+      pkgs.iputils
+      pkgs.jq
       pkgs.wireguard-tools
     ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      if ! nordvpnEndpoint=$(
+        curl --fail --silent --show-error \
+          --connect-timeout 10 \
+          --max-time 30 \
+          --retry 3 \
+          --retry-all-errors \
+          '${vpnRecommendationsUrl}' \
+          | jq --exit-status --raw-output --arg publicKey '${vpnPeerPublicKey}' '
+              [
+                .[]
+                | select(.status == "online")
+                | . as $server
+                | .technologies[]?
+                | select(.identifier == "wireguard_udp" and .pivot.status == "online")
+                | select(any(.metadata[]?; .name == "public_key" and .value == $publicKey))
+                | $server.station
+                | select(type == "string" and test("^[0-9]+(\\.[0-9]+){3}$"))
+              ][0] // empty
+            '
+      ); then
+        echo "failed to select an online NordVPN WireGuard endpoint" >&2
+        exit 1
+      fi
+
+      ip netns exec ${vpnNamespace} wg set ${vpnWireGuardInterface} \
+        peer '${vpnPeerPublicKey}' endpoint "$nordvpnEndpoint:${toString vpnEndpointPort}"
+
+      for _ in {1..30}; do
+        ip netns exec ${vpnNamespace} ping -c 1 -W 1 ${builtins.head vpnDnsServers} >/dev/null 2>&1 || true
+        latestHandshake=$(
+          ip netns exec ${vpnNamespace} wg show ${vpnWireGuardInterface} latest-handshakes \
+            | awk -v publicKey='${vpnPeerPublicKey}' '$1 == publicKey { print $2 }'
+        )
+        now=$(date +%s)
+
+        if [[ "$latestHandshake" =~ ^[0-9]+$ ]] && (( latestHandshake > 0 && now - latestHandshake <= 30 )); then
+          echo "NordVPN tunnel established through $nordvpnEndpoint"
+          exit 0
+        fi
+
+        sleep 1
+      done
+
+      echo "NordVPN endpoint $nordvpnEndpoint did not complete a WireGuard handshake" >&2
+      exit 1
+    '';
   };
 
   services.deluge = {

@@ -46,7 +46,6 @@ in
         mode = "0400";
       };
       nordvpn_wireguard_private_key = { };
-      nordvpn_wireguard_endpoint = { };
       unbound_gua_prefix = { };
       unbound_mjolnir_gua = { };
       unbound_opnsense_gua = { };
