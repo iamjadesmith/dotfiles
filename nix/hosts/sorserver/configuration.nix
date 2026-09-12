@@ -122,7 +122,10 @@ in
 
   networking.wg-quick.interfaces = {
     wg0 = {
-      address = [ "10.10.10.8/32" ];
+      address = [
+        "10.10.10.8/32"
+        "fd3a:3dab:51b8:100::8/128"
+      ];
       privateKeyFile = config.sops.secrets.wireguard_private_key.path;
       postUp = ''
         wg set wg0 peer NfwRlI/IFxEfmK6VmtemBYEUpLJ0wF07wpmdz598jGs= endpoint "$(cat ${config.sops.secrets.wireguard_endpoint.path})"
@@ -134,6 +137,9 @@ in
             "10.10.10.0/24"
             "10.3.0.0/24"
             "10.26.27.0/24"
+            "10.0.25.0/24"
+            "10.10.3.0/24"
+            "fd3a:3dab:51b8::/48"
           ];
           persistentKeepalive = 25;
         }
