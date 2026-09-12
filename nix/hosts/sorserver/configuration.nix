@@ -23,6 +23,10 @@ in
       wireguard_private_key = { };
       wireguard_endpoint = { };
       nextcloud_admin_pass = { };
+      cloudflared_token = {
+        mode = "0400";
+        restartUnits = [ "docker-cloudflared.service" ];
+      };
     };
   };
 
@@ -38,6 +42,28 @@ in
   dotfiles.docker = {
     enable = true;
     storageDriver = "btrfs";
+  };
+
+  virtualisation.oci-containers = {
+    backend = "docker";
+    containers.cloudflared = {
+      image = "cloudflare/cloudflared:latest";
+      autoStart = true;
+      user = "0:0";
+      volumes = [
+        "${config.sops.secrets.cloudflared_token.path}:/run/secrets/cloudflared_token:ro"
+      ];
+      cmd = [
+        "tunnel"
+        "run"
+        "--token-file"
+        "/run/secrets/cloudflared_token"
+      ];
+      capabilities.ALL = false;
+      extraOptions = [
+        "--security-opt=no-new-privileges"
+      ];
+    };
   };
 
   dotfiles.borg = {
@@ -71,8 +97,6 @@ in
   };
 
   boot.kernelParams = [
-    "intel_iommu=on"
-    "iommu=pt"
     "module_blacklist=nouveau"
     "tpm_tis.interrupts=0"
     "reboot=pci"
