@@ -56,7 +56,7 @@ let
   # Wedding revisions require explicit review and deployment; the generic updater must not advance it.
   weddingSource = builtins.fetchTree {
     type = "git";
-    url = "https://git.joejad.com/jade/wedding-rsvp.git";
+    url = "http://joejadserver.joejad.lan:3000/jade/wedding-rsvp.git";
     rev = "2e7e9c43464a3e06e465c241e86622b2003bcc38";
     narHash = "sha256-4dg9lrHgxfxmwljQaq2bU4zPHpA5yWjJ5M/fmTLi6Ag=";
   };
