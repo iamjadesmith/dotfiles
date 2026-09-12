@@ -61,6 +61,14 @@ in
         restartUnits = [ "opencode-web.service" ];
       };
       searx_secret_key = { };
+      wedding_preview_form_signing_key = { };
+      wedding_preview_admin_password_hash = { };
+      wedding_preview_admin_session_key = { };
+      wedding_preview_backup_authentication_key = {
+        owner = "wedding-preview";
+        group = "wedding-preview";
+        mode = "0400";
+      };
     };
   };
 
@@ -93,6 +101,38 @@ in
       "searx-init.service"
       "uwsgi.service"
     ];
+  };
+
+  sops.templates."wedding-preview.env" = {
+    content = ''
+      WEDDING_ADMIN_USERNAME=jade
+      WEDDING_ADMIN_PASSWORD_HASH='${config.sops.placeholder.wedding_preview_admin_password_hash}'
+      WEDDING_FORM_SIGNING_KEY='${config.sops.placeholder.wedding_preview_form_signing_key}'
+      WEDDING_ADMIN_SESSION_KEY='${config.sops.placeholder.wedding_preview_admin_session_key}'
+    '';
+    owner = "wedding-preview";
+    group = "wedding-preview";
+    mode = "0400";
+    restartUnits = [ "wedding-preview.service" ];
+  };
+
+  sops.templates."wedding-preview-network.conf" = {
+    content = ''
+      allow ${config.sops.placeholder.unbound_gua_prefix};
+    '';
+    owner = "nginx";
+    group = "nginx";
+    mode = "0400";
+    restartUnits = [ "nginx.service" ];
+  };
+
+  systemd.services.wedding-preview.serviceConfig.InaccessiblePaths = [
+    config.sops.secrets.wedding_preview_backup_authentication_key.path
+  ];
+
+  systemd.services.borgbackup-job-wedding-preview = {
+    requires = [ "postgresql.service" ];
+    after = [ "postgresql.service" ];
   };
 
   dotfiles.jade = {
@@ -141,6 +181,21 @@ in
       '';
       postHook = ''
         systemctl start couchdb.service podman-livesync-cli.service
+      '';
+    };
+    jobs.wedding-preview = {
+      paths = [
+        "/var/lib/db_backups/postgres/wedding-preview.sql.gz"
+        "/var/lib/wedding-preview/backups"
+        "/var/lib/wedding-preview/exports"
+        "/var/lib/wedding-preview/releases"
+      ];
+      repo = "borg@sorserver:/var/lib/borg/mjolnir";
+      startAt = "*-*-* 03:15:00";
+      persistentTimer = true;
+      keepWeekly = 7;
+      preHook = ''
+        ${pkgs.systemd}/bin/systemctl start postgresqlBackup-wedding-preview.service
       '';
     };
   };

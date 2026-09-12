@@ -20,6 +20,7 @@ let
         repo
         compression
         startAt
+        persistentTimer
         ;
       encryption = {
         mode = "repokey-blake2";
@@ -74,6 +75,12 @@ in
               type = lib.types.int;
               default = 7;
               description = "Number of weekly backups to keep.";
+            };
+
+            persistentTimer = lib.mkOption {
+              type = lib.types.bool;
+              default = false;
+              description = "Run the backup after boot when its scheduled time was missed.";
             };
 
             preHook = lib.mkOption {

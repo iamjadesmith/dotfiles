@@ -52,6 +52,37 @@ let
     workoutRust = mkApp sources.workoutRust { };
     stock = mkApp sources.stock { };
   };
+
+  # Wedding revisions require explicit review and deployment; the generic updater must not advance it.
+  weddingSource = builtins.fetchTree {
+    type = "git";
+    url = "https://git.joejad.com/jade/wedding-rsvp.git";
+    rev = "2e7e9c43464a3e06e465c241e86622b2003bcc38";
+    narHash = "sha256-4dg9lrHgxfxmwljQaq2bU4zPHpA5yWjJ5M/fmTLi6Ag=";
+  };
+  weddingCargoToml = builtins.fromTOML (builtins.readFile "${weddingSource}/Cargo.toml");
+  weddingPackage = pkgs.rustPlatform.buildRustPackage {
+    inherit (weddingCargoToml.package) version;
+    pname = weddingCargoToml.package.name;
+    src = weddingSource;
+    cargoLock.lockFile = "${weddingSource}/Cargo.lock";
+    doCheck = false;
+    nativeBuildInputs = [
+      pkgs.cmake
+      pkgs.makeWrapper
+      pkgs.pkg-config
+    ];
+    SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+    postInstall = ''
+      wrapProgram "$out/bin/wedding" \
+        --set-default SSL_CERT_FILE "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+    '';
+    meta.mainProgram = "wedding";
+  };
+  weddingModule = import "${weddingSource}/nix/module.nix" {
+    self.packages.${system}.default = weddingPackage;
+    source = weddingSource;
+  };
 in
 {
   imports = [
@@ -62,6 +93,7 @@ in
     apps.running.module
     apps.workoutRust.module
     apps.stock.module
+    weddingModule
   ];
 
   sops.secrets = {
@@ -106,6 +138,18 @@ in
     environmentFiles = [ config.sops.secrets.stock_env.path ];
   };
 
+  services.wedding-rsvp = {
+    enable = true;
+    package = weddingPackage;
+    environmentFile = config.sops.templates."wedding-preview.env".path;
+    databaseIdentity = "183ddd3c-3741-493b-ba69-dde20e55e1c4";
+  };
+
+  services.nginx.appendHttpConfig = ''
+    limit_req_zone $binary_remote_addr zone=wedding_preview_public:10m rate=10r/s;
+    limit_req_zone $binary_remote_addr zone=wedding_preview_admin:10m rate=5r/s;
+  '';
+
   services.nginx.virtualHosts = {
     "budget.${domain}" = ssl // {
       locations."/".proxyPass = "http://127.0.0.1:8080";
@@ -129,6 +173,54 @@ in
 
     "workout.${domain}" = ssl // {
       locations."/".proxyPass = "http://127.0.0.1:8086";
+    };
+
+    "wedding.${domain}" = ssl // {
+      forceSSL = false;
+      onlySSL = true;
+      extraConfig = ''
+        access_log off;
+        error_log /dev/null;
+        limit_req_status 429;
+        allow 10.3.0.0/24;
+        allow 10.10.10.0/24;
+        allow 10.26.27.0/24;
+        allow 10.47.59.0/24;
+        allow 100.64.0.0/10;
+        allow fd3a:3dab:51b8::/48;
+        include ${config.sops.templates."wedding-preview-network.conf".path};
+        deny all;
+      '';
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8090";
+        extraConfig = ''
+          limit_req zone=wedding_preview_public burst=20 nodelay;
+        '';
+      };
+    };
+
+    "wedding-admin.${domain}" = ssl // {
+      forceSSL = false;
+      onlySSL = true;
+      extraConfig = ''
+        access_log off;
+        error_log /dev/null;
+        limit_req_status 429;
+        allow 10.3.0.0/24;
+        allow 10.10.10.0/24;
+        allow 10.26.27.0/24;
+        allow 10.47.59.0/24;
+        allow 100.64.0.0/10;
+        allow fd3a:3dab:51b8::/48;
+        include ${config.sops.templates."wedding-preview-network.conf".path};
+        deny all;
+      '';
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8091";
+        extraConfig = ''
+          limit_req zone=wedding_preview_admin burst=10 nodelay;
+        '';
+      };
     };
   };
 }

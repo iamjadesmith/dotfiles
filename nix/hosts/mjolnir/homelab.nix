@@ -243,6 +243,11 @@ in
     enableTCPIP = false;
     authentication = lib.mkForce ''
       local all postgres peer map=postgres
+      local wedding-preview wedding-preview peer
+      local wedding_preview_restore_verify wedding-preview peer
+      local all wedding-preview reject
+      host all wedding-preview 127.0.0.1/32 reject
+      host all wedding-preview ::1/128 reject
       local all all peer
     '';
     ensureDatabases = [

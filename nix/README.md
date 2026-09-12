@@ -132,6 +132,32 @@ sudo journalctl -u podman-livesync-cli.service -f
 
 Stop `podman-livesync-cli.service` before any later one-off `sudo livesync-cli ...` command. One-off commands and the Borg job share a lock so that neither can copy or open the CLI database while the other is using it. CouchDB and the full CLI state are included in mjolnir's weekly Borg job; the job stops both services for a consistent cold backup and starts them afterward. Synchronisation is not a substitute for a tested backup restore.
 
+## Wedding Private Preview On Mjolnir
+
+Mjolnir explicitly pins the reviewed `wedding-rsvp` Forgejo revision over HTTPS and runs its
+project-owned NixOS module. The wedding pin is deliberately excluded from the generic source updater;
+promote it only after application and deployment verification. The synthetic
+guest preview is `https://wedding.joejad.com`; its separate admin origin is
+`https://wedding-admin.joejad.com`. Both nginx virtual hosts use local Unbound records, allow only the
+configured LAN, VPN, Tailscale, ULA, and home GUA source ranges, disable request logging, and have
+per-client request limits. They must remain absent from public DNS and every Cloudflare Tunnel
+configuration.
+
+The service uses local peer-authenticated PostgreSQL and the immutable database identity
+`183ddd3c-3741-493b-ba69-dde20e55e1c4`. SOPS renders the service environment from
+`wedding_preview_form_signing_key`, `wedding_preview_admin_password_hash`, and
+`wedding_preview_admin_session_key`. The separate `wedding_preview_backup_authentication_key` file is
+available to explicit backup/recovery commands but is not passed to or readable inside the web unit.
+
+Activation creates only the empty database and service wiring. Follow the pinned application's
+`docs/private-preview.md` runbook to migrate, initialize the exact identity, import synthetic fixtures,
+synchronize RSVP definitions, and explicitly create preview credentials. Nightly PostgreSQL dumps land
+under `/var/lib/db_backups/postgres`; the persistent daily `borgbackup-job-wedding-preview` job first
+requires a fresh successful PostgreSQL dump, then sends it and the private wedding artifact directories
+to the existing off-host mjolnir Borg repository. Use only
+the fixed `wedding_preview_restore_verify` database for same-cluster application backup verification;
+the PostgreSQL HBA rejects the service role from every other database.
+
 ## Custom Modules
 
 The `modules/dotfiles/` directory contains small modules that remove repeated NixOS host boilerplate.
