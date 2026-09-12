@@ -231,7 +231,7 @@ in
     useRoutingFeatures = "server";
     extraSetFlags = [
       "--accept-dns=false"
-      "--advertise-routes=10.3.0.1/32,10.3.0.2/32"
+      "--advertise-routes=10.3.0.0/24,10.10.10.0/24,10.26.27.0/24,10.0.25.0/24,10.10.3.0/24,fd3a:3dab:51b8::/48"
     ];
   };
 

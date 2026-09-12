@@ -1,12 +1,29 @@
 {
   pkgs,
   config,
-  lib,
   ...
 }:
 
 let
   domain = "sorenson-fam.com";
+  lanInterface = "enp5s0";
+  ulaSitePrefix = "fd6e:61d0:82c";
+  staticUlaIp = "${ulaSitePrefix}:3d10::3";
+  staticUlaAddress = "${staticUlaIp}/64";
+  addStaticUla = ''
+    ${pkgs.iproute2}/bin/ip -6 addr replace "${staticUlaAddress}" dev "${lanInterface}"
+  '';
+  staticUlaDispatcher = pkgs.writeShellScript "sorserver-static-ula" ''
+    if [[ "$1" != "${lanInterface}" ]]; then
+      exit 0
+    fi
+
+    case "$2" in
+      up|dhcp6-change)
+        ${addStaticUla}
+        ;;
+    esac
+  '';
   ssl = {
     useACMEHost = domain;
     forceSSL = true;
@@ -20,8 +37,6 @@ in
   dotfiles.sops = {
     enable = true;
     secrets = {
-      wireguard_private_key = { };
-      wireguard_endpoint = { };
       nextcloud_admin_pass = { };
       cloudflared_token = {
         mode = "0400";
@@ -106,13 +121,23 @@ in
 
   hardware.enableRedistributableFirmware = true;
 
-  networking.networkmanager.dns = "systemd-resolved";
-  networking.resolvconf.enable = true;
-  networking.resolvconf.useLocalResolver = true;
   networking.search = [ "joejad.lan" ];
-  networking.nameservers = [
-    "127.0.0.1"
+  networking.nameservers = [ "127.0.0.1" ];
+  networking.networkmanager.dispatcherScripts = [
+    {
+      source = staticUlaDispatcher;
+      type = "basic";
+    }
   ];
+
+  systemd.services.static-ula-address = {
+    description = "Add static ULA address to ${lanInterface}";
+    wantedBy = [ "multi-user.target" ];
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    serviceConfig.Type = "oneshot";
+    script = addStaticUla;
+  };
 
   environment.systemPackages = with pkgs; [
     ethtool
@@ -128,9 +153,14 @@ in
     ];
   };
 
-  services.tailscale.enable = true;
-  services.tailscale.useRoutingFeatures = "both";
-  services.tailscale.extraUpFlags = [ "--accept-dns=false" ];
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "both";
+    extraSetFlags = [
+      "--accept-dns=false"
+      "--accept-routes=true"
+    ];
+  };
   networking.firewall.checkReversePath = "loose";
   services = {
     networkd-dispatcher = {
@@ -144,55 +174,36 @@ in
     };
   };
 
-  networking.wg-quick.interfaces = {
-    wg0 = {
-      address = [
-        "10.10.10.8/32"
-        "fd3a:3dab:51b8:100::8/128"
-      ];
-      privateKeyFile = config.sops.secrets.wireguard_private_key.path;
-      postUp = ''
-        wg set wg0 peer NfwRlI/IFxEfmK6VmtemBYEUpLJ0wF07wpmdz598jGs= endpoint "$(cat ${config.sops.secrets.wireguard_endpoint.path})"
-      '';
-      peers = [
-        {
-          publicKey = "NfwRlI/IFxEfmK6VmtemBYEUpLJ0wF07wpmdz598jGs=";
-          allowedIPs = [
-            "10.10.10.0/24"
-            "10.3.0.0/24"
-            "10.26.27.0/24"
-            "10.0.25.0/24"
-            "10.10.3.0/24"
-            "fd3a:3dab:51b8::/48"
-          ];
-          persistentKeepalive = 25;
-        }
-      ];
-    };
-  };
-
   services.unbound = {
     enable = true;
     settings = {
       server = {
-        interface = [ "0.0.0.0" ];
+        interface = [
+          "0.0.0.0"
+          "::0"
+        ];
+        do-ip6 = true;
         access-control = [
           "127.0.0.1/32 allow"
+          "::1/128 allow"
+          "${ulaSitePrefix}::/48 allow"
+          "fd7a:115c:a1e0::/48 allow"
           "192.168.86.0/24 allow"
+          "100.64.0.0/10 allow"
         ];
         private-domain = [ "joejad.lan" ];
         domain-insecure = [ "joejad.lan" ];
         local-zone = "\"sorenson-fam.com.\" redirect";
         local-data = [
           "\"sorenson-fam.com. IN A 192.168.86.3\""
-          "\"sorenson-fam.com. IN AAAA ::ffff:192.168.86.3\""
+          "\"sorenson-fam.com. IN AAAA ${staticUlaIp}\""
         ];
       };
       forward-zone = [
         {
           name = "joejad.lan.";
           forward-addr = [
-            "10.10.10.1"
+            "100.75.221.122"
           ];
         }
         {
@@ -200,7 +211,9 @@ in
           forward-tls-upstream = "yes";
           forward-addr = [
             "1.1.1.1@853#cloudflare-dns.com"
+            "2606:4700:4700::1111@853#cloudflare-dns.com"
             "8.8.8.8@853#dns.google.com"
+            "2001:4860:4860::8888@853#dns.google.com"
           ];
         }
       ];
