@@ -12,13 +12,17 @@ let
   addStaticUla = ''
     ${pkgs.iproute2}/bin/ip -6 addr replace "${staticUlaAddress}" dev "${lanInterface}"
   '';
-  staticUlaDispatcher = pkgs.writeShellScript "joejadserver-static-ula" ''
+  networkDispatcher = pkgs.writeShellScript "joejadserver-network-dispatcher" ''
     if [[ "$1" != "${lanInterface}" ]]; then
       exit 0
     fi
 
     case "$2" in
-      up|dhcp6-change)
+      up)
+        ${addStaticUla}
+        ${pkgs.ethtool}/bin/ethtool -K "${lanInterface}" rx-udp-gro-forwarding on rx-gro-list off
+        ;;
+      dhcp6-change)
         ${addStaticUla}
         ;;
     esac
@@ -101,7 +105,6 @@ in
   environment.systemPackages = with pkgs; [
     bind
     ethtool
-    networkd-dispatcher
   ];
 
   services.tailscale.enable = true;
@@ -109,7 +112,7 @@ in
   networking.firewall.checkReversePath = "loose";
   networking.networkmanager.dispatcherScripts = [
     {
-      source = staticUlaDispatcher;
+      source = networkDispatcher;
       type = "basic";
     }
   ];
@@ -121,17 +124,5 @@ in
     serviceConfig.Type = "oneshot";
     script = addStaticUla;
   };
-  services = {
-    networkd-dispatcher = {
-      enable = true;
-      rules."50-tailscale" = {
-        onState = [ "routable" ];
-        script = ''
-          ethtool -K ens18 rx-udp-gro-forwarding on rx-gro-list off
-        '';
-      };
-    };
-  };
-
   system.stateVersion = "23.11";
 }
