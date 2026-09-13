@@ -134,9 +134,10 @@ Stop `podman-livesync-cli.service` before any later one-off `sudo livesync-cli .
 
 ## Wedding Private Preview On Mjolnir
 
-Mjolnir explicitly pins the reviewed `wedding-rsvp` Forgejo revision over HTTPS and runs its
-project-owned NixOS module. The wedding pin is deliberately excluded from the generic source updater;
-promote it only after application and deployment verification. The synthetic
+Mjolnir fetches an explicitly reviewed `wedding-rsvp` revision from internal Forgejo and runs its
+project-owned NixOS module. Independently obtain the matching NAR hash through the public HTTPS Forgejo
+origin. The wedding pin is deliberately excluded from the generic source updater; promote it only after
+application and deployment verification. The synthetic
 guest preview is `https://wedding.joejad.com`; its separate admin origin is
 `https://wedding-admin.joejad.com`. Both nginx virtual hosts use local Unbound records, allow only the
 configured LAN, VPN, Tailscale, ULA, and home GUA source ranges, disable request logging, and have

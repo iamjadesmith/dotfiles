@@ -53,12 +53,12 @@ let
     stock = mkApp sources.stock { };
   };
 
-  # Wedding revisions require explicit review and deployment; the generic updater must not advance it.
+  # Verify wedding pins over public HTTPS; the generic updater must not advance this internal fetch.
   weddingSource = builtins.fetchTree {
     type = "git";
     url = "http://joejadserver.joejad.lan:3000/jade/wedding-rsvp.git";
-    rev = "2e7e9c43464a3e06e465c241e86622b2003bcc38";
-    narHash = "sha256-4dg9lrHgxfxmwljQaq2bU4zPHpA5yWjJ5M/fmTLi6Ag=";
+    rev = "5584f7538dff076aa44299e5f18161193fd1bcf5";
+    narHash = "sha256-zEsbvtiIlt3vPHGfotqBqaqG8ONjUZbcRwqDmezjRYI=";
   };
   weddingCargoToml = builtins.fromTOML (builtins.readFile "${weddingSource}/Cargo.toml");
   weddingPackage = pkgs.rustPlatform.buildRustPackage {
