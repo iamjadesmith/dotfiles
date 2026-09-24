@@ -26,9 +26,6 @@ in
       enableAlacritty = true;
       enableAlacrittyTheme = true;
       enableNeovim = false;
-      extraConfigFiles = {
-        aerospace = ".config/aerospace";
-      };
     })
   ];
 

@@ -22,6 +22,10 @@ in
 
   system.primaryUser = username;
 
+  security.sudo.extraConfig = ''
+    ${username} ALL = (ALL) NOPASSWD: ALL
+  '';
+
   users.users.jade = {
     name = username;
     home = "/Users/${username}";
@@ -42,7 +46,10 @@ in
       "tree-sitter-cli"
       "yt-dlp"
       "libpq"
-      "anomalyco/tap/opencode-v2"
+      {
+        name = "anomalyco/tap/opencode-v2";
+        conflicts_with = [ "opencode" ];
+      }
     ];
     casks = [
       "firefox"
@@ -68,6 +75,7 @@ in
       Tailscale = 1475387142;
     };
     onActivation.autoUpdate = true;
+    onActivation.cleanup = "uninstall";
     onActivation.upgrade = true;
   };
 

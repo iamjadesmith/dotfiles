@@ -237,4 +237,4 @@ sudo darwin-rebuild switch --flake ~/.dotfiles/nix#mini
 sudo darwin-rebuild switch --flake ~/.dotfiles/nix#joejadmbp
 ```
 
-Homebrew packages, casks, and App Store apps are managed by nix-darwin in `hosts/darwin/configuration.nix`.
+Homebrew packages, casks, and App Store apps are managed by nix-darwin in `hosts/darwin/configuration.nix`. Packages removed from this shared configuration are uninstalled from both Darwin hosts during activation.
