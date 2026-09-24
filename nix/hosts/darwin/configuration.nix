@@ -42,6 +42,7 @@ in
       "tree-sitter-cli"
       "yt-dlp"
       "libpq"
+      "anomalyco/tap/opencode-v2"
     ];
     casks = [
       "firefox"
@@ -59,6 +60,7 @@ in
     ];
     taps = [
       # "nikitabobko/tap"
+      "anomalyco/tap"
     ];
     masApps = {
       Wireguard = 1451685025;

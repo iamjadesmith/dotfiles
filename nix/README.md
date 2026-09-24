@@ -84,6 +84,12 @@ Darwin Homebrew packages live in `hosts/darwin/configuration.nix` under `homebre
 
 Prefer Nix packages for shared command-line tools when they build reliably on each platform. Prefer Homebrew for Darwin GUI apps or Darwin packages that are broken in the current Nix channel.
 
+### OpenCode V2
+
+OpenCode is installed independently of nixpkgs so it can follow upstream stable releases. NixOS installs the official V2 binary in `~jade/.opencode/bin` through `opencode-update.service`; `opencode-update.timer` checks daily. Run `sudo systemctl start opencode-update.service` to check immediately. The binary needs `programs.nix-ld` on NixOS. On mjolnir, updating it also restarts `opencode-web.service`, which runs V2's `serve` command and uses the existing SOPS-managed password.
+
+Darwin installs `anomalyco/tap/opencode-v2` through nix-darwin's Homebrew configuration. The Home Manager `opencode-upgrade` launchd agent checks for formula upgrades daily. Run `brew upgrade anomalyco/tap/opencode-v2` to check immediately. Restart any running OpenCode clients to use a newly installed binary. The global OpenCode configuration lives in `.config/opencode/opencode.json`; V2's migration guide is at <https://opencode.ai/v2/docs/migrate-v1/>.
+
 ## Self-hosted LiveSync On Mjolnir
 
 Mjolnir runs CouchDB natively and the official Self-hosted LiveSync CLI daemon in Podman. CouchDB listens only on `127.0.0.1:5984`; Nginx provides `https://livesync.joejad.com` to the configured LAN, WireGuard, Tailscale, and private IPv6 ranges. Requests forwarded by Cloudflare Tunnel are rejected.
@@ -168,6 +174,7 @@ The `modules/dotfiles/` directory contains small modules that remove repeated Ni
 - `jade.nix`: shared `jade` user setup with host-specific password and SSH key additions.
 - `docker.nix`: shared Docker defaults.
 - `borg.nix`: shared Borg user, SSH key generation, and backup job defaults.
+- `opencode.nix`: upstream V2 installer and daily stable-release updates for NixOS.
 
 Keep custom modules small and easy to understand. If a repeated pattern is only a few lines, prefer a local `let` binding in the host file instead of a new abstraction.
 

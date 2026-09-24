@@ -184,8 +184,8 @@ in
   systemd.services.opencode-web = {
     description = "OpenCode web interface";
     wantedBy = [ "multi-user.target" ];
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
+    requires = [ "opencode-update.service" ];
+    after = [ "opencode-update.service" ];
     environment = {
       HOME = "/home/jade";
       OPENCODE_SERVER_USERNAME = "opencode";
@@ -197,7 +197,7 @@ in
     };
     script = ''
       export OPENCODE_SERVER_PASSWORD="$(< ${config.sops.secrets.opencode_server_password.path})"
-      exec ${pkgs.opencode}/bin/opencode web --hostname 127.0.0.1 --port 4096
+      exec /home/jade/.opencode/bin/opencode serve --hostname 127.0.0.1 --port 4096
     '';
     serviceConfig = {
       User = "jade";
@@ -217,6 +217,7 @@ in
       BindReadOnlyPaths = [
         "/home/jade/.config/git"
         "/home/jade/.config/opencode"
+        "/home/jade/.opencode/bin"
       ];
       InaccessiblePaths = [
         "-/run/docker.sock"

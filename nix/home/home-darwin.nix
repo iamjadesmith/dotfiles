@@ -70,4 +70,17 @@ in
       StandardErrorPath = "/tmp/theme-mode-sync.err.log";
     };
   };
+
+  launchd.agents.opencode-upgrade = {
+    enable = true;
+    config = {
+      ProgramArguments = [
+        "/opt/homebrew/bin/brew"
+        "upgrade"
+        "anomalyco/tap/opencode-v2"
+      ];
+      RunAtLoad = true;
+      StartInterval = 86400;
+    };
+  };
 }

@@ -70,6 +70,7 @@
               ./modules/dotfiles/mdns.nix
               ./modules/dotfiles/server.nix
               ./modules/dotfiles/jade.nix
+              ./modules/dotfiles/opencode.nix
               ./modules/dotfiles/sops.nix
               ./modules/dotfiles/docker.nix
               ./modules/dotfiles/borg.nix
