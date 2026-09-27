@@ -12,6 +12,7 @@ let
     R
     age
     basedpyright
+    claude-code
     fd
     fluxcd
     git
