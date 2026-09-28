@@ -25,6 +25,11 @@ let
     "alacritty/themes/catppuccin-latte.toml" = ".config/alacritty/catppuccin-latte.toml";
   }
   // extraConfigFiles;
+  # Share opencode skills with Claude Code. Each skill is linked individually
+  # because ~/.claude/skills also holds Claude-managed directories.
+  sharedSkills = lib.attrNames (
+    lib.filterAttrs (_name: type: type == "directory") (builtins.readDir ../../.config/opencode/skills)
+  );
 in
 {
   home.username = user;
@@ -39,7 +44,12 @@ in
 
   home.packages = [ ];
 
-  home.file = { };
+  home.file = lib.listToAttrs (
+    map (name: {
+      name = ".claude/skills/${name}";
+      value.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/opencode/skills/${name}";
+    }) sharedSkills
+  );
 
   home.activation.initTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] (
     ''
