@@ -22,7 +22,7 @@ in
     settings = {
       global = {
         "server string" = "mjolnir";
-        "hosts allow" = "10.3.0. 10.10.10. 10.26.27. 100.64.0.0/10 127.0.0.1 ::1";
+        "hosts allow" = "10.3.0. 10.10.10. 10.4.25. 10.26.27. 100.64.0.0/10 127.0.0.1 ::1";
         "hosts deny" = "0.0.0.0/0";
         "map to guest" = "never";
         "load printers" = "no";
