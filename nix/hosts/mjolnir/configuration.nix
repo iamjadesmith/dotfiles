@@ -34,6 +34,7 @@ in
     ./external.nix
     ./livesync.nix
     ./personal.nix
+    ./scans.nix
   ];
 
   dotfiles.sops = {
