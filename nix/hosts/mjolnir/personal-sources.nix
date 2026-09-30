@@ -16,6 +16,6 @@ in
   golfRust = fetchApp "golf_rust" "72468d414fb551405127ac31164396a40b72e8c6" "sha256-13+l/7z1lk5Z/dL5ZE2IwTzYDfXOWvFprPZhS/94sFg=";
   receipt = fetchApp "receipt" "435a56e861a7b63fc949721952d18d060ad16b01" "sha256-fnemQWj6adXnP5kbwgRJgXJj81shPWn+cOrMOHTMzg0=";
   running = fetchApp "running" "3ad7233939389a0f7aaf72b89d451c0db70e6236" "sha256-iPENz3DFH4KZsNPZWKad5/IJiSYRdp/kGra49v2cl7Y=";
-  workoutRust = fetchApp "workout_rust" "fd2b1ff1271085c436d5bd8d8f33d32bdfa61f8b" "sha256-OjhSXF8GuRoM9OV3duZlfZR5gBSrOywghd86MIwdE+I=";
+  workoutRust = fetchApp "workout_rust" "290f66ebd40e521f8899f4f6db211c8580b837e2" "sha256-XWb9EDB1i0QhNUrapwuc6aCAL/VoAZrx+6a5ZlivTVw=";
   stock = fetchApp "stock" "78af7f0fdf308b8bab5512928e63082ca8061edb" "sha256-optrcT9mFEJ4DGBflHk3qFyVsSnxAyF0mK6WnWIfXWk=";
 }

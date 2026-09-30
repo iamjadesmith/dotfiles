@@ -131,6 +131,8 @@ in
   services."workout-rust" = {
     enable = true;
     environmentFiles = [ config.sops.secrets.workout_env.path ];
+    # speaches generates this root-only file; loaded as a systemd credential.
+    dictationApiKeyFile = "/var/lib/speaches/api.env";
   };
 
   services.stock = {
@@ -172,6 +174,9 @@ in
     };
 
     "workout.${domain}" = ssl // {
+      extraConfig = ''
+        client_max_body_size 3M;
+      '';
       locations."/".proxyPass = "http://127.0.0.1:8086";
     };
 
