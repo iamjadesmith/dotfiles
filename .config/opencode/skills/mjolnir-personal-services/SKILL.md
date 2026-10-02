@@ -19,7 +19,7 @@ only", "do not deploy", or "do not commit" overrides that default.
 | `food_log` | `food_log` | `foodLog` | `food-log` | `https://food.joejad.com/` |
 | `golf_rust` | `golf_rust` | `golfRust` | `golf-rust` | `https://golf.joejad.com/ui` |
 | `receipt` | `receipt` | `receipt` | `receipt` | `https://receipt.joejad.com/` |
-| `running` | `running` | `running` | `running` | `https://run.joejad.com/` |
+| `running` | `running` | `running` | `running` | `https://run.joejad.com/health` |
 | `workout_rust` | `workout_rust` | `workoutRust` | `workout-rust` | `https://workout.joejad.com/` |
 | `stock` | `stock` | `stock` | `stock` | systemd only |
 
