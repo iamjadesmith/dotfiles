@@ -41,7 +41,12 @@
         SSH_PORT = lib.head config.services.openssh.ports;
         SSH_DOMAIN = "joejadserver.joejad.lan";
       };
-      service.DISABLE_REGISTRATION = false;
+      service.DISABLE_REGISTRATION = true;
+      # Pushing a new repo creates it; public so mjolnir can fetch source pins anonymously.
+      repository = {
+        ENABLE_PUSH_CREATE_USER = true;
+        DEFAULT_PUSH_CREATE_PRIVATE = false;
+      };
       mailer = {
         ENABLED = true;
         PROTOCOL = "smtp+starttls";
