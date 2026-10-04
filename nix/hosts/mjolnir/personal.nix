@@ -50,7 +50,9 @@ let
     };
     running = mkApp sources.running { };
     workoutRust = mkApp sources.workoutRust { };
+    tallyRust = mkApp sources.tallyRust { };
     stock = mkApp sources.stock { };
+    yahtzeeRust = mkApp sources.yahtzeeRust { };
   };
 
   # Verify wedding pins over public HTTPS; the generic updater must not advance this internal fetch.
@@ -92,7 +94,9 @@ in
     apps.receipt.module
     apps.running.module
     apps.workoutRust.module
+    apps.tallyRust.module
     apps.stock.module
+    apps.yahtzeeRust.module
     weddingModule
   ];
 
@@ -140,6 +144,10 @@ in
     environmentFiles = [ config.sops.secrets.stock_env.path ];
   };
 
+  services."tally-rust".enable = true;
+
+  services."yahtzee-rust".enable = true;
+
   services.wedding-rsvp = {
     enable = true;
     package = weddingPackage;
@@ -173,11 +181,19 @@ in
       locations."/".proxyPass = "http://127.0.0.1:8085";
     };
 
+    "tally.${domain}" = ssl // {
+      locations."/".proxyPass = "http://127.0.0.1:8088";
+    };
+
     "workout.${domain}" = ssl // {
       extraConfig = ''
         client_max_body_size 3M;
       '';
       locations."/".proxyPass = "http://127.0.0.1:8086";
+    };
+
+    "yahtzee.${domain}" = ssl // {
+      locations."/".proxyPass = "http://127.0.0.1:8087";
     };
 
     "wedding.${domain}" = ssl // {

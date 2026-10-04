@@ -273,7 +273,9 @@ in
       "freshrss"
       "golf"
       "receipt"
+      "tally"
       "workout"
+      "yahtzee"
       "nextcloud"
       "immich"
     ];
