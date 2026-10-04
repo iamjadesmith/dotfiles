@@ -172,6 +172,7 @@ in
         "/var/lib/deluge"
         "/var/lib/couchdb"
         "/var/lib/livesync-cli"
+        "/var/lib/private/meal-planner"
       ];
       repo = "borg@sorserver:/var/lib/borg/mjolnir";
       preHook = ''

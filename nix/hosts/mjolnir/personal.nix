@@ -53,6 +53,7 @@ let
     tallyRust = mkApp sources.tallyRust { };
     stock = mkApp sources.stock { };
     yahtzeeRust = mkApp sources.yahtzeeRust { };
+    mealPlanner = mkApp sources.mealPlanner { };
   };
 
   # Verify wedding pins over public HTTPS; the generic updater must not advance this internal fetch.
@@ -97,6 +98,7 @@ in
     apps.tallyRust.module
     apps.stock.module
     apps.yahtzeeRust.module
+    apps.mealPlanner.module
     weddingModule
   ];
 
@@ -148,6 +150,11 @@ in
 
   services."yahtzee-rust".enable = true;
 
+  services.meal-planner = {
+    enable = true;
+    recipeDir = "/home/jade/recipes";
+  };
+
   services.wedding-rsvp = {
     enable = true;
     package = weddingPackage;
@@ -190,6 +197,20 @@ in
         client_max_body_size 3M;
       '';
       locations."/".proxyPass = "http://127.0.0.1:8086";
+    };
+
+    # No auth in the app: LAN and Tailscale only.
+    "meals.${domain}" = ssl // {
+      extraConfig = ''
+        allow 10.3.0.0/24;
+        allow 10.10.10.0/24;
+        allow 10.26.27.0/24;
+        allow 10.47.59.0/24;
+        allow 100.64.0.0/10;
+        allow fd3a:3dab:51b8::/48;
+        deny all;
+      '';
+      locations."/".proxyPass = "http://127.0.0.1:8089";
     };
 
     "yahtzee.${domain}" = ssl // {

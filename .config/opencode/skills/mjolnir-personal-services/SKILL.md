@@ -1,6 +1,6 @@
 ---
 name: mjolnir-personal-services
-description: Use when changing, committing, releasing, or deploying the budget, food_log, golf_rust, receipt, running, tally_rust, workout_rust, yahtzee_rust, or stock personal services on mjolnir. Verifies and pushes application changes, updates the matching source pin in ~/.dotfiles, deploys mjolnir, verifies the service, and persists the dotfiles update.
+description: Use when changing, committing, releasing, or deploying the budget, food_log, golf_rust, meals, receipt, running, tally_rust, workout_rust, yahtzee_rust, or stock personal services on mjolnir. Verifies and pushes application changes, updates the matching source pin in ~/.dotfiles, deploys mjolnir, verifies the service, and persists the dotfiles update.
 ---
 
 # Mjolnir Personal Services
@@ -18,6 +18,7 @@ only", "do not deploy", or "do not commit" overrides that default.
 | `budget` | `budget` | `budget` | `budget` | `https://budget.joejad.com/` |
 | `food_log` | `food_log` | `foodLog` | `food-log` | `https://food.joejad.com/` |
 | `golf_rust` | `golf_rust` | `golfRust` | `golf-rust` | `https://golf.joejad.com/ui` |
+| `meals` | `meals` | `mealPlanner` | `meal-planner` | `https://meals.joejad.com/health` |
 | `receipt` | `receipt` | `receipt` | `receipt` | `https://receipt.joejad.com/` |
 | `running` | `running` | `running` | `running` | `https://run.joejad.com/health` |
 | `tally_rust` | `tally_rust` | `tallyRust` | `tally-rust` | `https://tally.joejad.com/health` |
