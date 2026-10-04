@@ -199,17 +199,7 @@ in
       locations."/".proxyPass = "http://127.0.0.1:8086";
     };
 
-    # No auth in the app: LAN and Tailscale only.
     "meals.${domain}" = ssl // {
-      extraConfig = ''
-        allow 10.3.0.0/24;
-        allow 10.10.10.0/24;
-        allow 10.26.27.0/24;
-        allow 10.47.59.0/24;
-        allow 100.64.0.0/10;
-        allow fd3a:3dab:51b8::/48;
-        deny all;
-      '';
       locations."/".proxyPass = "http://127.0.0.1:8089";
     };
 
