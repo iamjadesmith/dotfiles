@@ -20,5 +20,5 @@ in
   tallyRust = fetchApp "tally_rust" "b90dddacac19f76dae78e4c1dcc492b7faab2029" "sha256-5rwq1UZ1WQI5TC5GXqKKmeyAGcbIubnNcC+3C8+o3yM=";
   stock = fetchApp "stock" "78af7f0fdf308b8bab5512928e63082ca8061edb" "sha256-optrcT9mFEJ4DGBflHk3qFyVsSnxAyF0mK6WnWIfXWk=";
   yahtzeeRust = fetchApp "yahtzee_rust" "d43ac8c33220ead7b1c25d1373aea0845409dedb" "sha256-cW3Dv4ylsk/BDdcjq58yJV4hgXF5z+QgeosYCl4RTEw=";
-  mealPlanner = fetchApp "meals" "90982601e804dad2ae353a688f31ad78de03722c" "sha256-mwtXlx7Uvy52sU7jbWA/H3rF+dRDzmvaKDMUhXL7zPU=";
+  mealPlanner = fetchApp "meals" "3c918ed337fc8b0f2e545683243ee5e5902d642c" "sha256-NafawspisLxap//WswUGxURnIIk4Q9EF+CoowO1rWQo=";
 }
