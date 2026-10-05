@@ -13,6 +13,7 @@
     init.defaultBranch = "main";
     diff.tool = "nvim";
     difftool.nvim.cmd = "nvim -d \"$LOCAL\" \"$REMOTE\"";
+    difftool.prompt = false;
   };
   signing.format = "openpgp";
 }

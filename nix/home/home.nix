@@ -81,6 +81,7 @@ in
     fzf = import ./fzf.nix { inherit pkgs; };
     tmux = import ./tmux.nix { inherit pkgs; };
     git = import ./git.nix { inherit config pkgs; };
+    delta = import ./delta.nix;
     zoxide = import ./zoxide.nix { inherit pkgs; };
     starship.enable = true;
     yazi = import ./yazi.nix;
