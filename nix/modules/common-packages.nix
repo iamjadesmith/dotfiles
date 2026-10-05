@@ -13,6 +13,7 @@ let
     age
     basedpyright
     claude-code
+    codex
     fd
     fluxcd
     git
