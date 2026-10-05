@@ -25,8 +25,8 @@ let
     "alacritty/themes/catppuccin-latte.toml" = ".config/alacritty/catppuccin-latte.toml";
   }
   // extraConfigFiles;
-  # Share opencode skills with Claude Code. Each skill is linked individually
-  # because ~/.claude/skills also holds Claude-managed directories.
+  # Share OpenCode skills with Claude Code and Codex. Link each skill individually
+  # so both discovery directories can also hold independently installed skills.
   sharedSkills = lib.attrNames (
     lib.filterAttrs (_name: type: type == "directory") (builtins.readDir ../../.config/opencode/skills)
   );
@@ -45,10 +45,18 @@ in
   home.packages = [ ];
 
   home.file = lib.listToAttrs (
-    map (name: {
-      name = ".claude/skills/${name}";
-      value.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/opencode/skills/${name}";
-    }) sharedSkills
+    lib.concatMap
+      (
+        directory:
+        map (name: {
+          name = "${directory}/${name}";
+          value.source = mkOutOfStoreSymlink "${dotfilesDirectory}/.config/opencode/skills/${name}";
+        }) sharedSkills
+      )
+      [
+        ".claude/skills"
+        ".agents/skills"
+      ]
   );
 
   home.activation.initTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] (

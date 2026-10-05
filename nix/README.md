@@ -90,6 +90,10 @@ OpenCode is installed independently of nixpkgs so it can follow upstream stable 
 
 Darwin installs `anomalyco/tap/opencode-v2` through nix-darwin's Homebrew configuration. The Home Manager `opencode-upgrade` launchd agent checks for formula upgrades daily. Run `brew upgrade anomalyco/tap/opencode-v2` to check immediately. Restart any running OpenCode clients to use a newly installed binary. The global OpenCode configuration lives in `.config/opencode/opencode.json`; V2's migration guide is at <https://opencode.ai/v2/docs/migrate-v1/>.
 
+### Shared Agent Skills
+
+Keep shared skills in `.config/opencode/skills/<name>/SKILL.md`. Home Manager links each skill into `~/.claude/skills` for Claude Code and `~/.agents/skills` for Codex; OpenCode reads the source directory directly. Apply the system configuration after adding or removing skill directories. Edits to existing skills are available through the links without a rebuild. Restart Codex if a skill does not appear, and invoke it with `$<name>`.
+
 ## Self-hosted LiveSync On Mjolnir
 
 Mjolnir runs CouchDB natively and the official Self-hosted LiveSync CLI daemon in Podman. CouchDB listens only on `127.0.0.1:5984`; Nginx provides `https://livesync.joejad.com` to the configured LAN, WireGuard, Tailscale, and private IPv6 ranges. Requests forwarded by Cloudflare Tunnel are rejected.
