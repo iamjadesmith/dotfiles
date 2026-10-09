@@ -6,7 +6,7 @@ local apps = {
 	["5"] = "Mail",
 	["6"] = "Reminders",
 	["7"] = "Music",
-	["9"] = "ChatGPT",
+	["9"] = "Claude",
 }
 
 for key, app in pairs(apps) do
