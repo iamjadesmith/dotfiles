@@ -47,9 +47,8 @@ in
         mode = "0400";
       };
       nordvpn_wireguard_private_key = { };
+      # Home GUA prefix for the wedding allow lists; drop once OPNsense serves ULA-only AAAA records.
       unbound_gua_prefix = { };
-      unbound_mjolnir_gua = { };
-      unbound_opnsense_gua = { };
       vaultwarden_env = { };
       nextcloud_admin_pass = { };
       cloudflared_creds = { };
@@ -70,24 +69,6 @@ in
         mode = "0400";
       };
     };
-  };
-
-  sops.templates."unbound-private.conf" = {
-    content = ''
-      server:
-        access-control: ${config.sops.placeholder.unbound_gua_prefix} allow
-        local-data: "joejad.com. IN AAAA ${config.sops.placeholder.unbound_mjolnir_gua}"
-
-      forward-zone:
-        name: "joejad.lan."
-        forward-addr: 10.3.0.1
-        forward-addr: ${opnsenseUlaIp}
-        forward-addr: ${config.sops.placeholder.unbound_opnsense_gua}
-    '';
-    owner = "unbound";
-    group = "unbound";
-    mode = "0400";
-    restartUnits = [ "unbound.service" ];
   };
 
   sops.templates."searx.env" = {
@@ -205,11 +186,14 @@ in
     "interface-name:vpn0"
     "interface-name:vpn1"
   ];
-  networking.search = [
-    "taildfe4ce.ts.net"
-    "joejad.lan"
+  networking.search = [ "joejad.lan" ];
+  # OPNsense's Unbound serves the joejad.com and joejad.lan records for the whole network.
+  networking.nameservers = [
+    "10.3.0.1"
+    opnsenseUlaIp
   ];
-  networking.nameservers = [ "127.0.0.1" ];
+  networking.networkmanager.dns = "systemd-resolved";
+  services.resolved.enable = true;
   networking.firewall.checkReversePath = "loose";
   networking.networkmanager.dispatcherScripts = [
     {
@@ -304,65 +288,6 @@ in
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
-
-  services.unbound = {
-    enable = true;
-    checkconf = false;
-    settings = {
-      include-toplevel = "\"${config.sops.templates."unbound-private.conf".path}\"";
-      server = {
-        interface = [
-          "0.0.0.0"
-          "::0"
-        ];
-        do-ip6 = true;
-        access-control = [
-          "127.0.0.1/32 allow"
-          "::1/128 allow"
-          "${ulaSitePrefix}::/48 allow"
-          "10.3.0.0/24 allow"
-          "10.10.10.0/24 allow"
-          "10.26.27.0/24 allow"
-          "10.47.59.0/24 allow"
-          "100.64.0.0/10 allow"
-        ];
-        private-domain = [ "joejad.lan" ];
-        domain-insecure = [ "joejad.lan" ];
-        local-zone = "\"joejad.com.\" redirect";
-        local-data = [
-          "\"joejad.com. IN A 10.3.0.2\""
-          "\"joejad.com. IN AAAA ${staticUlaIp}\""
-        ];
-        module-config = "'respip validator iterator'";
-      };
-      forward-zone = [
-        {
-          name = "taildfe4ce.ts.net.";
-          forward-addr = [ "100.100.100.100" ];
-        }
-        {
-          name = ".";
-          forward-tls-upstream = "yes";
-          forward-addr = [
-            "1.1.1.1@853#cloudflare-dns.com"
-            "2606:4700:4700::1111@853#cloudflare-dns.com"
-            "8.8.8.8@853#dns.google.com"
-            "2001:4860:4860::8888@853#dns.google.com"
-          ];
-        }
-      ];
-      rpz = [
-        {
-          name = "hageziPro";
-          url = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/rpz/pro.txt";
-        }
-      ];
-    };
-  };
-
-  systemd.services.unbound.preStart = ''
-    ${config.services.unbound.package}/bin/unbound-checkconf /etc/unbound/unbound.conf
-  '';
 
   security.acme = {
     acceptTerms = true;

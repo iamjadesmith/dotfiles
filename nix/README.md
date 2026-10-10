@@ -149,7 +149,7 @@ project-owned NixOS module. Independently obtain the matching NAR hash through t
 origin. The wedding pin is deliberately excluded from the generic source updater; promote it only after
 application and deployment verification. The synthetic
 guest preview is `https://wedding.joejad.com`; its separate admin origin is
-`https://wedding-admin.joejad.com`. Both nginx virtual hosts use local Unbound records, allow only the
+`https://wedding-admin.joejad.com`. Both nginx virtual hosts use OPNsense Unbound records, allow only the
 configured LAN, VPN, Tailscale, ULA, and home GUA source ranges, disable request logging, and have
 per-client request limits. They must remain absent from public DNS and every Cloudflare Tunnel
 configuration.
