@@ -196,8 +196,21 @@ in
   networking.networkmanager.dns = "systemd-resolved";
   services.resolved = {
     enable = true;
-    settings.Resolve.LLMNR = false;
+    # Avahi already handles mDNS.
+    settings.Resolve = {
+      LLMNR = false;
+      MulticastDNS = false;
+    };
   };
+
+  # OPNsense never sees same-VLAN, Tailscale, or tunnel traffic to mjolnir, so
+  # keep app ports behind nginx. SSH, Samba, Avahi, Ollama, and Tailscale open
+  # their own ports through their modules.
+  dotfiles.server.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
   networking.firewall.checkReversePath = "loose";
   networking.networkmanager.dispatcherScripts = [
     {
@@ -221,6 +234,7 @@ in
 
   services.tailscale = {
     enable = true;
+    openFirewall = true;
     useRoutingFeatures = "server";
     extraSetFlags = [
       "--accept-dns=false"

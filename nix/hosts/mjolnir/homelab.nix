@@ -637,6 +637,8 @@ in
     enable = true;
     package = pkgs.ollama-cuda;
     host = "0.0.0.0";
+    # Neovim on the Macs uses mjolnir.joejad.lan:11434 directly.
+    openFirewall = true;
     environmentVariables.OLLAMA_KEEP_ALIVE = "30m";
     loadModels = [
       "llama3.1:8b"
