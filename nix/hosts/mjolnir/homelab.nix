@@ -249,6 +249,9 @@ in
     wantedBy = [ "multi-user.target" ];
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
+    # Sessions run inside this unit, so a rebuild must not restart it out from under
+    # a session that is deploying mjolnir. Changes apply on reboot or manual restart.
+    restartIfChanged = false;
     environment = {
       HOME = "/home/jade";
       PATH = lib.mkForce "/run/wrappers/bin:/etc/profiles/per-user/jade/bin:/run/current-system/sw/bin";
@@ -260,6 +263,10 @@ in
       ExecStart = "${pkgs.claude-code}/bin/claude remote-control --name dotfiles --permission-mode default";
       Restart = "always";
       RestartSec = "30s";
+      # Only stop the server on restart; spawned sessions reattach to the new one.
+      KillMode = "process";
+      # stdout is a status screen redrawn every second; errors still go to stderr.
+      StandardOutput = "null";
     };
   };
 
