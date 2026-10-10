@@ -241,6 +241,28 @@ in
     };
   };
 
+  # Always-on Claude Code Remote Control session in ~/.dotfiles, reachable from
+  # claude.ai/code and the mobile app. Unsandboxed on purpose: it is a normal dev
+  # session that needs the same access (sudo, nixos-rebuild) as an interactive shell.
+  systemd.services.claude-remote-control = {
+    description = "Claude Code Remote Control in ~/.dotfiles";
+    wantedBy = [ "multi-user.target" ];
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    environment = {
+      HOME = "/home/jade";
+      PATH = lib.mkForce "/run/wrappers/bin:/etc/profiles/per-user/jade/bin:/run/current-system/sw/bin";
+    };
+    serviceConfig = {
+      User = "jade";
+      Group = "users";
+      WorkingDirectory = "/home/jade/.dotfiles";
+      ExecStart = "${pkgs.claude-code}/bin/claude remote-control --name dotfiles --permission-mode default";
+      Restart = "always";
+      RestartSec = "30s";
+    };
+  };
+
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_18;
