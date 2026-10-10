@@ -52,7 +52,6 @@ in
       vaultwarden_env = { };
       nextcloud_admin_pass = { };
       cloudflared_creds = { };
-      syncthing_pass = { };
       opencode_server_password = {
         owner = "jade";
         group = "users";
@@ -142,7 +141,6 @@ in
         "/var/local/vaultwarden/backup"
         "/var/lib/freshrss"
         "/var/lib/uptime-kuma"
-        "/home/jade/.config/syncthing"
         "/var/lib/jellyfin"
         "/var/lib/prowlarr"
         "/var/lib/radarr/.config/Radarr"
@@ -186,7 +184,10 @@ in
     "interface-name:vpn0"
     "interface-name:vpn1"
   ];
-  networking.search = [ "joejad.lan" ];
+  networking.search = [
+    "joejad.lan"
+    "taildfe4ce.ts.net"
+  ];
   # OPNsense's Unbound serves the joejad.com and joejad.lan records for the whole network.
   networking.nameservers = [
     "10.3.0.1"
@@ -225,6 +226,14 @@ in
       "--accept-dns=false"
       "--advertise-routes=10.3.0.0/24,10.10.10.0/24,10.26.27.0/24,10.0.25.0/24,10.10.3.0/24,fd3a:3dab:51b8::/48"
     ];
+  };
+
+  # Tailscale DNS stays off so local names never depend on tailscaled. A resolved
+  # delegate sends only tailnet names to MagicDNS; tailscaled resets tailscale0's
+  # per-link DNS on every reconfig, so per-link settings would not stick.
+  services.resolved.dnsDelegates.tailnet.Delegate = {
+    DNS = "100.100.100.100";
+    Domains = "taildfe4ce.ts.net";
   };
 
   fileSystems."/mnt/data" = {

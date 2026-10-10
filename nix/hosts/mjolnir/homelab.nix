@@ -149,13 +149,6 @@ in
       };
     };
 
-    "sync.${domain}" = ssl // {
-      locations."/" = {
-        proxyPass = "http://[::1]:8384";
-        proxyWebsockets = true;
-      };
-    };
-
     "study.${domain}" = ssl // {
       root = "/var/lib/study-html/current";
       locations."/" = {
@@ -651,17 +644,4 @@ in
       "qwen2.5-coder:7b"
     ];
   };
-
-  services.syncthing = {
-    enable = true;
-    openDefaultPorts = true;
-    guiPasswordFile = config.sops.secrets.syncthing_pass.path;
-    settings.gui.user = "jade";
-    guiAddress = "0.0.0.0:8384";
-    user = "jade";
-    group = "users";
-    configDir = "/home/jade/.config/syncthing";
-  };
-  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
-
 }
