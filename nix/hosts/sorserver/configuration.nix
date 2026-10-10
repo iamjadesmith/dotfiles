@@ -228,7 +228,7 @@ in
         {
           name = "joejad.lan.";
           forward-addr = [
-            "100.75.221.122"
+            "10.3.0.1"
           ];
         }
         {
