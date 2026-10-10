@@ -256,6 +256,7 @@ in
         group = "nginx";
         domain = "*.sorenson-fam.com";
         extraDomainNames = [ "sorenson-fam.com" ];
+        dnsResolver = "1.1.1.1:53";
       };
     };
   };
