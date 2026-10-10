@@ -193,7 +193,10 @@ in
     opnsenseUlaIp
   ];
   networking.networkmanager.dns = "systemd-resolved";
-  services.resolved.enable = true;
+  services.resolved = {
+    enable = true;
+    settings.Resolve.LLMNR = false;
+  };
   networking.firewall.checkReversePath = "loose";
   networking.networkmanager.dispatcherScripts = [
     {
