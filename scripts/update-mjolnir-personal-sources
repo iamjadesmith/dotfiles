@@ -16,7 +16,10 @@ apps=(
   "receipt receipt"
   "running running"
   "workoutRust workout_rust"
+  "tallyRust tally_rust"
   "stock stock"
+  "yahtzeeRust yahtzee_rust"
+  "mealPlanner meals"
 )
 
 {
