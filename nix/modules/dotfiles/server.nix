@@ -48,6 +48,9 @@ in
             "nix-command"
             "flakes"
           ];
+          # Lets `nixos-rebuild --target-host` copy unsigned closures in. wheel
+          # already has passwordless sudo, so this grants nothing new.
+          settings.trusted-users = [ "@wheel" ];
         };
 
         nixpkgs = {
