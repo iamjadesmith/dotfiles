@@ -22,43 +22,43 @@
     # building mjolnir needs Forgejo; see nix/README.md if it is down.
     budget = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/budget.git?ref=main";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     foodLog = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/food_log.git?ref=main";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     golfRust = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/golf_rust.git?ref=main";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     mealPlanner = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/meals.git?ref=main";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     receipt = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/receipt.git?ref=main";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     running = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/running.git?ref=main";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     stock = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/stock.git?ref=main";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     tallyRust = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/tally_rust.git?ref=main";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     workoutRust = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/workout_rust.git?ref=main";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     yahtzeeRust = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/yahtzee_rust.git?ref=main";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

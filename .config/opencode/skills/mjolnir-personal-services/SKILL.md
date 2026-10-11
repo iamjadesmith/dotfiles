@@ -26,7 +26,7 @@ only", "do not deploy", or "do not commit" overrides that default.
 | `yahtzee_rust` | `yahtzee_rust` | `yahtzeeRust` | `yahtzee-rust` | `https://yahtzee.joejad.com/health` |
 | `stock` | `stock` | `stock` | `stock` | systemd only |
 
-Each app is a non-flake input in `~/.dotfiles/nix/flake.nix`, named by the
+Each app is a flake input in `~/.dotfiles/nix/flake.nix`, named by the
 Nix source attribute above and pinned in `~/.dotfiles/nix/flake.lock`. Forgejo
 repositories are under `http://joejadserver.joejad.lan:3000/jade` for Nix
 fetches and normally use an `origin` SSH remote for pushes.

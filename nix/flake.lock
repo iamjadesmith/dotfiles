@@ -37,7 +37,11 @@
       }
     },
     "budget": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
         "lastModified": 1782142562,
         "narHash": "sha256-bjMzdO4micdq38X+2Xb8raHAmSnLnnqEOGJ+RPShFFg=",
@@ -92,7 +96,11 @@
       }
     },
     "foodLog": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
         "lastModified": 1782142562,
         "narHash": "sha256-BS6M+ywpcSI/plXM15LzeE+C1pMIGqhyyuGTPfNrG0k=",
@@ -109,7 +117,11 @@
       }
     },
     "golfRust": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
         "lastModified": 1789741091,
         "narHash": "sha256-13+l/7z1lk5Z/dL5ZE2IwTzYDfXOWvFprPZhS/94sFg=",
@@ -146,7 +158,11 @@
       }
     },
     "mealPlanner": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
         "lastModified": 1791157798,
         "narHash": "sha256-NafawspisLxap//WswUGxURnIIk4Q9EF+CoowO1rWQo=",
@@ -230,7 +246,11 @@
       }
     },
     "receipt": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
         "lastModified": 1782142562,
         "narHash": "sha256-fnemQWj6adXnP5kbwgRJgXJj81shPWn+cOrMOHTMzg0=",
@@ -267,7 +287,11 @@
       }
     },
     "running": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
         "lastModified": 1790904962,
         "narHash": "sha256-AxDOtnsAPHN5zFUZDYImvTAE5Hk61XZuR5Ytj1v3p2s=",
@@ -304,7 +328,11 @@
       }
     },
     "stock": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
         "lastModified": 1780611618,
         "narHash": "sha256-optrcT9mFEJ4DGBflHk3qFyVsSnxAyF0mK6WnWIfXWk=",
@@ -321,7 +349,11 @@
       }
     },
     "tallyRust": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
         "lastModified": 1791042252,
         "narHash": "sha256-5rwq1UZ1WQI5TC5GXqKKmeyAGcbIubnNcC+3C8+o3yM=",
@@ -338,7 +370,11 @@
       }
     },
     "workoutRust": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
         "lastModified": 1790957673,
         "narHash": "sha256-48YhUM2vSqomXNCQKJeZtfMXRFaQSRNPTj+d5NRn9fA=",
@@ -355,7 +391,11 @@
       }
     },
     "yahtzeeRust": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
         "lastModified": 1791042252,
         "narHash": "sha256-cW3Dv4ylsk/BDdcjq58yJV4hgXF5z+QgeosYCl4RTEw=",

@@ -152,8 +152,9 @@ Stop `podman-livesync-cli.service` before any later one-off `sudo livesync-cli .
 ## Personal Apps On Mjolnir
 
 Mjolnir's personal apps (budget, food_log, golf_rust, meals, receipt, running, stock, tally_rust,
-workout_rust, yahtzee_rust) are non-flake inputs in `flake.nix` that track `main` on internal Forgejo,
-pinned in `flake.lock`. `hosts/mjolnir/personal.nix` builds each one and imports its `nix/module.nix`.
+workout_rust, yahtzee_rust) are flake inputs in `flake.nix` that track `main` on internal Forgejo,
+pinned in `flake.lock`, with `nixpkgs` following ours. `hosts/mjolnir/personal.nix` imports each
+app's `nixosModules.default`, which packages the app with its own flake definition.
 
 Update one app, or let the weekly `update-nix-inputs` timer update everything:
 
@@ -161,8 +162,8 @@ Update one app, or let the weekly `update-nix-inputs` timer update everything:
 nix flake update budget
 ```
 
-To add an app, add an input next to the others and a matching `mkApp` entry, module import, and service
-config in `personal.nix`.
+To add an app, add an input next to the others (with `inputs.nixpkgs.follows = "nixpkgs"`) and its module
+import and service config in `personal.nix`.
 
 Inputs are fetched lazily, so only building mjolnir needs Forgejo. If Forgejo is down (for example while
 reinstalling joejadserver before restoring `/var/lib/forgejo` from Borg), build from the local clones

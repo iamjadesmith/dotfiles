@@ -14,48 +14,6 @@ let
 
   system = pkgs.stdenv.hostPlatform.system;
 
-  mkApp =
-    src: extraBuildArgs:
-    let
-      cargoToml = builtins.fromTOML (builtins.readFile "${src}/Cargo.toml");
-      packageMeta = cargoToml.package;
-      package = pkgs.rustPlatform.buildRustPackage (
-        {
-          pname = packageMeta.name;
-          version = packageMeta.version;
-          inherit src;
-          cargoLock.lockFile = "${src}/Cargo.lock";
-          doCheck = false;
-
-          meta.mainProgram = packageMeta.name;
-        }
-        // extraBuildArgs
-      );
-      self = {
-        packages.${system}.default = package;
-      };
-    in
-    {
-      module = import "${src}/nix/module.nix" { inherit self; };
-      inherit package;
-    };
-
-  apps = {
-    budget = mkApp inputs.budget { };
-    foodLog = mkApp inputs.foodLog { };
-    golfRust = mkApp inputs.golfRust { };
-    receipt = mkApp inputs.receipt {
-      nativeBuildInputs = [ pkgs.pkg-config ];
-      buildInputs = [ pkgs.openssl ];
-    };
-    running = mkApp inputs.running { };
-    workoutRust = mkApp inputs.workoutRust { };
-    tallyRust = mkApp inputs.tallyRust { };
-    stock = mkApp inputs.stock { };
-    yahtzeeRust = mkApp inputs.yahtzeeRust { };
-    mealPlanner = mkApp inputs.mealPlanner { };
-  };
-
   # Not a flake input, so `nix flake update` cannot advance it; verify wedding pins over public HTTPS.
   weddingSource = builtins.fetchTree {
     type = "git";
@@ -89,16 +47,16 @@ let
 in
 {
   imports = [
-    apps.budget.module
-    apps.foodLog.module
-    apps.golfRust.module
-    apps.receipt.module
-    apps.running.module
-    apps.workoutRust.module
-    apps.tallyRust.module
-    apps.stock.module
-    apps.yahtzeeRust.module
-    apps.mealPlanner.module
+    inputs.budget.nixosModules.default
+    inputs.foodLog.nixosModules.default
+    inputs.golfRust.nixosModules.default
+    inputs.receipt.nixosModules.default
+    inputs.running.nixosModules.default
+    inputs.workoutRust.nixosModules.default
+    inputs.tallyRust.nixosModules.default
+    inputs.stock.nixosModules.default
+    inputs.yahtzeeRust.nixosModules.default
+    inputs.mealPlanner.nixosModules.default
     weddingModule
     ./recipes.nix
   ];
