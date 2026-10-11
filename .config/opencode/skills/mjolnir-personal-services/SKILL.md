@@ -26,13 +26,13 @@ only", "do not deploy", or "do not commit" overrides that default.
 | `yahtzee_rust` | `yahtzee_rust` | `yahtzeeRust` | `yahtzee-rust` | `https://yahtzee.joejad.com/health` |
 | `stock` | `stock` | `stock` | `stock` | systemd only |
 
-The source file is
-`~/.dotfiles/nix/hosts/mjolnir/personal-sources.nix`. Forgejo repositories are
-under `http://joejadserver.joejad.lan:3000/jade` for Nix fetches and normally
-use an `origin` SSH remote for pushes.
+Each app is a non-flake input in `~/.dotfiles/nix/flake.nix`, named by the
+Nix source attribute above and pinned in `~/.dotfiles/nix/flake.lock`. Forgejo
+repositories are under `http://joejadserver.joejad.lan:3000/jade` for Nix
+fetches and normally use an `origin` SSH remote for pushes.
 
-Do not use this workflow for `wedding-rsvp`. Its pin is deliberately excluded
-from the generic source updater and requires the reviewed promotion process in
+Do not use this workflow for `wedding-rsvp`. Its pin is a `fetchTree`, not a
+flake input, and requires the reviewed promotion process in
 `~/.dotfiles/nix/README.md`.
 
 ## 1. Identify And Verify The Application
@@ -62,22 +62,20 @@ The standing workflow preference above is authorization for these commit and
 push steps when the skill is triggered by a request that changes a scoped
 service. Never include unrelated work in the commit.
 
-## 3. Update Only The Matching Source Pin
+## 3. Update Only The Matching Flake Input
 
-From `~/.dotfiles`, prefetch the changed repository only:
+From `~/.dotfiles/nix`, update the changed app's input only:
 
 ```bash
-nix flake prefetch --refresh --json "git+http://joejadserver.joejad.lan:3000/jade/<repo>.git?ref=main"
+nix flake update <attribute>
 ```
 
-Use `.locked.rev` and `.hash` from the JSON. Confirm the fetched revision is
-the pushed application commit, then update only the mapped attribute in
-`nix/hosts/mjolnir/personal-sources.nix`.
+Confirm `git diff flake.lock` changes only that input and that its new `rev`
+is the pushed application commit.
 
-Do not run `scripts/update-mjolnir-personal-sources` for a single application;
-it refreshes every personal source and can introduce unrelated upgrades. Do
-not modify any other source pin unless the user explicitly requests a bulk
-update.
+Do not run a bare `nix flake update`; it refreshes every input and can
+introduce unrelated upgrades. Do not modify any other input unless the user
+explicitly requests a bulk update.
 
 Before deployment:
 
@@ -90,7 +88,7 @@ Before deployment:
 nix eval --raw .#nixosConfigurations.mjolnir.config.system.build.toplevel.drvPath
 ```
 
-Stop if the source revision or hash does not evaluate correctly.
+Stop if the input does not evaluate correctly.
 
 ## 4. Deploy And Verify
 
@@ -116,7 +114,7 @@ Only after deployment and health checks succeed:
 
 1. Reinspect `git status`, `git diff`, and `git log --oneline -10` in
    `~/.dotfiles`.
-2. Stage only `nix/hosts/mjolnir/personal-sources.nix`.
+2. Stage only `nix/flake.lock`.
 3. Commit with a concise message such as `Update <service> app source`.
 4. Push dotfiles `main` to its normal remote without force.
 5. Confirm both application and dotfiles worktrees contain no unintended

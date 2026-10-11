@@ -52,6 +52,13 @@ Switch a NixOS host:
 sudo nixos-rebuild switch --flake ~/.dotfiles/nix#mjolnir
 ```
 
+Deploy another server from mjolnir; it builds locally, copies the closure over SSH, and
+activates with sudo on the target (servers trust `@wheel` in the Nix daemon for this):
+
+```bash
+nixos-rebuild switch --flake .#joejadserver --target-host jade@joejadserver.joejad.lan --sudo
+```
+
 Switch a macOS host:
 
 ```bash
@@ -142,11 +149,39 @@ sudo journalctl -u podman-livesync-cli.service -f
 
 Stop `podman-livesync-cli.service` before any later one-off `sudo livesync-cli ...` command. One-off commands and the Borg job share a lock so that neither can copy or open the CLI database while the other is using it. CouchDB and the full CLI state are included in mjolnir's weekly Borg job; the job stops both services for a consistent cold backup and starts them afterward. Synchronisation is not a substitute for a tested backup restore.
 
+## Personal Apps On Mjolnir
+
+Mjolnir's personal apps (budget, food_log, golf_rust, meals, receipt, running, stock, tally_rust,
+workout_rust, yahtzee_rust) are non-flake inputs in `flake.nix` that track `main` on internal Forgejo,
+pinned in `flake.lock`. `hosts/mjolnir/personal.nix` builds each one and imports its `nix/module.nix`.
+
+Update one app, or let the weekly `update-nix-inputs` timer update everything:
+
+```bash
+nix flake update budget
+```
+
+To add an app, add an input next to the others and a matching `mkApp` entry, module import, and service
+config in `personal.nix`.
+
+Inputs are fetched lazily, so only building mjolnir needs Forgejo. If Forgejo is down (for example while
+reinstalling joejadserver before restoring `/var/lib/forgejo` from Borg), build from the local clones
+instead. The pins are by revision and NAR hash, so the result is identical as long as each clone has the
+locked commit:
+
+```bash
+sudo nixos-rebuild switch --flake ~/.dotfiles/nix#mjolnir \
+  --override-input budget git+file:///home/jade/projects/budget
+```
+
+Repeat `--override-input` for each app that is not already in the Nix store.
+
 ## Wedding Private Preview On Mjolnir
 
 Mjolnir fetches an explicitly reviewed `wedding-rsvp` revision from internal Forgejo and runs its
 project-owned NixOS module. Independently obtain the matching NAR hash through the public HTTPS Forgejo
-origin. The wedding pin is deliberately excluded from the generic source updater; promote it only after
+origin. The wedding pin is a `fetchTree` in `personal.nix` rather than a flake input, so `nix flake update`
+never advances it; promote it only after
 application and deployment verification. The synthetic
 guest preview is `https://wedding.joejad.com`; its separate admin origin is
 `https://wedding-admin.joejad.com`. Both nginx virtual hosts use OPNsense Unbound records, allow only the
@@ -173,7 +208,7 @@ the PostgreSQL HBA rejects the service role from every other database.
 
 The `modules/dotfiles/` directory contains small modules that remove repeated NixOS host boilerplate.
 
-- `server.nix`: shared server defaults such as bootloader, locale, SSH, Nix settings, and common system behavior.
+- `server.nix`: shared server defaults such as bootloader, locale, SSH, Nix settings, and common system behavior. `dotfiles.server.networkd.enable` swaps NetworkManager for systemd-networkd; each host still declares its own static `10-lan` network.
 - `mdns.nix`: shared Avahi hostname publication and `.local` resolution for NixOS hosts.
 - `jade.nix`: shared `jade` user setup with host-specific password and SSH key additions.
 - `docker.nix`: shared Docker defaults.

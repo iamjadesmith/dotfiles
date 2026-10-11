@@ -36,6 +36,23 @@
         "type": "github"
       }
     },
+    "budget": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782142562,
+        "narHash": "sha256-bjMzdO4micdq38X+2Xb8raHAmSnLnnqEOGJ+RPShFFg=",
+        "ref": "main",
+        "rev": "879ef776fec6ab61d63d5afae5589413b2950b51",
+        "revCount": 14,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/budget.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/budget.git"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -74,6 +91,40 @@
         "type": "github"
       }
     },
+    "foodLog": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782142562,
+        "narHash": "sha256-BS6M+ywpcSI/plXM15LzeE+C1pMIGqhyyuGTPfNrG0k=",
+        "ref": "main",
+        "rev": "af0b6e07177ebdab3e39074929bf69dc36667f3a",
+        "revCount": 17,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/food_log.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/food_log.git"
+      }
+    },
+    "golfRust": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789741091,
+        "narHash": "sha256-13+l/7z1lk5Z/dL5ZE2IwTzYDfXOWvFprPZhS/94sFg=",
+        "ref": "main",
+        "rev": "72468d414fb551405127ac31164396a40b72e8c6",
+        "revCount": 13,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/golf_rust.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/golf_rust.git"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -92,6 +143,23 @@
         "owner": "nix-community",
         "repo": "home-manager",
         "type": "github"
+      }
+    },
+    "mealPlanner": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791157798,
+        "narHash": "sha256-NafawspisLxap//WswUGxURnIIk4Q9EF+CoowO1rWQo=",
+        "ref": "main",
+        "rev": "3c918ed337fc8b0f2e545683243ee5e5902d642c",
+        "revCount": 3,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/meals.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/meals.git"
       }
     },
     "nix-darwin": {
@@ -161,14 +229,58 @@
         "type": "github"
       }
     },
+    "receipt": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782142562,
+        "narHash": "sha256-fnemQWj6adXnP5kbwgRJgXJj81shPWn+cOrMOHTMzg0=",
+        "ref": "main",
+        "rev": "435a56e861a7b63fc949721952d18d060ad16b01",
+        "revCount": 4,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/receipt.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/receipt.git"
+      }
+    },
     "root": {
       "inputs": {
         "alacritty-theme": "alacritty-theme",
+        "budget": "budget",
         "disko": "disko",
+        "foodLog": "foodLog",
+        "golfRust": "golfRust",
         "home-manager": "home-manager",
+        "mealPlanner": "mealPlanner",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs_2",
-        "sops-nix": "sops-nix"
+        "receipt": "receipt",
+        "running": "running",
+        "sops-nix": "sops-nix",
+        "stock": "stock",
+        "tallyRust": "tallyRust",
+        "workoutRust": "workoutRust",
+        "yahtzeeRust": "yahtzeeRust"
+      }
+    },
+    "running": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790904962,
+        "narHash": "sha256-AxDOtnsAPHN5zFUZDYImvTAE5Hk61XZuR5Ytj1v3p2s=",
+        "ref": "main",
+        "rev": "f38ca63e1650bffa40fd63589c9cccabaca5039b",
+        "revCount": 12,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/running.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/running.git"
       }
     },
     "sops-nix": {
@@ -189,6 +301,74 @@
         "owner": "Mic92",
         "repo": "sops-nix",
         "type": "github"
+      }
+    },
+    "stock": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780611618,
+        "narHash": "sha256-optrcT9mFEJ4DGBflHk3qFyVsSnxAyF0mK6WnWIfXWk=",
+        "ref": "main",
+        "rev": "78af7f0fdf308b8bab5512928e63082ca8061edb",
+        "revCount": 3,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/stock.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/stock.git"
+      }
+    },
+    "tallyRust": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791042252,
+        "narHash": "sha256-5rwq1UZ1WQI5TC5GXqKKmeyAGcbIubnNcC+3C8+o3yM=",
+        "ref": "main",
+        "rev": "b90dddacac19f76dae78e4c1dcc492b7faab2029",
+        "revCount": 1,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/tally_rust.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/tally_rust.git"
+      }
+    },
+    "workoutRust": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790957673,
+        "narHash": "sha256-48YhUM2vSqomXNCQKJeZtfMXRFaQSRNPTj+d5NRn9fA=",
+        "ref": "main",
+        "rev": "6f9ce8845b8e92c93fddb0e849328d725e97ab68",
+        "revCount": 30,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/workout_rust.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/workout_rust.git"
+      }
+    },
+    "yahtzeeRust": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791042252,
+        "narHash": "sha256-cW3Dv4ylsk/BDdcjq58yJV4hgXF5z+QgeosYCl4RTEw=",
+        "ref": "main",
+        "rev": "d43ac8c33220ead7b1c25d1373aea0845409dedb",
+        "revCount": 1,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/yahtzee_rust.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/yahtzee_rust.git"
       }
     }
   },

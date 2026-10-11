@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   pkgs,
   ...
 }:
@@ -11,7 +12,6 @@ let
     forceSSL = true;
   };
 
-  sources = import ./personal-sources.nix;
   system = pkgs.stdenv.hostPlatform.system;
 
   mkApp =
@@ -41,22 +41,22 @@ let
     };
 
   apps = {
-    budget = mkApp sources.budget { };
-    foodLog = mkApp sources.foodLog { };
-    golfRust = mkApp sources.golfRust { };
-    receipt = mkApp sources.receipt {
+    budget = mkApp inputs.budget { };
+    foodLog = mkApp inputs.foodLog { };
+    golfRust = mkApp inputs.golfRust { };
+    receipt = mkApp inputs.receipt {
       nativeBuildInputs = [ pkgs.pkg-config ];
       buildInputs = [ pkgs.openssl ];
     };
-    running = mkApp sources.running { };
-    workoutRust = mkApp sources.workoutRust { };
-    tallyRust = mkApp sources.tallyRust { };
-    stock = mkApp sources.stock { };
-    yahtzeeRust = mkApp sources.yahtzeeRust { };
-    mealPlanner = mkApp sources.mealPlanner { };
+    running = mkApp inputs.running { };
+    workoutRust = mkApp inputs.workoutRust { };
+    tallyRust = mkApp inputs.tallyRust { };
+    stock = mkApp inputs.stock { };
+    yahtzeeRust = mkApp inputs.yahtzeeRust { };
+    mealPlanner = mkApp inputs.mealPlanner { };
   };
 
-  # Verify wedding pins over public HTTPS; the generic updater must not advance this internal fetch.
+  # Not a flake input, so `nix flake update` cannot advance it; verify wedding pins over public HTTPS.
   weddingSource = builtins.fetchTree {
     type = "git";
     url = "http://joejadserver.joejad.lan:3000/jade/wedding-rsvp.git";

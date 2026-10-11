@@ -17,6 +17,49 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
+
+    # mjolnir's personal apps on Forgejo. Inputs are fetched lazily, so only
+    # building mjolnir needs Forgejo; see nix/README.md if it is down.
+    budget = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/budget.git?ref=main";
+      flake = false;
+    };
+    foodLog = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/food_log.git?ref=main";
+      flake = false;
+    };
+    golfRust = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/golf_rust.git?ref=main";
+      flake = false;
+    };
+    mealPlanner = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/meals.git?ref=main";
+      flake = false;
+    };
+    receipt = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/receipt.git?ref=main";
+      flake = false;
+    };
+    running = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/running.git?ref=main";
+      flake = false;
+    };
+    stock = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/stock.git?ref=main";
+      flake = false;
+    };
+    tallyRust = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/tally_rust.git?ref=main";
+      flake = false;
+    };
+    workoutRust = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/workout_rust.git?ref=main";
+      flake = false;
+    };
+    yahtzeeRust = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/yahtzee_rust.git?ref=main";
+      flake = false;
+    };
   };
 
   outputs =
