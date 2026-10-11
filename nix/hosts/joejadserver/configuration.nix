@@ -8,25 +8,7 @@
 
 let
   lanInterface = "ens18";
-  staticUlaAddress = "fd3a:3dab:51b8:50::3/64";
-  addStaticUla = ''
-    ${pkgs.iproute2}/bin/ip -6 addr replace "${staticUlaAddress}" dev "${lanInterface}"
-  '';
-  networkDispatcher = pkgs.writeShellScript "joejadserver-network-dispatcher" ''
-    if [[ "$1" != "${lanInterface}" ]]; then
-      exit 0
-    fi
-
-    case "$2" in
-      up)
-        ${addStaticUla}
-        ${pkgs.ethtool}/bin/ethtool -K "${lanInterface}" rx-udp-gro-forwarding on rx-gro-list off
-        ;;
-      dhcp6-change)
-        ${addStaticUla}
-        ;;
-    esac
-  '';
+  ulaPrefix = "fd3a:3dab:51b8:50";
 in
 
 {
@@ -110,19 +92,50 @@ in
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "both";
   networking.firewall.checkReversePath = "loose";
-  networking.networkmanager.dispatcherScripts = [
-    {
-      source = networkDispatcher;
-      type = "basic";
-    }
-  ];
-  systemd.services.static-ula-address = {
-    description = "Add static ULA address to ${lanInterface}";
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-    serviceConfig.Type = "oneshot";
-    script = addStaticUla;
+
+  # Static addresses on the server VLAN; OPNsense keeps the matching host entries.
+  # RAs still provide the GUA and the IPv6 default route.
+  networking.networkmanager.enable = false;
+  networking.useNetworkd = true;
+  networking.useDHCP = false;
+  systemd.network.networks."10-lan" = {
+    matchConfig.Name = lanInterface;
+    address = [
+      "10.3.0.3/24"
+      "${ulaPrefix}::3/64"
+    ];
+    gateway = [ "10.3.0.1" ];
+    dns = [
+      "10.3.0.1"
+      "${ulaPrefix}::1"
+    ];
+    domains = [ "joejad.lan" ];
+    networkConfig.IPv6AcceptRA = true;
+    ipv6AcceptRAConfig.UseDNS = false;
+    linkConfig.RequiredForOnline = "routable";
+  };
+  services.resolved = {
+    enable = true;
+    # Avahi already handles mDNS.
+    settings.Resolve = {
+      LLMNR = false;
+      MulticastDNS = false;
+    };
+  };
+
+  # Tailscale's recommended UDP GRO settings for subnet routers and exit nodes.
+  systemd.services.tailscale-udp-gro = {
+    description = "Tune UDP GRO on ${lanInterface} for Tailscale";
+    wantedBy = [ "sys-subsystem-net-devices-${lanInterface}.device" ];
+    bindsTo = [ "sys-subsystem-net-devices-${lanInterface}.device" ];
+    after = [ "sys-subsystem-net-devices-${lanInterface}.device" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      ${pkgs.ethtool}/bin/ethtool -K "${lanInterface}" rx-udp-gro-forwarding on rx-gro-list off
+    '';
   };
   system.stateVersion = "23.11";
 }
