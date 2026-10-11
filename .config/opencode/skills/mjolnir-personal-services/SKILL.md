@@ -1,138 +1,62 @@
 ---
 name: mjolnir-personal-services
-description: Use when changing, committing, releasing, or deploying the budget, food_log, golf_rust, meals, receipt, running, tally_rust, workout_rust, yahtzee_rust, or stock personal services on mjolnir. Verifies and pushes application changes, updates the matching source pin in ~/.dotfiles, deploys mjolnir, verifies the service, and persists the dotfiles update.
+description: Use when changing, committing, releasing, or deploying the budget, food_log, golf_rust, meals, receipt, running, tally_rust, workout_rust, yahtzee_rust, or stock personal services on mjolnir. Verifies and pushes application changes, updates the app's flake input in ~/.dotfiles, deploys mjolnir, verifies the service, and commits the lock update.
 ---
 
 # Mjolnir Personal Services
 
-Use this workflow after making code changes in one of the mapped personal
-service repositories. The user's default preference is to carry successful
-changes through commit, source pinning, deployment, verification, and the
-dotfiles commit without asking again. An explicit request such as "local
-only", "do not deploy", or "do not commit" overrides that default.
+Ship an app change to mjolnir now and verify it. Without this, the weekly
+`update-nix-inputs` timer and Sunday auto-upgrade deploy it unverified within
+a week. By default, carry a successful change all the way through without
+asking; "local only", "do not deploy", or "do not commit" overrides that.
 
-## Scope
+| Repository (`~/projects/`, Forgejo `jade/`) | Flake input | systemd service | Health check |
+| --- | --- | --- | --- |
+| `budget` | `budget` | `budget` | `https://budget.joejad.com/` |
+| `food_log` | `foodLog` | `food-log` | `https://food.joejad.com/` |
+| `golf_rust` | `golfRust` | `golf-rust` | `https://golf.joejad.com/ui` |
+| `meals` | `mealPlanner` | `meal-planner` | `https://meals.joejad.com/health` |
+| `receipt` | `receipt` | `receipt` | `https://receipt.joejad.com/` |
+| `running` | `running` | `running` | `https://run.joejad.com/health` |
+| `tally_rust` | `tallyRust` | `tally-rust` | `https://tally.joejad.com/health` |
+| `workout_rust` | `workoutRust` | `workout-rust` | `https://workout.joejad.com/` |
+| `yahtzee_rust` | `yahtzeeRust` | `yahtzee-rust` | `https://yahtzee.joejad.com/health` |
+| `stock` | `stock` | `stock` | systemd only |
 
-| Local repository | Forgejo repository | Nix source attribute | systemd service | Health check |
-| --- | --- | --- | --- | --- |
-| `budget` | `budget` | `budget` | `budget` | `https://budget.joejad.com/` |
-| `food_log` | `food_log` | `foodLog` | `food-log` | `https://food.joejad.com/` |
-| `golf_rust` | `golf_rust` | `golfRust` | `golf-rust` | `https://golf.joejad.com/ui` |
-| `meals` | `meals` | `mealPlanner` | `meal-planner` | `https://meals.joejad.com/health` |
-| `receipt` | `receipt` | `receipt` | `receipt` | `https://receipt.joejad.com/` |
-| `running` | `running` | `running` | `running` | `https://run.joejad.com/health` |
-| `tally_rust` | `tally_rust` | `tallyRust` | `tally-rust` | `https://tally.joejad.com/health` |
-| `workout_rust` | `workout_rust` | `workoutRust` | `workout-rust` | `https://workout.joejad.com/` |
-| `yahtzee_rust` | `yahtzee_rust` | `yahtzeeRust` | `yahtzee-rust` | `https://yahtzee.joejad.com/health` |
-| `stock` | `stock` | `stock` | `stock` | systemd only |
-
-Each app is a flake input in `~/.dotfiles/nix/flake.nix`, named by the
-Nix source attribute above and pinned in `~/.dotfiles/nix/flake.lock`. Forgejo
-repositories are under `http://joejadserver.joejad.lan:3000/jade` for Nix
-fetches and normally use an `origin` SSH remote for pushes.
-
-Do not use this workflow for `wedding-rsvp`. Its pin is a `fetchTree`, not a
-flake input, and requires the reviewed promotion process in
+Not for `wedding-rsvp`; it follows the reviewed promotion process in
 `~/.dotfiles/nix/README.md`.
 
-## 1. Identify And Verify The Application
+## 1. Verify And Push The App
 
-1. Read the application's `AGENTS.md` and follow its repository-specific
-   checks and conventions.
-2. Confirm the repository by inspecting its root, current branch, and remotes;
-   do not rely only on the directory name.
-3. Complete the requested implementation and all applicable formatting,
-   linting, and test commands before publishing anything.
-4. Inspect `git status --short`, `git diff`, and `git log --oneline -10`.
-   Preserve unrelated user or agent changes and stage only intended files.
-5. The Nix pin follows `main`. If the change is not on `main`, or the expected
-   Forgejo remote is missing, stop and ask rather than merging, force-pushing,
-   or guessing.
+1. Follow the app's `AGENTS.md`; run its format, lint, and test commands. Also
+   run `nix build` in the repo, since its flake package and
+   `nixosModules.default` are exactly what mjolnir deploys.
+2. The deployed branch is `main` on the Forgejo `origin`. If the work is on
+   another branch or the remote is missing, stop and ask.
+3. Commit only the intended files, push `main` without force, and note
+   `git rev-parse HEAD`.
 
-Do not proceed to source pinning when application checks fail.
+## 2. Update The Input And Deploy
 
-## 2. Publish The Application
-
-1. Create a concise commit matching the repository's history.
-2. Push `main` to the Forgejo remote without force.
-3. Record the full pushed commit with `git rev-parse HEAD` and ensure the push
-   succeeded before calculating a Nix hash.
-
-The standing workflow preference above is authorization for these commit and
-push steps when the skill is triggered by a request that changes a scoped
-service. Never include unrelated work in the commit.
-
-## 3. Update Only The Matching Flake Input
-
-From `~/.dotfiles/nix`, update the changed app's input only:
+From `~/.dotfiles/nix`:
 
 ```bash
-nix flake update <attribute>
+nix flake update <input>
+git diff flake.lock   # only <input> changed, rev is the pushed commit
+sudo nixos-rebuild switch --flake .#mjolnir
 ```
 
-Confirm `git diff flake.lock` changes only that input and that its new `rev`
-is the pushed application commit.
+Never run a bare `nix flake update` here; it pulls in unrelated upgrades.
+Leave unrelated dotfiles changes alone.
 
-Do not run a bare `nix flake update`; it refreshes every input and can
-introduce unrelated upgrades. Do not modify any other input unless the user
-explicitly requests a bulk update.
+## 3. Verify And Commit
 
-Before deployment:
+1. Require `systemctl is-active <service>` and, where listed,
+   `curl --fail <health check>` to succeed.
+2. On success, commit only `nix/flake.lock` as `Update <service> app source`
+   and push dotfiles `main` without force.
+3. On failure, check `systemctl status` and `journalctl -u <service>`, leave
+   `flake.lock` uncommitted, and report. Do not revert the pushed app commit.
 
-1. Inspect the dotfiles worktree and its recent history.
-2. Do not stage or alter unrelated dotfiles changes.
-3. Run `git diff --check`.
-4. Evaluate the host configuration from `~/.dotfiles/nix`:
-
-```bash
-nix eval --raw .#nixosConfigurations.mjolnir.config.system.build.toplevel.drvPath
-```
-
-Stop if the input does not evaluate correctly.
-
-## 4. Deploy And Verify
-
-Deploy the evaluated working tree:
-
-```bash
-sudo nixos-rebuild switch --flake ~/.dotfiles/nix#mjolnir
-```
-
-After a successful switch:
-
-1. Require `systemctl is-active <service>` to report `active`.
-2. For services with an HTTP health check, use `curl --fail` and require a
-   successful response from the mapped URL.
-3. For `stock`, verify systemd state only because it has no HTTP endpoint.
-4. If verification fails, inspect service status and recent journal output.
-   Diagnose the failure without destructive Git operations and do not claim a
-   successful deployment.
-
-## 5. Persist The Dotfiles Pin
-
-Only after deployment and health checks succeed:
-
-1. Reinspect `git status`, `git diff`, and `git log --oneline -10` in
-   `~/.dotfiles`.
-2. Stage only `nix/flake.lock`.
-3. Commit with a concise message such as `Update <service> app source`.
-4. Push dotfiles `main` to its normal remote without force.
-5. Confirm both application and dotfiles worktrees contain no unintended
-   remaining changes.
-
-If deployment fails, leave the source-pin change uncommitted, report the
-failure and current application commit, and continue diagnosis when feasible.
-Do not silently revert the already-pushed application commit or unrelated
-work.
-
-## Completion Report
-
-Report:
-
-- application checks run and their outcome;
-- application commit and push result;
-- pinned revision and NAR hash;
-- NixOS switch result;
-- systemd and HTTP verification results;
-- dotfiles commit and push result;
-- any remaining worktree changes or blockers.
+Report the app checks, pushed commit, switch result, health checks, and
+dotfiles commit.
