@@ -95,9 +95,7 @@ in
 
   # Static addresses on the server VLAN; OPNsense keeps the matching host entries.
   # RAs still provide the GUA and the IPv6 default route.
-  networking.networkmanager.enable = false;
-  networking.useNetworkd = true;
-  networking.useDHCP = false;
+  dotfiles.server.networkd.enable = true;
   systemd.network.networks."10-lan" = {
     matchConfig.Name = lanInterface;
     address = [
@@ -114,15 +112,6 @@ in
     ipv6AcceptRAConfig.UseDNS = false;
     linkConfig.RequiredForOnline = "routable";
   };
-  services.resolved = {
-    enable = true;
-    # Avahi already handles mDNS.
-    settings.Resolve = {
-      LLMNR = false;
-      MulticastDNS = false;
-    };
-  };
-
   # Tailscale's recommended UDP GRO settings for subnet routers and exit nodes.
   systemd.services.tailscale-udp-gro = {
     description = "Tune UDP GRO on ${lanInterface} for Tailscale";

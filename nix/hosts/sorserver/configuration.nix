@@ -8,27 +8,11 @@
 let
   domain = "sorenson-fam.com";
   lanInterface = "enp5s0";
+  # Matched by MAC so a PCIe change cannot rename the NIC out of its config.
+  lanMac = "44:a8:42:fc:57:e0";
   ulaSitePrefix = "fd6e:61d0:82c";
   staticUlaIp = "${ulaSitePrefix}:3d10::3";
   staticUlaAddress = "${staticUlaIp}/64";
-  addStaticUla = ''
-    ${pkgs.iproute2}/bin/ip -6 addr replace "${staticUlaAddress}" dev "${lanInterface}"
-  '';
-  networkDispatcher = pkgs.writeShellScript "sorserver-network-dispatcher" ''
-    if [[ "$1" != "${lanInterface}" ]]; then
-      exit 0
-    fi
-
-    case "$2" in
-      up)
-        ${addStaticUla}
-        ${pkgs.ethtool}/bin/ethtool -K "${lanInterface}" rx-udp-gro-forwarding on rx-gro-list off
-        ;;
-      dhcp6-change)
-        ${addStaticUla}
-        ;;
-    esac
-  '';
   ssl = {
     useACMEHost = domain;
     forceSSL = true;
@@ -158,22 +142,44 @@ in
 
   hardware.enableRedistributableFirmware = true;
 
+  # Static addresses on the Google Wifi LAN, which keeps a matching reservation.
+  # RAs still provide the ULA prefix route and Thread border router routes.
+  dotfiles.server.networkd.enable = true;
+  systemd.network.networks."10-lan" = {
+    matchConfig = {
+      MACAddress = lanMac;
+      Type = "ether";
+    };
+    address = [
+      "192.168.86.3/24"
+      staticUlaAddress
+    ];
+    gateway = [ "192.168.86.1" ];
+    networkConfig.IPv6AcceptRA = true;
+    ipv6AcceptRAConfig.UseDNS = false;
+    linkConfig.RequiredForOnline = "routable";
+  };
+  # The local Unbound is the resolver; keep resolv.conf pointing straight at it.
+  services.resolved.enable = false;
   networking.search = [ "joejad.lan" ];
   networking.nameservers = [ "127.0.0.1" ];
-  networking.networkmanager.dispatcherScripts = [
-    {
-      source = networkDispatcher;
-      type = "basic";
-    }
-  ];
 
-  systemd.services.static-ula-address = {
-    description = "Add static ULA address to ${lanInterface}";
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-    serviceConfig.Type = "oneshot";
-    script = addStaticUla;
+  # Tailscale's recommended UDP GRO settings for subnet routers and exit nodes.
+  systemd.services.tailscale-udp-gro = {
+    description = "Tune UDP GRO on ${lanInterface} for Tailscale";
+    wantedBy = [
+      "multi-user.target"
+      "sys-subsystem-net-devices-${lanInterface}.device"
+    ];
+    bindsTo = [ "sys-subsystem-net-devices-${lanInterface}.device" ];
+    after = [ "sys-subsystem-net-devices-${lanInterface}.device" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      ${pkgs.ethtool}/bin/ethtool -K "${lanInterface}" rx-udp-gro-forwarding on rx-gro-list off
+    '';
   };
 
   environment.systemPackages = with pkgs; [

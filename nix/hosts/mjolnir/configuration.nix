@@ -6,26 +6,9 @@
 
 let
   dotfilesPath = "/home/jade/.dotfiles";
-  lanInterface = "enp132s0";
-  ulaSitePrefix = "fd3a:3dab:51b8";
-  ulaPrefix = "${ulaSitePrefix}:50";
-  staticUlaIp = "${ulaPrefix}::2";
-  staticUlaAddress = "${staticUlaIp}/64";
-  opnsenseUlaIp = "${ulaPrefix}::1";
-  addStaticUla = ''
-    ${pkgs.iproute2}/bin/ip -6 addr replace "${staticUlaAddress}" dev "${lanInterface}"
-  '';
-  staticUlaDispatcher = pkgs.writeShellScript "mjolnir-static-ula" ''
-    if [[ "$1" != "${lanInterface}" ]]; then
-      exit 0
-    fi
-
-    case "$2" in
-      up|dhcp6-change)
-        ${addStaticUla}
-        ;;
-    esac
-  '';
+  # Onboard NIC; matched by MAC so a PCIe change cannot rename it out of its config.
+  lanMac = "30:c5:99:d1:ff:a9";
+  ulaPrefix = "fd3a:3dab:51b8:50";
 in
 {
   imports = [
@@ -180,28 +163,35 @@ in
     };
   };
 
-  networking.networkmanager.unmanaged = [
-    "interface-name:vpn0"
-    "interface-name:vpn1"
-  ];
+  # Static addresses on the server VLAN; OPNsense keeps the matching host entries.
+  # RAs still provide the GUA and the IPv6 default route.
+  dotfiles.server.networkd.enable = true;
+  # The NordVPN tunnel lives in a network namespace, which the networkd backend
+  # does not support.
+  networking.wireguard.useNetworkd = false;
+  systemd.network.networks."10-lan" = {
+    matchConfig = {
+      MACAddress = lanMac;
+      Type = "ether";
+    };
+    address = [
+      "10.3.0.2/24"
+      "${ulaPrefix}::2/64"
+    ];
+    gateway = [ "10.3.0.1" ];
+    # OPNsense's Unbound serves the joejad.com and joejad.lan records for the whole network.
+    dns = [
+      "10.3.0.1"
+      "${ulaPrefix}::1"
+    ];
+    networkConfig.IPv6AcceptRA = true;
+    ipv6AcceptRAConfig.UseDNS = false;
+    linkConfig.RequiredForOnline = "routable";
+  };
   networking.search = [
     "joejad.lan"
     "taildfe4ce.ts.net"
   ];
-  # OPNsense's Unbound serves the joejad.com and joejad.lan records for the whole network.
-  networking.nameservers = [
-    "10.3.0.1"
-    opnsenseUlaIp
-  ];
-  networking.networkmanager.dns = "systemd-resolved";
-  services.resolved = {
-    enable = true;
-    # Avahi already handles mDNS.
-    settings.Resolve = {
-      LLMNR = false;
-      MulticastDNS = false;
-    };
-  };
 
   # OPNsense never sees same-VLAN, Tailscale, or tunnel traffic to mjolnir, so
   # keep app ports behind nginx. SSH, Samba, Avahi, Ollama, and Tailscale open
@@ -212,21 +202,6 @@ in
     443
   ];
   networking.firewall.checkReversePath = "loose";
-  networking.networkmanager.dispatcherScripts = [
-    {
-      source = staticUlaDispatcher;
-      type = "basic";
-    }
-  ];
-
-  systemd.services.static-ula-address = {
-    description = "Add static ULA address to ${lanInterface}";
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-    serviceConfig.Type = "oneshot";
-    script = addStaticUla;
-  };
 
   systemd.services.borgbackup-job-mjolnir.serviceConfig.ReadWritePaths = [
     "/run/lock/livesync-cli.lock"
