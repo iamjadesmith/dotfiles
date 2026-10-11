@@ -126,7 +126,10 @@ in
   # Tailscale's recommended UDP GRO settings for subnet routers and exit nodes.
   systemd.services.tailscale-udp-gro = {
     description = "Tune UDP GRO on ${lanInterface} for Tailscale";
-    wantedBy = [ "sys-subsystem-net-devices-${lanInterface}.device" ];
+    wantedBy = [
+      "multi-user.target"
+      "sys-subsystem-net-devices-${lanInterface}.device"
+    ];
     bindsTo = [ "sys-subsystem-net-devices-${lanInterface}.device" ];
     after = [ "sys-subsystem-net-devices-${lanInterface}.device" ];
     serviceConfig = {
