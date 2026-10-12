@@ -183,7 +183,7 @@ in
         allow 10.47.59.0/24;
         allow 100.64.0.0/10;
         allow fd3a:3dab:51b8::/48;
-        include ${config.sops.templates."wedding-preview-network.conf".path};
+        allow fd7a:115c:a1e0::/48;
         deny all;
       '';
       locations."/" = {
@@ -207,7 +207,7 @@ in
         allow 10.47.59.0/24;
         allow 100.64.0.0/10;
         allow fd3a:3dab:51b8::/48;
-        include ${config.sops.templates."wedding-preview-network.conf".path};
+        allow fd7a:115c:a1e0::/48;
         deny all;
       '';
       locations."/" = {

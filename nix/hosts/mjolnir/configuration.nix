@@ -30,8 +30,6 @@ in
         mode = "0400";
       };
       nordvpn_wireguard_private_key = { };
-      # Home GUA prefix for the wedding allow lists; drop once OPNsense serves ULA-only AAAA records.
-      unbound_gua_prefix = { };
       vaultwarden_env = { };
       nextcloud_admin_pass = { };
       cloudflared_creds = { };
@@ -77,16 +75,6 @@ in
     group = "wedding-preview";
     mode = "0400";
     restartUnits = [ "wedding-preview.service" ];
-  };
-
-  sops.templates."wedding-preview-network.conf" = {
-    content = ''
-      allow ${config.sops.placeholder.unbound_gua_prefix};
-    '';
-    owner = "nginx";
-    group = "nginx";
-    mode = "0400";
-    restartUnits = [ "nginx.service" ];
   };
 
   systemd.services.wedding-preview.serviceConfig.InaccessiblePaths = [
