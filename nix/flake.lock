@@ -293,11 +293,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792103597,
-        "narHash": "sha256-CPZfjf/NBmsqWMhMfMKGsCF2qPQexcfpYoiQMSG17SI=",
+        "lastModified": 1792104352,
+        "narHash": "sha256-7nmnmfu64RYwaksIYw62OXR70/78dVns0pB8eGIyXGg=",
         "ref": "main",
-        "rev": "273fad07ffc1c6e9cc78822af633316346140205",
-        "revCount": 13,
+        "rev": "22c52f175dbf200bd2bcdfec6cae90b178518a4a",
+        "revCount": 14,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/running.git"
       },
