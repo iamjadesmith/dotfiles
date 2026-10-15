@@ -49,6 +49,7 @@ let
     jq
     luajitPackages.luarocks-nix
     postgresql_18
+    python3
     stow
     tree-sitter
     unzip
