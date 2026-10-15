@@ -31,6 +31,8 @@ vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" }
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste without yanking" })
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to system clipboard" })
 vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank line to system clipboard" })
+vim.keymap.set("n", "<leader>p", [["+p]], { desc = "Paste from system clipboard" })
+vim.keymap.set("n", "<leader>P", [["+P]], { desc = "Paste from system clipboard before cursor" })
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete to black hole register" })
 vim.keymap.set("n", "Q", "<nop>", { desc = "Disable Ex mode" })
 
