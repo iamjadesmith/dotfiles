@@ -400,6 +400,10 @@ in
   # Public FreshRSS API for mobile readers: the Cloudflare tunnel sends
   # rss-api.joejad.com to this localhost-only server. Only the Google Reader
   # and Fever endpoints are served; the web UI stays on rss.joejad.com.
+  # Keyed on the real client address, since real_ip runs before limit_req.
+  services.nginx.appendHttpConfig = ''
+    limit_req_zone $binary_remote_addr zone=freshrss_api:10m rate=10r/s;
+  '';
   services.nginx.virtualHosts."rss-api.${domain}" = {
     listen = [
       {
@@ -412,6 +416,9 @@ in
       # Log the client address cloudflared forwards instead of 127.0.0.1.
       set_real_ip_from 127.0.0.1;
       real_ip_header CF-Connecting-IP;
+      # Room for a reader's sync burst; sustained guessing gets 429s.
+      limit_req zone=freshrss_api burst=100 nodelay;
+      limit_req_status 429;
     '';
     locations."~ ^/api/(greader|fever)\\.php(/.*)?$".extraConfig = ''
       fastcgi_pass unix:${config.services.phpfpm.pools.freshrss.socket};
