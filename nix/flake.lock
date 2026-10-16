@@ -123,11 +123,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789741091,
-        "narHash": "sha256-13+l/7z1lk5Z/dL5ZE2IwTzYDfXOWvFprPZhS/94sFg=",
+        "lastModified": 1792157729,
+        "narHash": "sha256-ryEOlujakmiGiMDsQ2Tg0qkO1/ioApUcEMiIbzuyKig=",
         "ref": "main",
-        "rev": "72468d414fb551405127ac31164396a40b72e8c6",
-        "revCount": 13,
+        "rev": "44b820304414a685e658a9b255d1cc0792407a42",
+        "revCount": 14,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/golf_rust.git"
       },
