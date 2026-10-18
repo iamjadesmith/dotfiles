@@ -18,8 +18,8 @@ let
   weddingSource = builtins.fetchTree {
     type = "git";
     url = "http://joejadserver.joejad.lan:3000/jade/wedding-rsvp.git";
-    rev = "1064e716a56efd554bde82443dbea247903be6f8";
-    narHash = "sha256-RTC/036AfNh2cyg5LtezsBI5jxIVIs9Vw1rzKpioKxg=";
+    rev = "b0814c7bc8e979a9fe6c44eee0ab9387a0986686";
+    narHash = "sha256-Y29OGeHYWl5CEGo2lXioOM/o4Cz10E64LJ/QbyDNY7I=";
   };
   weddingCargoToml = builtins.fromTOML (builtins.readFile "${weddingSource}/Cargo.toml");
   weddingPackage = pkgs.rustPlatform.buildRustPackage {
