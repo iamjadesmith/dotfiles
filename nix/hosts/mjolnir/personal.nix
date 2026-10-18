@@ -178,6 +178,7 @@ in
         error_log /dev/null;
         limit_req_status 429;
         allow 10.3.0.0/24;
+        allow 10.10.3.0/24;
         allow 10.10.10.0/24;
         allow 10.26.27.0/24;
         allow 10.47.59.0/24;
@@ -202,6 +203,7 @@ in
         error_log /dev/null;
         limit_req_status 429;
         allow 10.3.0.0/24;
+        allow 10.10.3.0/24;
         allow 10.10.10.0/24;
         allow 10.26.27.0/24;
         allow 10.47.59.0/24;
