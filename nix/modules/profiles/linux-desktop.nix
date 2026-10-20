@@ -10,15 +10,6 @@
 
   programs.hyprland.enable = true;
 
-  # darkman uses GeoClue for sunrise and sunset times instead of fixed coordinates.
-  services.geoclue2 = {
-    enable = true;
-    appConfig.darkman = {
-      isAllowed = true;
-      isSystem = false;
-    };
-  };
-
   # darkman (Home Manager) provides the light/dark color-scheme setting to apps.
   xdg.portal = {
     extraPortals = [ pkgs.darkman ];
