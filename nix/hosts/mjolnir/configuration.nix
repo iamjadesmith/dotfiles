@@ -123,6 +123,7 @@ in
         "/var/lib/couchdb"
         "/var/lib/livesync-cli"
         "/var/lib/private/meal-planner"
+        "/var/lib/private/receipt-breakdown"
       ];
       repo = "borg@sorserver:/var/lib/borg/mjolnir";
       preHook = ''

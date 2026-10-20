@@ -710,6 +710,8 @@ in
       "llama3.1:8b"
       "llama3.2-vision"
       "qwen2.5-coder:7b"
+      # receipt-breakdown OCR
+      "qwen2.5vl:7b"
     ];
   };
 }

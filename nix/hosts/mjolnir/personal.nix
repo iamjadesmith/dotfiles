@@ -50,7 +50,7 @@ in
     inputs.budget.nixosModules.default
     inputs.foodLog.nixosModules.default
     inputs.golfRust.nixosModules.default
-    inputs.receipt.nixosModules.default
+    inputs.receiptBreakdown.nixosModules.default
     inputs.running.nixosModules.default
     inputs.workoutRust.nixosModules.default
     inputs.tallyRust.nixosModules.default
@@ -85,7 +85,7 @@ in
 
   services."golf-rust".enable = true;
 
-  services.receipt.enable = true;
+  services.receipt-breakdown.enable = true;
 
   services.running = {
     enable = true;
@@ -140,7 +140,12 @@ in
     };
 
     "receipt.${domain}" = ssl // {
-      locations."/".proxyPass = "http://127.0.0.1:3000";
+      # Several full-size phone photos per upload; reading them takes a while.
+      extraConfig = ''
+        client_max_body_size 80M;
+        proxy_read_timeout 300s;
+      '';
+      locations."/".proxyPass = "http://127.0.0.1:8082";
     };
 
     "run.${domain}" = ssl // {

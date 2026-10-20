@@ -1,6 +1,6 @@
 ---
 name: mjolnir-personal-services
-description: Use when changing, committing, releasing, or deploying the budget, food_log, golf_rust, meals, receipt, running, tally_rust, workout_rust, yahtzee_rust, or stock personal services on mjolnir. Verifies and pushes application changes, updates the app's flake input in ~/.dotfiles, deploys mjolnir, verifies the service, and commits the lock update.
+description: Use when changing, committing, releasing, or deploying the budget, food_log, golf_rust, meals, receipt_breakdown, running, tally_rust, workout_rust, yahtzee_rust, or stock personal services on mjolnir. Verifies and pushes application changes, updates the app's flake input in ~/.dotfiles, deploys mjolnir, verifies the service, and commits the lock update.
 ---
 
 # Mjolnir Personal Services
@@ -16,7 +16,7 @@ asking; "local only", "do not deploy", or "do not commit" overrides that.
 | `food_log` | `foodLog` | `food-log` | `https://food.joejad.com/` |
 | `golf_rust` | `golfRust` | `golf-rust` | `https://golf.joejad.com/ui` |
 | `meals` | `mealPlanner` | `meal-planner` | `https://meals.joejad.com/health` |
-| `receipt` | `receipt` | `receipt` | `https://receipt.joejad.com/` |
+| `receipt_breakdown` | `receiptBreakdown` | `receipt-breakdown` | `https://receipt.joejad.com/health` |
 | `running` | `running` | `running` | `https://run.joejad.com/health` |
 | `tally_rust` | `tallyRust` | `tally-rust` | `https://tally.joejad.com/health` |
 | `workout_rust` | `workoutRust` | `workout-rust` | `https://workout.joejad.com/` |

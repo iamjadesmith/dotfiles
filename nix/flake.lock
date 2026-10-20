@@ -245,25 +245,25 @@
         "type": "github"
       }
     },
-    "receipt": {
+    "receiptBreakdown": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1782142562,
-        "narHash": "sha256-fnemQWj6adXnP5kbwgRJgXJj81shPWn+cOrMOHTMzg0=",
+        "lastModified": 1792504202,
+        "narHash": "sha256-g08OIxM3OnX/sGKs8VdBmQSEr71TYZrkGZIwJH0IqfU=",
         "ref": "main",
-        "rev": "435a56e861a7b63fc949721952d18d060ad16b01",
-        "revCount": 4,
+        "rev": "1157f605c9ff57940041070ab6862c200acfcbff",
+        "revCount": 1,
         "type": "git",
-        "url": "http://joejadserver.joejad.lan:3000/jade/receipt.git"
+        "url": "http://joejadserver.joejad.lan:3000/jade/receipt_breakdown.git"
       },
       "original": {
         "ref": "main",
         "type": "git",
-        "url": "http://joejadserver.joejad.lan:3000/jade/receipt.git"
+        "url": "http://joejadserver.joejad.lan:3000/jade/receipt_breakdown.git"
       }
     },
     "root": {
@@ -277,7 +277,7 @@
         "mealPlanner": "mealPlanner",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs_2",
-        "receipt": "receipt",
+        "receiptBreakdown": "receiptBreakdown",
         "running": "running",
         "sops-nix": "sops-nix",
         "stock": "stock",

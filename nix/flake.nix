@@ -36,8 +36,8 @@
       url = "git+http://joejadserver.joejad.lan:3000/jade/meals.git?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    receipt = {
-      url = "git+http://joejadserver.joejad.lan:3000/jade/receipt.git?ref=main";
+    receiptBreakdown = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/receipt_breakdown.git?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     running = {
