@@ -27,12 +27,7 @@
     })
   ];
 
-  gtk = {
-    enable = true;
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-    };
-  };
+  gtk.enable = true;
 
   home.pointerCursor = {
     x11.enable = true;
@@ -42,9 +37,27 @@
     size = 24;
   };
 
-  dconf = {
+  dconf.enable = true;
+
+  # Switches light/dark at sunrise and sunset. darkman also serves the
+  # color-scheme portal setting that Ghostty follows; the script covers GTK apps.
+  services.darkman = {
     enable = true;
-    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    settings = {
+      # Approximate location; only used to compute sunrise and sunset.
+      lat = 41.9;
+      lng = -87.6;
+      usegeoclue = false;
+    };
+    scripts.gtk-theme = ''
+      if [[ "$1" == "dark" ]]; then
+        ${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
+        ${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita-dark'"
+      else
+        ${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
+        ${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita'"
+      fi
+    '';
   };
 
   programs.firefox = import ./firefox.nix;
