@@ -44,6 +44,8 @@ let
     cargo
     fzf
     gcc
+    # Lets Ghostty sessions over SSH use TERM=xterm-ghostty.
+    ghostty.terminfo
     gnumake
     helm
     jq

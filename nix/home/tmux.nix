@@ -17,45 +17,47 @@
   ];
 
   extraConfig = ''
-        set -s set-clipboard on
-        set -g allow-passthrough on
-        set -as terminal-features ",xterm-256color:RGB,tmux-256color:RGB,xterm-256color:clipboard"
-        set-environment -g LANG C.UTF-8
-        set-environment -g LC_CTYPE C.UTF-8
-        set -g mouse on
+    set -s set-clipboard on
+    set -g allow-passthrough on
+    set -as terminal-features ",xterm-256color:RGB,tmux-256color:RGB,xterm-256color:clipboard"
+    set-environment -g LANG C.UTF-8
+    set-environment -g LC_CTYPE C.UTF-8
+    set -g mouse on
 
-        bind -r ^ last-window
-        bind -r k select-pane -U
-        bind -r j select-pane -D
-        bind -r h select-pane -L
-        bind -r l select-pane -R
+    bind -r ^ last-window
+    bind -r k select-pane -U
+    bind -r j select-pane -D
+    bind -r h select-pane -L
+    bind -r l select-pane -R
 
-        set -g pane-base-index 1
-        set-window-option -g pane-base-index 1
-        set-option -g renumber-windows on
+    set -g pane-base-index 1
+    set-window-option -g pane-base-index 1
+    set-option -g renumber-windows on
 
-        bind L send-keys '^L'
+    bind L send-keys '^L'
 
-    		set -g status-bg black
-    		set -g status-fg white
+    # Match the status bar to the terminal's light or dark theme.
+    set -g status-style "bg=black,fg=white"
+    set-hook -g client-dark-theme 'set -g status-style "bg=black,fg=white"'
+    set-hook -g client-light-theme 'set -g status-style "bg=#dce0e8,fg=#4c4f69"'
 
-        bind -n S-Left  previous-window
-        bind -n S-Right next-window
+    bind -n S-Left  previous-window
+    bind -n S-Right next-window
 
-        bind -n M-H previous-window
-        bind -n M-L next-window
+    bind -n M-H previous-window
+    bind -n M-L next-window
 
-        set-window-option -g mode-keys vi
+    set-window-option -g mode-keys vi
 
-        bind-key -T copy-mode-vi v send-keys -X begin-selection
-        bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
-        bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+    bind-key -T copy-mode-vi v send-keys -X begin-selection
+    bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+    bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
-        bind '"' split-window -v -c "#{pane_current_path}"
-        bind % split-window -h -c "#{pane_current_path}"
-        bind c new-window -c "#{pane_current_path}"
+    bind '"' split-window -v -c "#{pane_current_path}"
+    bind % split-window -h -c "#{pane_current_path}"
+    bind c new-window -c "#{pane_current_path}"
 
-        set -gu default-command
-        set -g default-shell "$SHELL"
+    set -gu default-command
+    set -g default-shell "$SHELL"
   '';
 }

@@ -10,7 +10,6 @@
 
 let
   dotfilesDirectory = "${homeDirectory}/.dotfiles";
-  themeMode = "dark"; # Set to "auto" to follow the macOS appearance.
 in
 {
   imports = [
@@ -23,11 +22,11 @@ in
         user
         homeDirectory
         ;
-      enableAlacritty = true;
-      enableAlacrittyTheme = true;
       enableNeovim = false;
     })
   ];
+
+  programs.ghostty = import ./ghostty.nix { inherit meta; };
 
   programs.zsh.initContent = lib.mkBefore ''
     # Cache brew shellenv so Homebrew tools are available without slowing every shell startup.
@@ -52,20 +51,6 @@ in
   home.file.".hammerspoon/init.lua" = {
     source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/.hammerspoon/init.lua";
     force = true;
-  };
-
-  launchd.agents.theme-mode-sync = {
-    enable = true;
-    config = {
-      ProgramArguments = [
-        "${dotfilesDirectory}/scripts/theme-mode"
-        (if themeMode == "auto" then "sync-macos" else themeMode)
-      ];
-      RunAtLoad = true;
-      StartInterval = 300;
-      StandardOutPath = "/tmp/theme-mode-sync.out.log";
-      StandardErrorPath = "/tmp/theme-mode-sync.err.log";
-    };
   };
 
   launchd.agents.opencode-upgrade = {

@@ -1,5 +1,5 @@
 local apps = {
-	["1"] = "Alacritty",
+	["1"] = "Ghostty",
 	["2"] = "Safari",
 	["3"] = "Obsidian",
 	["4"] = "Messages",

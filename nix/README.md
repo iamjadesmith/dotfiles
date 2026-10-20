@@ -101,6 +101,14 @@ Darwin installs `anomalyco/tap/opencode-v2` through nix-darwin's Homebrew config
 
 Keep shared skills in `.config/opencode/skills/<name>/SKILL.md`. Home Manager links each skill into `~/.claude/skills` for Claude Code and `~/.agents/skills` for Codex; OpenCode reads the source directory directly. Apply the system configuration after adding or removing skill directories. Edits to existing skills are available through the links without a rebuild. Restart Codex if a skill does not appear, and invoke it with `$<name>`.
 
+### Terminal And Light/Dark Themes
+
+Darwin uses Ghostty from the Homebrew cask; Home Manager writes its config from `nix/home/ghostty.nix`. Ghostty follows the macOS appearance with Catppuccin Latte for light mode and TokyoNight Night for dark mode, and reports theme changes to programs (DEC mode 2031).
+
+Neovim does not store a theme. It reads the terminal's background color at startup and on each theme change, then picks `catppuccin-latte` or `tokyonight-night`, so it follows the Mac even over SSH and inside tmux. `:ThemeLight`, `:ThemeDark`, and `:ThemeToggle` override until the next terminal change; `:ThemeReload` asks the terminal again. tmux switches its status bar colors with the `client-light-theme` and `client-dark-theme` hooks, and fzf uses the terminal's ANSI palette. NixOS hosts install Ghostty's terminfo so `TERM=xterm-ghostty` works over SSH.
+
+Alacritty and `scripts/theme-mode` remain only for the Linux desktop profile.
+
 ## Self-hosted LiveSync On Mjolnir
 
 Mjolnir runs CouchDB natively and the official Self-hosted LiveSync CLI daemon in Podman. CouchDB listens only on `127.0.0.1:5984`; Nginx provides `https://livesync.joejad.com` to the configured LAN, WireGuard, Tailscale, and private IPv6 ranges. Requests forwarded by Cloudflare Tunnel are rejected.

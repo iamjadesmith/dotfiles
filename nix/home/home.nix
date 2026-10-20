@@ -59,13 +59,8 @@ in
       ]
   );
 
-  home.activation.initTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] (
-    ''
-      if [ ! -e "$HOME/.config/theme-mode" ]; then
-        printf '%s\n' dark > "$HOME/.config/theme-mode"
-      fi
-    ''
-    + lib.optionalString enableAlacrittyTheme ''
+  home.activation.initTheme = lib.mkIf enableAlacrittyTheme (
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       if [ ! -e "$HOME/.config/alacritty/theme.toml" ]; then
         mkdir -p "$HOME/.config/alacritty"
         cp "${dotfilesDirectory}/.config/alacritty/tokyonight-night.toml" "$HOME/.config/alacritty/theme.toml"

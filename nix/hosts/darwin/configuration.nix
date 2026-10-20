@@ -60,7 +60,7 @@ in
       "linearmouse"
       "betterdisplay"
       "google-chrome"
-      "alacritty"
+      "ghostty"
       "obsidian"
       "raycast"
       "hammerspoon"

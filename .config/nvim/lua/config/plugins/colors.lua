@@ -1,28 +1,23 @@
-local function theme_mode()
-	local mode_file = vim.fn.expand("~/.config/theme-mode")
-	local ok, lines = pcall(vim.fn.readfile, mode_file)
-	if ok and (lines[1] == "dark" or lines[1] == "light") then
-		return lines[1]
-	end
-
-	return "dark"
-end
-
-local function write_theme_mode(mode)
-	local config_dir = vim.fn.expand("~/.config")
-	vim.fn.mkdir(config_dir, "p")
-	vim.fn.writefile({ mode }, config_dir .. "/theme-mode")
-end
+-- Nvim sets 'background' from the terminal's background color at startup and
+-- again whenever the terminal reports a theme change (DEC mode 2031), so the
+-- colorscheme follows the terminal, including over SSH and inside tmux.
+local themes = {
+	dark = "tokyonight-night",
+	light = "catppuccin-latte",
+}
 
 local function apply_theme()
-	if theme_mode() == "light" then
-		-- "light" is daytime mode; Frappe still uses a dark background.
-		vim.o.background = "dark"
-		vim.cmd.colorscheme("catppuccin-frappe")
-	else
-		vim.o.background = "dark"
-		vim.cmd.colorscheme("tokyonight-night")
+	local scheme = themes[vim.o.background] or themes.dark
+	-- Colorschemes set 'background' themselves; skip when already applied so
+	-- the OptionSet autocmd below does not loop.
+	if vim.g.colors_name ~= scheme then
+		vim.cmd.colorscheme(scheme)
 	end
+end
+
+local function set_background(mode)
+	vim.o.background = mode
+	apply_theme()
 end
 
 return {
@@ -30,43 +25,40 @@ return {
 		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
-		config = function()
-			if theme_mode() == "dark" then
-				apply_theme()
-			end
-		end,
 	},
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 		lazy = false,
 		priority = 1000,
+		dependencies = { "folke/tokyonight.nvim" },
 		config = function()
-			if theme_mode() == "light" then
-				apply_theme()
-			end
+			apply_theme()
 
+			vim.api.nvim_create_autocmd("OptionSet", {
+				group = vim.api.nvim_create_augroup("dotfiles_theme", { clear = true }),
+				pattern = "background",
+				callback = apply_theme,
+			})
+
+			-- Manual overrides last until the terminal next reports a theme change.
 			vim.api.nvim_create_user_command("ThemeDark", function()
-				write_theme_mode("dark")
-				apply_theme()
+				set_background("dark")
 			end, {})
 
 			vim.api.nvim_create_user_command("ThemeLight", function()
-				write_theme_mode("light")
-				apply_theme()
+				set_background("light")
 			end, {})
 
 			vim.api.nvim_create_user_command("ThemeToggle", function()
-				if theme_mode() == "dark" then
-					write_theme_mode("light")
-				else
-					write_theme_mode("dark")
-				end
-
-				apply_theme()
+				set_background(vim.o.background == "dark" and "light" or "dark")
 			end, {})
 
-			vim.api.nvim_create_user_command("ThemeReload", apply_theme, {})
+			-- Ask the terminal for its background color again; Nvim updates
+			-- 'background' from the reply.
+			vim.api.nvim_create_user_command("ThemeReload", function()
+				vim.api.nvim_ui_send("\027]11;?\007")
+			end, {})
 		end,
 	},
 }
