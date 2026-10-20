@@ -7,7 +7,6 @@ Personal dotfiles and system configuration for NixOS, macOS, Home Manager, shell
 - `.config/`: application configuration managed as dotfiles.
 - `nix/`: consolidated NixOS and nix-darwin flake.
 - `scripts/`: helper scripts used by shell aliases and system jobs.
-- `start/`: bootstrap scripts for non-Nix setup flows.
 
 ## Basic Dotfile Setup
 

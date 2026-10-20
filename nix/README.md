@@ -103,11 +103,9 @@ Keep shared skills in `.config/opencode/skills/<name>/SKILL.md`. Home Manager li
 
 ### Terminal And Light/Dark Themes
 
-Darwin uses Ghostty from the Homebrew cask; Home Manager writes its config from `nix/home/ghostty.nix`. Ghostty follows the macOS appearance with Catppuccin Latte for light mode and TokyoNight Night for dark mode, and reports theme changes to programs (DEC mode 2031).
+Ghostty is the terminal on Darwin (from the Homebrew cask) and the Linux desktop profile; Home Manager writes its config from `nix/home/ghostty.nix`. Ghostty follows the macOS appearance with Catppuccin Latte for light mode and TokyoNight Night for dark mode, and reports theme changes to programs (DEC mode 2031).
 
 Neovim does not store a theme. It reads the terminal's background color at startup and on each theme change, then picks `catppuccin-latte` or `tokyonight-night`, so it follows the Mac even over SSH and inside tmux. `:ThemeLight`, `:ThemeDark`, and `:ThemeToggle` override until the next terminal change; `:ThemeReload` asks the terminal again. tmux switches its status bar colors with the `client-light-theme` and `client-dark-theme` hooks, and fzf uses the terminal's ANSI palette. NixOS hosts install Ghostty's terminfo so `TERM=xterm-ghostty` works over SSH.
-
-Alacritty and `scripts/theme-mode` remain only for the Linux desktop profile.
 
 ## Self-hosted LiveSync On Mjolnir
 

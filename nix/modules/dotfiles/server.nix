@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   meta,
   pkgs,
@@ -54,9 +53,6 @@ in
         };
 
         nixpkgs = {
-          overlays = [
-            inputs.alacritty-theme.overlays.default
-          ];
           config = {
             permittedInsecurePackages = [ "electron-25.9.0" ];
             allowUnfree = true;

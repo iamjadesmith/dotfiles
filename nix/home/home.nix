@@ -6,8 +6,6 @@
   user,
   homeDirectory,
   extraConfigFiles ? { },
-  enableAlacritty ? false,
-  enableAlacrittyTheme ? false,
   enableNeovim ? true,
   ...
 }:
@@ -18,11 +16,6 @@ let
     nvim = ".config/nvim";
     "opencode/opencode.json" = ".config/opencode/opencode.json";
     "starship.toml" = ".config/starship.toml";
-  }
-  // lib.optionalAttrs enableAlacrittyTheme {
-    "alacritty/themes/tokyonight.toml" = ".config/alacritty/tokyonight-night.toml";
-    "alacritty/themes/catppuccin-frappe.toml" = ".config/alacritty/catppuccin-frappe.toml";
-    "alacritty/themes/catppuccin-latte.toml" = ".config/alacritty/catppuccin-latte.toml";
   }
   // extraConfigFiles;
   # Share OpenCode skills with Claude Code and Codex. Link each skill individually
@@ -59,15 +52,6 @@ in
       ]
   );
 
-  home.activation.initTheme = lib.mkIf enableAlacrittyTheme (
-    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      if [ ! -e "$HOME/.config/alacritty/theme.toml" ]; then
-        mkdir -p "$HOME/.config/alacritty"
-        cp "${dotfilesDirectory}/.config/alacritty/tokyonight-night.toml" "$HOME/.config/alacritty/theme.toml"
-      fi
-    ''
-  );
-
   home.sessionVariables = { };
 
   programs = {
@@ -80,15 +64,6 @@ in
     zoxide = import ./zoxide.nix { inherit pkgs; };
     starship.enable = true;
     yazi = import ./yazi.nix;
-  }
-  // lib.optionalAttrs enableAlacritty {
-    alacritty = import ./alacritty.nix {
-      inherit
-        pkgs
-        lib
-        meta
-        ;
-    };
   }
   // lib.optionalAttrs enableNeovim {
     neovim = import ./neovim.nix { inherit config pkgs; };

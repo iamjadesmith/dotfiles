@@ -26,7 +26,7 @@ in
     })
   ];
 
-  programs.ghostty = import ./ghostty.nix { inherit meta; };
+  programs.ghostty = import ./ghostty.nix { inherit meta pkgs; };
 
   programs.zsh.initContent = lib.mkBefore ''
     # Cache brew shellenv so Homebrew tools are available without slowing every shell startup.

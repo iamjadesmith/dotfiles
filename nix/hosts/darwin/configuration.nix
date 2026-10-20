@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   meta,
   pkgs,
   self,
@@ -12,9 +11,6 @@ let
 in
 {
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [
-    inputs.alacritty-theme.overlays.default
-  ];
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono

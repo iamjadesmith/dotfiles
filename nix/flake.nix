@@ -16,8 +16,6 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
-
     # mjolnir's personal apps on Forgejo. Inputs are fetched lazily, so only
     # building mjolnir needs Forgejo; see nix/README.md if it is down.
     budget = {

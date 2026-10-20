@@ -1,11 +1,11 @@
-{ meta }:
+{ meta, pkgs }:
 {
   enable = true;
-  # The app comes from the Homebrew cask; Home Manager only writes the config.
-  package = null;
+  # On Darwin the app comes from the Homebrew cask; Home Manager only writes the config.
+  package = if pkgs.stdenv.hostPlatform.isDarwin then null else pkgs.ghostty;
 
   settings = {
-    # Follows the macOS appearance. Ghostty also reports theme changes to
+    # Follows the system light/dark appearance. Ghostty also reports theme changes to
     # programs (DEC mode 2031), which Neovim uses to switch colorschemes live.
     theme = "light:Catppuccin Latte,dark:TokyoNight Night";
 

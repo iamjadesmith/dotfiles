@@ -25,7 +25,6 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    alacritty
     ansible
     apacheHttpd
     bitwarden-cli

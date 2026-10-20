@@ -71,14 +71,12 @@ Lint shell scripts:
 
 ```bash
 shellcheck scripts/*
-shellcheck start/*.sh
 ```
 
 Syntax-check shell scripts:
 
 ```bash
 bash -n scripts/script_name
-bash -n start/arch.sh
 ```
 
 Lint Lua files:

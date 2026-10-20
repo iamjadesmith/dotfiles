@@ -19,8 +19,6 @@
         user
         homeDirectory
         ;
-      enableAlacritty = true;
-      enableAlacrittyTheme = true;
       extraConfigFiles = {
         swaync = ".config/swaync";
         waybar = ".config/waybar";
@@ -50,6 +48,7 @@
   };
 
   programs.firefox = import ./firefox.nix;
+  programs.ghostty = import ./ghostty.nix { inherit meta pkgs; };
 
   wayland.windowManager.hyprland = import ./hyprland.nix { inherit config; };
 }
