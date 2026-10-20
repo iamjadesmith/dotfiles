@@ -44,10 +44,9 @@
   services.darkman = {
     enable = true;
     settings = {
-      # Approximate location; only used to compute sunrise and sunset.
-      lat = 41.9;
-      lng = -87.6;
-      usegeoclue = false;
+      # Look up the location at runtime (GeoClue, enabled in the Linux desktop
+      # profile) so no coordinates live in this repo.
+      usegeoclue = true;
     };
     scripts.gtk-theme = ''
       if [[ "$1" == "dark" ]]; then
