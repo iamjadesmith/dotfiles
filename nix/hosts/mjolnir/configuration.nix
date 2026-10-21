@@ -152,6 +152,17 @@ in
     };
   };
 
+  # Push monitors on uptime.joejad.com; see modules/dotfiles/kuma-push.nix.
+  dotfiles.kumaPush = {
+    units = [
+      "borgbackup-job-mjolnir"
+      "borgbackup-job-wedding-preview"
+      "backup-vaultwarden"
+      "vpn-watchdog"
+    ];
+    postgresDumps.enable = true;
+  };
+
   # Static addresses on the server VLAN; OPNsense keeps the matching host entries.
   # RAs still provide the GUA and the IPv6 default route.
   dotfiles.server.networkd.enable = true;

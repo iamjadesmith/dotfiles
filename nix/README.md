@@ -211,6 +211,18 @@ to the existing off-host mjolnir Borg repository. Use only
 the fixed `wedding_preview_restore_verify` database for same-cluster application backup verification;
 the PostgreSQL HBA rejects the service role from every other database.
 
+## Uptime Kuma
+
+The main instance runs on mjolnir at `https://uptime.joejad.com` and watches every service, host, and
+background job. Monitors live in Kuma's database (`/var/lib/uptime-kuma`, included in mjolnir's Borg job),
+not in Nix, so add and edit them in the web UI. Timed jobs report through push monitors set up with
+`dotfiles.kumaPush` (see Custom Modules); after creating a push monitor in the UI, write its URL to
+`/var/lib/kuma-push/<service name>` on the host that runs the job (`sudo install -m 600 /dev/stdin ...`).
+
+Kuma cannot report its own host going down, so joejadserver runs a second instance at
+`http://joejadserver.joejad.lan:3001` (LAN and Tailscale) that pings mjolnir and checks mjolnir's Kuma.
+mjolnir's Kuma checks the joejadserver instance in turn. Both alert through the same Discord notification.
+
 ## Custom Modules
 
 The `modules/dotfiles/` directory contains small modules that remove repeated NixOS host boilerplate.
@@ -220,6 +232,7 @@ The `modules/dotfiles/` directory contains small modules that remove repeated Ni
 - `jade.nix`: shared `jade` user setup with host-specific password and SSH key additions.
 - `docker.nix`: shared Docker defaults.
 - `borg.nix`: shared Borg user, SSH key generation, and backup job defaults.
+- `kuma-push.nix`: `dotfiles.kumaPush.units` pushes to an Uptime Kuma push monitor after each successful run of the listed services, and `dotfiles.kumaPush.postgresDumps.enable` adds a daily check that every `services.postgresqlBackup` dump is under 26 hours old. Push URLs contain the monitor token, so they live outside the repo in root-only `/var/lib/kuma-push/<service name>` files on each host; a missing file skips the push.
 - `opencode.nix`: upstream V2 installer and daily stable-release updates for NixOS.
 
 Keep custom modules small and easy to understand. If a repeated pattern is only a few lines, prefer a local `let` binding in the host file instead of a new abstraction.

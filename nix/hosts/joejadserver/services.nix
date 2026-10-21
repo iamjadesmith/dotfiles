@@ -61,6 +61,19 @@
     };
   };
 
+  # Second Uptime Kuma that watches mjolnir, which cannot report its own outage.
+  # Reachable on the LAN and Tailscale at http://joejadserver.joejad.lan:3001.
+  services.uptime-kuma = {
+    enable = true;
+    settings.HOST = "0.0.0.0";
+  };
+
+  # Push monitors on uptime.joejad.com; see modules/dotfiles/kuma-push.nix.
+  dotfiles.kumaPush = {
+    units = [ "borgbackup-job-joejadserver" ];
+    postgresDumps.enable = true;
+  };
+
   services.postgresqlBackup = {
     enable = true;
     databases = [ "forgejo" ];

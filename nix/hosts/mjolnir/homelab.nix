@@ -11,7 +11,6 @@ let
     useACMEHost = domain;
     forceSSL = true;
   };
-  freshrssApiPort = 8095;
 
   vpnNamespace = "vpn";
   vpnNamespacePath = "/run/netns/${vpnNamespace}";
@@ -397,41 +396,6 @@ in
     passwordFile = config.sops.secrets.freshrss_pass.path;
   };
 
-  # Public FreshRSS API for mobile readers: the Cloudflare tunnel sends
-  # rss-api.joejad.com to this localhost-only server. Only the Google Reader
-  # and Fever endpoints are served; the web UI stays on rss.joejad.com.
-  # Keyed on the real client address, since real_ip runs before limit_req.
-  services.nginx.appendHttpConfig = ''
-    limit_req_zone $binary_remote_addr zone=freshrss_api:10m rate=10r/s;
-  '';
-  services.nginx.virtualHosts."rss-api.${domain}" = {
-    listen = [
-      {
-        addr = "127.0.0.1";
-        port = freshrssApiPort;
-      }
-    ];
-    root = "${config.services.freshrss.package}/p";
-    extraConfig = ''
-      # Log the client address cloudflared forwards instead of 127.0.0.1.
-      set_real_ip_from 127.0.0.1;
-      real_ip_header CF-Connecting-IP;
-      # Room for a reader's sync burst; sustained guessing gets 429s.
-      limit_req zone=freshrss_api burst=100 nodelay;
-      limit_req_status 429;
-    '';
-    locations."~ ^/api/(greader|fever)\\.php(/.*)?$".extraConfig = ''
-      fastcgi_pass unix:${config.services.phpfpm.pools.freshrss.socket};
-      fastcgi_split_path_info ^(.+\.php)(/.*)$;
-      # greader.php needs PATH_INFO; see the FreshRSS NixOS module.
-      set $path_info $fastcgi_path_info;
-      fastcgi_param PATH_INFO $path_info;
-      include ${pkgs.nginx}/conf/fastcgi_params;
-      include ${pkgs.nginx}/conf/fastcgi.conf;
-    '';
-    locations."/".return = "404";
-  };
-
   systemd.services.jellyfin.environment.LIBVA_DRIVER_NAME = "iHD";
   environment.sessionVariables = {
     LIBVA_DRIVER_NAME = "iHD";
@@ -529,6 +493,11 @@ in
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${lib.getExe vpnSelectServer} --if-stale";
+      # A fresh handshake alone does not prove traffic flows, so the Uptime Kuma
+      # push (dotfiles.kumaPush) only runs once a request leaves through the tunnel.
+      ExecStartPost = [
+        "${pkgs.iproute2}/bin/ip netns exec ${vpnNamespace} ${pkgs.curl}/bin/curl --fail --silent --show-error --output /dev/null --max-time 15 https://1.1.1.1/cdn-cgi/trace"
+      ];
     };
   };
 

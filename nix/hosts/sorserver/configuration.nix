@@ -110,6 +110,12 @@ in
     };
   };
 
+  # Push monitors on uptime.joejad.com; see modules/dotfiles/kuma-push.nix.
+  dotfiles.kumaPush = {
+    units = [ "borgbackup-job-sorserver" ];
+    postgresDumps.enable = true;
+  };
+
   services.nginx.virtualHosts."immich.${domain}" = ssl // {
     locations."/" = {
       proxyPass = "http://[::1]:${toString config.services.immich.port}";
@@ -231,6 +237,13 @@ in
         ];
       };
       forward-zone = [
+        # Push monitors report to mjolnir's Uptime Kuma, which OPNsense resolves.
+        {
+          name = "uptime.joejad.com.";
+          forward-addr = [
+            "10.3.0.1"
+          ];
+        }
         {
           name = "joejad.lan.";
           forward-addr = [

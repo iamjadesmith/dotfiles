@@ -115,6 +115,7 @@
               ./modules/dotfiles/sops.nix
               ./modules/dotfiles/docker.nix
               ./modules/dotfiles/borg.nix
+              ./modules/dotfiles/kuma-push.nix
               ./modules/nix-maintenance.nix
               ./modules/common-packages.nix
               disko.nixosModules.disko
