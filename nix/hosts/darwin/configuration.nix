@@ -42,10 +42,6 @@ in
       "tree-sitter-cli"
       "yt-dlp"
       "libpq"
-      {
-        name = "anomalyco/tap/opencode-v2";
-        conflicts_with = [ "opencode" ];
-      }
     ];
     casks = [
       "firefox"

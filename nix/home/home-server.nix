@@ -27,6 +27,4 @@
       nix-direnv.enable = true;
     };
   };
-
-  home.sessionPath = [ "${homeDirectory}/.opencode/bin" ];
 }

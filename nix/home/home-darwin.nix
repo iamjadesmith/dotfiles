@@ -52,17 +52,4 @@ in
     source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/.hammerspoon/init.lua";
     force = true;
   };
-
-  launchd.agents.opencode-upgrade = {
-    enable = true;
-    config = {
-      ProgramArguments = [
-        "/opt/homebrew/bin/brew"
-        "upgrade"
-        "anomalyco/tap/opencode-v2"
-      ];
-      RunAtLoad = true;
-      StartInterval = 86400;
-    };
-  };
 }

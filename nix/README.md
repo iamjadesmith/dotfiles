@@ -91,11 +91,9 @@ Darwin Homebrew packages live in `hosts/darwin/configuration.nix` under `homebre
 
 Prefer Nix packages for shared command-line tools when they build reliably on each platform. Prefer Homebrew for Darwin GUI apps or Darwin packages that are broken in the current Nix channel.
 
-### OpenCode V2
+### OpenCode
 
-OpenCode is installed independently of nixpkgs so it can follow upstream stable releases. NixOS installs the official V2 binary in `~jade/.opencode/bin` through `opencode-update.service`; `opencode-update.timer` checks daily. Run `sudo systemctl start opencode-update.service` to check immediately. The binary needs `programs.nix-ld` on NixOS. On mjolnir, updating it also restarts `opencode-web.service`, which runs V2's `serve` command and uses the existing SOPS-managed password.
-
-Darwin installs `anomalyco/tap/opencode-v2` through nix-darwin's Homebrew configuration. The Home Manager `opencode-upgrade` launchd agent checks for formula upgrades daily. Run `brew upgrade anomalyco/tap/opencode-v2` to check immediately. Restart any running OpenCode clients to use a newly installed binary. The global OpenCode configuration lives in `.config/opencode/opencode.json`; V2's migration guide is at <https://opencode.ai/v2/docs/migrate-v1/>.
+OpenCode comes from nixpkgs through `commonPackages` on NixOS and Darwin, so it updates with `nix flake update`. The global configuration lives in `.config/opencode/opencode.json`.
 
 ### Shared Agent Skills
 
@@ -233,7 +231,6 @@ The `modules/dotfiles/` directory contains small modules that remove repeated Ni
 - `docker.nix`: shared Docker defaults.
 - `borg.nix`: shared Borg user, SSH key generation, and backup job defaults.
 - `kuma-push.nix`: `dotfiles.kumaPush.units` pushes to an Uptime Kuma push monitor after each successful run of the listed services, and `dotfiles.kumaPush.postgresDumps.enable` adds a daily check that every `services.postgresqlBackup` dump is under 26 hours old. Push URLs contain the monitor token, so they live outside the repo in root-only `/var/lib/kuma-push/<service name>` files on each host; a missing file skips the push.
-- `opencode.nix`: upstream V2 installer and daily stable-release updates for NixOS.
 
 Keep custom modules small and easy to understand. If a repeated pattern is only a few lines, prefer a local `let` binding in the host file instead of a new abstraction.
 

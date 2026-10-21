@@ -33,12 +33,6 @@ in
       vaultwarden_env = { };
       nextcloud_admin_pass = { };
       cloudflared_creds = { };
-      opencode_server_password = {
-        owner = "jade";
-        group = "users";
-        mode = "0400";
-        restartUnits = [ "opencode-web.service" ];
-      };
       searx_secret_key = { };
       wedding_preview_form_signing_key = { };
       wedding_preview_admin_password_hash = { };

@@ -26,6 +26,7 @@ let
     nil
     nixfmt
     nodejs
+    opencode
     ripgrep
     ruff
     rustup

@@ -130,17 +130,6 @@ in
       locations."/".proxyPass = "http://127.0.0.1:3001";
     };
 
-    "code.${domain}" = ssl // {
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:4096";
-        proxyWebsockets = true;
-        extraConfig = ''
-          proxy_buffering off;
-          proxy_read_timeout 3600s;
-        '';
-      };
-    };
-
     "rss.${domain}" = ssl;
 
     "jellyfin.${domain}" = ssl // {
@@ -250,66 +239,6 @@ in
   };
 
   services.uptime-kuma.enable = true;
-
-  systemd.services.opencode-web = {
-    description = "OpenCode web interface";
-    wantedBy = [ "multi-user.target" ];
-    requires = [ "opencode-update.service" ];
-    after = [ "opencode-update.service" ];
-    environment = {
-      HOME = "/home/jade";
-      OPENCODE_SERVER_USERNAME = "opencode";
-      PATH = lib.mkForce "/run/current-system/sw/bin";
-      XDG_CACHE_HOME = "/home/jade/.cache";
-      XDG_CONFIG_HOME = "/home/jade/.config";
-      XDG_DATA_HOME = "/home/jade/.local/share";
-      XDG_STATE_HOME = "/home/jade/.local/state";
-    };
-    script = ''
-      export OPENCODE_SERVER_PASSWORD="$(< ${config.sops.secrets.opencode_server_password.path})"
-      exec /home/jade/.opencode/bin/opencode serve --hostname 127.0.0.1 --port 4096
-    '';
-    serviceConfig = {
-      User = "jade";
-      Group = "users";
-      WorkingDirectory = "/home/jade";
-      Restart = "on-failure";
-      RestartSec = "5s";
-
-      BindPaths = [
-        "/home/jade/projects"
-        "/home/jade/.dotfiles"
-        "/home/jade/obsidian"
-        "/home/jade/.cache/opencode"
-        "/home/jade/.local/share/opencode"
-        "/home/jade/.local/state/opencode"
-      ];
-      BindReadOnlyPaths = [
-        "/home/jade/.config/git"
-        "/home/jade/.config/opencode"
-        "/home/jade/.opencode/bin"
-      ];
-      InaccessiblePaths = [
-        "-/run/docker.sock"
-        "-/var/run/docker.sock"
-      ];
-
-      CapabilityBoundingSet = "";
-      LockPersonality = true;
-      NoNewPrivileges = true;
-      PrivateDevices = true;
-      PrivateTmp = true;
-      ProtectClock = true;
-      ProtectControlGroups = true;
-      ProtectHome = "tmpfs";
-      ProtectKernelLogs = true;
-      ProtectKernelModules = true;
-      ProtectKernelTunables = true;
-      ProtectSystem = "strict";
-      RestrictRealtime = true;
-      RestrictSUIDSGID = true;
-    };
-  };
 
   # Always-on Claude Code Remote Control session in ~/.dotfiles, reachable from
   # claude.ai/code and the mobile app. Unsandboxed on purpose: it is a normal dev
