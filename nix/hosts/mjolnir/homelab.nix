@@ -614,8 +614,6 @@ in
     maxUploadSize = "16G";
     config = {
       dbtype = "pgsql";
-      adminuser = "jade";
-      adminpassFile = config.sops.secrets.nextcloud_admin_pass.path;
     };
     settings = {
       trusted_domains = [ "cloud.joejad.com" ];
