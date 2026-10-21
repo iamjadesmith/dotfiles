@@ -33,7 +33,6 @@ in
     enable = true;
     brews = [
       "mas"
-      "syncthing"
       "cmake"
       "ninja"
       "dfu-util"
