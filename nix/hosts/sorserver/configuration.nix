@@ -26,7 +26,6 @@ in
   dotfiles.sops = {
     enable = true;
     secrets = {
-      nextcloud_admin_pass = { };
       cloudflared_token = {
         mode = "0400";
         restartUnits = [ "docker-cloudflared.service" ];

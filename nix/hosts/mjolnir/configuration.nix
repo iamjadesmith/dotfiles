@@ -31,7 +31,6 @@ in
       };
       nordvpn_wireguard_private_key = { };
       vaultwarden_env = { };
-      nextcloud_admin_pass = { };
       cloudflared_creds = { };
       searx_secret_key = { };
       wedding_preview_form_signing_key = { };
