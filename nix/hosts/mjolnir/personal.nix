@@ -55,6 +55,7 @@ in
     inputs.workoutRust.nixosModules.default
     inputs.tallyRust.nixosModules.default
     inputs.stock.nixosModules.default
+    inputs.study.nixosModules.default
     inputs.yahtzeeRust.nixosModules.default
     inputs.mealPlanner.nixosModules.default
     weddingModule
@@ -105,6 +106,11 @@ in
     environmentFiles = [ config.sops.secrets.stock_env.path ];
   };
 
+  services.study = {
+    enable = true;
+    booksDir = "/home/jade/study-books";
+  };
+
   services."tally-rust".enable = true;
 
   services."yahtzee-rust".enable = true;
@@ -150,6 +156,22 @@ in
 
     "run.${domain}" = ssl // {
       locations."/".proxyPass = "http://127.0.0.1:8085";
+    };
+
+    # Copyrighted study material: LAN and Tailscale only.
+    "study.${domain}" = ssl // {
+      extraConfig = ''
+        allow 10.3.0.0/24;
+        allow 10.10.3.0/24;
+        allow 10.10.10.0/24;
+        allow 10.26.27.0/24;
+        allow 10.47.59.0/24;
+        allow 100.64.0.0/10;
+        allow fd3a:3dab:51b8::/48;
+        allow fd7a:115c:a1e0::/48;
+        deny all;
+      '';
+      locations."/".proxyPass = "http://127.0.0.1:8092";
     };
 
     "tally.${domain}" = ssl // {

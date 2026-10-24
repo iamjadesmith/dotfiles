@@ -1,6 +1,6 @@
 ---
 name: mjolnir-personal-services
-description: Use when changing, committing, releasing, or deploying the budget, food_log, golf_rust, meals, receipt_breakdown, running, tally_rust, workout_rust, yahtzee_rust, or stock personal services on mjolnir. Verifies and pushes application changes, updates the app's flake input in ~/.dotfiles, deploys mjolnir, verifies the service, and commits the lock update.
+description: Use when changing, committing, releasing, or deploying the budget, food_log, golf_rust, meals, receipt_breakdown, running, study, tally_rust, workout_rust, yahtzee_rust, or stock personal services on mjolnir. Verifies and pushes application changes, updates the app's flake input in ~/.dotfiles, deploys mjolnir, verifies the service, and commits the lock update.
 ---
 
 # Mjolnir Personal Services
@@ -18,6 +18,7 @@ asking; "local only", "do not deploy", or "do not commit" overrides that.
 | `meals` | `mealPlanner` | `meal-planner` | `https://meals.joejad.com/health` |
 | `receipt_breakdown` | `receiptBreakdown` | `receipt-breakdown` | `https://receipt.joejad.com/health` |
 | `running` | `running` | `running` | `https://run.joejad.com/health` |
+| `study` | `study` | `study` | `https://study.joejad.com/health` |
 | `tally_rust` | `tallyRust` | `tally-rust` | `https://tally.joejad.com/health` |
 | `workout_rust` | `workoutRust` | `workout-rust` | `https://workout.joejad.com/` |
 | `yahtzee_rust` | `yahtzeeRust` | `yahtzee-rust` | `https://yahtzee.joejad.com/health` |

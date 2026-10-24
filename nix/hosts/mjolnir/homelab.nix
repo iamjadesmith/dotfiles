@@ -214,23 +214,7 @@ in
         '';
       };
     };
-
-    "study.${domain}" = ssl // {
-      root = "/var/lib/study-html/current";
-      locations."/" = {
-        extraConfig = ''
-          try_files $uri $uri/ =404;
-          add_header Cache-Control "public, max-age=300";
-          add_header X-Content-Type-Options "nosniff" always;
-          add_header Referrer-Policy "no-referrer" always;
-        '';
-      };
-    };
   };
-
-  systemd.tmpfiles.rules = [
-    "d /var/lib/study-html 0755 jade nginx -"
-  ];
 
   services.vaultwarden = {
     enable = true;

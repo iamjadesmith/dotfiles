@@ -46,6 +46,10 @@
       url = "git+http://joejadserver.joejad.lan:3000/jade/stock.git?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    study = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/study.git?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     tallyRust = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/tally_rust.git?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";

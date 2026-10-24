@@ -195,6 +195,7 @@
         "running": "running",
         "sops-nix": "sops-nix",
         "stock": "stock",
+        "study": "study",
         "tallyRust": "tallyRust",
         "workoutRust": "workoutRust",
         "yahtzeeRust": "yahtzeeRust"
@@ -260,6 +261,27 @@
         "ref": "main",
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/stock.git"
+      }
+    },
+    "study": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792866372,
+        "narHash": "sha256-ttVjRKWN/VK8xr7SCrIzHpLC0F8YnwZ2UWhnyVsa/II=",
+        "ref": "main",
+        "rev": "d50659e87913e3e1caac03dd5293225a8bdb9e7f",
+        "revCount": 2,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/study.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/study.git"
       }
     },
     "tallyRust": {
