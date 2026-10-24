@@ -270,11 +270,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792866372,
-        "narHash": "sha256-ttVjRKWN/VK8xr7SCrIzHpLC0F8YnwZ2UWhnyVsa/II=",
+        "lastModified": 1792866648,
+        "narHash": "sha256-SFaJdOJX82VBDVlWnGcveyngB1e8fWo+mfX2V8wum+0=",
         "ref": "main",
-        "rev": "d50659e87913e3e1caac03dd5293225a8bdb9e7f",
-        "revCount": 2,
+        "rev": "263cbaebfcfe94f799a316685178d94b3ca48786",
+        "revCount": 3,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/study.git"
       },
