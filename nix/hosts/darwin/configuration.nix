@@ -50,7 +50,6 @@ in
       "google-chrome"
       "ghostty"
       "obsidian"
-      "raycast"
       "hammerspoon"
     ];
     taps = [
