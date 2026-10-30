@@ -37,7 +37,6 @@ in
       "ninja"
       "dfu-util"
       "helm"
-      "gemini-cli"
       "tree-sitter-cli"
       "yt-dlp"
       "libpq"
@@ -45,11 +44,9 @@ in
     casks = [
       "firefox"
       "discord"
-      # "nikitabobko/tap/aerospace"
       "prismlauncher"
       "nextcloud"
       "linearmouse"
-      "betterdisplay"
       "google-chrome"
       "ghostty"
       "obsidian"
@@ -57,7 +54,6 @@ in
       "hammerspoon"
     ];
     taps = [
-      # "nikitabobko/tap"
       "anomalyco/tap"
     ];
     masApps = {
