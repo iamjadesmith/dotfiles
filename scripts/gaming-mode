@@ -1,0 +1,133 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Frees the GPU and quiets background work on mjolnir while gaming. Everything
+# comes back with `gaming-mode off`, or on its own after a reboot.
+
+state_file=/run/gaming-mode
+
+# Stopped first and started last so it does not send alerts about the rest.
+monitor=uptime-kuma.service
+
+units=(
+  # Hold VRAM on the NVIDIA GPU.
+  ollama.service
+  podman-speaches.service
+  # Background CPU, disk, and memory use.
+  immich-server.service
+  immich-machine-learning.service
+  jellyfin.service
+  deluged.service
+  delugeweb.service
+  sonarr.service
+  radarr.service
+  lidarr.service
+  readarr.service
+  prowlarr.service
+  seerr.service
+  podman-flaresolverr.service
+  # nixos-upgrade can reboot the host and would restart everything above.
+  nixos-upgrade.timer
+  nix-gc.timer
+  nix-optimise.timer
+)
+
+usage() {
+  echo "usage: gaming-mode on|off|status" >&2
+  exit 2
+}
+
+require_root() {
+  if [[ "$EUID" -ne 0 ]]; then
+    exec sudo "$(readlink -f "${BASH_SOURCE[0]}")" "$@"
+  fi
+}
+
+show_gpu() {
+  nvidia-smi --query-gpu=memory.used,memory.total,power.draw,pstate --format=csv,noheader
+}
+
+gaming_on() {
+  # Record everything before stopping: stopping one unit can take others with it.
+  local unit active=()
+  for unit in "$monitor" "${units[@]}"; do
+    if systemctl is-active --quiet "$unit"; then
+      active+=("$unit")
+      echo "$unit" >>"$state_file"
+    fi
+  done
+
+  for unit in "${active[@]}"; do
+    echo "stopping $unit"
+    systemctl stop "$unit"
+  done
+  show_gpu
+}
+
+gaming_off() {
+  if [[ ! -s "$state_file" ]]; then
+    echo "gaming mode is not on"
+    return
+  fi
+
+  local stopped=() restart_monitor=false unit
+  while IFS= read -r unit; do
+    if [[ "$unit" == "$monitor" ]]; then
+      restart_monitor=true
+    else
+      stopped+=("$unit")
+    fi
+  done <"$state_file"
+
+  local failed=false
+  if ((${#stopped[@]} > 0)); then
+    echo "starting ${stopped[*]}"
+    systemctl start "${stopped[@]}" || failed=true
+  fi
+  if [[ "$restart_monitor" == true ]]; then
+    # Give the apps time to answer before their monitors check them.
+    sleep 30
+    systemctl start "$monitor" || failed=true
+  fi
+
+  if [[ "$failed" == true ]]; then
+    echo "some units failed to start; run gaming-mode off to retry" >&2
+    exit 1
+  fi
+  rm -f "$state_file"
+}
+
+gaming_status() {
+  if [[ -s "$state_file" ]]; then
+    echo "gaming mode: on"
+    local unit
+    while IFS= read -r unit; do
+      echo "  $unit: $(systemctl is-active "$unit" || true)"
+    done <"$state_file"
+  else
+    echo "gaming mode: off"
+  fi
+  show_gpu
+}
+
+if [[ "$(hostname)" != mjolnir ]]; then
+  echo "gaming-mode only applies to mjolnir" >&2
+  exit 1
+fi
+
+case "${1:-}" in
+  on)
+    require_root "$@"
+    gaming_on
+    ;;
+  off)
+    require_root "$@"
+    gaming_off
+    ;;
+  status)
+    gaming_status
+    ;;
+  *)
+    usage
+    ;;
+esac

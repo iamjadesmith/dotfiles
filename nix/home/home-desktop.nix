@@ -1,64 +1,15 @@
 {
   config,
-  pkgs,
-  lib,
-  meta,
-  user,
   homeDirectory,
+  meta,
+  pkgs,
   ...
 }:
 
 {
-  imports = [
-    (import ./home.nix {
-      inherit
-        config
-        pkgs
-        lib
-        meta
-        user
-        homeDirectory
-        ;
-      extraConfigFiles = {
-        swaync = ".config/swaync";
-        waybar = ".config/waybar";
-        wofi = ".config/wofi";
-      };
-    })
-  ];
+  imports = [ ./home-server.nix ];
 
-  gtk.enable = true;
-
-  home.pointerCursor = {
-    x11.enable = true;
-    gtk.enable = true;
-    package = pkgs.rose-pine-cursor;
-    name = "BreezeX-RosePine-Linux";
-    size = 24;
-  };
-
-  dconf.enable = true;
-
-  # Switches light/dark at sunrise and sunset. darkman also serves the
-  # color-scheme portal setting that Ghostty follows; the script covers GTK apps.
-  services.darkman = {
-    enable = true;
-    settings = {
-      # Approximate location; only used to compute sunrise and sunset.
-      lat = 41.9;
-      lng = -87.6;
-      usegeoclue = false;
-    };
-    scripts.gtk-theme = ''
-      if [[ "$1" == "dark" ]]; then
-        ${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
-        ${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita-dark'"
-      else
-        ${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
-        ${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita'"
-      fi
-    '';
-  };
+  xdg.configFile.wofi.source = config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/.config/wofi";
 
   programs.firefox = import ./firefox.nix;
   programs.ghostty = import ./ghostty.nix { inherit meta pkgs; };

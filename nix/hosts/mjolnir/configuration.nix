@@ -12,6 +12,8 @@ let
 in
 {
   imports = [
+    ../../modules/profiles/gaming.nix
+    ../../modules/profiles/linux-desktop.nix
     ./dictation.nix
     ./homelab.nix
     ./external.nix

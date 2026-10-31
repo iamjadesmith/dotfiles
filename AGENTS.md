@@ -11,7 +11,7 @@ This repository contains personal dotfiles, NixOS configurations, nix-darwin con
 - `nix/home/home-server.nix`, `nix/home/home-desktop.nix`, and `nix/home/home-darwin.nix` are Home Manager entrypoints.
 - `nix/modules/common-packages.nix` contains shared package groups.
 - `nix/modules/dotfiles/` contains small custom NixOS modules for repeated host patterns.
-- `nix/modules/profiles/` contains optional Linux desktop/profile modules and should be preserved even if currently unused.
+- `nix/modules/profiles/` contains optional Linux desktop/profile modules and should be preserved even if currently unused. mjolnir uses `linux-desktop.nix` and `gaming.nix`.
 - `nix/darwin/` is intentionally removed; use `nix#mini` or `nix#joejadmbp` for Darwin.
 
 ## Build, Lint, And Test Commands
@@ -186,7 +186,7 @@ in
 - NixOS hosts are built from `nix#<hostname>`.
 - Darwin hosts are built from `nix#mini` and `nix#joejadmbp`.
 - Home Manager is managed through the system flakes, not standalone Home Manager commands.
-- Linux desktop profiles are intentionally kept for possible future Linux desktop hosts.
+- mjolnir is a server that also runs Hyprland and Steam on demand; other Linux desktop profiles are intentionally kept for possible future hosts.
 - Test platform-specific service changes on the target platform when possible.
 
 ## Documentation

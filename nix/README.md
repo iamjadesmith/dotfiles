@@ -10,17 +10,17 @@ This directory contains the shared Nix flake for NixOS hosts and macOS nix-darwi
 - `hosts/darwin/configuration.nix`: shared macOS nix-darwin system configuration.
 - `home/home.nix`: shared Home Manager base.
 - `home/home-server.nix`: server Home Manager entrypoint.
-- `home/home-desktop.nix`: Linux desktop Home Manager entrypoint.
+- `home/home-desktop.nix`: Home Manager entrypoint for desktop hosts (mjolnir); adds Hyprland to the server base.
 - `home/home-darwin.nix`: macOS Home Manager entrypoint.
 - `modules/common-packages.nix`: shared package groups for Linux, Linux servers, and Darwin.
 - `modules/dotfiles/`: small custom modules for repeated NixOS host patterns.
-- `modules/profiles/`: optional Linux desktop/profile modules kept for future hosts.
+- `modules/profiles/`: optional Linux desktop/profile modules. mjolnir uses `linux-desktop.nix` and `gaming.nix`; the rest are kept for future hosts.
 
 ## Hosts
 
 - `joejadserver`: NixOS server.
 - `sorserver`: NixOS server.
-- `mjolnir`: NixOS server.
+- `mjolnir`: NixOS server, with Hyprland and Steam for occasional gaming.
 - `mini`: nix-darwin configuration for the Mac mini.
 - `joejadmbp`: nix-darwin configuration for the MacBook Pro.
 
@@ -101,7 +101,7 @@ Keep shared skills in `.config/opencode/skills/<name>/SKILL.md`. Home Manager li
 
 ### Terminal And Light/Dark Themes
 
-Ghostty is the terminal on Darwin (from the Homebrew cask) and the Linux desktop profile; Home Manager writes its config from `nix/home/ghostty.nix`. Ghostty follows the system appearance with Catppuccin Latte for light mode and TokyoNight Night for dark mode, and reports theme changes to programs (DEC mode 2031). On the Linux desktop profile, darkman switches the system between light and dark at sunrise and sunset (coordinates in `nix/home/home-desktop.nix`) and serves that setting through the XDG settings portal; run `darkman toggle` to switch manually.
+Ghostty is the terminal on Darwin (from the Homebrew cask) and the Linux desktop profile; Home Manager writes its config from `nix/home/ghostty.nix`. Ghostty follows the system appearance with Catppuccin Latte for light mode and TokyoNight Night for dark mode, and reports theme changes to programs (DEC mode 2031).
 
 Neovim does not store a theme. It reads the terminal's background color at startup and on each theme change, then picks `catppuccin-latte` or `tokyonight-night`, so it follows the Mac even over SSH and inside tmux. `:ThemeLight`, `:ThemeDark`, and `:ThemeToggle` override until the next terminal change; `:ThemeReload` asks the terminal again. tmux switches its status bar colors with the `client-light-theme` and `client-dark-theme` hooks, and fzf uses the terminal's ANSI palette. NixOS hosts install Ghostty's terminfo so `TERM=xterm-ghostty` works over SSH.
 
@@ -208,6 +208,12 @@ requires a fresh successful PostgreSQL dump, then sends it and the private weddi
 to the existing off-host mjolnir Borg repository. Use only
 the fixed `wedding_preview_restore_verify` database for same-cluster application backup verification;
 the PostgreSQL HBA rejects the service role from every other database.
+
+## Gaming On Mjolnir
+
+Mjolnir is still a server first. Hyprland only runs after logging in on the TTY and running `Hyprland`, so idle power is unchanged the rest of the time. `SUPER+ALT+E` exits it.
+
+Run `gaming-mode on` before a game that needs all of the GPU's VRAM, `gaming-mode off` afterward, and `gaming-mode status` to check. It stops Ollama and Speaches (the only GPU users), the media apps and Immich, and Uptime Kuma on mjolnir so they do not send alerts, and pauses the auto-upgrade and Nix cleanup timers. Other apps stay up. A rebuild or reboot brings the stopped units back; run `gaming-mode on` again after a rebuild.
 
 ## Uptime Kuma
 

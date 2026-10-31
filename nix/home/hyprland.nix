@@ -2,17 +2,14 @@
 {
   enable = true;
   settings = {
-    "$mod" = "ALT";
+    # Super, not Alt: games use Alt, and Alt+Q here would close the game.
+    "$mod" = "SUPER";
     bind = [
       "$mod, F, exec, firefox"
-      "$mod, N, exec, swaync-client -t"
       "$mod, RETURN, exec, ghostty"
-      "$mod+SUPER, E, exit"
-      "$mod+SUPER, S, exec, systemctl suspend"
-      "$mod+SUPER, R, exec, systemctl restart"
-      "$mod+SUPER, Q, exec, shutdown now"
+      "$mod+ALT, E, exit"
       "$mod, Q, killactive"
-      "$mod, V, togglesplit"
+      "$mod, V, layoutmsg, togglesplit"
       "$mod, H, movefocus, l"
       "$mod, L, movefocus, r"
       "$mod, K, movefocus, u"
@@ -22,10 +19,10 @@
       "$mod+SHIFT, K, movewindow, u"
       "$mod+SHIFT, J, movewindow, d"
       "$mod, Space, exec, wofi --show drun"
-      "$mod+SUPER, H, resizeactive, -10 -10"
-      "$mod+SUPER, L, resizeactive, 10 -10"
-      "$mod+SUPER, K, resizeactive, 10 -10"
-      "$mod+SUPER, J, resizeactive, -10 -10"
+      "$mod+ALT, H, resizeactive, -10 -10"
+      "$mod+ALT, L, resizeactive, 10 -10"
+      "$mod+ALT, K, resizeactive, 10 -10"
+      "$mod+ALT, J, resizeactive, -10 -10"
     ]
     ++ (builtins.concatLists (
       builtins.genList (
@@ -43,35 +40,26 @@
         ]
       ) 10
     ));
-    monitor = [
-      "DP-3,3840x2160@239.99,0x0,1.5"
-      "Unknown-1,disable"
-    ];
-    exec-once = [
-      "obsidian"
-      "firefox"
-      "ghostty"
-      "swaync"
-    ];
+    # No connector name, so moving between HDMI and DisplayPort needs no change.
+    monitor = [ ",3840x2160@239.99,0x0,1.5" ];
+    # Variable refresh for fullscreen games only.
+    misc.vrr = 2;
+    exec-once = [ "ghostty" ];
     bindl = [
       ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ];
-    windowrulev2 = [
-      "workspace 1, class:^(com.mitchellh.ghostty)$"
-      "workspace 2, class:^(firefox)$"
-      "workspace 3, class:^(obsidian)$"
-    ];
     xwayland.force_zero_scaling = true;
     cursor.no_hardware_cursors = true;
     env = [
       "MOZ_ENABLE_WAYLAND,1"
-      "LIBVA_DRIVER_NAME,nvidia"
       "XDG_SESSION_TYPE,wayland"
       "GBM_BACKEND,nvidia-drm"
       "__GLX_VENDOR_LIBRARY_NAME,nvidia"
       "NIXOS_OZONE_WL,1"
+      # force_zero_scaling leaves XWayland apps unscaled, and Steam is one.
+      "STEAM_FORCE_DESKTOPUI_SCALING,1.5"
     ];
   };
   extraConfig = ''

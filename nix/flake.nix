@@ -91,6 +91,7 @@
         {
           name = "mjolnir";
           server = true;
+          desktop = true;
         }
       ];
       darwinHosts = [
@@ -132,7 +133,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.users.${linuxUser} =
-                  if host.server == true then import ./home/home-server.nix else import ./home/home-desktop.nix;
+                  if host.desktop or false then import ./home/home-desktop.nix else import ./home/home-server.nix;
                 home-manager.extraSpecialArgs = {
                   inherit inputs;
                   meta = host;
