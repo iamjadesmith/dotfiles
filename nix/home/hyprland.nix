@@ -45,10 +45,16 @@
     # Variable refresh for fullscreen games only.
     misc.vrr = 2;
     exec-once = [ "ghostty" ];
-    bindl = [
-      ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+    # Hold to repeat. Volume follows the default output, including AirPlay speakers.
+    bindel = [
+      ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      "$mod, EQUAL, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+      "$mod, MINUS, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+    ];
+    bindl = [
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      "$mod, M, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ];
     xwayland.force_zero_scaling = true;
     cursor.no_hardware_cursors = true;

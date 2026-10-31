@@ -221,6 +221,8 @@ PipeWire discovers AirPlay speakers over mDNS and adds each one as an output; pi
 
 HomePods answer `403 Forbidden` to PipeWire's own User-Agent, so mjolnir builds PipeWire with an iTunes User-Agent in `hosts/mjolnir/configuration.nix`. If that patch stops matching after an update, the build prints a warning and the 403 comes back.
 
+Latency is set to PipeWire's minimum of `raop.latency.ms = 250`, about 0.5 s end to end; raise it if audio drops out. In Hyprland, `SUPER+=` and `SUPER+-` change the default output's volume, and `SUPER+M` mutes it.
+
 ## Uptime Kuma
 
 The main instance runs on mjolnir at `https://uptime.joejad.com` and watches every service, host, and

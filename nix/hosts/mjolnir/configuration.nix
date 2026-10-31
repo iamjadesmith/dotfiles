@@ -212,7 +212,11 @@ in
     });
     raopOpenFirewall = true;
     extraConfig.pipewire."50-raop-discover"."context.modules" = [
-      { name = "libpipewire-module-raop-discover"; }
+      {
+        name = "libpipewire-module-raop-discover";
+        # Default is 1500 ms; 250 is the lowest PipeWire accepts.
+        args."raop.latency.ms" = 250;
+      }
     ];
   };
 
