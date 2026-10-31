@@ -223,6 +223,8 @@ HomePods answer `403 Forbidden` to PipeWire's own User-Agent, so mjolnir builds 
 
 Latency is set to PipeWire's minimum of `raop.latency.ms = 250`, about 0.5 s end to end; raise it if audio drops out. In Hyprland, `SUPER+=` and `SUPER+-` change the default output's volume, and `SUPER+M` mutes it.
 
+`SUPER+A` or `homepod toggle` switches between the Office HomePod and the wired output; `homepod on`, `off`, and `status` also work.
+
 ## Uptime Kuma
 
 The main instance runs on mjolnir at `https://uptime.joejad.com` and watches every service, host, and

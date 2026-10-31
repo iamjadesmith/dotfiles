@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Moves mjolnir's audio between the Office HomePod and the wired output. Running
+# apps follow the default output, and PipeWire drops the AirPlay session once
+# nothing is playing to the HomePod.
+
+# The rest of the HomePod's sink name is its IP address and port.
+homepod_prefix=raop_sink.Office-HomePod.local.
+wired_sink=alsa_output.pci-0000_80_1f.3.iec958-stereo
+
+usage() {
+  echo "usage: homepod on|off|toggle|status" >&2
+  exit 2
+}
+
+notify() {
+  hyprctl notify -1 3000 "rgb(89b4fa)" "$1" >/dev/null 2>&1 || true
+}
+
+find_homepod() {
+  pw-dump | jq -r --arg prefix "$homepod_prefix" '
+    [.[].info.props["node.name"]? // empty | select(startswith($prefix))][0] // empty'
+}
+
+current_sink() {
+  pw-dump | jq -r '
+    [.[] | select(.props["metadata.name"]? == "default") | .metadata[]
+      | select(.key == "default.audio.sink") | .value.name][0] // empty'
+}
+
+set_default() {
+  pw-metadata 0 default.configured.audio.sink "{\"name\":\"$1\"}" Spa:String:JSON >/dev/null
+}
+
+homepod_on() {
+  local homepod_sink
+  homepod_sink="$(find_homepod)"
+  if [[ -z "$homepod_sink" ]]; then
+    notify "Audio: HomePod not found"
+    echo "homepod: Office HomePod not found" >&2
+    exit 1
+  fi
+  set_default "$homepod_sink"
+  notify "Audio: HomePod"
+  echo "HomePod"
+}
+
+homepod_off() {
+  set_default "$wired_sink"
+  notify "Audio: wired"
+  echo "wired"
+}
+
+is_on() {
+  [[ "$(current_sink)" == "$homepod_prefix"* ]]
+}
+
+case "${1:-}" in
+  on) homepod_on ;;
+  off) homepod_off ;;
+  toggle) if is_on; then homepod_off; else homepod_on; fi ;;
+  status) if is_on; then echo "HomePod"; else echo "wired"; fi ;;
+  *) usage ;;
+esac
