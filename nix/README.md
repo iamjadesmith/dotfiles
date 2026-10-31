@@ -215,6 +215,10 @@ Mjolnir is still a server first. Hyprland only runs after logging in on the TTY 
 
 Run `gaming-mode on` before a game that needs all of the GPU's VRAM, `gaming-mode off` afterward, and `gaming-mode status` to check. It stops Ollama and Speaches (the only GPU users), the media apps and Immich, and Uptime Kuma on mjolnir so they do not send alerts, and pauses the auto-upgrade and Nix cleanup timers. Other apps stay up. A rebuild or reboot brings the stopped units back; run `gaming-mode on` again after a rebuild.
 
+## AirPlay On Mjolnir
+
+PipeWire discovers AirPlay speakers over mDNS and adds each one as an output; pick one with `wpctl status` and `wpctl set-default <id>`, or per stream with `pw-play --target`. The speakers are on `10.26.27.0/24` and mjolnir is on `10.3.0.0/24`, so OPNsense has to pass TCP 7000 and UDP from mjolnir to each speaker, and UDP 6001-6002 from the speakers back to mjolnir. mDNS is reflected between the VLANs, so a speaker can be listed even when these rules are missing.
+
 ## Uptime Kuma
 
 The main instance runs on mjolnir at `https://uptime.joejad.com` and watches every service, host, and

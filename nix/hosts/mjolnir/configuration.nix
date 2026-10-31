@@ -199,6 +199,15 @@ in
   ];
   networking.firewall.checkReversePath = "loose";
 
+  # AirPlay speakers on the LAN show up as PipeWire sinks. The speakers live on
+  # 10.26.27.0/24, so OPNsense has to pass RTSP and audio between the VLANs.
+  services.pipewire = {
+    raopOpenFirewall = true;
+    extraConfig.pipewire."50-raop-discover"."context.modules" = [
+      { name = "libpipewire-module-raop-discover"; }
+    ];
+  };
+
   systemd.services.borgbackup-job-mjolnir.serviceConfig.ReadWritePaths = [
     "/run/lock/livesync-cli.lock"
   ];
