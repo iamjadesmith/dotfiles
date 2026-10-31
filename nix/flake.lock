@@ -167,11 +167,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792519311,
-        "narHash": "sha256-RFN96C0jGjgiVuP0NdkZ/mFnZf9ewxHPUUkdO4oqDuw=",
+        "lastModified": 1793460978,
+        "narHash": "sha256-+QiuPEg1Syfl7ck/ONiALtoh4V59GFGILbojfmzgfuo=",
         "ref": "main",
-        "rev": "c3865abb80c28212a63b82ee31eabbedd5333e12",
-        "revCount": 3,
+        "rev": "7a5c60caa248b061196f7d5454e2a6716c3cd531",
+        "revCount": 4,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/receipt_breakdown.git"
       },
