@@ -13,6 +13,7 @@ in
 {
   imports = [
     ../../modules/profiles/gaming.nix
+    ../../modules/profiles/kanata-caps-escape.nix
     ../../modules/profiles/linux-desktop.nix
     ./dictation.nix
     ./homelab.nix
