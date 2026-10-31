@@ -202,6 +202,14 @@ in
   # AirPlay speakers on the LAN show up as PipeWire sinks. The speakers live on
   # 10.26.27.0/24, so OPNsense has to pass RTSP and audio between the VLANs.
   services.pipewire = {
+    # HomePods answer 403 to PipeWire's own User-Agent but accept iTunes. Warn
+    # rather than fail if this stops matching, so an update cannot block a rebuild.
+    package = pkgs.pipewire.overrideAttrs (old: {
+      postPatch = (old.postPatch or "") + ''
+        substituteInPlace src/modules/module-raop-sink.c --replace-warn \
+          'DEFAULT_USER_NAME "/" PACKAGE_VERSION' '"iTunes/11.0.4 (Windows; N)"'
+      '';
+    });
     raopOpenFirewall = true;
     extraConfig.pipewire."50-raop-discover"."context.modules" = [
       { name = "libpipewire-module-raop-discover"; }

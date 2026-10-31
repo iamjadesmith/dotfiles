@@ -219,6 +219,8 @@ Run `gaming-mode on` before a game that needs all of the GPU's VRAM, `gaming-mod
 
 PipeWire discovers AirPlay speakers over mDNS and adds each one as an output; pick one with `wpctl status` and `wpctl set-default <id>`, or per stream with `pw-play --target`. The speakers are on `10.26.27.0/24` and mjolnir is on `10.3.0.0/24`, so OPNsense has to pass TCP 7000 and UDP from mjolnir to each speaker, and UDP 6001-6002 from the speakers back to mjolnir. mDNS is reflected between the VLANs, so a speaker can be listed even when these rules are missing.
 
+HomePods answer `403 Forbidden` to PipeWire's own User-Agent, so mjolnir builds PipeWire with an iTunes User-Agent in `hosts/mjolnir/configuration.nix`. If that patch stops matching after an update, the build prints a warning and the 403 comes back.
+
 ## Uptime Kuma
 
 The main instance runs on mjolnir at `https://uptime.joejad.com` and watches every service, host, and
