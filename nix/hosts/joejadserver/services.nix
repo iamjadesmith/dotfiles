@@ -19,7 +19,7 @@
       environment = {
         EULA = "TRUE";
         OPS = "JoeJad, Abbyb727";
-        LEVEL = "Great World";
+        LEVEL = "Great World 26.3";
         MEMORY = "3G";
         MOTD = "Great World";
         DIFFICULTY = "normal";
