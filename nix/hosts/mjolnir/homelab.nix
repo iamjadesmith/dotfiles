@@ -66,11 +66,14 @@ let
         echo "NordVPN handshake is stale; selecting a new server"
       fi
 
+      # DNS can still be down when network-online.target is reached at boot.
       if ! candidates=$(
         curl --fail --silent --show-error \
           --connect-timeout 10 \
           --max-time 30 \
-          --retry 3 \
+          --retry 30 \
+          --retry-delay 10 \
+          --retry-max-time 300 \
           --retry-all-errors \
           '${vpnRecommendationsUrl}' \
           | jq --exit-status --raw-output '
@@ -390,10 +393,15 @@ in
       "vpn-namespace.service"
       "wireguard-${vpnWireGuardInterface}.service"
     ];
+    # vpn-watchdog cannot run until this succeeds, so never give up. Dependents
+    # only wait for the first attempt (see the curl retries in vpnSelectServer).
+    startLimitIntervalSec = 0;
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = lib.getExe vpnSelectServer;
+      Restart = "on-failure";
+      RestartSec = "30s";
     };
   };
 
