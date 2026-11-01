@@ -155,8 +155,8 @@ Stop `podman-livesync-cli.service` before any later one-off `sudo livesync-cli .
 
 ## Personal Apps On Mjolnir
 
-Mjolnir's personal apps (budget, food_log, golf_rust, meals, receipt, running, stock, tally_rust,
-workout_rust, yahtzee_rust) are flake inputs in `flake.nix` that track `main` on internal Forgejo,
+Mjolnir's personal apps (bingo_rust, budget, food_log, golf_rust, meals, receipt, running, stock,
+tally_rust, workout_rust, yahtzee_rust) are flake inputs in `flake.nix` that track `main` on internal Forgejo,
 pinned in `flake.lock`, with `nixpkgs` following ours. `hosts/mjolnir/personal.nix` imports each
 app's `nixosModules.default`, which packages the app with its own flake definition.
 

@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "bingoRust": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793570238,
+        "narHash": "sha256-iw6QNPE3glUbjgkyhTZtGvrJeCgmDka1ygCBVMglIuw=",
+        "ref": "main",
+        "rev": "c9ca0590547003d8b147d7bd0dd0dd8ab67e91d1",
+        "revCount": 1,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/bingo_rust.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/bingo_rust.git"
+      }
+    },
     "budget": {
       "inputs": {
         "nixpkgs": [
@@ -183,6 +204,7 @@
     },
     "root": {
       "inputs": {
+        "bingoRust": "bingoRust",
         "budget": "budget",
         "disko": "disko",
         "foodLog": "foodLog",

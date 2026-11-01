@@ -283,6 +283,7 @@ in
   services.postgresqlBackup = {
     enable = true;
     databases = [
+      "bingo"
       "budget"
       "food"
       "freshrss"

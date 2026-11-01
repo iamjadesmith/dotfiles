@@ -18,6 +18,10 @@
 
     # mjolnir's personal apps on Forgejo. Inputs are fetched lazily, so only
     # building mjolnir needs Forgejo; see nix/README.md if it is down.
+    bingoRust = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/bingo_rust.git?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     budget = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/budget.git?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -47,6 +47,7 @@ let
 in
 {
   imports = [
+    inputs.bingoRust.nixosModules.default
     inputs.budget.nixosModules.default
     inputs.foodLog.nixosModules.default
     inputs.golfRust.nixosModules.default
@@ -111,6 +112,8 @@ in
     booksDir = "/home/jade/study-books";
   };
 
+  services."bingo-rust".enable = true;
+
   services."tally-rust".enable = true;
 
   services."yahtzee-rust".enable = true;
@@ -172,6 +175,10 @@ in
         deny all;
       '';
       locations."/".proxyPass = "http://127.0.0.1:8092";
+    };
+
+    "bingo.${domain}" = ssl // {
+      locations."/".proxyPass = "http://127.0.0.1:8093";
     };
 
     "tally.${domain}" = ssl // {

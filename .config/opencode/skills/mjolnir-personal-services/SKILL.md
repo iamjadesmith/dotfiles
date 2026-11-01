@@ -1,6 +1,6 @@
 ---
 name: mjolnir-personal-services
-description: Use when changing, committing, releasing, or deploying the budget, food_log, golf_rust, meals, receipt_breakdown, running, study, tally_rust, workout_rust, yahtzee_rust, or stock personal services on mjolnir. Verifies and pushes application changes, updates the app's flake input in ~/.dotfiles, deploys mjolnir, verifies the service, and commits the lock update.
+description: Use when changing, committing, releasing, or deploying the bingo_rust, budget, food_log, golf_rust, meals, receipt_breakdown, running, study, tally_rust, workout_rust, yahtzee_rust, or stock personal services on mjolnir. Verifies and pushes application changes, updates the app's flake input in ~/.dotfiles, deploys mjolnir, verifies the service, and commits the lock update.
 ---
 
 # Mjolnir Personal Services
@@ -12,6 +12,7 @@ asking; "local only", "do not deploy", or "do not commit" overrides that.
 
 | Repository (`~/projects/`, Forgejo `jade/`) | Flake input | systemd service | Health check |
 | --- | --- | --- | --- |
+| `bingo_rust` | `bingoRust` | `bingo-rust` | `https://bingo.joejad.com/health` |
 | `budget` | `budget` | `budget` | `https://budget.joejad.com/` |
 | `food_log` | `foodLog` | `food-log` | `https://food.joejad.com/` |
 | `golf_rust` | `golfRust` | `golf-rust` | `https://golf.joejad.com/ui` |
