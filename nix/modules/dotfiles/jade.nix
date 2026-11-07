@@ -14,6 +14,7 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN6MCnmxn47X/aP9pQxNmHc2I6kkZqh5R+J4KdcJUhZI jade@mini"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOciDf2c/QVPKjPVgSXYg7LSg8nwL4J7JDf8mYO4cs11 iPad"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/u5NjhzaqeMcdDxkdQeIz3ufGrZiZ2UfsDuEEzPEA6 jade@hermes"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIChGL3/tVabmbRkbBYkG9QPB9JWG90H69Uw30Gy/wxPo jade@Jades-MacBook-Pro.local"
   ];
 in
 {
