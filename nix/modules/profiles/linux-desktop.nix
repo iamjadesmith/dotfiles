@@ -26,5 +26,8 @@
 
   fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
-  environment.systemPackages = [ pkgs.wofi ];
+  environment.systemPackages = [
+    pkgs.fuzzel
+    pkgs.waybar
+  ];
 }

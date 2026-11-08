@@ -26,10 +26,15 @@ hl.config({
   cursor = { no_hardware_cursors = true },
 })
 
-hl.device({ name = "logitech-g502-1", sensitivity = -1.0 })
-hl.device({ name = "logitech-g502", sensitivity = -1.0 })
+-- Global rather than per-device: the mouse's name changes with how it is
+-- connected (wired G502 vs. its Lightspeed receiver).
+hl.config({ input = { sensitivity = -1.0, follow_mouse = 1 } })
+
+-- fuzzel's layer namespace is "launcher"; fade instead of the default pop-in.
+hl.layer_rule({ name = "launcher-fade", match = { namespace = "^launcher$" }, animation = "fade" })
 
 hl.on("hyprland.start", function()
+  hl.exec_cmd("waybar")
   hl.exec_cmd("ghostty")
 end)
 
@@ -42,7 +47,7 @@ bind("RETURN", hl.dsp.exec_cmd("ghostty"))
 bind("ALT + E", hl.dsp.exit())
 bind("Q", hl.dsp.window.close())
 bind("V", hl.dsp.layout("togglesplit"))
-bind("Space", hl.dsp.exec_cmd("wofi --show drun"))
+bind("Space", hl.dsp.exec_cmd("fuzzel"))
 bind("A", hl.dsp.exec_cmd("~/.dotfiles/scripts/homepod toggle"))
 
 local directions = { H = "left", L = "right", K = "up", J = "down" }

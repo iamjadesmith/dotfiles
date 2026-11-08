@@ -1,0 +1,15 @@
+/* Catppuccin Latte, matching Ghostty's light theme. */
+@define-color bg rgba(239, 241, 245, 0.9);
+@define-color surface #e6e9ef;
+@define-color surface-hover #dce0e8;
+@define-color fg #4c4f69;
+@define-color muted #8c8fa1;
+@define-color accent #1e66f5;
+@define-color accent-fg #eff1f5;
+@define-color blue #1e66f5;
+@define-color cyan #04a5e5;
+@define-color green #40a02b;
+@define-color yellow #df8e1d;
+@define-color red #d20f39;
+@define-color peach #fe640b;
+@define-color purple #8839ef;

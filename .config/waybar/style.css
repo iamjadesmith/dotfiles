@@ -1,127 +1,110 @@
-@import "mocha.css"; 
+/* Palette comes from colors.css, a link darkman points at
+   tokyonight-night.css or catppuccin-latte.css. */
+@import "colors.css";
 
 * {
-    font-family: "MesloLGS Nerd Font Mono Bold";
-    font-size: 16px;
-    min-height: 0;
-    font-weight: bold;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
 }
 
 window#waybar {
-    background: transparent;
-    background-color: @crust;
-    color: @overlay0;
-    transition-property: background-color;
-    transition-duration: 0.1s;
-    border-bottom: 1px solid @overlay1;
+  background: @bg;
+  color: @fg;
+  border-radius: 12px;
 }
 
-#window {
-    margin: 8px;
-    padding-left: 8;
-    padding-right: 8;
+tooltip {
+  background: @surface;
+  color: @fg;
+  border: 1px solid @muted;
+  border-radius: 10px;
 }
 
-button {
-    box-shadow: inset 0 -3px transparent;
-    border: none;
-    border-radius: 0;
+tooltip label {
+  color: @fg;
 }
 
-button:hover {
-    background: inherit;
-    color: @mauve;
-    border-top: 2px solid @mauve;
+/* Each module is a rounded pill. */
+#workspaces,
+#window,
+#clock,
+#cpu,
+#memory,
+#wireplumber,
+#tray {
+  background: @surface;
+  border-radius: 10px;
+  margin: 4px 0;
+  padding: 0 12px;
+}
+
+#workspaces {
+  margin-left: 4px;
+  padding: 0 4px;
 }
 
 #workspaces button {
-    padding: 0 4px;
+  color: @muted;
+  padding: 0 6px;
+  margin: 3px 1px;
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: none;
+  transition: all 150ms ease;
 }
 
-#workspaces button.focused {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: @rosewater;
-    border-top: 2px solid @rosewater;
+#workspaces button:hover {
+  background: @surface-hover;
+  color: @fg;
 }
 
 #workspaces button.active {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: @mauve;
-    border-top: 2px solid @mauve;
+  background: @accent;
+  color: @accent-fg;
+  padding: 0 12px;
 }
 
 #workspaces button.urgent {
-    background-color: #eb4d4b;
+  background: @red;
+  color: @accent-fg;
 }
 
-#pulseaudio,
-#clock,
-#battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
-#wireplumber,
-#tray,
-#network,
-#mode,
-#scratchpad {
-  margin-top: 2px;
-  margin-bottom: 2px;
-  margin-left: 4px;
-  margin-right: 4px;
-  padding-left: 4px;
-  padding-right: 4px;
+#window {
+  color: @fg;
+}
+
+window#waybar.empty #window {
+  background: transparent;
 }
 
 #clock {
-    color: @maroon;
-    border-bottom: 2px solid @maroon;
+  color: @purple;
 }
 
-#clock.date {
-    color: @mauve;
-    border-bottom: 2px solid @mauve;
+#cpu {
+  color: @green;
 }
 
-#pulseaudio {
-    color: @blue;
-    border-bottom: 2px solid @blue;
+#memory {
+  color: @yellow;
 }
 
-#network {
-    color: @yellow;
-    border-bottom: 2px solid @yellow;
+#wireplumber {
+  color: @cyan;
 }
 
-#idle_inhibitor {
-    margin-right: 12px;
-    color: #7cb342;
+#wireplumber.muted {
+  color: @muted;
 }
 
-#idle_inhibitor.activated {
-    color: @red;
+#tray {
+  margin-right: 4px;
 }
 
-#battery {
-    color: @green;
-    border-bottom: 2px solid @green;
-}
-
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left>widget:first-child>#workspaces {
-    margin-left: 0;
-}
-
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right>widget:last-child>#workspaces {
-    margin-right: 0;
-}
-
-#custom-vpn {
-    color: @lavender;
-    border-radius: 15px;
-    padding-left: 6px;
-    padding-right: 6px;
+#tray > .needs-attention {
+  background: @red;
 }
