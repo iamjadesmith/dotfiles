@@ -27,6 +27,7 @@ let
     nixfmt
     nodejs
     opencode
+    pandoc
     ripgrep
     ruff
     rustup
