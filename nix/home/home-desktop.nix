@@ -45,6 +45,10 @@
     '';
   };
 
+  # 96 * 1.5, matching the monitor scale in hyprland.lua. Hyprland loads this
+  # with xrdb at startup so XWayland apps such as Steam scale to match.
+  xresources.properties."Xft.dpi" = 144;
+
   programs.firefox = import ./firefox.nix;
   programs.ghostty = import ./ghostty.nix { inherit meta pkgs; };
 

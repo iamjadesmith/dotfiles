@@ -29,5 +29,6 @@
   environment.systemPackages = [
     pkgs.fuzzel
     pkgs.waybar
+    pkgs.xrdb
   ];
 }

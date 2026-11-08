@@ -16,8 +16,6 @@ hl.env("XDG_SESSION_TYPE", "wayland")
 hl.env("GBM_BACKEND", "nvidia-drm")
 hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 hl.env("NIXOS_OZONE_WL", "1")
--- force_zero_scaling leaves XWayland apps unscaled, and Steam is one.
-hl.env("STEAM_FORCE_DESKTOPUI_SCALING", "1.5")
 
 hl.config({
   -- Variable refresh for fullscreen games only.
@@ -34,6 +32,9 @@ hl.config({ input = { sensitivity = -1.0, follow_mouse = 1 } })
 hl.layer_rule({ name = "launcher-fade", match = { namespace = "^launcher$" }, animation = "fade" })
 
 hl.on("hyprland.start", function()
+  -- force_zero_scaling leaves XWayland apps unscaled; Steam and other X apps
+  -- size themselves from Xft.dpi instead (set in home-desktop.nix).
+  hl.exec_cmd("xrdb -merge ~/.Xresources")
   hl.exec_cmd("waybar")
   hl.exec_cmd("ghostty")
 end)
