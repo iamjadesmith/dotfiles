@@ -6,6 +6,37 @@
 }:
 
 let
+  # Always-on Claude Code Remote Control server for one working directory.
+  # Unsandboxed on purpose: it is a normal dev session that needs the same access
+  # (sudo, nixos-rebuild) as an interactive shell.
+  claudeRemoteControl =
+    { name, directory }:
+    {
+      description = "Claude Code Remote Control in ${directory}";
+      wantedBy = [ "multi-user.target" ];
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+      # Sessions run inside this unit, so a rebuild must not restart it out from under
+      # a session that is deploying mjolnir. Changes apply on reboot or manual restart.
+      restartIfChanged = false;
+      environment = {
+        HOME = "/home/jade";
+        PATH = lib.mkForce "/run/wrappers/bin:/etc/profiles/per-user/jade/bin:/run/current-system/sw/bin";
+      };
+      serviceConfig = {
+        User = "jade";
+        Group = "users";
+        WorkingDirectory = directory;
+        ExecStart = "${pkgs.claude-code}/bin/claude remote-control --name ${name} --permission-mode default";
+        Restart = "always";
+        RestartSec = "30s";
+        # Only stop the server on restart; spawned sessions reattach to the new one.
+        KillMode = "process";
+        # stdout is a status screen redrawn every second; errors still go to stderr.
+        StandardOutput = "null";
+      };
+    };
+
   domain = "joejad.com";
   ssl = {
     useACMEHost = domain;
@@ -227,33 +258,15 @@ in
 
   services.uptime-kuma.enable = true;
 
-  # Always-on Claude Code Remote Control session in ~/.dotfiles, reachable from
-  # claude.ai/code and the mobile app. Unsandboxed on purpose: it is a normal dev
-  # session that needs the same access (sudo, nixos-rebuild) as an interactive shell.
-  systemd.services.claude-remote-control = {
-    description = "Claude Code Remote Control in ~/.dotfiles";
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-    # Sessions run inside this unit, so a rebuild must not restart it out from under
-    # a session that is deploying mjolnir. Changes apply on reboot or manual restart.
-    restartIfChanged = false;
-    environment = {
-      HOME = "/home/jade";
-      PATH = lib.mkForce "/run/wrappers/bin:/etc/profiles/per-user/jade/bin:/run/current-system/sw/bin";
-    };
-    serviceConfig = {
-      User = "jade";
-      Group = "users";
-      WorkingDirectory = "/home/jade/.dotfiles";
-      ExecStart = "${pkgs.claude-code}/bin/claude remote-control --name dotfiles --permission-mode default";
-      Restart = "always";
-      RestartSec = "30s";
-      # Only stop the server on restart; spawned sessions reattach to the new one.
-      KillMode = "process";
-      # stdout is a status screen redrawn every second; errors still go to stderr.
-      StandardOutput = "null";
-    };
+  # Always-on Claude Code Remote Control sessions, reachable from claude.ai/code
+  # and the mobile app.
+  systemd.services.claude-remote-control = claudeRemoteControl {
+    name = "dotfiles";
+    directory = "/home/jade/.dotfiles";
+  };
+  systemd.services.claude-remote-control-workout-rust = claudeRemoteControl {
+    name = "workout_rust";
+    directory = "/home/jade/projects/workout_rust";
   };
 
   services.postgresql = {
