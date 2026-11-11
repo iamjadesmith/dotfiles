@@ -219,6 +219,7 @@
         "stock": "stock",
         "study": "study",
         "tallyRust": "tallyRust",
+        "tracker": "tracker",
         "workoutRust": "workoutRust",
         "yahtzeeRust": "yahtzeeRust"
       }
@@ -325,6 +326,27 @@
         "ref": "main",
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/tally_rust.git"
+      }
+    },
+    "tracker": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794415185,
+        "narHash": "sha256-x9VdxDXwHt6V1B/6DRmwzy4zjkQ66DEbTSHx29YlwS8=",
+        "ref": "main",
+        "rev": "933791a88664bb300a96b60038b10587f394f0af",
+        "revCount": 1,
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/tracker.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "http://joejadserver.joejad.lan:3000/jade/tracker.git"
       }
     },
     "workoutRust": {

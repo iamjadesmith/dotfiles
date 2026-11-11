@@ -53,6 +53,7 @@ in
     inputs.golfRust.nixosModules.default
     inputs.receiptBreakdown.nixosModules.default
     inputs.running.nixosModules.default
+    inputs.tracker.nixosModules.default
     inputs.workoutRust.nixosModules.default
     inputs.tallyRust.nixosModules.default
     inputs.stock.nixosModules.default
@@ -90,6 +91,13 @@ in
   services.receipt-breakdown.enable = true;
 
   services.running = {
+    enable = true;
+    manageLocalDatabase = false;
+    environmentFiles = [ config.sops.secrets.running_env.path ];
+  };
+
+  # Shares the workout database and reuses running's API key.
+  services.tracker = {
     enable = true;
     manageLocalDatabase = false;
     environmentFiles = [ config.sops.secrets.running_env.path ];
@@ -159,6 +167,10 @@ in
 
     "run.${domain}" = ssl // {
       locations."/".proxyPass = "http://127.0.0.1:8085";
+    };
+
+    "track.${domain}" = ssl // {
+      locations."/".proxyPass = "http://127.0.0.1:8094";
     };
 
     # Copyrighted study material: LAN and Tailscale only.

@@ -58,6 +58,10 @@
       url = "git+http://joejadserver.joejad.lan:3000/jade/tally_rust.git?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    tracker = {
+      url = "git+http://joejadserver.joejad.lan:3000/jade/tracker.git?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     workoutRust = {
       url = "git+http://joejadserver.joejad.lan:3000/jade/workout_rust.git?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
