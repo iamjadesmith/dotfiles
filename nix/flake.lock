@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793570238,
-        "narHash": "sha256-iw6QNPE3glUbjgkyhTZtGvrJeCgmDka1ygCBVMglIuw=",
+        "lastModified": 1794937806,
+        "narHash": "sha256-lUIzRv+RhV9Ie2mJIXwdbs5sTH0nRGjAgh1Wj8K1CfE=",
         "ref": "main",
-        "rev": "c9ca0590547003d8b147d7bd0dd0dd8ab67e91d1",
-        "revCount": 1,
+        "rev": "3268592f30f8a759adc8ff30ee3c752276358e1b",
+        "revCount": 2,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/bingo_rust.git"
       },
@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782142562,
-        "narHash": "sha256-bjMzdO4micdq38X+2Xb8raHAmSnLnnqEOGJ+RPShFFg=",
+        "lastModified": 1794937805,
+        "narHash": "sha256-T72AgHn/tREfNpMf+KCp95eZEE+XP/ipj4IediYZ0B8=",
         "ref": "main",
-        "rev": "879ef776fec6ab61d63d5afae5589413b2950b51",
-        "revCount": 14,
+        "rev": "b946b36910d1c5462ca9699f23372316fd7aa95f",
+        "revCount": 15,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/budget.git"
       },
@@ -69,11 +69,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782142562,
-        "narHash": "sha256-BS6M+ywpcSI/plXM15LzeE+C1pMIGqhyyuGTPfNrG0k=",
+        "lastModified": 1794937805,
+        "narHash": "sha256-6xIJaXDkHqlpOGpPbUC5TFX3zxcX3SwWgAV3+LB6Mlc=",
         "ref": "main",
-        "rev": "af0b6e07177ebdab3e39074929bf69dc36667f3a",
-        "revCount": 17,
+        "rev": "c58525dd750a4fd8a86d5df1168ec3ff893392d4",
+        "revCount": 18,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/food_log.git"
       },
@@ -90,11 +90,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792157729,
-        "narHash": "sha256-ryEOlujakmiGiMDsQ2Tg0qkO1/ioApUcEMiIbzuyKig=",
+        "lastModified": 1794937806,
+        "narHash": "sha256-DrQyN3t771yKe5dvz+HzS4XYP1ydpE8H6Bdc4eYAFNY=",
         "ref": "main",
-        "rev": "44b820304414a685e658a9b255d1cc0792407a42",
-        "revCount": 14,
+        "rev": "b797952ee825e3fd943f04248bd5d39df593d028",
+        "revCount": 15,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/golf_rust.git"
       },
@@ -188,11 +188,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794070137,
-        "narHash": "sha256-RV+xI+679ZSUu4pyIqxTJAmto323ENXk3siYn4ZzBrs=",
+        "lastModified": 1794937807,
+        "narHash": "sha256-WZYhR9+0x6deE1MZvr75AboQGkb45/eyIw7QvNIdhfA=",
         "ref": "main",
-        "rev": "1de8d5e4c473cb9d8111439b38f5dc553ab1df57",
-        "revCount": 5,
+        "rev": "19d53f200eaedec0347d84027b5c82fa19b82eea",
+        "revCount": 6,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/receipt_breakdown.git"
       },
@@ -231,11 +231,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792107189,
-        "narHash": "sha256-jztaH/WVE361F6eOLWvG7sZVs2cQSep9McsgxYEXqkU=",
+        "lastModified": 1794937807,
+        "narHash": "sha256-0cYxyPrqo6rPeLtDlVHV/JyZBs4ySsQr8hYchbh769U=",
         "ref": "main",
-        "rev": "0ca2296c64ef063a864846a765b6a0e544802da3",
-        "revCount": 16,
+        "rev": "4735952f72aa1b9aa29df9ea2351a50901003296",
+        "revCount": 17,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/running.git"
       },
@@ -293,11 +293,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792871736,
-        "narHash": "sha256-eO7OkSz0Ug8cSdXGl3nkfIfvMJ60eo1Yu/XUqetLAJU=",
+        "lastModified": 1794937807,
+        "narHash": "sha256-+23QXkuL/ou5I6xypj10EgbKCtIFKG3FmPa+pyhC8BI=",
         "ref": "main",
-        "rev": "07d1f024a4f4a61f53a3628ade511732c0ac34bb",
-        "revCount": 4,
+        "rev": "fc8be96180e9f0c8a2b9f338f741677d76fa3892",
+        "revCount": 5,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/study.git"
       },
@@ -314,11 +314,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791042252,
-        "narHash": "sha256-5rwq1UZ1WQI5TC5GXqKKmeyAGcbIubnNcC+3C8+o3yM=",
+        "lastModified": 1794937808,
+        "narHash": "sha256-cCHyx3Y9FWI5k+SsJuBhP9EKkBCi+EJG18b87eGBFVQ=",
         "ref": "main",
-        "rev": "b90dddacac19f76dae78e4c1dcc492b7faab2029",
-        "revCount": 1,
+        "rev": "2573fa951b0de1fcf3e60c31d70b4bfce79ecf45",
+        "revCount": 2,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/tally_rust.git"
       },
@@ -335,11 +335,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794415185,
-        "narHash": "sha256-x9VdxDXwHt6V1B/6DRmwzy4zjkQ66DEbTSHx29YlwS8=",
+        "lastModified": 1794937808,
+        "narHash": "sha256-BnmQWmQ/swJ9+5HCOFsUnHaozoAXTCa99T+QAeBzElA=",
         "ref": "main",
-        "rev": "933791a88664bb300a96b60038b10587f394f0af",
-        "revCount": 1,
+        "rev": "2bffea945b678b6c04f9dbc78362b97d35d4a84b",
+        "revCount": 2,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/tracker.git"
       },
@@ -356,11 +356,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794415361,
-        "narHash": "sha256-7CLdk1+6KwpCw8CueVWR4Kv/FaLQvagApj0Kp2jV4O0=",
+        "lastModified": 1794937808,
+        "narHash": "sha256-p0EoGy8eU0A6SZSolwJzPJ28CVXfAC4NwK/j7g1103w=",
         "ref": "main",
-        "rev": "db8807a57e938c14dc0e39b60557209a8354975c",
-        "revCount": 34,
+        "rev": "974f3d5b2969295afe664814419d0a7c86727c1d",
+        "revCount": 35,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/workout_rust.git"
       },
@@ -377,11 +377,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791042252,
-        "narHash": "sha256-cW3Dv4ylsk/BDdcjq58yJV4hgXF5z+QgeosYCl4RTEw=",
+        "lastModified": 1794937809,
+        "narHash": "sha256-3AYsCZ6CR4miUIuyqhjYwwnIm7yqhWaxNHq6XvO+aEg=",
         "ref": "main",
-        "rev": "d43ac8c33220ead7b1c25d1373aea0845409dedb",
-        "revCount": 1,
+        "rev": "db73be31adc61d97002c6c7c455471b307c30908",
+        "revCount": 2,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/yahtzee_rust.git"
       },
