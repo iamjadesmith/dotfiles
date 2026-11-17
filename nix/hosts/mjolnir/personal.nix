@@ -33,6 +33,12 @@ let
       pkgs.makeWrapper
       pkgs.pkg-config
     ];
+    # nixpkgs sets AWS_LC_SYS_USE_SYSTEM=1 and LIBSQLITE3_SYS_USE_PKG_CONFIG=1,
+    # overriding the crates' bundled builds, so link against system libraries.
+    buildInputs = [
+      pkgs.aws-lc
+      pkgs.sqlite
+    ];
     SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
     postInstall = ''
       wrapProgram "$out/bin/wedding" \
