@@ -131,11 +131,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792258253,
-        "narHash": "sha256-AxPVPEoPTvFF3MtpFpmQMC2PKSiWUzYTMe7TZh4A2JU=",
+        "lastModified": 1794935985,
+        "narHash": "sha256-uiJMY1T3d7iz6jGMyonMC9BT6uuBr5BaUNQyfj+v7Eg=",
         "ref": "main",
-        "rev": "11b10896680f44ecd19213e11bd09accffa9d740",
-        "revCount": 5,
+        "rev": "6a635375c72d1791cf627b314369db86664b9d5f",
+        "revCount": 6,
         "type": "git",
         "url": "http://joejadserver.joejad.lan:3000/jade/meals.git"
       },
