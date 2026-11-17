@@ -28,6 +28,9 @@ in
 
   programs.ghostty = import ./ghostty.nix { inherit meta pkgs; };
 
+  # On macOS the vault syncs through iCloud instead of ~/obsidian.
+  programs.zsh.shellAliases.obs = lib.mkForce ''cd "$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian" && nvim Todo.md'';
+
   programs.zsh.initContent = lib.mkBefore ''
     # Cache brew shellenv so Homebrew tools are available without slowing every shell startup.
     if [[ -f "/opt/homebrew/bin/brew" ]]; then
