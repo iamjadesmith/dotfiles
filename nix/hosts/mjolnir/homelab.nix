@@ -258,15 +258,11 @@ in
 
   services.uptime-kuma.enable = true;
 
-  # Always-on Claude Code Remote Control sessions, reachable from claude.ai/code
+  # Always-on Claude Code Remote Control session, reachable from claude.ai/code
   # and the mobile app.
   systemd.services.claude-remote-control = claudeRemoteControl {
     name = "dotfiles";
     directory = "/home/jade/.dotfiles";
-  };
-  systemd.services.claude-remote-control-workout-rust = claudeRemoteControl {
-    name = "workout_rust";
-    directory = "/home/jade/projects/workout_rust";
   };
 
   services.postgresql = {
