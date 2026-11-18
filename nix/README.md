@@ -97,7 +97,7 @@ OpenCode comes from nixpkgs through `commonPackages` on NixOS and Darwin, so it 
 
 ### Shared Agent Skills
 
-Keep shared skills in `.config/opencode/skills/<name>/SKILL.md`. Home Manager links each skill into `~/.claude/skills` for Claude Code and `~/.agents/skills` for Codex; OpenCode reads the source directory directly. Apply the system configuration after adding or removing skill directories. Edits to existing skills are available through the links without a rebuild. Restart Codex if a skill does not appear, and invoke it with `$<name>`.
+Keep shared skills in `.config/opencode/skills/<name>/SKILL.md`. Home Manager links each skill into `~/.claude/skills` for Claude Code and `~/.agents/skills` for Codex; OpenCode reads the source directory directly. A skill directory in `.config/opencode/skills-darwin/` replaces the shared skill of the same name in those links on Darwin hosts only (for example, `mjolnir-personal-services` deploys mjolnir remotely from the Mac); OpenCode still reads only the shared directory. Apply the system configuration after adding or removing skill directories. Edits to existing skills are available through the links without a rebuild. Restart Codex if a skill does not appear, and invoke it with `$<name>`.
 
 ### Terminal And Light/Dark Themes
 

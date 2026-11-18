@@ -12,6 +12,7 @@ This repository contains personal dotfiles, NixOS configurations, nix-darwin con
 - `nix/modules/common-packages.nix` contains shared package groups.
 - `nix/modules/dotfiles/` contains small custom NixOS modules for repeated host patterns.
 - `nix/modules/profiles/` contains optional Linux desktop/profile modules and should be preserved even if currently unused. mjolnir uses `linux-desktop.nix` and `gaming.nix`.
+- `.config/opencode/skills/` contains shared agent skills; `.config/opencode/skills-darwin/` holds Darwin-only replacements of the same name, linked by `nix/home/home-darwin.nix`.
 - `nix/darwin/` is intentionally removed; use `nix#mini` or `nix#joejadmbp` for Darwin.
 
 ## Build, Lint, And Test Commands

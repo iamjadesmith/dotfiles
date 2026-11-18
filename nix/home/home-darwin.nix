@@ -10,6 +10,11 @@
 
 let
   dotfilesDirectory = "${homeDirectory}/.dotfiles";
+  darwinSkills = lib.attrNames (
+    lib.filterAttrs (_name: type: type == "directory") (
+      builtins.readDir ../../.config/opencode/skills-darwin
+    )
+  );
 in
 {
   imports = [
@@ -51,8 +56,28 @@ in
     fi
   '';
 
-  home.file.".hammerspoon/init.lua" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/.hammerspoon/init.lua";
-    force = true;
-  };
+  home.file = {
+    ".hammerspoon/init.lua" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/.hammerspoon/init.lua";
+      force = true;
+    };
+  }
+  # Darwin-specific skill variants replace the shared skill of the same name
+  # for Claude Code and Codex; OpenCode still reads the shared directory.
+  // lib.listToAttrs (
+    lib.concatMap
+      (
+        directory:
+        map (name: {
+          name = "${directory}/${name}";
+          value.source = lib.mkForce (
+            config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/.config/opencode/skills-darwin/${name}"
+          );
+        }) darwinSkills
+      )
+      [
+        ".claude/skills"
+        ".agents/skills"
+      ]
+  );
 }
