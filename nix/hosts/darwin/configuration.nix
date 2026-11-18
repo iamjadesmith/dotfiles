@@ -55,11 +55,6 @@ in
     taps = [
       "anomalyco/tap"
     ];
-    masApps = {
-      Wireguard = 1451685025;
-      Bitwarden = 1352778147;
-      Tailscale = 1475387142;
-    };
     onActivation.autoUpdate = true;
     onActivation.cleanup = "uninstall";
     onActivation.upgrade = true;
