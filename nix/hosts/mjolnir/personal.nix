@@ -67,7 +67,6 @@ in
     inputs.yahtzeeRust.nixosModules.default
     inputs.mealPlanner.nixosModules.default
     weddingModule
-    ./recipes.nix
   ];
 
   sops.secrets = {
@@ -208,10 +207,6 @@ in
         client_max_body_size 3M;
       '';
       locations."/".proxyPass = "http://127.0.0.1:8086";
-    };
-
-    "hooks.${domain}" = ssl // {
-      locations."/hooks/".proxyPass = "http://127.0.0.1:9000";
     };
 
     "meals.${domain}" = ssl // {
