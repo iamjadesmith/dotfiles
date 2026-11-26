@@ -143,13 +143,33 @@ in
     "reboot=pci"
   ];
 
-  # Warm reboots hang in firmware until a power cycle. systemd arms the first
-  # watchdog during shutdown, and intel_oc_wdt (the CPU overclocking watchdog)
-  # cannot be stopped, so it stays running into the Alienware X51 R3 POST.
-  # Without it, systemd uses iTCO_wdt, which can also reset a stuck reboot.
-  boot.blacklistedKernelModules = [ "intel_oc_wdt" ];
+  # After days of uptime, firmware reboots of this Alienware X51 R3 hang with
+  # the power on until someone power-cycles it; reboot=pci did not help.
+  # Keep the newest generation loaded into kexec so `reboot` and the
+  # autoUpgrade reboot skip the firmware entirely: systemctl reboot performs a
+  # kexec whenever a kernel is loaded. For a real firmware reboot, run
+  # `sudo kexec -u` first.
+  systemd.services.kexec-load = {
+    description = "Load the newest NixOS generation for kexec reboots";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      system="$(readlink -f /nix/var/nix/profiles/system)"
+      ${pkgs.kexec-tools}/bin/kexec --load "$system/kernel" \
+        --initrd="$system/initrd" \
+        --append="init=$system/init $(cat "$system/kernel-params")"
+    '';
+  };
+  # Reload whenever a new generation is created (switch, boot, autoUpgrade).
+  systemd.paths.kexec-load = {
+    wantedBy = [ "paths.target" ];
+    pathConfig.PathChanged = "/nix/var/nix/profiles";
+  };
 
-  system.autoUpgrade.allowReboot = false;
+  # systemd arms the first watchdog during shutdown. intel_oc_wdt (the CPU
+  # overclocking watchdog) cannot be stopped, so keep iTCO_wdt as watchdog0;
+  # it can also hardware-reset a reboot that stalls inside Linux.
+  boot.blacklistedKernelModules = [ "intel_oc_wdt" ];
 
   hardware.enableRedistributableFirmware = true;
 
