@@ -143,6 +143,12 @@ in
     "reboot=pci"
   ];
 
+  # Warm reboots hang in firmware until a power cycle. systemd arms the first
+  # watchdog during shutdown, and intel_oc_wdt (the CPU overclocking watchdog)
+  # cannot be stopped, so it stays running into the Alienware X51 R3 POST.
+  # Without it, systemd uses iTCO_wdt, which can also reset a stuck reboot.
+  boot.blacklistedKernelModules = [ "intel_oc_wdt" ];
+
   system.autoUpgrade.allowReboot = false;
 
   hardware.enableRedistributableFirmware = true;
@@ -269,7 +275,6 @@ in
     certs = {
       "sorenson-fam.com" = {
         dnsProvider = "cloudflare";
-        dnsPropagationCheck = true;
         environmentFile = "/var/lib/acme/.secrets/cert.env";
         group = "nginx";
         domain = "*.sorenson-fam.com";

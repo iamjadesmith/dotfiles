@@ -298,7 +298,6 @@ in
     certs = {
       "joejad.com" = {
         dnsProvider = "cloudflare";
-        dnsPropagationCheck = true;
         environmentFile = config.sops.secrets.acme_cloudflare_env.path;
         group = "nginx";
         domain = "*.joejad.com";
